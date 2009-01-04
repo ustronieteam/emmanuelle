@@ -5,18 +5,26 @@
 //End section for file ServerCreatePipeObserver.h
 
 #include "IRemoteObserver.h"
+#include "ClientsDataBase.h"
+#include "ClientRecord.h"
+#include "RemoteObserverData.h"
+
+#include <boost/shared_ptr.hpp>
+#include <iostream>
+#include <exception>
+#include <boost/thread.hpp>
+#include <vector>
+//Do utworzenia logow w przypadkyu bledow
+#include <log4cxx/logger.h>
+#include <log4cxx/level.h>
 
 
 class ClientsDataBase;
 
-//<p>
+
 //    1)Klientowi który ma tworzyæ pipe przeka¿ odpowiedni¹ wiadomoœæ.
-//</p>
-//<p>
-//    &nbsp;Klient ten musi byæ z nami pod³¹czony, je¿eli nie to b³ad integralnoœci danych w bazie.
-//</p>
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-class ServerCreatePipeObserver : IRemoteObserver
+//Klient ten musi byæ z nami pod³¹czony, je¿eli nie to b³ad integralnoœci danych w bazie.
+class ServerCreatePipeObserver : public IRemoteObserver
 {
 
     //Begin section for ServerCreatePipeObserver
@@ -25,33 +33,46 @@ class ServerCreatePipeObserver : IRemoteObserver
 
     private:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        ClientsDataBase * clientsDataBase;
+         boost::shared_ptr<ClientsDataBase> clientsDataBase;
 
 
 
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         ServerCreatePipeObserver();
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         ServerCreatePipeObserver(ServerCreatePipeObserver & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+		ServerCreatePipeObserver(boost::shared_ptr<ClientsDataBase> & clientsDB);
         ServerCreatePipeObserver & operator =(const ServerCreatePipeObserver & arg);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~ServerCreatePipeObserver();
 
-        //get clientsDataBase
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline ClientsDataBase * & get_clientsDataBase();
+         boost::shared_ptr<ClientsDataBase> & get_clientsDataBase();
+        void set_clientsDataBase( boost::shared_ptr<ClientsDataBase> & clientsDataBase);
 
-        //set clientsDataBase
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline void set_clientsDataBase(ClientsDataBase * & clientsDataBase);
+		virtual int Refresh(RemoteObserverData observerData);
 
 };  //end class ServerCreatePipeObserver
+
+//@author Marian Szczykulski
+//@brief Funktor odpowiedzialny za logike przetwarzania. 
+//@brief Potrzebny do wywo³ania w odzielnym watku
+class ServerCreatePipeObserverLogicRunnable
+{
+	private: 
+		boost::shared_ptr<ClientsDataBase> clientsDataBase;
+		RemoteObserverData observerData;
+		log4cxx::LoggerPtr logger;//(Logger::getLogger("ServerCreatePipeObserverLogicRunnable"));
+	public:
+		ServerCreatePipeObserverLogicRunnable(boost::shared_ptr<ClientsDataBase> & cDB, const RemoteObserverData & oD)
+		{
+			clientsDataBase = cDB;
+			observerData = oD;
+			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("ServerCreatePipeObserverLogicRunnable"));
+			logger->setLevel(log4cxx::Level::getAll());
+		}
+		int operator()();
+
+
+};
 
 #endif
