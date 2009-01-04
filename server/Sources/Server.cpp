@@ -39,3 +39,7 @@ bool Server::init()
     //TODO Auto-generated method stub
     return 0;
 }
+int main()
+{
+	return 0;
+}
