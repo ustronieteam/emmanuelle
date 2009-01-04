@@ -25,6 +25,8 @@ RemoteServerDisconnectedObserver & RemoteServerDisconnectedObserver::operator =(
     {
         this->serverDataBase = arg.serverDataBase;
     }
+
+	return const_cast<RemoteServerDisconnectedObserver &>(arg);
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"

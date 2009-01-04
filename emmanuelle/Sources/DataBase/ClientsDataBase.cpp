@@ -20,6 +20,7 @@ ClientsDataBase::ClientsDataBase(ClientsDataBase & arg)
 ClientsDataBase & ClientsDataBase::operator =(const ClientsDataBase & arg) 
 {
     //TODO Auto-generated method stub
+	return const_cast<ClientsDataBase &>(arg);
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"

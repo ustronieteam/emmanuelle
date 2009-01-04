@@ -25,6 +25,8 @@ Record & Record::operator =(const Record & arg)
     {
         this->recordId = arg.recordId;
     }
+
+	return const_cast<Record &>(arg);
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"

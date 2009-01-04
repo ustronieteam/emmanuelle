@@ -20,6 +20,7 @@ ServerRecord::ServerRecord(ServerRecord & arg)
 ServerRecord & ServerRecord::operator =(const ServerRecord & arg) 
 {
     //TODO Auto-generated method stub
+	return const_cast<ServerRecord &>(arg);
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
