@@ -20,6 +20,7 @@ ClientRecord::ClientRecord(ClientRecord & arg)
 ClientRecord & ClientRecord::operator =(const ClientRecord & arg) 
 {
     //TODO Auto-generated method stub
+	return const_cast<ClientRecord &>(arg);
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"

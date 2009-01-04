@@ -27,6 +27,8 @@ RemoteClientSendMessageObserver & RemoteClientSendMessageObserver::operator =(co
         this->clientsDataBase = arg.clientsDataBase;
         this->serverDataBase = arg.serverDataBase;
     }
+
+	return const_cast<RemoteClientSendMessageObserver &>(arg);
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"

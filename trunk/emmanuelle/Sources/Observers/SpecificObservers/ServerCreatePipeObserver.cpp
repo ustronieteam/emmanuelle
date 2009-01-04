@@ -25,6 +25,8 @@ ServerCreatePipeObserver & ServerCreatePipeObserver::operator =(const ServerCrea
     {
         this->clientsDataBase = arg.clientsDataBase;
     }
+
+	return *this;
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"

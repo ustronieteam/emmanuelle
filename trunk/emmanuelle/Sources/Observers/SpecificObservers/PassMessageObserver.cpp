@@ -25,6 +25,8 @@ PassMessageObserver & PassMessageObserver::operator =(const PassMessageObserver 
     {
         this->clientsDataBase = arg.clientsDataBase;
     }
+
+	return const_cast<PassMessageObserver &>(arg);
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"

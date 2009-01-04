@@ -27,6 +27,8 @@ RemoteClientCreatePipeObserver & RemoteClientCreatePipeObserver::operator =(cons
         this->clientsDataBase = arg.clientsDataBase;
         this->serverDataBase = arg.serverDataBase;
     }
+
+	return const_cast<RemoteClientCreatePipeObserver &>(arg);
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"

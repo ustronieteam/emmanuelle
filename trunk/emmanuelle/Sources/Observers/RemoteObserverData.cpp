@@ -25,6 +25,8 @@ RemoteObserverData & RemoteObserverData::operator =(const RemoteObserverData & a
     {
         this->eventType = arg.eventType;
     }
+
+	return const_cast<RemoteObserverData &>(arg);
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"

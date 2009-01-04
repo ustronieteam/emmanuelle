@@ -27,6 +27,8 @@ RemoteClientConnectedObserver & RemoteClientConnectedObserver::operator =(const 
         this->clientsDataBase = arg.clientsDataBase;
         this->serverDataBase = arg.serverDataBase;
     }
+
+	return const_cast<RemoteClientConnectedObserver &>(arg);
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"

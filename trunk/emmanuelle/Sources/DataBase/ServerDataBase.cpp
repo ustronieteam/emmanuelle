@@ -20,6 +20,7 @@ ServerDataBase::ServerDataBase(ServerDataBase & arg)
 ServerDataBase & ServerDataBase::operator =(const ServerDataBase & arg) 
 {
     //TODO Auto-generated method stub
+	return const_cast<ServerDataBase &>(arg);
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"

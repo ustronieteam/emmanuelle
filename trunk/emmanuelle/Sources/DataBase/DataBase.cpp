@@ -25,6 +25,8 @@ DataBase & DataBase::operator =(const DataBase & arg)
     {
         this->record = arg.record;
     }
+
+	return const_cast<DataBase &>(arg);
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
@@ -54,7 +56,7 @@ int DataBase::GetRecord(int recordId)
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
- DataBase::GetAllRecords() 
+int DataBase::GetAllRecords() 
 {
     //TODO Auto-generated method stub
     return 0;
