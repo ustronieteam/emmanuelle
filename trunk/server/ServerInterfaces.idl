@@ -1,0 +1,69 @@
+module DomainData
+{
+	struct Address
+	{
+		string name;
+		string localization;
+	};
+
+	struct Message
+	{
+		string content;
+	};
+	
+	struct File
+	{
+		string path;
+	};
+
+	enum Mode {passiv, active};
+
+	struct Enability
+	{
+		boolean status;
+		Mode mode_;
+	};
+	
+	struct User
+	{
+		string name;
+		long number;
+	};
+};
+
+module ServerInterfaces
+{
+	typedef sequence<DomainData::Address> AddressesList;
+
+	interface IServerServer
+	{
+		AddressesList Join();
+
+		void Unjoin();
+
+		void AddServer(in DomainData::Address serverAddress);
+
+		void RemoveServer(in DomainData::Address serverAddress);
+
+		void PassMessage(in DomainData::Message msg, in DomainData::Address senderAddress, in DomainData::Address receiverAddress);
+
+		void PassCreatePipeRequest(in DomainData::Address pipeHolderAddress, in DomainData::Address senderAddress, in DomainData::Address receiverAddress);
+		
+		void ClientStatusChanged(in DomainData::Address clientAddress, in DomainData::Enability en);
+	};
+	
+	interface IServerClient
+	{
+		DomainData::Address Connect(in DomainData::Mode m, in DomainData::User usr);
+
+		void Disconnect();
+
+		DomainData::User Register(in DomainData::User usr);
+		
+		void SendMessage(in DomainData::Address receiverAddress, in DomainData::Message msg);
+
+		DomainData::Enability CheckClientStatus(in DomainData::Address clientAddress);
+
+		DomainData::Address GetPipeHolder(in DomainData::Address receiverAddress);
+	};
+};

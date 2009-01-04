@@ -41,6 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="$(SolutionDir)\server\Headers;$(SolutionDir)\CORBA\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -60,7 +61,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="ob.lib jtc.lib advapi32.lib wsock32.lib"
 				LinkIncremental="2"
+				AdditionalLibraryDirectories="$(SolutionDir)\CORBA\lib"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
@@ -114,6 +117,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="$(SolutionDir)\server\Headers;$(SolutionDir)\CORBA\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -132,7 +136,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
+				AdditionalDependencies="ob.lib jtc.lib advapi32.lib wsock32.lib"
 				LinkIncremental="1"
+				AdditionalLibraryDirectories="$(SolutionDir)\CORBA\lib"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				OptimizeReferences="2"
@@ -170,6 +176,10 @@
 			Filter="cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx"
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
+			<File
+				RelativePath=".\main.cpp"
+				>
+			</File>
 			<File
 				RelativePath=".\Sources\Server.cpp"
 				>
@@ -258,6 +268,22 @@
 					</File>
 				</Filter>
 			</Filter>
+			<Filter
+				Name="CorbaClasses"
+				>
+				<File
+					RelativePath=".\Sources\CorbaClasses\ServerInterfaces.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Sources\CorbaClasses\ServerInterfaces_impl.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Sources\CorbaClasses\ServerInterfaces_skel.cpp"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Header Files"
@@ -338,6 +364,18 @@
 			</File>
 			<File
 				RelativePath=".\Headers\ServerDataBase.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Sources\CorbaFiles\ServerInterfaces.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Sources\CorbaFiles\ServerInterfaces_impl.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Sources\CorbaFiles\ServerInterfaces_skel.h"
 				>
 			</File>
 			<File
