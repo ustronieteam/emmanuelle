@@ -1,4 +1,4 @@
-#include "PassMessageObserver.h"
+#include "Observers/PassMessageObserver.h"
 //Begin section for file PassMessageObserver.cpp
 //TODO: Add definitions that you want preserved
 //End section for file PassMessageObserver.cpp

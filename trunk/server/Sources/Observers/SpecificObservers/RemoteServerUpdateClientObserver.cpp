@@ -1,4 +1,4 @@
-#include "RemoteServerUpdateClientObserver.h"
+#include "Observers/RemoteServerUpdateClientObserver.h"
 //Begin section for file RemoteServerUpdateClientObserver.cpp
 //TODO: Add definitions that you want preserved
 //End section for file RemoteServerUpdateClientObserver.cpp

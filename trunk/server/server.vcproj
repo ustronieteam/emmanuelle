@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(SolutionDir)\server\Headers;$(SolutionDir)\CORBA\include"
+				AdditionalIncludeDirectories="$(SolutionDir)\server\Headers;$(SolutionDir)\server\Headers\CorbaClasses;$(SolutionDir)\server\Headers\DataBase;$(SolutionDir)\server\HeadersObservers;$(SolutionDir)\CORBA\include"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -117,7 +117,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
-				AdditionalIncludeDirectories="$(SolutionDir)\server\Headers;$(SolutionDir)\CORBA\include"
+				AdditionalIncludeDirectories="$(SolutionDir)\server\Headers;$(SolutionDir)\server\Headers\CorbaClasses;$(SolutionDir)\server\Headers\DataBase;$(SolutionDir)\server\HeadersObservers;$(SolutionDir)\CORBA\include"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -291,97 +291,109 @@
 			UniqueIdentifier="{93995380-89BD-4b04-88EB-625FBE52EBFB}"
 			>
 			<File
-				RelativePath=".\Headers\ClientRecord.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\ClientsDataBase.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\DataBase.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\EventType.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\IRemoteObjects.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\IRemoteObserver.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\PassMessageObserver.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\Record.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\RemoteClientConnectedObserver.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\RemoteClientCreatePipeObserver.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\RemoteClientDisconnectedObserver.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\RemoteClientSendMessageObserver.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\RemoteObserverData.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\RemoteServerConnectedObserver.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\RemoteServerDisconnectedObserver.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\RemoteServerUpdateClientObserver.h"
-				>
-			</File>
-			<File
 				RelativePath=".\Headers\Server.h"
 				>
 			</File>
-			<File
-				RelativePath=".\Headers\ServerCreatePipeObserver.h"
+			<Filter
+				Name="CorbaClasses"
 				>
-			</File>
-			<File
-				RelativePath=".\Headers\ServerDataBase.h"
+				<File
+					RelativePath=".\Headers\CorbaClasses\ServerInterfaces.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\CorbaClasses\ServerInterfaces_impl.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\CorbaClasses\ServerInterfaces_skel.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="DataBase"
 				>
-			</File>
-			<File
-				RelativePath=".\Headers\ServerInterfaces.h"
+				<File
+					RelativePath=".\Headers\DataBase\ClientRecord.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\DataBase\ClientsDataBase.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\DataBase\DataBase.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\DataBase\Record.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\DataBase\ServerDataBase.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\DataBase\ServerRecord.h"
+					>
+				</File>
+			</Filter>
+			<Filter
+				Name="Observers"
 				>
-			</File>
-			<File
-				RelativePath=".\Headers\ServerInterfaces_impl.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\ServerInterfaces_skel.h"
-				>
-			</File>
-			<File
-				RelativePath=".\Headers\ServerRecord.h"
-				>
-			</File>
+				<File
+					RelativePath=".\Headers\Observers\EventType.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\Observers\IRemoteObjects.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\Observers\IRemoteObserver.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\Observers\PassMessageObserver.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\Observers\RemoteClientConnectedObserver.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\Observers\RemoteClientCreatePipeObserver.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\Observers\RemoteClientDisconnectedObserver.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\Observers\RemoteClientSendMessageObserver.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\Observers\RemoteObserverData.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\Observers\RemoteServerConnectedObserver.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\Observers\RemoteServerDisconnectedObserver.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\Observers\RemoteServerUpdateClientObserver.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\Observers\ServerCreatePipeObserver.h"
+					>
+				</File>
+			</Filter>
 		</Filter>
 		<Filter
 			Name="Resource Files"

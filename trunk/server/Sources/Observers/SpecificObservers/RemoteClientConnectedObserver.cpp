@@ -1,4 +1,4 @@
-#include "RemoteClientConnectedObserver.h"
+#include "Observers/RemoteClientConnectedObserver.h"
 //Begin section for file RemoteClientConnectedObserver.cpp
 //TODO: Add definitions that you want preserved
 //End section for file RemoteClientConnectedObserver.cpp

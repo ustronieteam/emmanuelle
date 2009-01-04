@@ -1,4 +1,4 @@
-#include "RemoteClientSendMessageObserver.h"
+#include "Observers/RemoteClientSendMessageObserver.h"
 //Begin section for file RemoteClientSendMessageObserver.cpp
 //TODO: Add definitions that you want preserved
 //End section for file RemoteClientSendMessageObserver.cpp
