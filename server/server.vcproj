@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="$(SolutionDir)\server\Headers;$(SolutionDir)\server\Headers\CorbaClasses;$(SolutionDir)\server\Headers\DataBase;$(SolutionDir)\server\HeadersObservers;$(SolutionDir)\CORBA\include"
+				AdditionalIncludeDirectories="&quot;C:\Program Files\boost\boost_1_36_0&quot;;&quot;$(SolutionDir)\server\Headers&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses&quot;;&quot;$(SolutionDir)\server\Headers\DataBase&quot;;&quot;$(SolutionDir)\server\HeadersObservers&quot;;&quot;$(SolutionDir)\CORBA\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
