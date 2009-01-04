@@ -367,15 +367,15 @@
 				>
 			</File>
 			<File
-				RelativePath=".\Sources\CorbaFiles\ServerInterfaces.h"
+				RelativePath=".\Headers\ServerInterfaces.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Sources\CorbaFiles\ServerInterfaces_impl.h"
+				RelativePath=".\Headers\ServerInterfaces_impl.h"
 				>
 			</File>
 			<File
-				RelativePath=".\Sources\CorbaFiles\ServerInterfaces_skel.h"
+				RelativePath=".\Headers\ServerInterfaces_skel.h"
 				>
 			</File>
 			<File
