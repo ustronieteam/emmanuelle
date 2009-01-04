@@ -28,3 +28,15 @@ ClientsDataBase::~ClientsDataBase()
 {
     //TODO Auto-generated method stub
 }
+
+int ClientsDataBase::Close()
+{
+
+	return 0;
+}
+
+int ClientsDataBase::Initialize()
+{
+
+	return 0;
+}

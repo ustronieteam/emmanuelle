@@ -31,6 +31,10 @@ class ServerDataBase : DataBase
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~ServerDataBase();
 
+		virtual int Close();
+
+		virtual int Initialize();
+
 };  //end class ServerDataBase
 
 #endif

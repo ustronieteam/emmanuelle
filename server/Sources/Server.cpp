@@ -3,12 +3,13 @@
 //TODO: Add definitions that you want preserved
 //End section for file Server.cpp
 
-const char * Server::configFileName;
-
-
-Server::Server() 
+Server::Server(const char * fileName) 
 {
-    //TODO Auto-generated method stub
+    // stworzenie obiektow baz danych: klienta i serwera
+	this->clientDataBaseObj = new ClientsDataBase();
+	this->serverDataBaseObj = new ServerDataBase();
+
+	configFileName = fileName;
 }
 
 /*
@@ -24,12 +25,6 @@ Server::~Server()
     //TODO Auto-generated method stub
 }
 
-
-const char * & Server::get_configFileName() 
-{
-    //TODO Auto-generated method stub
-    return configFileName;
-}
 
 
 bool Server::run() 

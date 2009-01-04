@@ -28,3 +28,15 @@ ServerDataBase::~ServerDataBase()
 {
     //TODO Auto-generated method stub
 }
+
+int ServerDataBase::Close()
+{
+
+	return 0;
+}
+
+int ServerDataBase::Initialize()
+{
+
+	return 0;
+}
