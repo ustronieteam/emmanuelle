@@ -1,4 +1,4 @@
-#include "IRemoteObjects.h"
+#include "Observers/IRemoteObjects.h"
 //Begin section for file IRemoteObjects.cpp
 //TODO: Add definitions that you want preserved
 //End section for file IRemoteObjects.cpp
