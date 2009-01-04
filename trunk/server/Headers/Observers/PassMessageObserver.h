@@ -5,17 +5,23 @@
 //End section for file PassMessageObserver.h
 
 #include "IRemoteObserver.h"
-
+#include "ClientsDataBase.h"
+#include "ClientRecord.h"
+#include "RemoteObserverData.h"
+#include "IServerServer.h" //Zaslepka
+#include <boost/shared_ptr.hpp>
+#include <iostream>
+#include <exception>
+#include <boost/thread.hpp>
+#include <vector>
+//Do utworzenia logow w przypadkyu bledow
+#include <log4cxx/logger.h>
+#include <log4cxx/level.h>
 
 class ClientsDataBase;
 
-//<p>
 //    1)Znajdz klienta docelowego(adresata) - musi byc do nas pod³¹czony (Je¿eli nie to b³¹d.)
-//</p>
-//<p>
 //    2)Przekaz mu wiadomoœæ
-//</p>
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 class PassMessageObserver : IRemoteObserver
 {
 
@@ -26,32 +32,47 @@ class PassMessageObserver : IRemoteObserver
     private:
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        ClientsDataBase * clientsDataBase;
+        boost::shared_ptr<ClientsDataBase> clientsDataBase;
 
 
 
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         PassMessageObserver();
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+		PassMessageObserver(boost::shared_ptr<ClientsDataBase> & cDB);
         PassMessageObserver(PassMessageObserver & arg);
+		PassMessageObserver & operator =(const PassMessageObserver & arg);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        PassMessageObserver & operator =(const PassMessageObserver & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~PassMessageObserver();
 
-        //get clientsDataBase
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline ClientsDataBase * & get_clientsDataBase();
+        boost::shared_ptr<ClientsDataBase> & get_clientsDataBase();
+        void set_clientsDataBase(boost::shared_ptr<ClientsDataBase> & clientsDataBase);
 
-        //set clientsDataBase
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline void set_clientsDataBase(ClientsDataBase * & clientsDataBase);
+		virtual int Refresh(RemoteObserverData observerData);
 
 };  //end class PassMessageObserver
+
+//@author Marian Szczykulski
+//@brief Funktor odpowiedzialny za logike przetwarzania. 
+//@brief Potrzebny do wywo³ania w odzielnym watku
+class PassMessageObserverLogicRunnable
+{
+	private: 
+		boost::shared_ptr<ClientsDataBase> clientsDataBase;
+		RemoteObserverData observerData;
+		log4cxx::LoggerPtr logger;//(Logger::getLogger("PassMessageObserverLogicRunnable"));
+	public:
+		PassMessageObserverLogicRunnable(boost::shared_ptr<ClientsDataBase> & cDB, const RemoteObserverData & oD)
+		{
+			clientsDataBase = cDB;
+			observerData = oD;
+			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("PassMessageObserverLogicRunnable"));
+			logger->setLevel(log4cxx::Level::getAll());
+		}
+		int operator()();
+
+
+};
+
 
 #endif

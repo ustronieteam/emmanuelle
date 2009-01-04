@@ -3,8 +3,21 @@
 //Begin section for file RemoteClientDisconnectedObserver.h
 //TODO: Add definitions that you want preserved
 //End section for file RemoteClientDisconnectedObserver.h
-
 #include "IRemoteObserver.h"
+#include "ServerDataBase.h"
+#include "ServerRecord.h"
+#include "ClientsDataBase.h"
+#include "ClientRecord.h"
+#include "RemoteObserverData.h"
+#include "IServerServer.h" //Zaslepka
+#include <boost/shared_ptr.hpp>
+#include <iostream>
+#include <exception>
+#include <boost/thread.hpp>
+#include <vector>
+//Do utworzenia logow w przypadkyu bledow
+#include <log4cxx/logger.h>
+#include <log4cxx/level.h>
 
 
 class ClientsDataBase;
@@ -27,43 +40,54 @@ class RemoteClientDisconnectedObserver : IRemoteObserver
     private:
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        ClientsDataBase * clientsDataBase;
+        boost::shared_ptr<ClientsDataBase> clientsDataBase;
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        ServerDataBase * serverDataBase;
+        boost::shared_ptr<ServerDataBase> serverDataBase;
 
 
 
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         RemoteClientDisconnectedObserver();
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+		RemoteClientDisconnectedObserver(boost::shared_ptr<ServerDataBase> & servDB, boost::shared_ptr<ClientsDataBase> & clientsDB);
         RemoteClientDisconnectedObserver(RemoteClientDisconnectedObserver & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         RemoteClientDisconnectedObserver & operator =(const RemoteClientDisconnectedObserver & arg);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~RemoteClientDisconnectedObserver();
 
-        //get clientsDataBase
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline ClientsDataBase * & get_clientsDataBase();
+        boost::shared_ptr<ClientsDataBase> & get_clientsDataBase();
+        void set_clientsDataBase(boost::shared_ptr<ClientsDataBase> & clientsDataBase);
 
-        //set clientsDataBase
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline void set_clientsDataBase(ClientsDataBase * & clientsDataBase);
+        boost::shared_ptr<ServerDataBase> & get_serverDataBase();
+        void set_serverDataBase(boost::shared_ptr<ServerDataBase> & serverDataBase);
 
-        //get serverDataBase
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline ServerDataBase * & get_serverDataBase();
-
-        //set serverDataBase
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline void set_serverDataBase(ServerDataBase * & serverDataBase);
+		virtual int Refresh(RemoteObserverData observerData);
 
 };  //end class RemoteClientDisconnectedObserver
+
+//@author Marian Szczykulski
+//@brief Funktor odpowiedzialny za logike przetwarzania. 
+//@brief Potrzebny do wywo³ania w odzielnym watku
+class RemoteClientDisconnectedObserverLogicRunnable
+{
+	private: 
+		boost::shared_ptr<ServerDataBase> serverDataBase;
+		boost::shared_ptr<ClientsDataBase> clientsDataBase;
+		RemoteObserverData observerData;
+		log4cxx::LoggerPtr logger;//(Logger::getLogger("RemoteClientDisconnectedObserverLogicRunnable"));
+	public:
+		RemoteClientDisconnectedObserverLogicRunnable(boost::shared_ptr<ServerDataBase> & sDB,boost::shared_ptr<ClientsDataBase> & cDB, const RemoteObserverData & oD)
+		{
+			serverDataBase = sDB;
+			clientsDataBase = cDB;
+			observerData = oD;
+			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("RemoteClientDisconnectedObserverLogicRunnable"));
+			logger->setLevel(log4cxx::Level::getAll());
+		}
+		int operator()();
+
+
+};
 
 #endif
