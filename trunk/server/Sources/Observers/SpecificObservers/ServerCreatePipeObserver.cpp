@@ -7,13 +7,12 @@
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 ServerCreatePipeObserver::ServerCreatePipeObserver() 
 {
-    //TODO Auto-generated method stub
+	this->clientsDataBase = boost::shared_ptr<ClientsDataBase>();
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 ServerCreatePipeObserver::ServerCreatePipeObserver(ServerCreatePipeObserver & arg) 
 {
-    //TODO Auto-generated method stub
     this->clientsDataBase = arg.clientsDataBase;
 }
 
@@ -25,7 +24,6 @@ ServerCreatePipeObserver & ServerCreatePipeObserver::operator =(const ServerCrea
     {
         this->clientsDataBase = arg.clientsDataBase;
     }
-
 	return *this;
 }
 
@@ -36,14 +34,68 @@ ServerCreatePipeObserver::~ServerCreatePipeObserver()
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-ClientsDataBase * & ServerCreatePipeObserver::get_clientsDataBase() 
+boost::shared_ptr<ClientsDataBase> & ServerCreatePipeObserver::get_clientsDataBase() 
 {
     //TODO Auto-generated method stub
     return clientsDataBase;
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-void ServerCreatePipeObserver::set_clientsDataBase(ClientsDataBase * & clientsDataBase) 
+void ServerCreatePipeObserver::set_clientsDataBase(boost::shared_ptr<ClientsDataBase> & clientsDataBase) 
 {
-    //TODO Auto-generated method stub
+	this->clientsDataBase = clientsDataBase;
+}
+//@author Marian Szczykulski
+//@date 02-01-2009
+//@note Obserwator zlecenie od innego servera do utworzenia pipe na jakims kliencie(ktory jest do nas podlaczony)
+//@brief Glowna funkcja obserwatora, odpowiedzialna za logike przetwarzania.
+//@param[in] Dane obserwatora potrzebne do podejmowania decyzji podczas przetwarzania
+//@return ??
+int ServerCreatePipeObserver::Refresh(RemoteObserverData observerData)
+{
+	//Utworz logike watku
+	ServerCreatePipeObserverLogicRunnable threadLogic(clientsDataBase, observerData);
+	//Utworz i uruchom watki
+	boost::thread threadServCreatePipe(threadLogic);
+	return 0;
+}
+//@author Marian Szczykulski
+//@date 02-01-2009
+//@note Logika watku
+//@brief Zawiera logike przetwarzania ktora moze byc uruchomiona w odzielnym watku
+int ServerCreatePipeObserverLogicRunnable::operator()()
+{
+	LOG4CXX_INFO(logger, "Przetwarzanie logiki ServerCreatePipeObserverLogicRunnable");
+
+	//    1)Klientowi który ma tworzyæ pipe przeka¿ odpowiedni¹ wiadomoœæ.
+	//Klient ten musi byæ z nami pod³¹czony, je¿eli nie to b³ad integralnoœci danych w bazie.
+	int clientId = clientsDataBase->Find(/*Dane z observerData*/);
+	if(clientId<=0)
+	{
+		LOG4CXX_ERROR(logger, "Blad podczas odnaidywania id klienta w bazie");
+		return -1;
+	}
+	Record clientRec;
+	try
+	{
+		clientRec = clientsDataBase->GetRecord(clientId);
+	}
+	catch(std::exception &exc)
+	{
+		LOG4CXX_ERROR(logger, "Blad podczas pobierania rekordu z bazy. Klient Id: "<<clientId);
+		return -2;
+	}
+	ClientRecord clientSpecRec = *(dynamic_cast<ClientRecord *> (&clientRec));
+	try
+	{
+		IClientServer remoteInstance = clientSpecRec.getRemoteInstance();
+		remoteInstance.CreatePipeRequest();
+	}
+	catch(std::exception &exc)
+	{
+		LOG4CXX_ERROR(logger, "Nie udalo sie wyslac zadania o utworzenie pipe-u do klienta");
+		return -3;
+	}
+	LOG4CXX_INFO(logger, "Koniec przetwarzania logiki ServerCreatePipeObserverLogicRunnable");
+	return 1;
 }
