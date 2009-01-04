@@ -7,13 +7,15 @@
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 PassMessageObserver::PassMessageObserver() 
 {
-    //TODO Auto-generated method stub
+	this->clientsDataBase = boost::shared_ptr<ClientsDataBase>();
 }
-
+PassMessageObserver::PassMessageObserver(boost::shared_ptr<ClientsDataBase> & clientsDB)
+{
+	this->clientsDataBase = clientsDataBase;
+}
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 PassMessageObserver::PassMessageObserver(PassMessageObserver & arg) 
 {
-    //TODO Auto-generated method stub
     this->clientsDataBase = arg.clientsDataBase;
 }
 
@@ -25,8 +27,7 @@ PassMessageObserver & PassMessageObserver::operator =(const PassMessageObserver 
     {
         this->clientsDataBase = arg.clientsDataBase;
     }
-
-	return const_cast<PassMessageObserver &>(arg);
+	return *this;
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
@@ -36,14 +37,69 @@ PassMessageObserver::~PassMessageObserver()
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-ClientsDataBase * & PassMessageObserver::get_clientsDataBase() 
+boost::shared_ptr<ClientsDataBase> & PassMessageObserver::get_clientsDataBase() 
 {
     //TODO Auto-generated method stub
     return clientsDataBase;
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-void PassMessageObserver::set_clientsDataBase(ClientsDataBase * & clientsDataBase) 
+void PassMessageObserver::set_clientsDataBase(boost::shared_ptr<ClientsDataBase> & clientsDataBase) 
 {
-    //TODO Auto-generated method stub
+	this->clientsDataBase = clientsDataBase;
+}
+//@author Marian Szczykulski
+//@date 30-12-2008
+//@note Obserwator rzadania utworzenia pipe-u od klienta
+//@brief Glowna funkcja obserwatora, odpowiedzialna za logike przetwarzania.
+//@param[in] Dane obserwatora potrzebne do podejmowania decyzji podczas przetwarzania
+//@return ??
+int PassMessageObserver::Refresh(RemoteObserverData observerData)
+{
+	//Utworz logike watku
+	PassMessageObserverLogicRunnable threadLogic(clientsDataBase, observerData);
+	//Utworz i uruchom watki
+	boost::thread threadPassMessage(threadLogic);
+	return 0;
+}
+//@author Marian Szczykulski
+//@date 30-12-2008
+//@note Logika watku
+//@brief Zawiera logike przetwarzania ktora moze byc uruchomiona w odzielnym watku
+int PassMessageObserverLogicRunnable::operator()()
+{
+	LOG4CXX_INFO(logger, "Przetwarzanie logiki PassMessageObserver");
+
+	//    1)Znajdz klienta docelowego(adresata) - musi byc do nas pod³¹czony (Je¿eli nie to b³¹d.)
+	int clientId = clientsDataBase->Find(/*Dane z observerData*/);
+	if(clientId <=0)
+	{
+		LOG4CXX_ERROR(logger, "Nie znaleziono klienta w bazie!!!");
+		return -1;
+	}
+	Record clientRec;
+	try
+	{
+		clientRec = clientsDataBase->GetRecord(clientId);
+	}
+	catch(std::exception &exc)
+	{
+		LOG4CXX_ERROR(logger, "Nie mozna pobrac rekordu z bazy danych klientow. Client ID: " << clientId);
+		return -2;
+	}
+	ClientRecord clientSpecRec = *(dynamic_cast<ClientRecord*>(&clientRec));
+	IClientServer remoteInstance = clientSpecRec.getRemoteInstance();
+	try	//    2)Przekaz mu wiadomoœæ
+	{
+		remoteInstance.ReceiveMessage(/*tresc wiadomosci z observerData*/);
+	}
+	catch(std::exception &exc)
+	{
+		LOG4CXX_ERROR(logger, "Blad podczas przekazywania wiadomosci do klienta");
+		return -3;
+	}
+	
+
+	LOG4CXX_INFO(logger, "Koniec przetwarzania logiki PassMessageObserver");
+	return 1;
 }
