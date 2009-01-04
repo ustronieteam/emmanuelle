@@ -5,7 +5,8 @@
 //End section for file Server.h
 
 #include "DataBase.h"
-
+#include "DataBase/ClientsDataBase.h"
+#include "DataBase/ServerDataBase.h"
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 class Server
@@ -19,11 +20,11 @@ class Server
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         //DataBase dataBase[2]; //Jedna typu klient jedna typu server
-		DataBase * clientDataBaseObj;
-		DataBase * serverDataBaseObj;
+		ClientsDataBase * clientDataBaseObj;
+		ServerDataBase * serverDataBaseObj;
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        static const char * configFileName;
+        const char * configFileName;
 
 		static Server * instance;
 
@@ -46,26 +47,22 @@ class Server
     public:
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Server();
+        Server(const char * fileName);
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Server(const Server & arg);
+        //Server(const Server & arg);
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~Server();
-
-        //get configFileName
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline static const char * & get_configFileName();
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         bool run();
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        static Server * getInstance()
+        static Server * getInstance(const char * fileName)
 		{
 		    if(!instance)
-				instance = new Server;
+				instance = new Server(fileName);
 
 			return instance;
 		}

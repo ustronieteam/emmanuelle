@@ -31,6 +31,10 @@ class ClientsDataBase : DataBase
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~ClientsDataBase();
 
+		virtual int Close();
+
+		virtual int Initialize();
+
 };  //end class ClientsDataBase
 
 #endif
