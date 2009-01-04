@@ -2,5 +2,7 @@
 
 int main()
 {
+	// to zaczynamy
+
 	return 0;
 }
