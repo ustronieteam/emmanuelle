@@ -15,7 +15,7 @@
 #include <boost/thread.hpp>
 #include "ServerRecord.h"
 #include "ServerDataBase.h"
-#include "IServerInterfaces.h"
+#include "ServerInterfaces.h"
 #include <iostream>
 //Do utworzenia logow w przypadkyu bledow
 #include <log4cxx/logger.h>

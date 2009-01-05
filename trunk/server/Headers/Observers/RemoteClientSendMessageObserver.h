@@ -10,7 +10,7 @@
 #include "ClientsDataBase.h"
 #include "ClientRecord.h"
 #include "RemoteObserverData.h"
-#include "IServerInterfaces.h"
+#include "ServerInterfaces.h"
 #include <boost/shared_ptr.hpp>
 #include <iostream>
 #include <exception>
@@ -57,7 +57,7 @@ class RemoteClientSendMessageObserver : IRemoteObserver
         void set_clientsDataBase( boost::shared_ptr<ClientsDataBase>& clientsDataBase);
 
         boost::shared_ptr<ServerDataBase> & get_serverDataBase();
-        void set_serverDataBase(boost::shared_ptr<ServerDataBase> & serverDataBase);
+        vod set_serverDataBase(boost::shared_ptr<ServerDataBase> & serverDataBase);
 		virtual int Refresh(RemoteObserverData observerData);
 
 };  //end class RemoteClientSendMessageObserver
