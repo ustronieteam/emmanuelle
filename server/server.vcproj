@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;C:\Program Files\boost\boost_1_36_0&quot;;&quot;$(SolutionDir)\server\Headers&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses&quot;;&quot;$(SolutionDir)\server\Headers\DataBase&quot;;&quot;$(SolutionDir)\server\HeadersObservers&quot;;&quot;$(SolutionDir)\CORBA\include&quot;"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\log4cxx\include&quot;;&quot;C:\Program Files\boost\boost_1_36_0&quot;;&quot;$(SolutionDir)\server\Headers&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses&quot;;&quot;$(SolutionDir)\server\Headers\DataBase&quot;;&quot;$(SolutionDir)\server\HeadersObservers&quot;;&quot;$(SolutionDir)\CORBA\include&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -61,9 +61,9 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ob.lib jtc.lib advapi32.lib wsock32.lib"
+				AdditionalDependencies="ob.lib jtc.lib advapi32.lib wsock32.lib log4cxx.lib"
 				LinkIncremental="2"
-				AdditionalLibraryDirectories="$(SolutionDir)\CORBA\lib"
+				AdditionalLibraryDirectories="&quot;$(SolutionDir)\log4cxx&quot;;&quot;$(SolutionDir)\CORBA\lib&quot;"
 				GenerateDebugInformation="true"
 				SubSystem="1"
 				TargetMachine="1"
