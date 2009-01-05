@@ -14,7 +14,7 @@
 #include "ClientsDataBase.h"
 #include "ClientRecord.h"
 #include "RemoteObserverData.h"
-#include "IServerServer.h" //Zaslepka
+#include "IServerInterfaces.h"
 #include <boost/shared_ptr.hpp>
 #include <iostream>
 #include <exception>
