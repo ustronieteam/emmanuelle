@@ -7,6 +7,20 @@
 #include "DataBase.h"
 #include "DataBase/ClientsDataBase.h"
 #include "DataBase/ServerDataBase.h"
+#include "CorbaClasses/ServerInterfaces.h"
+#include "CorbaClasses/ServerInterfaces_impl.h"
+
+#include <OB/CORBA.h>
+#include <OB/BootManager.h>
+
+#include <iostream>
+#include <fstream>
+#include <string>
+
+const std::string VADDRESS = "localhost";
+const std::string VPORT = "6666";
+const std::string NADDRESS = "address";
+const std::string NPORT = "port";
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 class Server
@@ -26,7 +40,7 @@ class Server
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         const char * configFileName;
 
-		static Server * instance;
+		//static Server * instance;
 
         //<p>
         //    Inicjalizacja servera.
@@ -41,7 +55,9 @@ class Server
         //    Tworzac obserwatorów nale¿y im dostarczyæ odpowiedniegi obiektu&nbsp;bazy danych
         //</p><br />
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        bool init();
+		bool init(std::string address, std::string port);
+
+		bool openConfFile(std::string & address, std::string & port);
 
 
     public:
@@ -56,13 +72,13 @@ class Server
         virtual ~Server();
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        bool run();
+        bool Run();
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         static Server * getInstance(const char * fileName)
 		{
-		    if(!instance)
-				instance = new Server(fileName);
+		    //if(!instance)
+			static Server * instance = new Server(fileName);
 
 			return instance;
 		}
