@@ -5,7 +5,7 @@
 #include <boost/thread.hpp>
 #include "ServerRecord.h"
 #include "ServerDataBase.h"
-#include "IServerServer.h"
+#include "IServerInterfaces.h"
 #include <iostream>
 
 //Begin section for file RemoteServerConnectedObserver.cpp
