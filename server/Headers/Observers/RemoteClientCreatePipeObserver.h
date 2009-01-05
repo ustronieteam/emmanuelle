@@ -10,7 +10,7 @@
 #include "ClientsDataBase.h"
 #include "ClientRecord.h"
 #include "RemoteObserverData.h"
-#include "IServerInterfaces.h"
+#include "ServerInterfaces.h"
 #include <boost/shared_ptr.hpp>
 #include <iostream>
 #include <exception>
