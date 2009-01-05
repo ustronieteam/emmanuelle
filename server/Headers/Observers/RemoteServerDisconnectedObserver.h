@@ -8,7 +8,7 @@
 #include "ServerDataBase.h"
 #include "ServerRecord.h"
 #include "RemoteObserverData.h"
-#include "IServerServer.h"
+#include "IServerInterfaces.h"
 #include <boost/shared_ptr.hpp>
 #include <iostream>
 #include <exception>
