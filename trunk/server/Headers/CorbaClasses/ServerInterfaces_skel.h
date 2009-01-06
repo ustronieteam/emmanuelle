@@ -9,8 +9,14 @@
 // All Rights Reserved
 //
 // **********************************************************************
-
 // Version: 4.3.3
+
+///
+/// @author	Mateusz Ko³odziejczyk
+/// @date	06.01.2009
+///
+/// @brief	Wygenerowany na podstawie pliku IDLa
+///
 
 #ifndef ___ServerInterfaces_skel_h__
 #define ___ServerInterfaces_skel_h__

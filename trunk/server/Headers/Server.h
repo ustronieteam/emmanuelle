@@ -1,8 +1,5 @@
 #ifndef SERVER_H
 #define SERVER_H
-//Begin section for file Server.h
-//TODO: Add definitions that you want preserved
-//End section for file Server.h
 
 #include "DataBase.h"
 #include "DataBase/ClientsDataBase.h"
@@ -17,72 +14,117 @@
 #include <fstream>
 #include <string>
 
+#include <log4cxx/logger.h>
+#include <log4cxx/level.h>
+
+
 const std::string VADDRESS = "localhost";
 const std::string VPORT = "6666";
 const std::string NADDRESS = "address";
 const std::string NPORT = "port";
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// @author	Mateusz Ko³odziejczyk
+/// @date	06.01.2009
+///
+/// @brief	Reprezentacja obiektu serwera - lacznie z innymi serwerami i wlaczenie nasluchiwania
+///
+/// Klasa reprezentuj¹ca Serwer - przechowuje obiekty bazy danych serwow aktywnych i aktywnych
+/// klientow, wczytuje dane z pliku konfiguracyjnego i na jego podstawie tworzy: serwer macierzysty
+/// albo nowy serwer i podlacza sie do ktoregos juz pierwotnie utworzonego; wlacza nasluchiwanie na 
+/// nowe serwery i klientow
+///
 class Server
 {
-
-    //Begin section for Server
-    //TODO: Add attributes that you want preserved
-    //End section for Server
-
     private:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        //DataBase dataBase[2]; //Jedna typu klient jedna typu server
+		///
+		/// wskaznik do bazy danych aktywnych klientow
+		///
 		ClientsDataBase * clientDataBaseObj;
+
+		///
+		/// wskaznik do bazy danych aktywnych serwerow
+		///
 		ServerDataBase * serverDataBaseObj;
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+		///
+		/// nazwa pliku konfiguracyjnego
+		///
         const char * configFileName;
 
-		//static Server * instance;
+		// logger
+		log4cxx::LoggerPtr logger;
 
-        //<p>
-        //    Inicjalizacja servera.
-        //</p>
-        //<p>
-        //    Utworzenie objektów zdalnych i wrzucenie go na broker(udostêpnienie)
-        //</p>
-        //<p>
-        //    Ponad to nale¿y zainstalowaæ ka¿demu obiektowi zdalnemu po jednym obserwatorze
-        //</p>
-        //<p>
-        //    Tworzac obserwatorów nale¿y im dostarczyæ odpowiedniegi obiektu&nbsp;bazy danych
-        //</p><br />
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+		///
+		/// @param [address]	adres serwera macierzystego
+		/// @param [port]		port na ktorym masluchuje serwer macierzysty
+		/// @return				0 - powodzneie, 1 - niepowodzenie
+		///
+        /// Inicjalizacja servera.
+        ///    Utworzenie objektów zdalnych i wrzucenie go na broker(udostêpnienie)
+        ///    Ponad to nale¿y zainstalowaæ ka¿demu obiektowi zdalnemu po jednym obserwatorze
+        ///    Tworzac obserwatorów nale¿y im dostarczyæ odpowiedniegi obiektu&nbsp;bazy danych
+		///
 		bool init(std::string address, std::string port);
 
+		///
+		///	@param [address]	miejsce gdzie ma byc zapisany adress serwera mecierzystego odczytany z pliku
+		/// @param [port]		miejsce gdzie ma byc zapisany port serwera macierzystego odczytany z pliku
+		/// @return				0 - powodzenie, 1 - niepowodzenie
+		///
+		/// Otwarcie pliku konfiguracyjnego o nawie 'configFileName' i odczytanie 
+		/// numerow: portu i addresu serwera i przekazanie ich do 'address' i 'port'
+		///
 		bool openConfFile(std::string & address, std::string & port);
 
 
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Server(const char * fileName);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        //Server(const Server & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual ~Server();
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        bool Run();
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        static Server * getInstance(const char * fileName)
+		///
+		/// @param [fileName]	nazwa pliku konfiguracyjnego
+		///
+		/// konstruktor
+		///
+        Server(const char * fileName)
 		{
-		    //if(!instance)
+			// stworzenie obiektow baz danych: klienta i serwera
+			this->clientDataBaseObj = new ClientsDataBase();
+			this->serverDataBaseObj = new ServerDataBase();
+
+			// nazwa pliku konfiguracyjnego
+			configFileName = fileName;
+
+			//logger
+			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("ServerLogicRunnable"));
+			logger->setLevel(log4cxx::Level::getAll());
+		}
+
+		///
+		/// destruktor
+		///
+        virtual ~Server()
+		{
+		}
+
+		///
+		/// @param [fileName]	nazwa pliku konfiguracyjnego
+		/// @return				wskaznik do instancji obiektu serwera
+		///
+		/// statyczna metoda zwracajaca wskaznik do obiektu klasy Server jesli
+		/// istnieje badz tworzaca go jesli nie istnieje
+		///
+        static Server * GetInstance(const char * fileName)
+		{
 			static Server * instance = new Server(fileName);
 
 			return instance;
 		}
 
-};  //end class Server
+		///
+		/// @return		 1 - niepowodznie, 0 - zakonczono bez niepowodzen
+		///
+		bool Run();
+}; 
 
 #endif

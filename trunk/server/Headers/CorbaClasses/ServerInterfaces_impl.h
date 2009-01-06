@@ -1,3 +1,11 @@
+///
+/// @author	Mateusz Ko³odziejczyk
+/// @date	06.01.2009
+///
+/// @brief	Wygenerowany na podstawie pliku IDLa - plik z implementacja
+///			metod zdefiniowanych w ServerInterfaces.h
+///
+
 #ifndef ___ServerInterfaces_impl_h__
 #define ___ServerInterfaces_impl_h__
 

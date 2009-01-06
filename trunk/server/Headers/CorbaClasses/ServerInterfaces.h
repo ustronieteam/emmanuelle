@@ -9,8 +9,18 @@
 // All Rights Reserved
 //
 // **********************************************************************
-
 // Version: 4.3.3
+
+
+///
+/// @author	Mateusz Ko³odziejczyk
+/// @date	06.01.2009
+///
+/// @brief	Wygenerowany na podstawie pliku IDLa
+///
+/// Znajduja sie tutaj klasy: IServerServer, IServerClient a takze definicje struktur:
+/// Message, Address, File, Enability, User i enum: Active
+///
 
 #ifndef ___ServerInterfaces_h__
 #define ___ServerInterfaces_h__
