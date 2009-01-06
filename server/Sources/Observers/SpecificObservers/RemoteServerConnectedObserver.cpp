@@ -5,7 +5,7 @@
 #include <boost/thread.hpp>
 #include "ServerRecord.h"
 #include "ServerDataBase.h"
-#include "ServerInterfaces.h"
+#include "IServerServer.h"
 #include <iostream>
 
 //Begin section for file RemoteServerConnectedObserver.cpp
@@ -79,13 +79,17 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 	//Lub odpowiedz na AddServer -> wtedy nie rozsylamy info do innych serverow
 
 	//	1) Dodaj nowy serwer do bazy(lub zmodyfikuj istniejacy rekord)
-	int serverId = serverDataBase->Find(/*dane z observerdata*/);
+	struct DomainData::Address servAddr = observerData.getServerAddress();
+	int serverId = serverDataBase->Find(servAddr);
 	if(serverId >0)
 	{//Rekord jest w bazie z jakis powodow, trzeba wiec go zmodyfikowac
 		try
 		{
 			Record servRec = serverDataBase->GetRecord(serverId);
 			//Modyfikuj rekord zgodnie z observerData
+			//ServerRecord servRec_spec = *(dynamic_cast<ServerRecord *>(&servRec));
+			//servRec_spec.
+			//servRec.
 			int status = serverDataBase->ModifyRecord(servRec);
 			if(status<0)
 			{
@@ -103,8 +107,8 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 	}
 	else
 	{//Rekordu nie ma w bazie trzeba dodac nowy
-		ServerRecord newRecord = ServerRecord(); //do dokonczenia (wype³niæ pola z observerData) !!!
-		int status = serverDataBase->InsertRecord(newRecord);
+		//ServerRecord newRecord; //do dokonczenia (wype³niæ pola z observerData) !!!
+		int status;// = serverDataBase->InsertRecord(newRecord);
 		if(status < 0)
 		{
 			LOG4CXX_ERROR(logger, "Blad podczas wstawiania nowego rekordu servera");
@@ -119,7 +123,7 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 
 	
 		//	2) Pobierz liste wszystkich serwerów
-		std::vector<Record> allRecords = serverDataBase->get_record();
+		std::vector<Record> allRecords = serverDataBase->GetAllRecords();
 
 		
 		//	3) Do ka¿dego serwera z listy dodaj nowy serwer (AddServer)
@@ -130,10 +134,11 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 		{
 			Record rec = (*it);
 			ServerRecord servRec = *(dynamic_cast<ServerRecord *>(&rec));
-			IServerServer remoteServer = servRec.getRemoteInstance();
+			IServerServer_var remoteServer = servRec.GetServerRemoteInstance();
 			try
 			{
-				remoteServer.AddServer();//Dodac dane z observer Data
+				struct DomainData::Address ownAddr;
+				remoteServer->AddServer(ownAddr);//Dodac dane z observer Data
 				LOG4CXX_INFO(logger, "Wiadomosc wyslana do serwera nr"<<serverCounter);
 			}
 			catch(std::exception & exc) //chyba rzuca jakis wyjatek??

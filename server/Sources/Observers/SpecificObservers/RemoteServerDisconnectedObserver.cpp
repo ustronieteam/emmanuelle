@@ -63,7 +63,8 @@ int RemoteServerDisconnectedObserverLogicRunnable::operator()()
 	LOG4CXX_INFO(logger, "Przetwarzanie logiki");
 	
 	//    1) ZnajdŸ odpowiedni serwer(ten który siê roz³¹cza)
-	int recordId = serverDataBase->Find(/*dane z observerData*/);
+	struct DomainData::Address servAddr = observerData.getServerAddress();
+	int recordId = serverDataBase->Find(servAddr/*dane z observerData*/);
 	if(recordId <=0)//Poniewaz bedzie to wykonane w odzielnynm watku nie ma gdzie zlapac tego wyjatku
 	{				//Dlatego stodujemy tylko logowanie bledu i zakonczenie funkcji
 		LOG4CXX_ERROR(logger, "Nie usunieto nic - Zle dane w observerData(objektu nie znaleziono)");
@@ -76,7 +77,7 @@ int RemoteServerDisconnectedObserverLogicRunnable::operator()()
 		LOG4CXX_WARN(logger, "Blad Funkcji DeleteRecord dla bazy na bierzacym serwerze");
 	}
 	//Pobierz wszystkie rekordy
-	std::vector<Record> allRecords = serverDataBase->get_record();
+	std::vector<Record> allRecords = serverDataBase->GetAllRecords();
 
 	//Utworz licznik serwerow z listy
 	int serverCounter =0;
@@ -89,10 +90,10 @@ int RemoteServerDisconnectedObserverLogicRunnable::operator()()
 	{
 		Record rec = (*it);
 		ServerRecord servRec = *(dynamic_cast<ServerRecord *>(&rec));
-		IServerServer remoteServer = servRec.getRemoteInstance();
+		IServerServer_var remoteServer = servRec.GetServerRemoteInstance();
 		try
 		{
-			remoteServer.RemoveServer(/*Dane z observerData*/);//Dodac dane z observer Data
+			remoteServer->RemoveServer(servAddr/*Dane z observerData*/);//Dodac dane z observer Data
 			LOG4CXX_INFO(logger, "Wiadomosc wyslana do serwera nr"<<serverCounter);
 		}
 		catch(std::exception & exc) //chyba rzuca jakis wyjatek??
