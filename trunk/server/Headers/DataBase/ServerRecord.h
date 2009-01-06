@@ -3,9 +3,6 @@
 
 #include "Record.h"
 
-// Aby moc urzywac klasy IServerServer.
-//using namespace ServerInterfaces;
-
 ///
 /// Server Rekord
 /// @brief Podstawowa jednosta informacji w bazie danych o serwerach.
@@ -18,7 +15,7 @@ class ServerRecord : Record
 
 		///
 		/// Namiastka serwera.
-		IServerServer * _serverRemoteInstance;
+		IServerServer_var _serverRemoteInstance;
 
     public:
 
@@ -43,12 +40,12 @@ class ServerRecord : Record
 		///
 		/// Pobiera namiastke serwera.
 		/// @return Namiastka servera.
-		IServerServer * GetServerRemoteInstance() const;
+		IServerServer_var GetServerRemoteInstance() const;
 
 		///
 		/// Ustawia namiastke servera.
 		/// @param[in] serverRemoteInstance Namiastka servera.
-		void SetServerRemoteInstance(IServerServer * serverRemoteInstance);
+		void SetServerRemoteInstance(IServerServer_var serverRemoteInstance);
 };
 
 #endif
