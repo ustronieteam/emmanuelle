@@ -3,6 +3,7 @@
 
 #include "Record.h"
 #include <vector>
+#include <map>
 
 using namespace std;
 
@@ -14,9 +15,9 @@ using namespace std;
 ///
 class DataBase
 {
-    private:
+    protected:
 
-        vector<Record> _records;
+        map<int, Record> _records;
 
     public:
 

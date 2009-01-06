@@ -2,6 +2,7 @@
 #define CLIENTSDATABASE_H
 
 #include "DataBase.h"
+#include "ClientRecord.h"
 
 ///
 /// ClientDataBase
@@ -47,7 +48,7 @@ class ClientsDataBase : public DataBase
 		/// Znajdz rekord klienta.
 		/// @param[in] address Adres do wyszukania rekordu.
 		/// @return ID wyszukanego rekordu.
-		int Find(DomainData::Address & address);
+		int Find(struct DomainData::Address & address);
 };
 
 #endif
