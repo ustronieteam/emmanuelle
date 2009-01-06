@@ -4,8 +4,8 @@
 #include "DataBase.h"
 #include "DataBase/ClientsDataBase.h"
 #include "DataBase/ServerDataBase.h"
-#include "CorbaClasses/ServerInterfaces.h"
-#include "CorbaClasses/ServerInterfaces_impl.h"
+#include "IServerServer.h"
+#include "IServerServer_impl.h"
 
 #include <OB/CORBA.h>
 #include <OB/BootManager.h>

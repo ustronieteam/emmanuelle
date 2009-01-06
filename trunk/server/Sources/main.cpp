@@ -23,7 +23,7 @@ int main(int argc, char * argv[])
 	log4cxx::LoggerPtr logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("MAIN"));
 	logger->setLevel(log4cxx::Level::getAll());
 
-	Server * serv = Server::GSetInstance(argv[1]);
+	Server * serv = Server::GetInstance(argv[1]);
 	if(serv->Run())
 	{
 		LOG4CXX_ERROR(logger, "Serwer zosta³ nieprawidlowo zamkniety z powodyu b³êdu");

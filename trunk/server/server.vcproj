@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)\log4cxx\include&quot;;&quot;C:\Program Files\boost\boost_1_36_0&quot;;&quot;$(SolutionDir)\server\Headers&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses&quot;;&quot;$(SolutionDir)\server\Headers\DataBase&quot;;&quot;$(SolutionDir)\server\HeadersObservers&quot;;&quot;$(SolutionDir)\CORBA\include&quot;"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\log4cxx\include&quot;;&quot;C:\Program Files\boost\boost_1_36_0&quot;;&quot;$(SolutionDir)\server\Headers&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses\DomainData&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses\IServerServer&quot;;&quot;$(SolutionDir)\server\Headers\DataBase&quot;;&quot;$(SolutionDir)\server\HeadersObservers&quot;;&quot;$(SolutionDir)\CORBA\include&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses\IClientServer&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses\IServerClient&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -271,26 +271,58 @@
 			<Filter
 				Name="CorbaClasses"
 				>
-				<File
-					RelativePath=".\Sources\CorbaClasses\ClientInterfaces.cpp"
+				<Filter
+					Name="DomainData"
 					>
-				</File>
-				<File
-					RelativePath=".\Sources\CorbaClasses\ClientInterfaces_skel.cpp"
+					<File
+						RelativePath=".\Sources\CorbaClasses\DomainData\DomainData.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="IServerServer"
 					>
-				</File>
-				<File
-					RelativePath=".\Sources\CorbaClasses\ServerInterfaces.cpp"
+					<File
+						RelativePath=".\Sources\CorbaClasses\IServerServer\IServerServer.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Sources\CorbaClasses\IServerServer\IServerServer_impl.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Sources\CorbaClasses\IServerServer\IServerServer_skel.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="IServerClient"
 					>
-				</File>
-				<File
-					RelativePath=".\Sources\CorbaClasses\ServerInterfaces_impl.cpp"
+					<File
+						RelativePath=".\Sources\CorbaClasses\IServerClient\IServerClient.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Sources\CorbaClasses\IServerClient\IServerClient_impl.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Sources\CorbaClasses\IServerClient\IServerClient_skel.cpp"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="IClientServer"
 					>
-				</File>
-				<File
-					RelativePath=".\Sources\CorbaClasses\ServerInterfaces_skel.cpp"
-					>
-				</File>
+					<File
+						RelativePath=".\Sources\CorbaClasses\IClientServer\IClientServer.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\Sources\CorbaClasses\IClientServer\IClientServer_skel.cpp"
+						>
+					</File>
+				</Filter>
 			</Filter>
 		</Filter>
 		<Filter
@@ -305,26 +337,58 @@
 			<Filter
 				Name="CorbaClasses"
 				>
-				<File
-					RelativePath=".\Headers\CorbaClasses\ClientInterfaces.h"
+				<Filter
+					Name="DomainData"
 					>
-				</File>
-				<File
-					RelativePath=".\Headers\CorbaClasses\ClientInterfaces_skel.h"
+					<File
+						RelativePath=".\Headers\CorbaClasses\DomainData\DomainData.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="IServerServer"
 					>
-				</File>
-				<File
-					RelativePath=".\Headers\CorbaClasses\ServerInterfaces.h"
+					<File
+						RelativePath=".\Headers\CorbaClasses\IServerServer\IServerServer.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Headers\CorbaClasses\IServerServer\IServerServer_impl.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Headers\CorbaClasses\IServerServer\IServerServer_skel.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="IServerClient"
 					>
-				</File>
-				<File
-					RelativePath=".\Headers\CorbaClasses\ServerInterfaces_impl.h"
+					<File
+						RelativePath=".\Headers\CorbaClasses\IServerClient\IServerClient.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Headers\CorbaClasses\IServerClient\IServerClient_impl.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Headers\CorbaClasses\IServerClient\IServerClient_skel.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="IClientServer"
 					>
-				</File>
-				<File
-					RelativePath=".\Headers\CorbaClasses\ServerInterfaces_skel.h"
-					>
-				</File>
+					<File
+						RelativePath=".\Headers\CorbaClasses\IClientServer\IClientServer.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Headers\CorbaClasses\IClientServer\IClientServer_skel.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="DataBase"

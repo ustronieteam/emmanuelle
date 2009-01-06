@@ -81,7 +81,7 @@ bool Server::Run()
 		}
 		LOG4CXX_DEBUG(logger, "obiekt POA dla 'servPOA' utworzony");
 
-		ServerInterfaces::IServerServer_impl * serverImpl = new ServerInterfaces::IServerServer_impl(poa);
+		IServerServer_impl * serverImpl = new IServerServer_impl(poa);
 		PortableServer::ObjectId_var oid = PortableServer::string_to_ObjectId("serverserver");
 		PortableServer::ServantBase_var servant = serverImpl;
 		poa->activate_object_with_id(oid, servant);
@@ -102,7 +102,7 @@ bool Server::Run()
 		}
 		LOG4CXX_DEBUG(logger, "utworzono boot manager'a");
 		
-		ServerInterfaces::IServerServer_var server = serverImpl->_this();
+		IServerServer_var server = serverImpl->_this();
 		bootManager->add_binding(oid, server);
 
 		manager->activate();
@@ -144,7 +144,7 @@ bool Server::init(string address, string port)
 		strIOR += port.c_str();
 		strIOR += "/serverserver";
 
-		ServerInterfaces::IServerServer_var parentServer;
+		IServerServer_var parentServer;
 
 		CORBA::Object_var oServer = orb->string_to_object(strIOR);
 		if (CORBA::is_nil(oServer))
@@ -153,7 +153,7 @@ bool Server::init(string address, string port)
 			return 1;
 		}
 
-		parentServer = ServerInterfaces::IServerServer::_narrow(oServer);
+		parentServer = IServerServer::_narrow(oServer);
     
 		if (CORBA::is_nil(parentServer))
 		{
