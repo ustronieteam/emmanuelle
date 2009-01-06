@@ -51,7 +51,7 @@ int Record::GetRecordId() const
 ///
 /// Ustawia identyfikator rekordu.
 /// param[in] recordId Identyfikator do ustawienia.
-void Record::SetRecordId(int & recordId) 
+void Record::SetRecordId(int recordId) 
 {
-    this->_recordId = _recordId;
+    this->_recordId = recordId;
 }

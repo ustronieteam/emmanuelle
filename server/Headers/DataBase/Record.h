@@ -50,7 +50,7 @@ class Record
 		///
 		/// Ustawia identyfikator rekordu.
 		/// param[in] recordId Identyfikator do ustawienia.
-        void SetRecordId(int & recordId);
+        void SetRecordId(int recordId);
 };
 
 #endif

@@ -2,6 +2,7 @@
 #define SERVERDATABASE_H
 
 #include "DataBase.h"
+#include "ServerRecord.h"
 
 ///
 /// ClientDataBase
@@ -47,7 +48,7 @@ class ServerDataBase : public DataBase
 		/// Znajdz rekord servera.
 		/// @param[in] address Adres do wyszukania rekordu.
 		/// @return ID wyszukanego rekordu.
-		int Find(DomainData::Address & address);
+		int Find(struct DomainData::Address & address);
 };
 
 #endif

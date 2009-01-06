@@ -1,6 +1,5 @@
 #include "ClientsDataBase.h"
 
-
 ///
 /// Konstruktor bezparametrowy.
 ClientsDataBase::ClientsDataBase() 
@@ -53,7 +52,18 @@ int ClientsDataBase::Initialize()
 /// Znajdz rekord klienta.
 /// @param[in] address Adres do wyszukania rekordu.
 /// @return ID wyszukanego rekordu.
-int ClientsDataBase::Find(DomainData::Address & address)
+int ClientsDataBase::Find(struct DomainData::Address & address)
 {
-	return 0;
+	ClientRecord * r;
+
+	if ( _records.size() != 0 )
+		for(map<int, Record>::iterator i = this->_records.begin(); i != this->_records.end(); i++)
+		{
+			r = static_cast<ClientRecord *>(&(i->second));
+
+			if ( r->GetAddress().name == address.name && r->GetAddress().localization == address.localization )
+				return r->GetRecordId();
+		}
+
+	return -1;
 }

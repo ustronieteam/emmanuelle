@@ -9,7 +9,7 @@
 /// @author Wojciech Grzeskowiak
 /// @date 2009.01.06
 ///
-class ServerRecord : Record
+class ServerRecord : public Record
 {
 	private:
 

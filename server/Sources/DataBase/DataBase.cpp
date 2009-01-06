@@ -12,7 +12,7 @@ DataBase::DataBase()
 /// @param[in] arg Baza danych do skopiowania.
 DataBase::DataBase(DataBase & arg) 
 {
-
+	this->_records = arg._records;
 }
 
 ///
@@ -20,6 +20,11 @@ DataBase::DataBase(DataBase & arg)
 /// param[in] arg Baza danych ktora chcemy przypisac.
 DataBase & DataBase::operator =(const DataBase & arg) 
 {
+	if ( this != &arg )
+	{
+		this->_records = arg._records;
+	}
+
 	return const_cast<DataBase &>(arg);
 }
 
@@ -36,8 +41,15 @@ DataBase::~DataBase()
 /// @return Rekord o podanym idetyfikatorze.
 Record DataBase::GetRecord(int recordId) 
 {
-    Record r;
-    return r;
+	if ( this->_records.count(recordId) != 0 )
+	{
+		return _records[recordId];
+	}
+	else
+	{
+		std::exception ex("Brak rekordu o podanym ID!");
+		throw ex;
+	}
 }
 
 ///
@@ -45,8 +57,13 @@ Record DataBase::GetRecord(int recordId)
 /// @return Wektor ze wszystkimi rekordami.
 std::vector<Record> DataBase::GetAllRecords() 
 {
-    vector<Record> v;
-    return v;
+	vector<Record> v;
+	
+	if ( _records.size() != 0 )
+		for(map<int, Record>::iterator i = this->_records.begin(); i != this->_records.end(); i++)
+			v.push_back((*i).second);
+
+	return v;
 }
 
 ///
@@ -55,7 +72,16 @@ std::vector<Record> DataBase::GetAllRecords()
 /// @return ???
 int DataBase::InsertRecord(Record record) 
 {
-    return 0;
+	if ( this->_records.count(record.GetRecordId()) == 0 )
+	{
+		this->_records[record.GetRecordId()] = record;
+		return 1;
+	}
+	else
+	{
+		std::exception ex("Record o podanym ID jest juz w bazie danych!");
+		throw ex;
+	}
 }
 
 ///
@@ -64,7 +90,16 @@ int DataBase::InsertRecord(Record record)
 /// @return ???
 int DataBase::DeleteRecord(int recordId) 
 {
-    return 0;
+	if ( this->_records.count(recordId) != 0 )
+	{
+		this->_records.erase(recordId);
+		return 1;
+	}
+	else
+	{
+		std::exception ex("Brak rekordu o podanym ID!");
+		throw ex;
+	}
 }
 
 ///
@@ -73,5 +108,14 @@ int DataBase::DeleteRecord(int recordId)
 /// @return ???
 int DataBase::ModifyRecord(Record record) 
 {
-    return 0;
+	if ( this->_records.count(record.GetRecordId()) != 0 )
+	{
+		_records[record.GetRecordId()] = record;
+		return 1;
+	}
+	else
+	{
+		std::exception ex("Brak rekordu o podanym ID!");
+		throw ex;
+	}
 }
