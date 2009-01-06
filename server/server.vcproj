@@ -272,6 +272,14 @@
 				Name="CorbaClasses"
 				>
 				<File
+					RelativePath=".\Sources\CorbaClasses\ClientInterfaces.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Sources\CorbaClasses\ClientInterfaces_skel.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Sources\CorbaClasses\ServerInterfaces.cpp"
 					>
 				</File>
@@ -297,6 +305,14 @@
 			<Filter
 				Name="CorbaClasses"
 				>
+				<File
+					RelativePath=".\Headers\CorbaClasses\ClientInterfaces.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\CorbaClasses\ClientInterfaces_skel.h"
+					>
+				</File>
 				<File
 					RelativePath=".\Headers\CorbaClasses\ServerInterfaces.h"
 					>

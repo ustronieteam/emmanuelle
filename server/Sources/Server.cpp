@@ -1,90 +1,71 @@
 #include "Server.h"
-//Begin section for file Server.cpp
-//TODO: Add definitions that you want preserved
-//End section for file Server.cpp
 
 using namespace std;
-
-Server::Server(const char * fileName) 
-{
-    // stworzenie obiektow baz danych: klienta i serwera
-	this->clientDataBaseObj = new ClientsDataBase();
-	this->serverDataBaseObj = new ServerDataBase();
-
-	configFileName = fileName;
-}
-
-/*
-Server::Server(const Server & arg) 
-{
-    return arg;
-}
-
-*/
-
-Server::~Server() 
-{
-    //TODO Auto-generated method stub
-}
-
-
 
 bool Server::Run() 
 {
 	string address = "";
 	string port = "";
 
+	// wczytanie danych konfiguracyjnych z pliku: port i address
 	if(openConfFile(address,port))
 	{
-		// brak pliku konfiguracyjnego
-		cout << "Brak pliku konfiguracyjnego" << endl;
+		LOG4CXX_ERROR(logger, "Brak pliku konfiguracyjnego");
 		return 1;
 	}
 	else
 	{
-		cout << "Wczytano plik konfiguracyjny " << configFileName << " (" << address << "," << port << ")" <<endl;
+		LOG4CXX_DEBUG(logger, string("Wczytano plik konfiguracyjny ") + configFileName + string(" (") + address + string(",") + port + string(")"));
 	}
 	
+	// jesli uruchomilismy serwer macierzysty to nie podlaczamy sie do zadnego 
 	if(address.compare("null"))
 	{
 		if(!init(address, port))
-			cout << "polaczono z serverem " << address << " nasluchujacym na porcie " << port << endl;	
+		{
+			LOG4CXX_DEBUG(logger, string("polaczono z serverem ") + address + string(" nasluchujacym na porcie ") + port);
+		}
 		else
 		{
-			cout << "Niepoprawna komunikacja z macierzystym serwerem" << endl;
+			LOG4CXX_ERROR(logger,"Niepoprawna komunikacja z macierzystym serwerem");
 			return 1;
 		}
 	}
 	else
 	{
-		cout << "odpalono serwer macierzysty ..." << endl;
+		LOG4CXX_DEBUG(logger, "odpalono serwer macierzysty ...");
 	}
+
+	// uruchomienie brokera, stworzenie obiektow zdalnych, udostepnienie ich i wlaczenie nasluchiwania
+	CORBA::ORB_var orb;
 
 	try
 	{
-cout << "1" << endl;
 		char* orb_options[] = { "-OAport", const_cast<char *>(port.c_str()) };
 		int optc = sizeof(orb_options)/sizeof(char *);
 
-		CORBA::ORB_var orb = CORBA::ORB_init(optc, orb_options);
-cout << "1.5" << endl;
+		orb = CORBA::ORB_init(optc, orb_options);
+
 		PortableServer::POAManager_var manager;
 		PortableServer::POA_var poa;
-cout << "1.75" << endl;
+
 		CORBA::Object_var poaObj = orb->resolve_initial_references("RootPOA");
-cout << "1.8" << endl;
+
 		if (CORBA::is_nil(poaObj))
 		{
-			// blad
+			LOG4CXX_ERROR(logger, "Bl¹d podczas resolve'a RootPOA");
+			return 1;
 		}
-cout << "2" << endl;
+
 		PortableServer::POA_var rootPOA = PortableServer::POA::_narrow(poaObj);
 		if (CORBA::is_nil(rootPOA))
 		{
-			// blad
+			LOG4CXX_ERROR(logger, "rootPOA nie jest referencja POA");
+			return 1;
 		}
     
 		manager = rootPOA->the_POAManager();
+		LOG4CXX_DEBUG(logger, "uzyskano obiekt POA i POAmanager'a");
 
 		CORBA::PolicyList policies;
 		policies.length(2);
@@ -95,41 +76,50 @@ cout << "2" << endl;
 		
 		if (CORBA::is_nil(poa))
 		{
-			// blad
+			LOG4CXX_ERROR(logger, "nie mozna stworzyc obiektu POA dla 'servPOA'");
+			return 1;
 		}
-cout << "3" << endl;
+		LOG4CXX_DEBUG(logger, "obiekt POA dla 'servPOA' utworzony");
 
 		ServerInterfaces::IServerServer_impl * serverImpl = new ServerInterfaces::IServerServer_impl(poa);
 		PortableServer::ObjectId_var oid = PortableServer::string_to_ObjectId("serverserver");
 		PortableServer::ServantBase_var servant = serverImpl;
 		poa->activate_object_with_id(oid, servant);
+		LOG4CXX_DEBUG(logger, "utworzono i zarejestrowano zdalny obiekt serwera");
 
 		CORBA::Object_var bootObj = orb->resolve_initial_references("BootManager");
 		if (CORBA::is_nil(bootObj))
 		{
-			// blad
+			LOG4CXX_ERROR(logger, "Bl¹d podczas resolve'a BootManager'a");
+			return 1;
 		}
-cout << "4" << endl;
 
 		OB::BootManager_var bootManager = OB::BootManager::_narrow(bootObj);
 		if (CORBA::is_nil(bootManager))
 		{
-			// blad
+			LOG4CXX_ERROR(logger, "obietk bootObj nie jest obiektem BootManager");
+			return 1;
 		}
+		LOG4CXX_DEBUG(logger, "utworzono boot manager'a");
 		
 		ServerInterfaces::IServerServer_var server = serverImpl->_this();
 		bootManager->add_binding(oid, server);
 
 		manager->activate();
 		
-		cout << "Wlaczono nasluchiwanie ... " << endl;
+		LOG4CXX_DEBUG(logger, "Wlaczono nasluchiwanie ... ");
 		orb->run();
 	}
 	catch(const CORBA::SystemException& e)
 	{
-		// wyjatek
-		cout << "POLECIAL WYJATEK: " << endl;
-		cout << e._name() << endl;
+		LOG4CXX_ERROR(logger, string("WYJ¥TEK") + e._name());
+
+		if (!CORBA::is_nil(orb))
+		{
+			orb->destroy();
+		}
+
+		return 1;
 	}
 
     return 0;
@@ -141,9 +131,12 @@ bool Server::init(string address, string port)
 	char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(port.c_str()) };
 	int optc = sizeof(orb_options)/sizeof(char *);
 
+	CORBA::ORB_var orb;
+
 	try
 	{
-		CORBA::ORB_var orb = CORBA::ORB_init(optc, orb_options);
+		orb = CORBA::ORB_init(optc, orb_options);
+		LOG4CXX_DEBUG(logger, "Zainicjalizowano obiekt ORB");
 
 		CORBA::String_var strIOR = CORBA::string_dup("corbaloc:iiop:");
 		strIOR += address.c_str();
@@ -156,7 +149,7 @@ bool Server::init(string address, string port)
 		CORBA::Object_var oServer = orb->string_to_object(strIOR);
 		if (CORBA::is_nil(oServer))
 		{
-			// blad
+			LOG4CXX_ERROR(logger, "Nie znaleziono serwera, ktory spelnia wymagania zawarte w 'strIOR'");
 			return 1;
 		}
 
@@ -164,15 +157,18 @@ bool Server::init(string address, string port)
     
 		if (CORBA::is_nil(parentServer))
 		{
-			//blad
+			LOG4CXX_ERROR(logger, "obiekt 'oServer' nie jest obiektem klasy IServerServer");
 			return 1;
 		}
 
-		// wywolania
+		LOG4CXX_DEBUG(logger, "Poczatek komunikacji z serwerem macierzystym ... ");
+		
 		parentServer->Join();
 		// TODO: dokonczyc ... nawiazanie kontaktu z macierzystym serwerem, zapisanie obiektu zdalnego
 		
+		LOG4CXX_DEBUG(logger, "... koniec komunikacji z serwerem macierzystym. ");
 
+		// zastanowic sie jeszcze co z tym zrobic
 		if (!CORBA::is_nil(orb))
 		{
 			orb->destroy();
@@ -181,9 +177,13 @@ bool Server::init(string address, string port)
 	}
 	catch(const CORBA::SystemException& e)
 	{
-		// wyjatek
-		cout << "POLECIAL WYJATEK: " << endl;
-		cout << e._name() << endl;
+		LOG4CXX_ERROR(logger, string("WYJ¥TEK: ") + e._name());
+
+		if (!CORBA::is_nil(orb))
+		{
+			orb->destroy();
+		}
+
 		return 1;
 	}
 
@@ -197,15 +197,14 @@ bool Server::openConfFile(string & address, string & port)
 
 	if(!conf.is_open())
 	{
-		// nie otwarto pliku
-		cout << "Nie ma takiego pliku" << endl;
+		LOG4CXX_ERROR(logger, "Nie ma takiego pliku konfiguracyjnego !");
+
 		return 1;
 	}
 
 	if(conf.fail())
 		conf.clear();
 
-	//conf.seekg(0, ios_base::beg);
 	conf.seekp(0, ios_base::beg);
 
 	string line;
