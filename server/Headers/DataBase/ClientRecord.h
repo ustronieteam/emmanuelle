@@ -25,6 +25,10 @@ class ClientRecord : Record
 		/// Dostepnosc klienta.
 		struct DomainData::Enability _enability;
 
+		///
+		/// Adres klienta.
+		struct DomainData::Address _address;
+
     public:
 
         ///
@@ -74,6 +78,16 @@ class ClientRecord : Record
 		/// Ustawia dostepnosc klienta.
 		/// param[in] enability Dostepnosc klienta.
 		void SetEnability(struct DomainData::Enability & enability);
+
+		///
+		/// Pobiera adresu klienta.
+		/// @return Adres klienta.
+		struct DomainData::Address GetAddress() const;
+
+		///
+		/// Ustawia adres klienta.
+		/// param[in] address Adres klienta.
+		void SetAddress(struct DomainData::Address & address);
 };
 
 #endif

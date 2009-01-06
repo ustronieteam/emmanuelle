@@ -51,8 +51,9 @@ int ServerDataBase::Initialize()
 
 ///
 /// Znajdz rekord servera.
+/// @param[in] address Adres do wyszukania rekordu.
 /// @return ID wyszukanego rekordu.
-int ServerDataBase::Find()
+int ServerDataBase::Find(DomainData::Address & address)
 {
 	return 0;
 }

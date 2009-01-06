@@ -18,6 +18,10 @@ class Record
 		/// Identyfikator rekordu.
         int _recordId;
 
+		///
+		/// Zrodlo do generacji ID.
+		static int _newId;
+
     public:
 
         ///
