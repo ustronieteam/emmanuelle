@@ -1,30 +1,89 @@
 #include "ClientRecord.h"
-//Begin section for file ClientRecord.cpp
-//TODO: Add definitions that you want preserved
-//End section for file ClientRecord.cpp
 
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Konstruktor bezparametrowy.
 ClientRecord::ClientRecord() 
 {
-    //TODO Auto-generated method stub
+
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-ClientRecord::ClientRecord(ClientRecord & arg) 
+///
+/// Konstruktor kopiujacy.
+/// @param[in] arg Record do skopiowania.
+ClientRecord::ClientRecord(const ClientRecord & arg) 
 {
-    //TODO Auto-generated method stub
+	this->_clientServerId		= arg._clientServerId;
+	this->_clientRemoteInstance = arg._clientRemoteInstance;
+	this->_enability			= arg._enability;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Operator przypisania.
+/// param[in] arg Record ktory chcemy przypisac.
 ClientRecord & ClientRecord::operator =(const ClientRecord & arg) 
 {
-    //TODO Auto-generated method stub
+	/// Jesli sa to rozne obiekty.
+    if (this != &arg)
+    {
+		this->_clientServerId		= arg._clientServerId;
+		this->_clientRemoteInstance = arg._clientRemoteInstance;
+		this->_enability			= arg._enability;
+    }
+
 	return const_cast<ClientRecord &>(arg);
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Destruktor.
 ClientRecord::~ClientRecord() 
 {
-    //TODO Auto-generated method stub
+
+}
+
+///
+/// Zwraca ID serwera do ktorego podlaczony jest klient.
+/// @return Id serwera do ktorego podlaczony jest klient.
+int ClientRecord::GetClientServerId() const
+{
+	return this->_clientServerId;
+}
+
+///
+/// Ustawia ID serwera do ktorego podlaczony jest klient.
+/// @param[in] clientServerId Id serwera do ktorego podlaczony jest klient.
+void ClientRecord::SetClientServerId(int & clientServerId)
+{
+	this->_clientServerId = clientServerId;
+}
+
+///
+/// Pobiera namiastke klienta.
+/// @return Namiastka klienta.
+IClientServer * ClientRecord::GetClientRemoteInstance() const
+{
+	return this->_clientRemoteInstance;
+}
+
+///
+/// Ustawia namiastke klienta.
+/// @param[in] clientRemoteInstance Namiastka klienta.
+void ClientRecord::SetClientRemoteInstance(IClientServer * clientRemoteInstance)
+{
+	this->_clientRemoteInstance = clientRemoteInstance;
+}
+
+///
+/// Pobiera dostepnosc klienta.
+/// @return Dostepnosc klienta.
+Enability ClientRecord::GetEnability() const
+{
+	return this->_enability;
+}
+
+///
+/// Ustawia dostepnosc klienta.
+/// param[in] enability Dostepnosc klienta.
+void ClientRecord::SetEnability(Enability & enability)
+{
+	this->_enability = enability;
 }

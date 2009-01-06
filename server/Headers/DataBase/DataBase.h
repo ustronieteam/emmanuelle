@@ -1,70 +1,81 @@
 #ifndef DATABASE_H
 #define DATABASE_H
-//Begin section for file DataBase.h
-//TODO: Add definitions that you want preserved
-//End section for file DataBase.h
 
 #include "Record.h"
+#include <vector>
 
+using namespace std;
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// DataBase
+/// @brief Baza danych trzymajaca rekordy.
+/// @author Wojciech Grzeskowiak
+/// @date 2009.01.06
+///
 class DataBase
 {
-
-    //Begin section for DataBase
-    //TODO: Add attributes that you want preserved
-    //End section for DataBase
-
     private:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Record * record; // Zmieniæ na kolekcjê!!!!!!!!!!!!!!!!
-
-
+        vector<Record> _records;
 
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Konstruktor bezparametrowy.
         DataBase();
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Konstruktor kopiujacy.
+		/// @param[in] arg Baza danych do skopiowania.
         DataBase(DataBase & arg);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Operator przypisania.
+		/// param[in] arg Baza danych ktora chcemy przypisac.
         DataBase & operator =(const DataBase & arg);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Destruktor.
         virtual ~DataBase();
 
-        //get record
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline Record * & get_record();
+		///
+		/// Zwraca rekord po podaniu rekord id.
+		/// @param[in] recordId Identyfikator rekordu.
+		/// @return Rekord o podanym idetyfikatorze.
+        Record GetRecord(int recordId);
 
-        //set record
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline void set_record(Record * & record);
+		///
+		/// Zwraca wszystkie rekordy z bazy danych.
+		/// @return Wektor ze wszystkimi rekordami.
+		std::vector<Record> GetAllRecords();
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        int GetRecord(int recordId);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        int GetAllRecords();
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Dodaje rekord do bazy danych.
+		/// param[in] record Record do wstawienia.
+		/// @return ???
         int InsertRecord(Record record);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Usuwa rekord o podanym id z bazy danych.
+		/// param[in] recordId ID rekordu ktory ma byc usuniety.
+		/// @return ???
         int DeleteRecord(int recordId);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Modyfikuje rekord w bazie danych.
+		/// param[in] record Record ze zmodyfikowanymi danymi.
+		/// @return ???
         int ModifyRecord(Record record);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+		///
+		/// Zamyka baze danych.
+		/// @return ???
         virtual int Close() = 0;
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Inicjalizuje baze danych.
+		/// @return ???
         virtual int Initialize() = 0;
-
-};  //end class DataBase
+};
 
 #endif

@@ -1,40 +1,52 @@
 #ifndef SERVERDATABASE_H
 #define SERVERDATABASE_H
-//Begin section for file ServerDataBase.h
-//TODO: Add definitions that you want preserved
-//End section for file ServerDataBase.h
 
 #include "DataBase.h"
 
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-class ServerDataBase : DataBase
+///
+/// ClientDataBase
+/// @brief Baza danych trzymajaca rekordy informacyjne o klientach.
+/// @author Wojciech Grzeskowiak
+/// @date 2009.01.06
+///
+class ServerDataBase : public DataBase
 {
+	public:
 
-    //Begin section for ServerDataBase
-    //TODO: Add attributes that you want preserved
-    //End section for ServerDataBase
-
-
-
-    public:
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Konstruktor bezparametrowy.
         ServerDataBase();
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        ServerDataBase(ServerDataBase & arg);
+        ///
+		/// Konstruktor kopiujacy.
+		/// @param[in] arg Baza danych do skopiowania.
+        ServerDataBase(const ServerDataBase & arg);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Operator przypisania.
+		/// param[in] arg Baza danych ktora chcemy przypisac.
         ServerDataBase & operator =(const ServerDataBase & arg);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Destruktor.
         virtual ~ServerDataBase();
 
+		///
+		/// Zamyka baze danych.
+		/// @return ???
 		virtual int Close();
 
+		///
+		/// Inicjalizuje baze danych.
+		/// @return ???
 		virtual int Initialize();
 
-};  //end class ServerDataBase
+		/// Metody szukajace.
+
+		///
+		/// Znajdz rekord servera.
+		/// @return ID wyszukanego rekordu.
+		int Find();
+};
 
 #endif

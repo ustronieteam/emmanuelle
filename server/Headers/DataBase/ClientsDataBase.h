@@ -1,40 +1,52 @@
 #ifndef CLIENTSDATABASE_H
 #define CLIENTSDATABASE_H
-//Begin section for file ClientsDataBase.h
-//TODO: Add definitions that you want preserved
-//End section for file ClientsDataBase.h
 
 #include "DataBase.h"
 
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-class ClientsDataBase : DataBase
+///
+/// ClientDataBase
+/// @brief Baza danych trzymajaca rekordy informacyjne o klientach.
+/// @author Wojciech Grzeskowiak
+/// @date 2009.01.06
+///
+class ClientsDataBase : public DataBase
 {
-
-    //Begin section for ClientsDataBase
-    //TODO: Add attributes that you want preserved
-    //End section for ClientsDataBase
-
-
-
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Konstruktor bezparametrowy.
         ClientsDataBase();
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        ClientsDataBase(ClientsDataBase & arg);
+        ///
+		/// Konstruktor kopiujacy.
+		/// @param[in] arg Baza danych do skopiowania.
+        ClientsDataBase(const ClientsDataBase & arg);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Operator przypisania.
+		/// param[in] arg Baza danych ktora chcemy przypisac.
         ClientsDataBase & operator =(const ClientsDataBase & arg);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Destruktor.
         virtual ~ClientsDataBase();
 
+		///
+		/// Zamyka baze danych.
+		/// @return ???
 		virtual int Close();
 
+		///
+		/// Inicjalizuje baze danych.
+		/// @return ???
 		virtual int Initialize();
 
-};  //end class ClientsDataBase
+		/// Metody szukajace.
+
+		///
+		/// Znajdz rekord klienta.
+		/// @return ID wyszukanego rekordu.
+		int Find();
+};
 
 #endif
