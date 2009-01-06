@@ -14,12 +14,14 @@
 #include "ClientsDataBase.h"
 #include "ClientRecord.h"
 #include "RemoteObserverData.h"
-#include "ServerInterfaces.h"
+#include "IServerServer.h"
+#include "IClientServer.h"
 #include <boost/shared_ptr.hpp>
 #include <iostream>
 #include <exception>
 #include <boost/thread.hpp>
 #include <vector>
+#include "DomainData.h"
 //Do utworzenia logow w przypadkyu bledow
 #include <log4cxx/logger.h>
 #include <log4cxx/level.h>

@@ -88,7 +88,8 @@ int RemoteClientConnectedObserverLogicRunnable::operator()()
 	LOG4CXX_INFO(logger, "Przetwarzanie logiki RemoteClientConnectedObserver");
 
 	//    1) Znajdz klienta
-	int clientId = clientsDataBase->Find(/*Dane z observerData*/);
+	struct DomainData::Address clientAddr = observerData.getClientAddress();
+	int clientId = clientsDataBase->Find(clientAddr);
 	if(clientId <= 0)
 	{ //Klienta nie ma w bazie - trzeba dodac go do bazy i oznaczyc jego status jako aktywny
 
@@ -124,7 +125,7 @@ int RemoteClientConnectedObserverLogicRunnable::operator()()
 		//Powiadom wszystkie serwery o zmianie.
 
 	}
-	std::vector<Record> allRecords = serverDataBase->get_record();
+	std::vector<Record> allRecords = serverDataBase->GetAllRecords();
 
 	//Utworz licznik serwerow z listy
 	int serverCounter =0;
@@ -136,10 +137,11 @@ int RemoteClientConnectedObserverLogicRunnable::operator()()
 	{
 		Record rec = (*it);
 		ServerRecord servRec = *(dynamic_cast<ServerRecord *>(&rec));
-		IServerServer remoteServer = servRec.getRemoteInstance();
+		IServerServer_var remoteServer = servRec.GetServerRemoteInstance();
 		try
 		{
-			remoteServer.ClientStatusChanged(/*dane*/);//Dodac dane z observer Data
+			struct DomainData::Enability enab = observerData.getClientEnability();
+			remoteServer->ClientStatusChanged(clientAddr, enab);//Dodac dane z observer Data
 			LOG4CXX_INFO(logger, "Wiadomosc wyslana do serwera nr"<<serverCounter);
 		}
 		catch(std::exception & exc) //chyba rzuca jakis wyjatek??

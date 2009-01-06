@@ -89,7 +89,8 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 	LOG4CXX_INFO(logger, "Przetwarzanie logiki RemoteClientSendMessageObserver");
 
 	//    1) Znajdz odpowiedniego klienta (adresata)
-	int clientId = clientsDataBase->Find(/*Dane z observerData*/);
+	struct DomainData::Address clientAddr = observerData.getClientAddress();
+	int clientId = clientsDataBase->Find(clientAddr/*Dane z observerData*/);
 	if(clientId<0)
 	{
 		LOG4CXX_ERROR(logger, "Blad w odnajdowaniu klienta- nie ma go w bazie");
@@ -107,18 +108,20 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 	}
 	//Znajdz serwer do którego jest on podlaczony (trzeba rzutowaæ)
 	ClientRecord clRec = *(dynamic_cast<ClientRecord *>(&clientRec));//Pomyslec o przechwytywaniu tu wyjatku bad_cast??
-	int servId = clRec.getConnectedServerId();
+	int servId = clRec.GetClientServerId();
 	
 	// Wyznacz nasz serverId
-	int localServerId = serverDataBase->getLocalServerId();
+	int localServerId ;//= serverDataBase->getLocalServerId();
 
 	
 	if(servId == localServerId)
 	{//    2) Jezeli jest do nas pod³¹czony przekaz mu wiadomoœæ
-		IClientServer remoteClientInterface= clRec.getRemoteInstance();
+		IClientServer_var remoteClientInterface= clRec.GetClientRemoteInstance();
 		try
 		{
-			remoteClientInterface.ReceiveMessage(/*wiadomosc z observerData*/);
+			struct DomainData::Address senderAddr = observerData.getSenderClientAddress();
+			struct DomainData::Message msg = observerData.getClientMessage();
+			remoteClientInterface->ReceiveMessage(senderAddr, msg);
 			LOG4CXX_INFO(logger, "Wiadomosc przekazana pomyslnie");
 		}
 		catch(std::exception &exc)
@@ -140,10 +143,13 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 			return -5;
 		}
 		ServerRecord remoteServRecord = *(dynamic_cast<ServerRecord *>(&remoteRecord));
-		IServerServer remoteInstance = remoteServRecord.getRemoteInstance();
+		IServerServer_var remoteInstance = remoteServRecord.GetServerRemoteInstance();
 		try
 		{
-			remoteInstance.PassMessage(/*Wiadomosc z observerData*/);
+			struct DomainData::Address senderAddr = observerData.getSenderClientAddress();
+			struct DomainData::Message msg = observerData.getClientMessage();
+			struct DomainData::Address recAddr = observerData.getClientAddress();
+			remoteInstance->PassMessage(msg, senderAddr, recAddr);
 			LOG4CXX_INFO(logger, "Wiadomosc przekazana pomyslnie na inny server");
 		}
 		catch(std::exception &exc)

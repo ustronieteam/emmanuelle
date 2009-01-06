@@ -69,7 +69,8 @@ int ServerCreatePipeObserverLogicRunnable::operator()()
 
 	//    1)Klientowi który ma tworzyæ pipe przeka¿ odpowiedni¹ wiadomoœæ.
 	//Klient ten musi byæ z nami pod³¹czony, je¿eli nie to b³ad integralnoœci danych w bazie.
-	int clientId = clientsDataBase->Find(/*Dane z observerData*/);
+	struct DomainData::Address clientAddr = observerData.getClientAddress();
+	int clientId = clientsDataBase->Find(clientAddr/*Dane z observerData*/);
 	if(clientId<=0)
 	{
 		LOG4CXX_ERROR(logger, "Blad podczas odnaidywania id klienta w bazie");
@@ -88,8 +89,10 @@ int ServerCreatePipeObserverLogicRunnable::operator()()
 	ClientRecord clientSpecRec = *(dynamic_cast<ClientRecord *> (&clientRec));
 	try
 	{
-		IClientServer remoteInstance = clientSpecRec.getRemoteInstance();
-		remoteInstance.CreatePipeRequest();
+		struct DomainData::Address pipeHolder = observerData.getPipeHolderAddress();
+		struct DomainData::Address senderAddr = observerData.getSenderClientAddress();
+		IClientServer_var remoteInstance = clientSpecRec.GetClientRemoteInstance();
+		remoteInstance->CreatePipeRequest(pipeHolder, senderAddr);
 	}
 	catch(std::exception &exc)
 	{

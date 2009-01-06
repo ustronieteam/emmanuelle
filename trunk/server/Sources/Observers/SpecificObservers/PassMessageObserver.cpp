@@ -71,7 +71,8 @@ int PassMessageObserverLogicRunnable::operator()()
 	LOG4CXX_INFO(logger, "Przetwarzanie logiki PassMessageObserver");
 
 	//    1)Znajdz klienta docelowego(adresata) - musi byc do nas pod³¹czony (Je¿eli nie to b³¹d.)
-	int clientId = clientsDataBase->Find(/*Dane z observerData*/);
+	struct DomainData::Address clientAddr = observerData.getClientAddress();
+	int clientId = clientsDataBase->Find(clientAddr);
 	if(clientId <=0)
 	{
 		LOG4CXX_ERROR(logger, "Nie znaleziono klienta w bazie!!!");
@@ -88,10 +89,12 @@ int PassMessageObserverLogicRunnable::operator()()
 		return -2;
 	}
 	ClientRecord clientSpecRec = *(dynamic_cast<ClientRecord*>(&clientRec));
-	IClientServer remoteInstance = clientSpecRec.getRemoteInstance();
+	IClientServer_var remoteInstance = clientSpecRec.GetClientRemoteInstance();
 	try	//    2)Przekaz mu wiadomoœæ
 	{
-		remoteInstance.ReceiveMessage(/*tresc wiadomosci z observerData*/);
+		struct DomainData::Message msg = observerData.getClientMessage();
+		struct DomainData::Address senderAddr = observerData.getSenderClientAddress();
+		remoteInstance->ReceiveMessage(senderAddr, msg);
 	}
 	catch(std::exception &exc)
 	{

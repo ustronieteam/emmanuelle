@@ -91,7 +91,8 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 
 	//    1) Zaktualizuj wpis o kliencie(roz³¹cz)
 	//Znajdz klienta w bazie klientow
-	int clientId = clientsDataBase->Find(/*dane z observerData*/); //Dodac dane!!!
+	struct DomainData::Address clientAddr = observerData.getClientAddress();
+	int clientId = clientsDataBase->Find(clientAddr/*dane z observerData*/); //Dodac dane!!!
 	Record clRec;
 	try
 	{
@@ -114,7 +115,7 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 
 	//    2)Powiadom wszystkie serwery o zmianie
 
-	std::vector<Record> allRecords = serverDataBase->get_record();
+	std::vector<Record> allRecords = serverDataBase->GetAllRecords();
 
 	//Utworz licznik serwerow z listy
 	int serverCounter =0;
@@ -126,10 +127,11 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 	{
 		Record rec = (*it);
 		ServerRecord servRec = *(dynamic_cast<ServerRecord *>(&rec));
-		IServerServer remoteServer = servRec.getRemoteInstance();
+		IServerServer_var remoteServer = servRec.GetServerRemoteInstance();
 		try
 		{
-			remoteServer.ClientStatusChanged(/*dodac dane z observerData*/);//Dodac dane z observer Data
+			struct DomainData::Enability enab = observerData.getClientEnability();
+			remoteServer->ClientStatusChanged(clientAddr, enab/*dodac dane z observerData*/);//Dodac dane z observer Data
 			LOG4CXX_INFO(logger, "Wiadomosc wyslana do serwera nr"<<serverCounter);
 		}
 		catch(std::exception & exc) //chyba rzuca jakis wyjatek??

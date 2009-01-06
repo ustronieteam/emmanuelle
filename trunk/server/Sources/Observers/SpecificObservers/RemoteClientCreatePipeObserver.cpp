@@ -90,8 +90,9 @@ int RemoteClientCreatePipeObserverLogicRunnable::operator()()
 
 	//    1) Znajdz w bazie o klientach, takiego który nie blokuje po³¹czeñ przychodz¹cych i jest pod³¹czony
 	//    z aktualnym serwerem i przekaz mu odpowiedni komunikat o tworzeniu pipe'u
-	int localServId = serverDataBase->getLocalServerId();
-	int clientId = clientsDataBase->Find(/*Na localnym serverze i nie blokujacy*/); //Byc moze trzeba wywolac inna funkcjie
+	int localServId;// = serverDataBase->getLocalServerId();
+	struct DomainData::Address clientAddr = observerData.getClientAddress();
+	int clientId = clientsDataBase->Find(clientAddr); //Byc moze trzeba wywolac inna funkcjie
 	if(clientId>0)
 	{
 		Record clRec;
@@ -105,11 +106,13 @@ int RemoteClientCreatePipeObserverLogicRunnable::operator()()
 			return -1;
 		}
 		ClientRecord clSpecRec = *(dynamic_cast<ClientRecord *>(&clRec));
-		IClientServer remoteInstance = clSpecRec.getRemoteInstance();
+		struct DomainData::Address pipeHolderAddr = clSpecRec.GetAddress();
+		IClientServer_var remoteInstance = clSpecRec.GetClientRemoteInstance();
 
 		try
 		{
-			remoteInstance.CreatePipeRequest();
+			struct DomainData::Address senderAddr = observerData.getSenderClientAddress();
+			remoteInstance->CreatePipeRequest(pipeHolderAddr, senderAddr);
 			LOG4CXX_INFO(logger, "Przekazano komunikat o utworzeniu pipe-u");
 		}
 		catch(std::exception &exc)
@@ -123,7 +126,7 @@ int RemoteClientCreatePipeObserverLogicRunnable::operator()()
 		//    odpowiedni komunikat (PassCreatePipe?)
 
 		//Wyszukaj dowolnego nie blokujacego
-		int clientId2 = clientsDataBase->Find(/*nie blokujacy*/); //Byc moze trzeba wywolac inna funkcjie
+		int clientId2 = clientsDataBase->Find(clientAddr/*nie blokujacy*/); //Byc moze trzeba wywolac inna funkcjie
 		if(clientId2<=0)
 		{
 			LOG4CXX_INFO(logger, "Nie odnaleziono zadnego pasujacego rekordu");
@@ -140,7 +143,7 @@ int RemoteClientCreatePipeObserverLogicRunnable::operator()()
 			return -5;
 		}
 		ClientRecord clSpecRec2 = *(dynamic_cast<ClientRecord *>(&clRec2));
-		int conServId = clSpecRec2.getConnectedServerId();
+		int conServId = clSpecRec2.GetClientServerId();
 		if(conServId <=0)
 		{
 			LOG4CXX_ERROR(logger, "Blad podczas identyfikacji klienta z serverem");
@@ -148,10 +151,13 @@ int RemoteClientCreatePipeObserverLogicRunnable::operator()()
 		}
 		Record servRec = serverDataBase->GetRecord(conServId);
 		ServerRecord servSpecRec = *(dynamic_cast<ServerRecord *>(&servRec));
-		IServerServer remInstance = servSpecRec.getRemoteInstance();
+		IServerServer_var remInstance = servSpecRec.GetServerRemoteInstance();
 		try
 		{
-			remInstance.PassCreatePipeRequest();
+			struct DomainData::Address pipeHolder = observerData.getPipeHolderAddress();  
+			struct DomainData::Address senderAddr = observerData.getSenderClientAddress();
+			struct DomainData::Address recAddr = observerData.getClientAddress();
+			remInstance->PassCreatePipeRequest(pipeHolder,senderAddr,recAddr);
 		}
 		catch(std::exception &exc)
 		{

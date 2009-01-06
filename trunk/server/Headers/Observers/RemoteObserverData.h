@@ -5,6 +5,7 @@
 //End section for file RemoteObserverData.h
 
 #include "EventType.h"
+#include "DomainData.h"
 
 
 //Dane przekazywane przez zdalny obiekt obserwowany do odpowiedniego obserwatora. Dzieki temu bedzie wiedzial co sie
@@ -18,33 +19,43 @@ class RemoteObserverData
     //End section for RemoteObserverData
 
     private:
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         EventType eventType;
-
-
+		DomainData::Address _serverAddress;
+		DomainData::Address _clientAddress;
+		DomainData::Address _senderClientAddress;
+		DomainData::Message _clientMessage;
+		DomainData::Enability _clientEnability;
+		DomainData::Address _pipeHolderAddress;
 
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+   
         RemoteObserverData();
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         RemoteObserverData(RemoteObserverData & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         RemoteObserverData & operator =(const RemoteObserverData & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~RemoteObserverData();
+        EventType & get_eventType();
+        void set_eventType(EventType & eventType);
+		
+		DomainData::Address & getServerAddress(){return _serverAddress;}
+		void setServerAddress(DomainData::Address & serverAddress){_serverAddress = serverAddress;}
 
-        //get eventType
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline EventType & get_eventType();
+		DomainData::Address & getClientAddress(){return _clientAddress;}
+		void setClientAddress(DomainData::Address & clientAddress){_clientAddress = clientAddress;}
 
-        //set eventType
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline void set_eventType(EventType & eventType);
+		DomainData::Message & getClientMessage(){return _clientMessage;}
+		void setClientMessage(DomainData::Message & clientMessage){_clientMessage = clientMessage;}
+
+		DomainData::Address & getSenderClientAddress(){return _senderClientAddress;}
+		void setSenderClientAddress(DomainData::Address & senderClientAddress){_senderClientAddress = senderClientAddress;}
+
+		DomainData::Enability & getClientEnability(){return _clientEnability;}
+		void setClientEnability(DomainData::Enability & clientEnability){_clientEnability = clientEnability;}
+
+		DomainData::Address & getPipeHolderAddress(){return _pipeHolderAddress;}
+		void setPipeHolderAddress(DomainData::Address & pipeHolderAddress){_pipeHolderAddress = pipeHolderAddress;}
+
+
 
 };  //end class RemoteObserverData
 
