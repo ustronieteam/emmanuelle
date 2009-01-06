@@ -87,3 +87,19 @@ void ClientRecord::SetEnability(struct DomainData::Enability & enability)
 {
 	this->_enability = enability;
 }
+
+///
+/// Pobiera adresu klienta.
+/// @return Adres klienta.
+struct DomainData::Address ClientRecord::GetAddress() const
+{
+	return this->_address;
+}
+
+///
+/// Ustawia adres klienta.
+/// param[in] address Adres klienta.
+void ClientRecord::SetAddress(struct DomainData::Address & address)
+{
+	this->_address = address;
+}

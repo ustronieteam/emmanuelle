@@ -52,3 +52,19 @@ void ServerRecord::SetServerRemoteInstance(IServerServer_var serverRemoteInstanc
 {
 	this->_serverRemoteInstance = serverRemoteInstance;
 }
+
+///
+/// Pobiera adresu serwera.
+/// @return Adres serwera.
+struct DomainData::Address ServerRecord::GetAddress() const
+{
+	return this->_address;
+}
+
+///
+/// Ustawia adres serwera.
+/// param[in] address Adres serwera.
+void ServerRecord::SetAddress(struct DomainData::Address & address)
+{
+	this->_address = address;
+}

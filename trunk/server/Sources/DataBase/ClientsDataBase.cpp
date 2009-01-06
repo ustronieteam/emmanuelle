@@ -51,8 +51,9 @@ int ClientsDataBase::Initialize()
 
 ///
 /// Znajdz rekord klienta.
+/// @param[in] address Adres do wyszukania rekordu.
 /// @return ID wyszukanego rekordu.
-int ClientsDataBase::Find()
+int ClientsDataBase::Find(DomainData::Address & address)
 {
 	return 0;
 }

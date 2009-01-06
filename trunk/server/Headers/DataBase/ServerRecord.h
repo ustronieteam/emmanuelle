@@ -17,6 +17,10 @@ class ServerRecord : Record
 		/// Namiastka serwera.
 		IServerServer_var _serverRemoteInstance;
 
+		///
+		/// Adres serwera.
+		DomainData::Address _address;
+
     public:
 
         ///
@@ -46,6 +50,16 @@ class ServerRecord : Record
 		/// Ustawia namiastke servera.
 		/// @param[in] serverRemoteInstance Namiastka servera.
 		void SetServerRemoteInstance(IServerServer_var serverRemoteInstance);
+
+		///
+		/// Pobiera adresu serwera.
+		/// @return Adres serwera.
+		struct DomainData::Address GetAddress() const;
+
+		///
+		/// Ustawia adres serwera.
+		/// param[in] address Adres serwera.
+		void SetAddress(struct DomainData::Address & address);
 };
 
 #endif

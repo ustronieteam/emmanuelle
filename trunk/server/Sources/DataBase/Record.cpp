@@ -1,10 +1,14 @@
 #include "Record.h"
 
 ///
+/// Zrodlo do generacji ID.
+int Record::_newId = 1;
+
+///
 /// Konstruktor bezparametrowy.
 Record::Record() 
 {
-    _recordId = 0;
+    _recordId = _newId++;
 }
 
 ///
