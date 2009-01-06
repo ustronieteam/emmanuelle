@@ -19,7 +19,7 @@ class ClientRecord : Record
 
 		///
 		/// Namiastka klienta dla serwera.
-		ClientInterfaces::IClientServer_var _clientRemoteInstance;
+		IClientServer_var _clientRemoteInstance;
 
 		///
 		/// Dostepnosc klienta.
@@ -58,12 +58,12 @@ class ClientRecord : Record
 		///
 		/// Pobiera namiastke klienta.
 		/// @return Namiastka klienta.
-		ClientInterfaces::IClientServer_var GetClientRemoteInstance() const;
+		IClientServer_var GetClientRemoteInstance() const;
 
 		///
 		/// Ustawia namiastke klienta.
 		/// @param[in] clientRemoteInstance Namiastka klienta.
-		void SetClientRemoteInstance(ClientInterfaces::IClientServer_var clientRemoteInstance);
+		void SetClientRemoteInstance(IClientServer_var clientRemoteInstance);
 
 		///
 		/// Pobiera dostepnosc klienta.
