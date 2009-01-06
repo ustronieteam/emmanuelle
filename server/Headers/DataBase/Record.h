@@ -1,8 +1,8 @@
 #ifndef RECORD_H
 #define RECORD_H
 
-#include "ServerInterfaces.h"
-#include "ClientInterfaces.h"
+#include "IServerServer.h"
+#include "IClientServer.h"
 
 ///
 /// Rekord

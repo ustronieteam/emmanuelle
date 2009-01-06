@@ -5,7 +5,7 @@
 
 // Aby moc urzywac takich struktur jak Enability.
 using namespace DomainData;
-using namespace ClientInterfaces;
+//using namespace ClientInterfaces;
 
 ///
 /// Client Rekord

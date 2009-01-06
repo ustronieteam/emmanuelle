@@ -4,7 +4,7 @@
 #include "Record.h"
 
 // Aby moc urzywac klasy IServerServer.
-using namespace ServerInterfaces;
+//using namespace ServerInterfaces;
 
 ///
 /// Server Rekord
