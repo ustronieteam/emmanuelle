@@ -1,48 +1,52 @@
 #ifndef RECORD_H
 #define RECORD_H
-//Begin section for file Record.h
-//TODO: Add definitions that you want preserved
-//End section for file Record.h
 
+#include "ServerInterfaces.h"
+#include "ClientInterfaces.h"
 
-//Trzyma tak¿e zdalne objekty odpowiadaj¹ce danemu rekordowi
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Rekord
+/// @brief Podstawowa jednosta informacji w bazie danych.
+/// @author Wojciech Grzeskowiak
+/// @date 2009.01.06
+///
 class Record
 {
-
-    //Begin section for Record
-    //TODO: Add attributes that you want preserved
-    //End section for Record
-
     private:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        int recordId;
-
-
+        ///
+		/// Identyfikator rekordu.
+        int _recordId;
 
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Konstruktor bezparametrowy.
         Record();
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Record(Record & arg);
+		///
+		/// Konstruktor kopiujacy.
+		/// @param[in] arg Record do skopiowania.
+        Record(const Record & arg);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Operator przypisania.
+		/// param[in] arg Record ktory chcemy przypisac.
         Record & operator =(const Record & arg);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Destruktor.
         virtual ~Record();
 
-        //get recordId
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline int & get_recordId();
+		///
+		/// Zwraca identyfikator rekordu.
+		/// @return Identyfikator rekordu.
+        int GetRecordId() const;
 
-        //set recordId
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline void set_recordId(int & recordId);
-
-};  //end class Record
+		///
+		/// Ustawia identyfikator rekordu.
+		/// param[in] recordId Identyfikator do ustawienia.
+        void SetRecordId(int & recordId);
+};
 
 #endif

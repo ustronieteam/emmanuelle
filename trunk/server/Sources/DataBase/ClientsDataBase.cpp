@@ -1,42 +1,58 @@
 #include "ClientsDataBase.h"
-//Begin section for file ClientsDataBase.cpp
-//TODO: Add definitions that you want preserved
-//End section for file ClientsDataBase.cpp
 
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Konstruktor bezparametrowy.
 ClientsDataBase::ClientsDataBase() 
 {
-    //TODO Auto-generated method stub
+
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-ClientsDataBase::ClientsDataBase(ClientsDataBase & arg) 
+///
+/// Konstruktor kopiujacy.
+/// @param[in] arg Baza danych do skopiowania.
+ClientsDataBase::ClientsDataBase(const ClientsDataBase & arg) 
 {
-    //TODO Auto-generated method stub
+
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Operator przypisania.
+/// param[in] arg Baza danych ktora chcemy przypisac.
 ClientsDataBase & ClientsDataBase::operator =(const ClientsDataBase & arg) 
 {
-    //TODO Auto-generated method stub
 	return const_cast<ClientsDataBase &>(arg);
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Destruktor.
 ClientsDataBase::~ClientsDataBase() 
 {
-    //TODO Auto-generated method stub
+
 }
 
+///
+/// Zamyka baze danych.
+/// @return ???
 int ClientsDataBase::Close()
 {
 
 	return 0;
 }
 
+///
+/// Inicjalizuje baze danych.
+/// @return ???
 int ClientsDataBase::Initialize()
 {
 
+	return 0;
+}
+
+///
+/// Znajdz rekord klienta.
+/// @return ID wyszukanego rekordu.
+int ClientsDataBase::Find()
+{
 	return 0;
 }

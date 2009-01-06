@@ -1,50 +1,53 @@
 #include "Record.h"
-//Begin section for file Record.cpp
-//TODO: Add definitions that you want preserved
-//End section for file Record.cpp
 
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Konstruktor bezparametrowy.
 Record::Record() 
 {
-    //TODO Auto-generated method stub
+    _recordId = 0;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-Record::Record(Record & arg) 
+///
+/// Konstruktor kopiujacy.
+/// @param[in] arg Record do skopiowania.
+Record::Record(const Record & arg) 
 {
-    //TODO Auto-generated method stub
-    this->recordId = arg.recordId;
+    this->_recordId = arg._recordId;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Operator przypisania.
+/// param[in] arg Record ktory chcemy przypisac.
 Record & Record::operator =(const Record & arg) 
 {
-    //TODO Auto-generated method stub
+	/// Jesli sa to rozne obiekty.
     if (this != &arg)
     {
-        this->recordId = arg.recordId;
+        this->_recordId = arg._recordId;
     }
 
 	return const_cast<Record &>(arg);
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Destruktor.
 Record::~Record() 
 {
-    //TODO Auto-generated method stub
+
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-int & Record::get_recordId() 
+///
+/// Zwraca identyfikator rekordu.
+/// @return Identyfikator rekordu.
+int Record::GetRecordId() const
 {
-    //TODO Auto-generated method stub
-    return recordId;
+    return _recordId;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-void Record::set_recordId(int & recordId) 
+///
+/// Ustawia identyfikator rekordu.
+/// param[in] recordId Identyfikator do ustawienia.
+void Record::SetRecordId(int & recordId) 
 {
-    //TODO Auto-generated method stub
-    this->recordId = recordId;
+    this->_recordId = _recordId;
 }

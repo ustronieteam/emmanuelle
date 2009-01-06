@@ -1,84 +1,77 @@
 #include "DataBase.h"
-//Begin section for file DataBase.cpp
-//TODO: Add definitions that you want preserved
-//End section for file DataBase.cpp
 
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Konstruktor bezparametrowy.
 DataBase::DataBase() 
 {
-    //TODO Auto-generated method stub
+
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Konstruktor kopiujacy.
+/// @param[in] arg Baza danych do skopiowania.
 DataBase::DataBase(DataBase & arg) 
 {
-    //TODO Auto-generated method stub
-    this->record = arg.record;
+
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Operator przypisania.
+/// param[in] arg Baza danych ktora chcemy przypisac.
 DataBase & DataBase::operator =(const DataBase & arg) 
 {
-    //TODO Auto-generated method stub
-    if (this != &arg)
-    {
-        this->record = arg.record;
-    }
-
 	return const_cast<DataBase &>(arg);
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Destruktor.
 DataBase::~DataBase() 
 {
-    //TODO Auto-generated method stub
+
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-Record * & DataBase::get_record() 
+///
+/// Zwraca rekord po podaniu rekord id.
+/// @param[in] recordId Identyfikator rekordu.
+/// @return Rekord o podanym idetyfikatorze.
+Record DataBase::GetRecord(int recordId) 
 {
-    //TODO Auto-generated method stub
-    return record;
+    Record r;
+    return r;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-void DataBase::set_record(Record * & record) 
+///
+/// Zwraca wszystkie rekordy z bazy danych.
+/// @return Wektor ze wszystkimi rekordami.
+std::vector<Record> DataBase::GetAllRecords() 
 {
-    //TODO Auto-generated method stub
+    vector<Record> v;
+    return v;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-int DataBase::GetRecord(int recordId) 
-{
-    //TODO Auto-generated method stub
-    return 0;
-}
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-int DataBase::GetAllRecords() 
-{
-    //TODO Auto-generated method stub
-    return 0;
-}
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Dodaje rekord do bazy danych.
+/// param[in] record Record do wstawienia.
+/// @return ???
 int DataBase::InsertRecord(Record record) 
 {
-    //TODO Auto-generated method stub
     return 0;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Usuwa rekord o podanym id z bazy danych.
+/// param[in] recordId ID rekordu ktory ma byc usuniety.
+/// @return ???
 int DataBase::DeleteRecord(int recordId) 
 {
-    //TODO Auto-generated method stub
     return 0;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Modyfikuje rekord w bazie danych.
+/// param[in] record Record ze zmodyfikowanymi danymi.
+/// @return ???
 int DataBase::ModifyRecord(Record record) 
 {
-    //TODO Auto-generated method stub
     return 0;
 }

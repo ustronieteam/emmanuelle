@@ -1,30 +1,54 @@
 #include "ServerRecord.h"
-//Begin section for file ServerRecord.cpp
-//TODO: Add definitions that you want preserved
-//End section for file ServerRecord.cpp
 
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Konstruktor bezparametrowy.
 ServerRecord::ServerRecord() 
 {
-    //TODO Auto-generated method stub
+
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-ServerRecord::ServerRecord(ServerRecord & arg) 
+///
+/// Konstruktor kopiujacy.
+/// @param[in] arg Record do skopiowania.
+ServerRecord::ServerRecord(const ServerRecord & arg) 
 {
-    //TODO Auto-generated method stub
+	this->_serverRemoteInstance = arg._serverRemoteInstance;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Operator przypisania.
+/// param[in] arg Record ktory chcemy przypisac.
 ServerRecord & ServerRecord::operator =(const ServerRecord & arg) 
 {
-    //TODO Auto-generated method stub
+	/// Jesli sa to rozne obiekty.
+    if (this != &arg)
+    {
+		this->_serverRemoteInstance = arg._serverRemoteInstance;
+	}
+
 	return const_cast<ServerRecord &>(arg);
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
+///
+/// Destruktor.
 ServerRecord::~ServerRecord() 
 {
-    //TODO Auto-generated method stub
+
+}
+
+///
+/// Pobiera namiastke serwera.
+/// @return Namiastka servera.
+IServerServer * ServerRecord::GetServerRemoteInstance() const
+{
+	return this->_serverRemoteInstance;
+}
+
+///
+/// Ustawia namiastke servera.
+/// @param[in] serverRemoteInstance Namiastka servera.
+void ServerRecord::SetServerRemoteInstance(IServerServer * serverRemoteInstance)
+{
+	this->_serverRemoteInstance = serverRemoteInstance;
 }

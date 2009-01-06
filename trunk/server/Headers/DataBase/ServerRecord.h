@@ -1,37 +1,54 @@
 #ifndef SERVERRECORD_H
 #define SERVERRECORD_H
-//Begin section for file ServerRecord.h
-//TODO: Add definitions that you want preserved
-//End section for file ServerRecord.h
 
 #include "Record.h"
 
+// Aby moc urzywac klasy IServerServer.
+using namespace ServerInterfaces;
 
-//Trzyma zdalny obiekt serwera oraz jego dane
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Server Rekord
+/// @brief Podstawowa jednosta informacji w bazie danych o serwerach.
+/// @author Wojciech Grzeskowiak
+/// @date 2009.01.06
+///
 class ServerRecord : Record
 {
+	private:
 
-    //Begin section for ServerRecord
-    //TODO: Add attributes that you want preserved
-    //End section for ServerRecord
-
-
+		///
+		/// Namiastka serwera.
+		IServerServer * _serverRemoteInstance;
 
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Konstruktor bezparametrowy.
         ServerRecord();
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        ServerRecord(ServerRecord & arg);
+		///
+		/// Konstruktor kopiujacy.
+		/// @param[in] arg Record do skopiowania.
+        ServerRecord(const ServerRecord & arg);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Operator przypisania.
+		/// param[in] arg Record ktory chcemy przypisac.
         ServerRecord & operator =(const ServerRecord & arg);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Destruktor.
         virtual ~ServerRecord();
 
-};  //end class ServerRecord
+		///
+		/// Pobiera namiastke serwera.
+		/// @return Namiastka servera.
+		IServerServer * GetServerRemoteInstance() const;
+
+		///
+		/// Ustawia namiastke servera.
+		/// @param[in] serverRemoteInstance Namiastka servera.
+		void SetServerRemoteInstance(IServerServer * serverRemoteInstance);
+};
 
 #endif

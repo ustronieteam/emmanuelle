@@ -1,42 +1,58 @@
 #include "ServerDataBase.h"
-//Begin section for file ServerDataBase.cpp
-//TODO: Add definitions that you want preserved
-//End section for file ServerDataBase.cpp
 
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Konstruktor bezparametrowy.
 ServerDataBase::ServerDataBase() 
 {
-    //TODO Auto-generated method stub
+
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-ServerDataBase::ServerDataBase(ServerDataBase & arg) 
+///
+/// Konstruktor kopiujacy.
+/// @param[in] arg Baza danych do skopiowania.
+ServerDataBase::ServerDataBase(const ServerDataBase & arg) 
 {
-    //TODO Auto-generated method stub
+
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Operator przypisania.
+/// param[in] arg Baza danych ktora chcemy przypisac.
 ServerDataBase & ServerDataBase::operator =(const ServerDataBase & arg) 
 {
-    //TODO Auto-generated method stub
 	return const_cast<ServerDataBase &>(arg);
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Destruktor.
 ServerDataBase::~ServerDataBase() 
 {
-    //TODO Auto-generated method stub
+
 }
 
+///
+/// Zamyka baze danych.
+/// @return ???
 int ServerDataBase::Close()
 {
 
 	return 0;
 }
 
+///
+/// Inicjalizuje baze danych.
+/// @return ???
 int ServerDataBase::Initialize()
 {
 
+	return 0;
+}
+
+///
+/// Znajdz rekord servera.
+/// @return ID wyszukanego rekordu.
+int ServerDataBase::Find()
+{
 	return 0;
 }
