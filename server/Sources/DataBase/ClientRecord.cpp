@@ -59,7 +59,7 @@ void ClientRecord::SetClientServerId(int & clientServerId)
 ///
 /// Pobiera namiastke klienta.
 /// @return Namiastka klienta.
-IClientServer * ClientRecord::GetClientRemoteInstance() const
+IClientServer_var ClientRecord::GetClientRemoteInstance() const
 {
 	return this->_clientRemoteInstance;
 }
@@ -67,7 +67,7 @@ IClientServer * ClientRecord::GetClientRemoteInstance() const
 ///
 /// Ustawia namiastke klienta.
 /// @param[in] clientRemoteInstance Namiastka klienta.
-void ClientRecord::SetClientRemoteInstance(IClientServer * clientRemoteInstance)
+void ClientRecord::SetClientRemoteInstance(IClientServer_var clientRemoteInstance)
 {
 	this->_clientRemoteInstance = clientRemoteInstance;
 }
@@ -75,7 +75,7 @@ void ClientRecord::SetClientRemoteInstance(IClientServer * clientRemoteInstance)
 ///
 /// Pobiera dostepnosc klienta.
 /// @return Dostepnosc klienta.
-Enability ClientRecord::GetEnability() const
+struct DomainData::Enability ClientRecord::GetEnability() const
 {
 	return this->_enability;
 }
@@ -83,7 +83,7 @@ Enability ClientRecord::GetEnability() const
 ///
 /// Ustawia dostepnosc klienta.
 /// param[in] enability Dostepnosc klienta.
-void ClientRecord::SetEnability(Enability & enability)
+void ClientRecord::SetEnability(struct DomainData::Enability & enability)
 {
 	this->_enability = enability;
 }

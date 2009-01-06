@@ -3,10 +3,6 @@
 
 #include "Record.h"
 
-// Aby moc urzywac takich struktur jak Enability.
-using namespace DomainData;
-//using namespace ClientInterfaces;
-
 ///
 /// Client Rekord
 /// @brief Podstawowa jednosta informacji w bazie danych o klientach.
@@ -23,11 +19,11 @@ class ClientRecord : Record
 
 		///
 		/// Namiastka klienta dla serwera.
-		IClientServer * _clientRemoteInstance;
+		ClientInterfaces::IClientServer_var _clientRemoteInstance;
 
 		///
 		/// Dostepnosc klienta.
-		struct Enability _enability;
+		struct DomainData::Enability _enability;
 
     public:
 
@@ -62,22 +58,22 @@ class ClientRecord : Record
 		///
 		/// Pobiera namiastke klienta.
 		/// @return Namiastka klienta.
-		IClientServer * GetClientRemoteInstance() const;
+		ClientInterfaces::IClientServer_var GetClientRemoteInstance() const;
 
 		///
 		/// Ustawia namiastke klienta.
 		/// @param[in] clientRemoteInstance Namiastka klienta.
-		void SetClientRemoteInstance(IClientServer * clientRemoteInstance);
+		void SetClientRemoteInstance(ClientInterfaces::IClientServer_var clientRemoteInstance);
 
 		///
 		/// Pobiera dostepnosc klienta.
 		/// @return Dostepnosc klienta.
-		Enability GetEnability() const;
+		struct DomainData::Enability GetEnability() const;
 
 		///
 		/// Ustawia dostepnosc klienta.
 		/// param[in] enability Dostepnosc klienta.
-		void SetEnability(Enability & enability);
+		void SetEnability(struct DomainData::Enability & enability);
 };
 
 #endif

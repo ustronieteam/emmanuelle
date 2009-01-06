@@ -40,7 +40,7 @@ ServerRecord::~ServerRecord()
 ///
 /// Pobiera namiastke serwera.
 /// @return Namiastka servera.
-IServerServer * ServerRecord::GetServerRemoteInstance() const
+IServerServer_var ServerRecord::GetServerRemoteInstance() const
 {
 	return this->_serverRemoteInstance;
 }
@@ -48,7 +48,7 @@ IServerServer * ServerRecord::GetServerRemoteInstance() const
 ///
 /// Ustawia namiastke servera.
 /// @param[in] serverRemoteInstance Namiastka servera.
-void ServerRecord::SetServerRemoteInstance(IServerServer * serverRemoteInstance)
+void ServerRecord::SetServerRemoteInstance(IServerServer_var serverRemoteInstance)
 {
 	this->_serverRemoteInstance = serverRemoteInstance;
 }
