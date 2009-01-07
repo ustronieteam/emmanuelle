@@ -1,7 +1,7 @@
 #ifndef CLIENTSDATABASE_H
 #define CLIENTSDATABASE_H
 
-#include <boost/thread/mutex.hpp>
+//#include <boost/thread/mutex.hpp>
 #include <vector>
 #include <map>
 
@@ -19,7 +19,7 @@ class ClientsDataBase
 
 		///
 		/// Mutex, gdy¿ kolekcja uzywana w róznych w¹tkach.
-		boost::mutex _mutex;
+		//boost::mutex _mutex;
 
 		///
 		/// Kolekcja trzymajaca rekordy.

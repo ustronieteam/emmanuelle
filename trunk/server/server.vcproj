@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)\CORBA\include\JTC&quot;;&quot;$(SolutionDir)\log4cxx\include&quot;;&quot;C:\Program Files\boost\boost_1_36_0&quot;;&quot;$(SolutionDir)\server\Headers&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses\DomainData&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses\IServerServer&quot;;&quot;$(SolutionDir)\server\Headers\DataBase&quot;;&quot;$(SolutionDir)\server\HeadersObservers&quot;;&quot;$(SolutionDir)\CORBA\include&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses\IClientServer&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses\IServerClient&quot;"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\log4cxx\include&quot;;&quot;C:\Program Files\boost\boost_1_36_0&quot;;&quot;$(SolutionDir)\server\Headers&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses\DomainData&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses\IServerServer&quot;;&quot;$(SolutionDir)\server\Headers\DataBase&quot;;&quot;$(SolutionDir)\server\HeadersObservers&quot;;&quot;$(SolutionDir)\CORBA\include&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses\IClientServer&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses\IServerClient&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
