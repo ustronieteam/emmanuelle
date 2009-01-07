@@ -1,3 +1,10 @@
+///
+/// @author	Mateusz Ko³odziejczyk
+/// @date	06.01.2009
+///
+/// @brief	Wygenerowano z IServerServer.idl
+///
+
 #ifndef ___IServerServer_impl_h__
 #define ___IServerServer_impl_h__
 
