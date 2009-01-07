@@ -15,9 +15,9 @@ using namespace std;
 ///
 class DataBase
 {
-    protected:
+	private:
 
-        map<int, Record> _records;
+		map<int, Record> _records;
 
     public:
 
@@ -37,7 +37,7 @@ class DataBase
 
         ///
 		/// Destruktor.
-        virtual ~DataBase();
+        ~DataBase();
 
 		///
 		/// Zwraca rekord po podaniu rekord id.
@@ -54,7 +54,7 @@ class DataBase
 		/// Dodaje rekord do bazy danych.
 		/// param[in] record Record do wstawienia.
 		/// @return ???
-        int InsertRecord(Record record);
+        int InsertRecord(const Record & record);
 
         ///
 		/// Usuwa rekord o podanym id z bazy danych.
@@ -66,17 +66,17 @@ class DataBase
 		/// Modyfikuje rekord w bazie danych.
 		/// param[in] record Record ze zmodyfikowanymi danymi.
 		/// @return ???
-        int ModifyRecord(Record record);
+        int ModifyRecord(const Record & record);
 
 		///
 		/// Zamyka baze danych.
 		/// @return ???
-        virtual int Close() = 0;
+        int Close();
 
         ///
 		/// Inicjalizuje baze danych.
 		/// @return ???
-        virtual int Initialize() = 0;
+        int Initialize();
 };
 
 #endif

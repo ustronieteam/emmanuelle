@@ -17,10 +17,6 @@ class ServerRecord : public Record
 		/// Namiastka serwera.
 		IServerServer_var _serverRemoteInstance;
 
-		///
-		/// Adres serwera.
-		DomainData::Address _address;
-
     public:
 
         ///
@@ -34,7 +30,7 @@ class ServerRecord : public Record
 
         ///
 		/// Operator przypisania.
-		/// param[in] arg Record ktory chcemy przypisac.
+		/// @param[in] arg Record ktory chcemy przypisac.
         ServerRecord & operator =(const ServerRecord & arg);
 
         ///
@@ -44,22 +40,12 @@ class ServerRecord : public Record
 		///
 		/// Pobiera namiastke serwera.
 		/// @return Namiastka servera.
-		IServerServer_var GetServerRemoteInstance() const;
+		const IServerServer_var & GetServerRemoteInstance() const;
 
 		///
 		/// Ustawia namiastke servera.
 		/// @param[in] serverRemoteInstance Namiastka servera.
-		void SetServerRemoteInstance(IServerServer_var serverRemoteInstance);
-
-		///
-		/// Pobiera adresu serwera.
-		/// @return Adres serwera.
-		struct DomainData::Address GetAddress() const;
-
-		///
-		/// Ustawia adres serwera.
-		/// param[in] address Adres serwera.
-		void SetAddress(struct DomainData::Address & address);
+		void SetServerRemoteInstance(const IServerServer_var & serverRemoteInstance);
 };
 
 #endif

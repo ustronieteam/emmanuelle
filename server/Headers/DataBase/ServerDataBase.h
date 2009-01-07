@@ -1,7 +1,10 @@
 #ifndef SERVERDATABASE_H
 #define SERVERDATABASE_H
 
-#include "DataBase.h"
+#include <boost/thread/mutex.hpp>
+#include <vector>
+#include <map>
+
 #include "ServerRecord.h"
 
 ///
@@ -10,9 +13,17 @@
 /// @author Wojciech Grzeskowiak
 /// @date 2009.01.06
 ///
-class ServerDataBase : public DataBase
+class ServerDataBase
 {
-	public:
+	private:
+
+		///
+		/// Mutex, gdy¿ kolekcja uzywana w róznych w¹tkach.
+		boost::mutex _mutex;
+
+		///
+		/// Kolekcja trzymajaca rekordy.
+		std::map<int, ServerRecord> _records;
 
         ///
 		/// Konstruktor bezparametrowy.
@@ -28,9 +39,45 @@ class ServerDataBase : public DataBase
 		/// param[in] arg Baza danych ktora chcemy przypisac.
         ServerDataBase & operator =(const ServerDataBase & arg);
 
+	public:
+
+		///
+		/// Zwraca baze danych (singleton)
+		/// @return Baza danych
+		static ServerDataBase * GetInstance();
+
         ///
 		/// Destruktor.
         virtual ~ServerDataBase();
+
+		///
+		/// Zwraca rekord po podaniu rekord id.
+		/// @param[in] recordId Identyfikator rekordu.
+		/// @return Rekord o podanym idetyfikatorze.
+        const ServerRecord & GetRecord(int recordId);
+
+		///
+		/// Zwraca wszystkie rekordy z bazy danych.
+		/// @return Wektor ze wszystkimi rekordami.
+		std::vector<ServerRecord> GetAllRecords();
+
+        ///
+		/// Dodaje rekord do bazy danych.
+		/// param[in] record Record do wstawienia.
+		/// @return ???
+        int InsertRecord(const ServerRecord & record);
+
+        ///
+		/// Usuwa rekord o podanym id z bazy danych.
+		/// param[in] recordId ID rekordu ktory ma byc usuniety.
+		/// @return ???
+        int DeleteRecord(int recordId);
+
+        ///
+		/// Modyfikuje rekord w bazie danych.
+		/// param[in] record Record ze zmodyfikowanymi danymi.
+		/// @return ???
+        int ModifyRecord(const ServerRecord & record);
 
 		///
 		/// Zamyka baze danych.
@@ -41,6 +88,11 @@ class ServerDataBase : public DataBase
 		/// Inicjalizuje baze danych.
 		/// @return ???
 		virtual int Initialize();
+
+		///
+		/// Zwraca liczbe elementow.
+		/// @return Liczba elementow w kolekcji.
+		int Size();
 
 		/// Metody szukajace.
 

@@ -70,7 +70,7 @@ std::vector<Record> DataBase::GetAllRecords()
 /// Dodaje rekord do bazy danych.
 /// param[in] record Record do wstawienia.
 /// @return ???
-int DataBase::InsertRecord(Record record) 
+int DataBase::InsertRecord(const Record & record) 
 {
 	if ( this->_records.count(record.GetRecordId()) == 0 )
 	{
@@ -106,7 +106,7 @@ int DataBase::DeleteRecord(int recordId)
 /// Modyfikuje rekord w bazie danych.
 /// param[in] record Record ze zmodyfikowanymi danymi.
 /// @return ???
-int DataBase::ModifyRecord(Record record) 
+int DataBase::ModifyRecord(const Record & record) 
 {
 	if ( this->_records.count(record.GetRecordId()) != 0 )
 	{
