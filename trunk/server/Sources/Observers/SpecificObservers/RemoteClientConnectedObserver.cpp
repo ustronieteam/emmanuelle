@@ -146,7 +146,7 @@ int RemoteClientConnectedObserverLogicRunnable::operator()()
 		}
 		catch(std::exception & exc) //chyba rzuca jakis wyjatek??
 		{
-			LOG4CXX_ERROR(logger, "Blad wysylania do serwera: " << serverCounter);
+			LOG4CXX_ERROR(logger, "Blad wysylania do serwera: " << serverCounter<< ".Powod: "<< exc.what());
 		}
 		serverCounter++;
 

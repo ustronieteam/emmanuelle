@@ -100,15 +100,15 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 		}
 		catch(std::exception & exc)
 		{
-			LOG4CXX_ERROR(logger, "Zlapano wyjotek podczas pobierania rekordu z bazy danych servera serverId: "<<serverId);
+			LOG4CXX_ERROR(logger, "Zlapano wyjotek podczas pobierania rekordu z bazy danych servera serverId: "<<serverId<< ".Powod: "<< exc.what());
 			return -2;
 		}
 		
 	}
 	else
 	{//Rekordu nie ma w bazie trzeba dodac nowy
-		//ServerRecord newRecord; //do dokonczenia (wype³niæ pola z observerData) !!!
-		int status;// = serverDataBase->InsertRecord(newRecord);
+		ServerRecord newRecord; //do dokonczenia (wype³niæ pola z observerData) !!!
+		int status = serverDataBase->InsertRecord(newRecord);
 		if(status < 0)
 		{
 			LOG4CXX_ERROR(logger, "Blad podczas wstawiania nowego rekordu servera");
@@ -143,7 +143,7 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 			}
 			catch(std::exception & exc) //chyba rzuca jakis wyjatek??
 			{
-				LOG4CXX_ERROR(logger, "Blad wysylania do serwera: " << serverCounter);
+				LOG4CXX_ERROR(logger, "Blad wysylania do serwera: " << serverCounter<< ".Powod: "<< exc.what());
 			}
 			serverCounter++;
 

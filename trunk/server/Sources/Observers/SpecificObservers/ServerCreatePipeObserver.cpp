@@ -83,7 +83,7 @@ int ServerCreatePipeObserverLogicRunnable::operator()()
 	}
 	catch(std::exception &exc)
 	{
-		LOG4CXX_ERROR(logger, "Blad podczas pobierania rekordu z bazy. Klient Id: "<<clientId);
+		LOG4CXX_ERROR(logger, "Blad podczas pobierania rekordu z bazy. Klient Id: "<<clientId<< ".Powod: "<< exc.what());
 		return -2;
 	}
 	ClientRecord clientSpecRec = *(dynamic_cast<ClientRecord *> (&clientRec));
@@ -96,7 +96,7 @@ int ServerCreatePipeObserverLogicRunnable::operator()()
 	}
 	catch(std::exception &exc)
 	{
-		LOG4CXX_ERROR(logger, "Nie udalo sie wyslac zadania o utworzenie pipe-u do klienta");
+		LOG4CXX_ERROR(logger, "Nie udalo sie wyslac zadania o utworzenie pipe-u do klienta"<< ".Powod: "<< exc.what());
 		return -3;
 	}
 	LOG4CXX_INFO(logger, "Koniec przetwarzania logiki ServerCreatePipeObserverLogicRunnable");

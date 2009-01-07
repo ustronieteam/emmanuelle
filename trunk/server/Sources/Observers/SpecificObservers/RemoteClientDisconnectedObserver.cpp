@@ -100,7 +100,7 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 	}
 	catch(std::exception & exc)
 	{
-		LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas pobierania rekordu recordId: "<<clientId);
+		LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas pobierania rekordu recordId: "<<clientId<< ".Powod: "<< exc.what());
 		return -2;
 	}
 
@@ -136,7 +136,7 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 		}
 		catch(std::exception & exc) //chyba rzuca jakis wyjatek??
 		{
-			LOG4CXX_ERROR(logger, "Blad wysylania do serwera: " << serverCounter);
+			LOG4CXX_ERROR(logger, "Blad wysylania do serwera: " << serverCounter<< ".Powod: "<< exc.what());
 		}
 		serverCounter++;
 
