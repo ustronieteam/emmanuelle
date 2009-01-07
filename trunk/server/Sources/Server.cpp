@@ -47,14 +47,14 @@ bool Server::init(string address, string port)
 
 	try
 	{
-		if(connectToServer(address, port, orb, parentServer))
+		if(connectToServer(address, orb, parentServer))
 		{
 			LOG4CXX_ERROR(logger, "Nie mo¿na po³¹czyc z sewerem macierzystym");
 			return 1;
 		}
 		
 		LOG4CXX_DEBUG(logger, "Poczatek komunikacji z serwerem macierzystym ... ");
-	
+
 		parentServer->Join();
 		// TODO: dokonczyc ...	nawiazanie kontaktu z macierzystym serwerem, zapisanie obiektu zdalnego
 		//						zapisanie obiektu orb
@@ -132,41 +132,6 @@ bool Server::openConfFile(string & address)
 
 	conf.close();
 
-	return 0;
-}
-
-bool Server::connectToServer(string address, string port, CORBA::ORB_out orb, IServerServer_out server)
-{
-	LOG4CXX_DEBUG(logger, "Laczenie z serwerem o adresie " << address.c_str() << " na porcie " << port.c_str());
-
-	char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(port.c_str()) };
-	int optc = sizeof(orb_options)/sizeof(char *);
-
-	orb = CORBA::ORB_init(optc, orb_options);
-	LOG4CXX_DEBUG(logger, "Zainicjalizowano obiekt ORB");
-
-	CORBA::String_var strIOR = CORBA::string_dup("corbaloc:iiop:");
-	strIOR += address.c_str();
-	strIOR += ":";
-	strIOR += port.c_str();
-	strIOR += "/serverserver";
-
-	CORBA::Object_var oServer = orb->string_to_object(strIOR);
-	if (CORBA::is_nil(oServer))
-	{
-		LOG4CXX_ERROR(logger, "Nie znaleziono serwera, ktory spelnia wymagania zawarte w 'strIOR'");
-		return 1;
-	}
-
-	server = IServerServer::_narrow(oServer);
-    
-	if (CORBA::is_nil(server))
-	{
-		LOG4CXX_ERROR(logger, "obiekt 'oServer' nie jest obiektem klasy IServerServer");
-		return 1;
-	}
-
-	LOG4CXX_DEBUG(logger, "Po³¹czono !");
 	return 0;
 }
 

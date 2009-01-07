@@ -1,5 +1,6 @@
 #include <OB/CORBA.h>
 #include <IServerServer_impl.h>
+#include <Server.h>
 
 //
 // IDL:IServerServer:1.0
@@ -26,8 +27,8 @@ IServerServer_impl::_default_POA()
 IServerServer_impl::Join()
     throw(::CORBA::SystemException)
 {
+	std::cout << "WYWOLANIE JOIN z adresu: " << Server::GetRemotedAddress() << std::endl;
 
-	std::cout << "JOIN";
     // TODO: Implementation
     ::AddressesList* _r = new ::AddressesList;
     return _r;
