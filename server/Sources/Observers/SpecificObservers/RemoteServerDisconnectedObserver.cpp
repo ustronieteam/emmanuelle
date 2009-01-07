@@ -77,19 +77,18 @@ int RemoteServerDisconnectedObserverLogicRunnable::operator()()
 		LOG4CXX_WARN(logger, "Blad Funkcji DeleteRecord dla bazy na bierzacym serwerze");
 	}
 	//Pobierz wszystkie rekordy
-	std::vector<Record> allRecords = serverDataBase->GetAllRecords();
+	std::vector<ServerRecord> allRecords = serverDataBase->GetAllRecords();
 
 	//Utworz licznik serwerow z listy
 	int serverCounter =0;
 
 	//    3)Powiadom wszystkie serwery o zmianie
 	LOG4CXX_INFO(logger, "Petla wysylania wiadomosci do serwerow");
-	for(std::vector<Record>::iterator it = allRecords.begin();
+	for(std::vector<ServerRecord>::iterator it = allRecords.begin();
 			it != allRecords.end();	//Dopuki nie doszlismy do konca zbioru
 				it++)
 	{
-		Record rec = (*it);
-		ServerRecord servRec = *(dynamic_cast<ServerRecord *>(&rec));
+		ServerRecord servRec = (*it);
 		IServerServer_var remoteServer = servRec.GetServerRemoteInstance();
 		try
 		{

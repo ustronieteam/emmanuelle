@@ -94,7 +94,7 @@ int RemoteClientConnectedObserverLogicRunnable::operator()()
 	{ //Klienta nie ma w bazie - trzeba dodac go do bazy i oznaczyc jego status jako aktywny
 
 		//Utworz nowy rekord klienta
-		Record newClient=Record(/*wstaw dane klienta*/);
+		ClientRecord newClient=ClientRecord(/*wstaw dane klienta*/);
 		//Wstaw dane
 
 		//Dodaj rekord do bazy
@@ -111,7 +111,7 @@ int RemoteClientConnectedObserverLogicRunnable::operator()()
 	{ //Klient jest w bazie - trzeba zmienic status i rozeslac zdarzenie statusChanged
 
 		//Znajdz rekord klienta
-		Record clRec = clientsDataBase->GetRecord(clientId);
+		ClientRecord clRec = clientsDataBase->GetRecord(clientId);
 
 		//Modyfikuj odpowiednie pole rekordu
 
@@ -125,18 +125,17 @@ int RemoteClientConnectedObserverLogicRunnable::operator()()
 		//Powiadom wszystkie serwery o zmianie.
 
 	}
-	std::vector<Record> allRecords = serverDataBase->GetAllRecords();
+	std::vector<ServerRecord> allRecords = serverDataBase->GetAllRecords();
 
 	//Utworz licznik serwerow z listy
 	int serverCounter =0;
 	//	3) Do ka¿dego serwera z listy dodaj nowy serwer (AddServer)
 	LOG4CXX_INFO(logger, "Petla wysylania wiadomosci do serwerow");
-	for(std::vector<Record>::iterator it = allRecords.begin();
+	for(std::vector<ServerRecord>::iterator it = allRecords.begin();
 			it != allRecords.end();	//Dopuki nie doszlismy do konca zbioru
 				it++)
 	{
-		Record rec = (*it);
-		ServerRecord servRec = *(dynamic_cast<ServerRecord *>(&rec));
+		ServerRecord servRec = (*it);
 		IServerServer_var remoteServer = servRec.GetServerRemoteInstance();
 		try
 		{

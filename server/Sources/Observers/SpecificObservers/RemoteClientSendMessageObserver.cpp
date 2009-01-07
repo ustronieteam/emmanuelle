@@ -96,10 +96,10 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 		LOG4CXX_ERROR(logger, "Blad w odnajdowaniu klienta- nie ma go w bazie");
 		return -1;
 	}
-	Record clientRec;
+	ClientRecord clRec;
 	try
 	{
-		clientRec = clientsDataBase->GetRecord(clientId);
+		clRec = clientsDataBase->GetRecord(clientId);
 	}
 	catch(std::exception &exc)
 	{
@@ -107,7 +107,6 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 		return -2;
 	}
 	//Znajdz serwer do którego jest on podlaczony (trzeba rzutowaæ)
-	ClientRecord clRec = *(dynamic_cast<ClientRecord *>(&clientRec));//Pomyslec o przechwytywaniu tu wyjatku bad_cast??
 	int servId = clRec.GetClientServerId();
 	
 	// Wyznacz nasz serverId
@@ -132,17 +131,16 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 	}
 	else
 	{//    3) Je¿eli nie jest to wykonaj PassMessage na serwerze do którego jest pod³¹czony
-		Record remoteRecord;
+		ServerRecord remoteServRecord;
 		try
 		{
-			remoteRecord = serverDataBase->GetRecord(servId);
+			remoteServRecord = serverDataBase->GetRecord(servId);
 		}
 		catch(std::exception &exc)
 		{
 			LOG4CXX_ERROR(logger, "Blad podczas pobierania rekordu z bazy serwerow"<< ".Powod: "<< exc.what());
 			return -5;
 		}
-		ServerRecord remoteServRecord = *(dynamic_cast<ServerRecord *>(&remoteRecord));
 		IServerServer_var remoteInstance = remoteServRecord.GetServerRemoteInstance();
 		try
 		{

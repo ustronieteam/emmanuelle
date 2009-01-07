@@ -78,17 +78,16 @@ int PassMessageObserverLogicRunnable::operator()()
 		LOG4CXX_ERROR(logger, "Nie znaleziono klienta w bazie!!!");
 		return -1;
 	}
-	Record clientRec;
+	ClientRecord clientSpecRec;
 	try
 	{
-		clientRec = clientsDataBase->GetRecord(clientId);
+		clientSpecRec = clientsDataBase->GetRecord(clientId);
 	}
 	catch(std::exception &exc)
 	{
 		LOG4CXX_ERROR(logger, "Nie mozna pobrac rekordu z bazy danych klientow. Client ID: " << clientId << ".Powod: "<< exc.what());
 		return -2;
 	}
-	ClientRecord clientSpecRec = *(dynamic_cast<ClientRecord*>(&clientRec));
 	IClientServer_var remoteInstance = clientSpecRec.GetClientRemoteInstance();
 	try	//    2)Przekaz mu wiadomoœæ
 	{

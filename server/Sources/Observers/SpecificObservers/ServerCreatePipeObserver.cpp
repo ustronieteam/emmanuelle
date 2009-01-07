@@ -76,17 +76,16 @@ int ServerCreatePipeObserverLogicRunnable::operator()()
 		LOG4CXX_ERROR(logger, "Blad podczas odnaidywania id klienta w bazie");
 		return -1;
 	}
-	Record clientRec;
+	ClientRecord clientSpecRec;
 	try
 	{
-		clientRec = clientsDataBase->GetRecord(clientId);
+		clientSpecRec = clientsDataBase->GetRecord(clientId);
 	}
 	catch(std::exception &exc)
 	{
 		LOG4CXX_ERROR(logger, "Blad podczas pobierania rekordu z bazy. Klient Id: "<<clientId<< ".Powod: "<< exc.what());
 		return -2;
 	}
-	ClientRecord clientSpecRec = *(dynamic_cast<ClientRecord *> (&clientRec));
 	try
 	{
 		struct DomainData::Address pipeHolder = observerData.getPipeHolderAddress();

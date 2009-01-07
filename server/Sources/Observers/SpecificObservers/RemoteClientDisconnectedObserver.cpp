@@ -93,7 +93,7 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 	//Znajdz klienta w bazie klientow
 	struct DomainData::Address clientAddr = observerData.getClientAddress();
 	int clientId = clientsDataBase->Find(clientAddr/*dane z observerData*/); //Dodac dane!!!
-	Record clRec;
+	ClientRecord clRec;
 	try
 	{
 		clRec = clientsDataBase->GetRecord(clientId);
@@ -115,18 +115,17 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 
 	//    2)Powiadom wszystkie serwery o zmianie
 
-	std::vector<Record> allRecords = serverDataBase->GetAllRecords();
+	std::vector<ServerRecord> allRecords = serverDataBase->GetAllRecords();
 
 	//Utworz licznik serwerow z listy
 	int serverCounter =0;
 	//	3) Do ka¿dego serwera z listy dodaj nowy serwer (AddServer)
 	LOG4CXX_INFO(logger, "Petla wysylania wiadomosci do serwerow");
-	for(std::vector<Record>::iterator it = allRecords.begin();
+	for(std::vector<ServerRecord>::iterator it = allRecords.begin();
 			it != allRecords.end();	//Dopuki nie doszlismy do konca zbioru
 				it++)
 	{
-		Record rec = (*it);
-		ServerRecord servRec = *(dynamic_cast<ServerRecord *>(&rec));
+		ServerRecord servRec = (*it);
 		IServerServer_var remoteServer = servRec.GetServerRemoteInstance();
 		try
 		{
