@@ -1,7 +1,7 @@
 ///
 /// @author	Wojciech Grzeœkowiak
 ///			Mateusz Ko³odziejczyk
-///			Marian Szczykulski
+///			Marian Szczykulskih
 /// @date	06.01.2009
 ///
 /// @brief	Server EMMANUELLE v1.0 
@@ -9,6 +9,10 @@
 
 #include <iostream>
 #include "Server.h"
+
+#include <log4cxx/basicconfigurator.h>
+#include <log4cxx/propertyconfigurator.h>
+#include <log4cxx/file.h>
 
 using namespace std;
 
@@ -19,6 +23,9 @@ int main(int argc, char * argv[])
 		cout << "Zla liczba paramaetrow";
 		return 1;
 	}
+
+	log4cxx::File confFile("logger.properties");
+	log4cxx::PropertyConfigurator::configure(confFile);
 
 	log4cxx::LoggerPtr logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("MAIN"));
 	logger->setLevel(log4cxx::Level::getAll());
@@ -33,6 +40,7 @@ int main(int argc, char * argv[])
 /*
 	Server * serv = Server::GetInstance("test.txt");
 	serv->Run();
-*/
+*/	
+	system("Pause");
 	return 0;
 }

@@ -57,8 +57,8 @@ class Server
 		log4cxx::LoggerPtr logger;
 
 		///
-		/// @param [address]	adres serwera macierzystego
-		/// @param [port]		port na ktorym masluchuje serwer macierzysty
+		/// @param	address		adres serwera macierzystego
+		/// @param	port		port na ktorym masluchuje serwer macierzysty
 		/// @return				0 - powodzneie, 1 - niepowodzenie
 		///
         /// Inicjalizacja servera.
@@ -69,9 +69,9 @@ class Server
 		bool init(std::string address, std::string port);
 
 		///
-		///	@param [address]	miejsce gdzie ma byc zapisany adress serwera mecierzystego odczytany z pliku
-		/// @param [port]		miejsce gdzie ma byc zapisany port serwera macierzystego odczytany z pliku
-		/// @return				0 - powodzenie, 1 - niepowodzenie
+		///	@param [out]	address		miejsce gdzie ma byc zapisany adress serwera mecierzystego odczytany z pliku
+		/// @param [out]	port		miejsce gdzie ma byc zapisany port serwera macierzystego odczytany z pliku
+		/// @return						0 - powodzenie, 1 - niepowodzenie
 		///
 		/// Otwarcie pliku konfiguracyjnego o nawie 'configFileName' i odczytanie 
 		/// numerow: portu i addresu serwera i przekazanie ich do 'address' i 'port'
@@ -82,7 +82,7 @@ class Server
     public:
 
 		///
-		/// @param [fileName]	nazwa pliku konfiguracyjnego
+		/// @param	fileName	nazwa pliku konfiguracyjnego
 		///
 		/// konstruktor
 		///
@@ -108,7 +108,7 @@ class Server
 		}
 
 		///
-		/// @param [fileName]	nazwa pliku konfiguracyjnego
+		/// @param	fileName	nazwa pliku konfiguracyjnego
 		/// @return				wskaznik do instancji obiektu serwera
 		///
 		/// statyczna metoda zwracajaca wskaznik do obiektu klasy Server jesli
