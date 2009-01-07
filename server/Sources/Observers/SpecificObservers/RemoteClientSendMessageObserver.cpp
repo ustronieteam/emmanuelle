@@ -103,7 +103,7 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 	}
 	catch(std::exception &exc)
 	{
-		LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas odszukiwania rekordu klienta. ClientId: "<<clientId);
+		LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas odszukiwania rekordu klienta. ClientId: "<<clientId<< ".Powod: "<< exc.what());
 		return -2;
 	}
 	//Znajdz serwer do którego jest on podlaczony (trzeba rzutowaæ)
@@ -126,7 +126,7 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 		}
 		catch(std::exception &exc)
 		{
-			LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas przekazywania wiadomosci do klienta");
+			LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas przekazywania wiadomosci do klienta"<< ".Powod: "<< exc.what());
 			return -3;
 		}
 	}
@@ -139,7 +139,7 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 		}
 		catch(std::exception &exc)
 		{
-			LOG4CXX_ERROR(logger, "Blad podczas pobierania rekordu z bazy serwerow");
+			LOG4CXX_ERROR(logger, "Blad podczas pobierania rekordu z bazy serwerow"<< ".Powod: "<< exc.what());
 			return -5;
 		}
 		ServerRecord remoteServRecord = *(dynamic_cast<ServerRecord *>(&remoteRecord));
@@ -154,7 +154,7 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 		}
 		catch(std::exception &exc)
 		{
-			LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas przekazywania wiadomosci na inny serwer");
+			LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas przekazywania wiadomosci na inny serwer"<< ".Powod: "<< exc.what());
 			return -4;
 		}
 	}

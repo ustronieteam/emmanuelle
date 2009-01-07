@@ -102,7 +102,7 @@ int RemoteClientCreatePipeObserverLogicRunnable::operator()()
 		}
 		catch(std::exception &exc)
 		{
-			LOG4CXX_ERROR(logger, "Nie udalo sie pobrac rekordu z klienta z bazy");
+			LOG4CXX_ERROR(logger, "Nie udalo sie pobrac rekordu z klienta z bazy"<< ".Powod: "<< exc.what());
 			return -1;
 		}
 		ClientRecord clSpecRec = *(dynamic_cast<ClientRecord *>(&clRec));
@@ -117,7 +117,7 @@ int RemoteClientCreatePipeObserverLogicRunnable::operator()()
 		}
 		catch(std::exception &exc)
 		{
-			LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas przekazywania do klienta komunikatu o tworzeniu pipe-u");
+			LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas przekazywania do klienta komunikatu o tworzeniu pipe-u"<< ".Powod: "<< exc.what());
 			return -2;
 		}
 	}
@@ -139,7 +139,7 @@ int RemoteClientCreatePipeObserverLogicRunnable::operator()()
 		}
 		catch(std::exception &exc)
 		{
-			LOG4CXX_ERROR(logger, "Blad podczas pobierania rekordu z bazy klientow");
+			LOG4CXX_ERROR(logger, "Blad podczas pobierania rekordu z bazy klientow"<< ".Powod: "<< exc.what());
 			return -5;
 		}
 		ClientRecord clSpecRec2 = *(dynamic_cast<ClientRecord *>(&clRec2));
@@ -161,7 +161,7 @@ int RemoteClientCreatePipeObserverLogicRunnable::operator()()
 		}
 		catch(std::exception &exc)
 		{
-			LOG4CXX_ERROR(logger, "Blad podczas przekazywania wiadomosci o tworzeniu pipe-u do zdalnego serwera");
+			LOG4CXX_ERROR(logger, "Blad podczas przekazywania wiadomosci o tworzeniu pipe-u do zdalnego serwera"<< ".Powod: "<< exc.what());
 			return -7;
 		}
 

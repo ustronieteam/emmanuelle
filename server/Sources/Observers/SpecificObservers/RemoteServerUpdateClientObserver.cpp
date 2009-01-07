@@ -110,7 +110,7 @@ int RemoteServerUpdateClientObserverLogicRunnable::operator()()
 		}
 		catch(std::exception & exc)
 		{
-			LOG4CXX_ERROR(logger, "Nie znaleziono rekordu o podanym id clientId: "<<clientId);
+			LOG4CXX_ERROR(logger, "Nie znaleziono rekordu o podanym id clientId: "<<clientId<< ".Powod: "<< exc.what());
 			return -2;
 		}
 		Record newRecord = oldRecord;
