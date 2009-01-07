@@ -12,6 +12,10 @@ ClientRecord::ClientRecord()
 /// @param[in] arg Record do skopiowania.
 ClientRecord::ClientRecord(const ClientRecord & arg) 
 {
+	this->_recordId				= arg._recordId;
+	this->_address				= arg._address;
+	this->_broker				= arg._broker;
+
 	this->_clientServerId		= arg._clientServerId;
 	this->_clientRemoteInstance = arg._clientRemoteInstance;
 	this->_enability			= arg._enability;
@@ -19,18 +23,22 @@ ClientRecord::ClientRecord(const ClientRecord & arg)
 
 ///
 /// Operator przypisania.
-/// param[in] arg Record ktory chcemy przypisac.
+/// @param[in] arg Record ktory chcemy przypisac.
 ClientRecord & ClientRecord::operator =(const ClientRecord & arg) 
 {
 	/// Jesli sa to rozne obiekty.
     if (this != &arg)
     {
+		this->_recordId				= arg._recordId;
+		this->_address				= arg._address;
+		this->_broker				= arg._broker;
+
 		this->_clientServerId		= arg._clientServerId;
 		this->_clientRemoteInstance = arg._clientRemoteInstance;
 		this->_enability			= arg._enability;
     }
 
-	return const_cast<ClientRecord &>(arg);
+	return *this;
 }
 
 ///
@@ -43,7 +51,7 @@ ClientRecord::~ClientRecord()
 ///
 /// Zwraca ID serwera do ktorego podlaczony jest klient.
 /// @return Id serwera do ktorego podlaczony jest klient.
-int ClientRecord::GetClientServerId() const
+const int & ClientRecord::GetClientServerId() const
 {
 	return this->_clientServerId;
 }
@@ -51,7 +59,7 @@ int ClientRecord::GetClientServerId() const
 ///
 /// Ustawia ID serwera do ktorego podlaczony jest klient.
 /// @param[in] clientServerId Id serwera do ktorego podlaczony jest klient.
-void ClientRecord::SetClientServerId(int & clientServerId)
+void ClientRecord::SetClientServerId(const int & clientServerId)
 {
 	this->_clientServerId = clientServerId;
 }
@@ -59,7 +67,7 @@ void ClientRecord::SetClientServerId(int & clientServerId)
 ///
 /// Pobiera namiastke klienta.
 /// @return Namiastka klienta.
-IClientServer_var ClientRecord::GetClientRemoteInstance() const
+const IClientServer_var & ClientRecord::GetClientRemoteInstance() const
 {
 	return this->_clientRemoteInstance;
 }
@@ -67,7 +75,7 @@ IClientServer_var ClientRecord::GetClientRemoteInstance() const
 ///
 /// Ustawia namiastke klienta.
 /// @param[in] clientRemoteInstance Namiastka klienta.
-void ClientRecord::SetClientRemoteInstance(IClientServer_var clientRemoteInstance)
+void ClientRecord::SetClientRemoteInstance(const IClientServer_var & clientRemoteInstance)
 {
 	this->_clientRemoteInstance = clientRemoteInstance;
 }
@@ -75,31 +83,15 @@ void ClientRecord::SetClientRemoteInstance(IClientServer_var clientRemoteInstanc
 ///
 /// Pobiera dostepnosc klienta.
 /// @return Dostepnosc klienta.
-struct DomainData::Enability ClientRecord::GetEnability() const
+const struct DomainData::Enability & ClientRecord::GetEnability() const
 {
 	return this->_enability;
 }
 
 ///
 /// Ustawia dostepnosc klienta.
-/// param[in] enability Dostepnosc klienta.
-void ClientRecord::SetEnability(struct DomainData::Enability & enability)
+/// @param[in] enability Dostepnosc klienta.
+void ClientRecord::SetEnability(const struct DomainData::Enability & enability)
 {
 	this->_enability = enability;
-}
-
-///
-/// Pobiera adresu klienta.
-/// @return Adres klienta.
-struct DomainData::Address ClientRecord::GetAddress() const
-{
-	return this->_address;
-}
-
-///
-/// Ustawia adres klienta.
-/// param[in] address Adres klienta.
-void ClientRecord::SetAddress(struct DomainData::Address & address)
-{
-	this->_address = address;
 }
