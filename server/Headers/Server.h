@@ -1,7 +1,11 @@
 #ifndef SERVER_H
 #define SERVER_H
 
-#include "DataBase.h"
+#include <OB/CORBA.h>
+#include <OB/BootManager.h>
+#include <OB/OCI_IIOP.h>
+
+//#include "DataBase.h"
 #include "DataBase/ClientsDataBase.h"
 #include "DataBase/ServerDataBase.h"
 #include "IServerServer.h"
@@ -9,9 +13,7 @@
 #include "IServerClient.h"
 #include "IServerClient_impl.h"
 
-#include <OB/CORBA.h>
-#include <OB/BootManager.h>
-#include <OB/OCI_IIOP.h>
+
 
 #include <iostream>
 #include <fstream>
@@ -149,7 +151,7 @@ class Server
 		/// Laczy sie do serwera o zadanym adresie nasluchujacym na porcie LPORT; efektem polaczenia jest 
 		/// zwrocenie wskaznikow do brokera polaczenia i obiektu namastki
 		///
-		static bool connectToServer(string address, CORBA::ORB_out orb, IServerServer_out server)
+		static bool connectToServer(std::string address, CORBA::ORB_out orb, IServerServer_out server)
 		{
 			char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(LPORT.c_str()) };
 			int optc = sizeof(orb_options)/sizeof(char *);
@@ -187,7 +189,7 @@ class Server
 		/// Laczy sie do klienta o zadanym adresie nasluchujacym na porcie LPORT; efektem polaczenia jest 
 		/// zwrocenie wskaznikow do brokera polaczenia i obiektu namastki
 		///
-		static bool connectToClient(string address, CORBA::ORB_out orb, IClientServer_out client)
+		static bool connectToClient(std::string address, CORBA::ORB_out orb, IClientServer_out client)
 		{
 			return 0;
 		}
