@@ -91,7 +91,7 @@ int RemoteServerUpdateClientObserverLogicRunnable::operator()()
 	int clientId = clientsDataBase->Find(servAddr/*dane z observerData*/);
 	if(clientId <=0)
 	{//Klienta nie ma w bazie => podlaczyl sie nowy klient
-		Record newClientRecord = Record(/*Dane z observerData*/);
+		ClientRecord newClientRecord = ClientRecord(/*Dane z observerData*/);
 		//Utworz odpowiedni rekord
 
 		int status = clientsDataBase->InsertRecord(newClientRecord);
@@ -103,7 +103,7 @@ int RemoteServerUpdateClientObserverLogicRunnable::operator()()
 	}
 	else
 	{//Dane klienta sa juz w bazie, nalezy je tylko zmodyfikowac
-		Record oldRecord;
+		ClientRecord oldRecord;
 		try
 		{
 			oldRecord = clientsDataBase->GetRecord(clientId);
@@ -113,7 +113,7 @@ int RemoteServerUpdateClientObserverLogicRunnable::operator()()
 			LOG4CXX_ERROR(logger, "Nie znaleziono rekordu o podanym id clientId: "<<clientId<< ".Powod: "<< exc.what());
 			return -2;
 		}
-		Record newRecord = oldRecord;
+		ClientRecord newRecord = oldRecord;
 	
 
 		//    2) Wprowaz zmiany w jego rekordzie

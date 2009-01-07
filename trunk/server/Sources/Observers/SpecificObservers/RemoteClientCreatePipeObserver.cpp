@@ -95,17 +95,16 @@ int RemoteClientCreatePipeObserverLogicRunnable::operator()()
 	int clientId = clientsDataBase->Find(clientAddr); //Byc moze trzeba wywolac inna funkcjie
 	if(clientId>0)
 	{
-		Record clRec;
+		ClientRecord clSpecRec;
 		try
 		{
-			clRec = clientsDataBase->GetRecord(clientId);
+			clSpecRec = clientsDataBase->GetRecord(clientId);
 		}
 		catch(std::exception &exc)
 		{
 			LOG4CXX_ERROR(logger, "Nie udalo sie pobrac rekordu z klienta z bazy"<< ".Powod: "<< exc.what());
 			return -1;
 		}
-		ClientRecord clSpecRec = *(dynamic_cast<ClientRecord *>(&clRec));
 		struct DomainData::Address pipeHolderAddr = clSpecRec.GetAddress();
 		IClientServer_var remoteInstance = clSpecRec.GetClientRemoteInstance();
 
@@ -132,25 +131,23 @@ int RemoteClientCreatePipeObserverLogicRunnable::operator()()
 			LOG4CXX_INFO(logger, "Nie odnaleziono zadnego pasujacego rekordu");
 			return -4;//To nie jest do konca blad. Taki pryzpadek jest moyliwz
 		}
-		Record clRec2;
+		ClientRecord clSpecRec2 ;
 		try
 		{
-			clRec2 = clientsDataBase->GetRecord(clientId2);
+			clSpecRec2 = clientsDataBase->GetRecord(clientId2);
 		}
 		catch(std::exception &exc)
 		{
 			LOG4CXX_ERROR(logger, "Blad podczas pobierania rekordu z bazy klientow"<< ".Powod: "<< exc.what());
 			return -5;
 		}
-		ClientRecord clSpecRec2 = *(dynamic_cast<ClientRecord *>(&clRec2));
 		int conServId = clSpecRec2.GetClientServerId();
 		if(conServId <=0)
 		{
 			LOG4CXX_ERROR(logger, "Blad podczas identyfikacji klienta z serverem");
 			return -6;
 		}
-		Record servRec = serverDataBase->GetRecord(conServId);
-		ServerRecord servSpecRec = *(dynamic_cast<ServerRecord *>(&servRec));
+		ServerRecord servSpecRec = serverDataBase->GetRecord(conServId);
 		IServerServer_var remInstance = servSpecRec.GetServerRemoteInstance();
 		try
 		{

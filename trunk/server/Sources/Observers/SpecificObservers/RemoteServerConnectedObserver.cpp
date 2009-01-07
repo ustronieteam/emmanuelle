@@ -85,7 +85,7 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 	{//Rekord jest w bazie z jakis powodow, trzeba wiec go zmodyfikowac
 		try
 		{
-			Record servRec = serverDataBase->GetRecord(serverId);
+			ServerRecord servRec = serverDataBase->GetRecord(serverId);
 			//Modyfikuj rekord zgodnie z observerData
 			//ServerRecord servRec_spec = *(dynamic_cast<ServerRecord *>(&servRec));
 			//servRec_spec.
@@ -123,17 +123,16 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 
 	
 		//	2) Pobierz liste wszystkich serwerów
-		std::vector<Record> allRecords = serverDataBase->GetAllRecords();
+		std::vector<ServerRecord> allRecords = serverDataBase->GetAllRecords();
 
 		
 		//	3) Do ka¿dego serwera z listy dodaj nowy serwer (AddServer)
 		LOG4CXX_INFO(logger, "Petla wysylania wiadomosci do serwerow");
-		for(std::vector<Record>::iterator it = allRecords.begin();
+		for(std::vector<ServerRecord>::iterator it = allRecords.begin();
 				it != allRecords.end();	//Dopuki nie doszlismy do konca zbioru
 					it++)
 		{
-			Record rec = (*it);
-			ServerRecord servRec = *(dynamic_cast<ServerRecord *>(&rec));
+			ServerRecord servRec = (*it);
 			IServerServer_var remoteServer = servRec.GetServerRemoteInstance();
 			try
 			{
