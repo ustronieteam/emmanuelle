@@ -52,7 +52,7 @@ ServerDataBase::~ServerDataBase()
 /// @return Rekord o podanym idetyfikatorze.
 const ServerRecord & ServerDataBase::GetRecord(int recordId) 
 {
-	//boost::mutex::scoped_lock sl(_mutex);
+	boost::mutex::scoped_lock sl(_mutex);
 
 	if ( this->_records.count(recordId) != 0 )
 	{
@@ -70,7 +70,7 @@ const ServerRecord & ServerDataBase::GetRecord(int recordId)
 /// @return Wektor ze wszystkimi rekordami.
 std::vector<ServerRecord> ServerDataBase::GetAllRecords() 
 {
-	//boost::mutex::scoped_lock sl(_mutex);
+	boost::mutex::scoped_lock sl(_mutex);
 	std::vector<ServerRecord> v;
 	
 	if ( _records.size() != 0 )
@@ -86,7 +86,7 @@ std::vector<ServerRecord> ServerDataBase::GetAllRecords()
 /// @return ???
 int ServerDataBase::InsertRecord(const ServerRecord & record) 
 {
-	//boost::mutex::scoped_lock sl(_mutex);
+	boost::mutex::scoped_lock sl(_mutex);
 
 	if ( this->_records.count(record.GetRecordId()) == 0 )
 	{
@@ -106,7 +106,7 @@ int ServerDataBase::InsertRecord(const ServerRecord & record)
 /// @return ???
 int ServerDataBase::DeleteRecord(int recordId) 
 {
-	//boost::mutex::scoped_lock sl(_mutex);
+	boost::mutex::scoped_lock sl(_mutex);
 
 	if ( this->_records.count(recordId) != 0 )
 	{
@@ -126,7 +126,7 @@ int ServerDataBase::DeleteRecord(int recordId)
 /// @return ???
 int ServerDataBase::ModifyRecord(const ServerRecord & record) 
 {
-	//boost::mutex::scoped_lock sl(_mutex);
+	boost::mutex::scoped_lock sl(_mutex);
 
 	if ( this->_records.count(record.GetRecordId()) != 0 )
 	{
@@ -170,7 +170,7 @@ int ServerDataBase::Size()
 /// @return ID wyszukanego rekordu.
 int ServerDataBase::Find(struct DomainData::Address & address)
 {
-	//boost::mutex::scoped_lock sl(_mutex);
+	boost::mutex::scoped_lock sl(_mutex);
 
 	if ( _records.size() != 0 )
 		for(std::map<int, ServerRecord>::iterator i = this->_records.begin(); i != this->_records.end(); i++)
