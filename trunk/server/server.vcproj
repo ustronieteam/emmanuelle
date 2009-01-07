@@ -196,10 +196,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Sources\DataBase\DataBase.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\Sources\DataBase\Record.cpp"
 					>
 				</File>
@@ -399,10 +395,6 @@
 				</File>
 				<File
 					RelativePath=".\Headers\DataBase\ClientsDataBase.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Headers\DataBase\DataBase.h"
 					>
 				</File>
 				<File

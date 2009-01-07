@@ -1,10 +1,10 @@
 #ifndef RECORD_H
 #define RECORD_H
 
-//#include <boost/thread/mutex.hpp>
-
 #include "IServerServer.h"
 #include "IClientServer.h"
+
+#include <boost/thread/mutex.hpp>
 
 ///
 /// Rekord
@@ -36,7 +36,7 @@ class Record
 
 		///
 		/// Mutex potrzebny go generowania id rekordow.
-		//static boost::mutex _mutex;
+		static boost::mutex _mutex;
 
     public:
 

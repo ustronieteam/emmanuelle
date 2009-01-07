@@ -1,11 +1,10 @@
 #ifndef SERVERDATABASE_H
 #define SERVERDATABASE_H
 
-//#include <boost/thread/mutex.hpp>
+#include "ServerRecord.h"
+
 #include <vector>
 #include <map>
-
-#include "ServerRecord.h"
 
 ///
 /// ClientDataBase
@@ -19,7 +18,7 @@ class ServerDataBase
 
 		///
 		/// Mutex, gdy¿ kolekcja uzywana w róznych w¹tkach.
-		//boost::mutex _mutex;
+		boost::mutex _mutex;
 
 		///
 		/// Kolekcja trzymajaca rekordy.
