@@ -26,6 +26,8 @@ IServerServer_impl::_default_POA()
 IServerServer_impl::Join()
     throw(::CORBA::SystemException)
 {
+
+	std::cout << "JOIN";
     // TODO: Implementation
     ::AddressesList* _r = new ::AddressesList;
     return _r;

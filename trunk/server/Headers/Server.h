@@ -6,6 +6,8 @@
 #include "DataBase/ServerDataBase.h"
 #include "IServerServer.h"
 #include "IServerServer_impl.h"
+#include "IServerClient.h"
+#include "IServerClient_impl.h"
 
 #include <OB/CORBA.h>
 #include <OB/BootManager.h>
@@ -18,10 +20,9 @@
 #include <log4cxx/level.h>
 
 
-const std::string VADDRESS = "localhost";
-const std::string VPORT = "6666";
 const std::string NADDRESS = "address";
-const std::string NPORT = "port";
+
+const std::string LPORT = "7080";
 
 ///
 /// @author	Mateusz Ko³odziejczyk
@@ -57,32 +58,43 @@ class Server
 		log4cxx::LoggerPtr logger;
 
 		///
-		/// @param	address		adres serwera macierzystego
-		/// @param	port		port na ktorym masluchuje serwer macierzysty
+		/// @param [in]	address	adres serwera macierzystego
+		/// @param [in]	port	port na ktorym masluchuje serwer macierzysty
 		/// @return				0 - powodzneie, 1 - niepowodzenie
 		///
-        /// Inicjalizacja servera.
-        ///    Utworzenie objektów zdalnych i wrzucenie go na broker(udostêpnienie)
-        ///    Ponad to nale¿y zainstalowaæ ka¿demu obiektowi zdalnemu po jednym obserwatorze
-        ///    Tworzac obserwatorów nale¿y im dostarczyæ odpowiedniegi obiektu&nbsp;bazy danych
+		/// polaczenie z serwerem macierzystym, komunikacja (wymiana danych) i ich zapisanie w bazie 
 		///
 		bool init(std::string address, std::string port);
 
 		///
 		///	@param [out]	address		miejsce gdzie ma byc zapisany adress serwera mecierzystego odczytany z pliku
-		/// @param [out]	port		miejsce gdzie ma byc zapisany port serwera macierzystego odczytany z pliku
 		/// @return						0 - powodzenie, 1 - niepowodzenie
 		///
 		/// Otwarcie pliku konfiguracyjnego o nawie 'configFileName' i odczytanie 
-		/// numerow: portu i addresu serwera i przekazanie ich do 'address' i 'port'
+		/// addresu serwera i przekazanie go do 'address'
 		///
-		bool openConfFile(std::string & address, std::string & port);
-
-
-    public:
+		bool openConfFile(std::string & address);
 
 		///
-		/// @param	fileName	nazwa pliku konfiguracyjnego
+		/// @param [in]		address	adres serwera do ktorego chcemy sie polaczyc
+		/// @param [in]		port	port na ktorym nasluchuje ten serwer
+		/// @param [out]	orb		wsk na obiekt brokera - trzyma polaczenie
+		/// @param [out]	server	wsk na obiekt namiastki
+		/// @return			0 - powodznie, 1 - niepowodzenie
+		///
+		/// Laczy sie do serwera o zadanym adresie nasluchujacym na podanym porcie; efektem polaczenia jest 
+		/// zwrocenie wskaznikow do brokera polaczenia i obiektu namastki
+		///
+		bool connectToServer(string address, string port, CORBA::ORB_out orb, IServerServer_out server);
+
+		///
+		/// Stworzenie brokera po stronie serwera, zarejestrownie obiektow zdalnych i uruchomienie
+		/// nasluchiwania na porcie PORT
+		///
+		void activateListning();
+
+		///
+		/// @param [in]	fileName	nazwa pliku konfiguracyjnego
 		///
 		/// konstruktor
 		///
@@ -100,16 +112,11 @@ class Server
 			logger->setLevel(log4cxx::Level::getAll());
 		}
 
-		///
-		/// destruktor
-		///
-        virtual ~Server()
-		{
-		}
+    public:
 
 		///
-		/// @param	fileName	nazwa pliku konfiguracyjnego
-		/// @return				wskaznik do instancji obiektu serwera
+		/// @param [in]	fileName	nazwa pliku konfiguracyjnego
+		/// @return					wskaznik do instancji obiektu serwera
 		///
 		/// statyczna metoda zwracajaca wskaznik do obiektu klasy Server jesli
 		/// istnieje badz tworzaca go jesli nie istnieje
@@ -123,6 +130,10 @@ class Server
 
 		///
 		/// @return		 1 - niepowodznie, 0 - zakonczono bez niepowodzen
+		///
+		/// Odpowiada za wczytanie i pozyskanie danych z pliku konfiguracyjnego i wlaczenie serwera
+		/// w trybie macierzystym (tylko nasluchiwanie) badz zwyklym (polaczenie z serwem macierzystym
+		/// i wymiana danych a nastepnie przejscie w stan nasluchiwania)
 		///
 		bool Run();
 }; 
