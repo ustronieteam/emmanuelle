@@ -90,8 +90,8 @@ class Server
         Server(const char * fileName)
 		{
 			// stworzenie obiektow baz danych: klienta i serwera
-			this->clientDataBaseObj = new ClientsDataBase();
-			this->serverDataBaseObj = new ServerDataBase();
+			this->clientDataBaseObj = ClientsDataBase::GetInstance();
+			this->serverDataBaseObj = ServerDataBase::GetInstance();
 
 			// nazwa pliku konfiguracyjnego
 			configFileName = fileName;

@@ -51,7 +51,7 @@ ClientsDataBase::~ClientsDataBase()
 /// @return Rekord o podanym idetyfikatorze.
 const ClientRecord & ClientsDataBase::GetRecord(int recordId) 
 {
-	boost::mutex::scoped_lock sl(_mutex);
+	//boost::mutex::scoped_lock sl(_mutex);
 
 	if ( this->_records.count(recordId) != 0 )
 	{
@@ -69,7 +69,7 @@ const ClientRecord & ClientsDataBase::GetRecord(int recordId)
 /// @return Wektor ze wszystkimi rekordami.
 std::vector<ClientRecord> ClientsDataBase::GetAllRecords() 
 {
-	boost::mutex::scoped_lock sl(_mutex);
+	//boost::mutex::scoped_lock sl(_mutex);
 	std::vector<ClientRecord> v;
 	
 	if ( _records.size() != 0 )
@@ -85,7 +85,7 @@ std::vector<ClientRecord> ClientsDataBase::GetAllRecords()
 /// @return ???
 int ClientsDataBase::InsertRecord(const ClientRecord & record) 
 {
-	boost::mutex::scoped_lock sl(_mutex);
+	//boost::mutex::scoped_lock sl(_mutex);
 
 	if ( this->_records.count(record.GetRecordId()) == 0 )
 	{
@@ -105,7 +105,7 @@ int ClientsDataBase::InsertRecord(const ClientRecord & record)
 /// @return ???
 int ClientsDataBase::DeleteRecord(int recordId) 
 {
-	boost::mutex::scoped_lock sl(_mutex);
+	//boost::mutex::scoped_lock sl(_mutex);
 
 	if ( this->_records.count(recordId) != 0 )
 	{
@@ -125,7 +125,7 @@ int ClientsDataBase::DeleteRecord(int recordId)
 /// @return ???
 int ClientsDataBase::ModifyRecord(const ClientRecord & record) 
 {
-	boost::mutex::scoped_lock sl(_mutex);
+	//boost::mutex::scoped_lock sl(_mutex);
 
 	if ( this->_records.count(record.GetRecordId()) != 0 )
 	{
@@ -170,7 +170,7 @@ int ClientsDataBase::Size()
 /// @return ID wyszukanego rekordu. -1 gdy nie znajdzie.
 int ClientsDataBase::Find(struct DomainData::Address & address)
 {
-	boost::mutex::scoped_lock sl(_mutex);
+	//boost::mutex::scoped_lock sl(_mutex);
 
 	if ( this->_records.size() != 0 )
 		for(std::map<int, ClientRecord>::iterator i = this->_records.begin(); i != this->_records.end(); i++)
@@ -185,7 +185,7 @@ int ClientsDataBase::Find(struct DomainData::Address & address)
 /// @return Id rekordu aktywnego klienta. -1 gdy nie znajdzie.
 int ClientsDataBase::FindActiveClient()
 {
-	boost::mutex::scoped_lock sl(_mutex);
+	//boost::mutex::scoped_lock sl(_mutex);
 
 	if ( _records.size() != 0 )
 		for(std::map<int, ClientRecord>::iterator i = this->_records.begin(); i != this->_records.end(); i++)
@@ -200,7 +200,7 @@ int ClientsDataBase::FindActiveClient()
 /// @return Id rekordu aktywnego klienta. -1 gdy nie znajdzie.
 int ClientsDataBase::FindActiveClientOnServer(int serverId)
 {
-	boost::mutex::scoped_lock sl(_mutex);
+	//boost::mutex::scoped_lock sl(_mutex);
 
 	if ( _records.size() != 0 )
 		for(std::map<int, ClientRecord>::iterator i = this->_records.begin(); i != this->_records.end(); i++)

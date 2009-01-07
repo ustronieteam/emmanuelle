@@ -6,18 +6,18 @@ int Record::_newId = 1;
 
 ///
 /// Mutex potrzebny go generowania id rekordow.
-boost::mutex Record::_mutex;
+//boost::mutex Record::_mutex;
 
 ///
 /// Konstruktor bezparametrowy.
 Record::Record() 
 {
 	// Mozliwosc otrzymania jednakowego identyfikatora.
-	_mutex.lock();
+	//_mutex.lock();
 
     _recordId = _newId++;
 
-	_mutex.unlock();
+	//_mutex.unlock();
 }
 
 ///
