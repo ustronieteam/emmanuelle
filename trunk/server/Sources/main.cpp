@@ -33,7 +33,7 @@ int main(int argc, char * argv[])
 	Server * serv = Server::GetInstance(argv[1]);
 	if(serv->Run())
 	{
-		LOG4CXX_ERROR(logger, "Serwer zosta³ nieprawidlowo zamkniety z powodyu b³êdu");
+		LOG4CXX_ERROR(logger, "Serwer zosta³ nieprawidlowo zamkniety z powodu b³êdu");
 		return 1;
 	}
 
@@ -41,6 +41,5 @@ int main(int argc, char * argv[])
 	Server * serv = Server::GetInstance("test.txt");
 	serv->Run();
 */	
-	system("Pause");
 	return 0;
 }

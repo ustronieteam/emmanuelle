@@ -15,7 +15,7 @@ bool Server::Run()
 	}
 	else
 	{
-		LOG4CXX_DEBUG(logger, string("Wczytano plik konfiguracyjny ") + configFileName + string(" (") + address + string(",") + port + string(")"));
+		LOG4CXX_DEBUG(logger, "Wczytano plik konfiguracyjny " << configFileName << " (" << address.c_str() << "," << port.c_str() << ")");
 	}
 	
 	// jesli uruchomilismy serwer macierzysty to nie podlaczamy sie do zadnego 
@@ -23,7 +23,7 @@ bool Server::Run()
 	{
 		if(!init(address, port))
 		{
-			LOG4CXX_DEBUG(logger, string("polaczono z serverem ") + address + string(" nasluchujacym na porcie ") + port);
+			LOG4CXX_DEBUG(logger, "polaczono z serverem " << address.c_str() << " nasluchujacym na porcie " << port.c_str());
 		}
 		else
 		{
@@ -112,7 +112,7 @@ bool Server::Run()
 	}
 	catch(const CORBA::SystemException& e)
 	{
-		LOG4CXX_ERROR(logger, string("WYJ¥TEK") + e._name());
+		LOG4CXX_ERROR(logger, "WYJ¥TEK" << e._name());
 
 		if (!CORBA::is_nil(orb))
 		{
@@ -177,7 +177,7 @@ bool Server::init(string address, string port)
 	}
 	catch(const CORBA::SystemException& e)
 	{
-		LOG4CXX_ERROR(logger, string("WYJ¥TEK: ") + e._name());
+		LOG4CXX_ERROR(logger, "WYJ¥TEK: " << e._name());
 
 		if (!CORBA::is_nil(orb))
 		{
