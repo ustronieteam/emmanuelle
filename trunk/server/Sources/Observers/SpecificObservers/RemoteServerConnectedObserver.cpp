@@ -78,11 +78,19 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 	//	1) Dodaj nowy serwer do bazy(lub zmodyfikuj istniejacy rekord)
 	struct DomainData::Address servAddr = observerData.getServerAddress();
 	int serverId = serverDataBase->Find(servAddr); //id nowego serwera
-
+	if(serverId<=0)
+	{
+		LOG4CXX_ERROR(logger,"Brak nowego serwera na lokalnej bazie. Nie zostal dodany wiec nigdzie.");
+		return -1;
+	}
 	//Zdobadz wlasne id
 	struct DomainData::Address localServAddr = Server::GetMyIp();
 	int localId = serverDataBase->Find(localServAddr); //wlasne id w bazie
-
+	if(localId<=0)
+	{
+		LOG4CXX_ERROR(logger,"Brak danych o lokalnym serwerze w bazie");
+		return -2;
+	}
 	//Utworz licznik serwerow z listy(tylko dla odp dla Join ma sens)
 	int serverCounter =0;
 
