@@ -39,7 +39,7 @@ class ServerDataBase;
 //    3) Do ka¿dego serwera z listy dodaj nowy serwer (AddServer)
 //</p>
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-class RemoteServerConnectedObserver : IRemoteObserver
+class RemoteServerConnectedObserver : public IRemoteObserver
 {
 
     //Begin section for RemoteServerConnectedObserver
