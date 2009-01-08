@@ -20,7 +20,7 @@ IRemoteObjects::~IRemoteObjects()
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 int IRemoteObjects::Notify(RemoteObserverData observerData)
 {
-	for(std::vector<RemoteObserver *>::iterator it = RemoteObserversList.begin();
+	for(std::vector<IRemoteObserver *>::iterator it = RemoteObserversList.begin();
 		it != RemoteObserversList.end();	//Dopuki nie doszlismy do konca zbioru
 			it++)
 	{
@@ -32,7 +32,10 @@ int IRemoteObjects::Notify(RemoteObserverData observerData)
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 int IRemoteObjects::UnregisterObserv(IRemoteObserver & observer)
 {
-	for(std::vector<RemoteObserver *>::const_iterator it = RemoteObserversList.begin();
+	// TODO: dodac w klasie IRemoteObserver jakas skladowa do porownywania 2 obiektow tej klasy
+	/*
+	std::vector<IRemoteObserver *>::const_iterator it = RemoteObserversList.begin();
+	for(it;
 		it != RemoteObserversList.end();	//Dopuki nie doszlismy do konca zbioru
 			it++)
 	{
@@ -40,6 +43,7 @@ int IRemoteObjects::UnregisterObserv(IRemoteObserver & observer)
 			break;
 	}
 	RemoteObserversList.erase(it);
+	*/
 	return 0;
 }
 

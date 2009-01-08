@@ -44,12 +44,6 @@ IServerServer_impl::Join(const ::DomainData::Address& serverAddress)
 	addr.localization = CORBA::string_dup( Server::GetRemotedAddress() );
 	this->AddServer(addr);
 	
-	/*
-	ServerRecord * record = new ServerRecord();
-	// TODO: dodac dane
-	serverDB->InsertRecord(*record);
-   */
-
 	// stworzenie obiektu z danymi dla obserwatora
 	RemoteObserverData observData;
 	observData.set_eventType(SERVER_CONNECTED);
@@ -84,15 +78,6 @@ IServerServer_impl::Unjoin()
 	addr.localization = CORBA::string_dup(Server::GetRemotedAddress());
 
 	this->RemoveServer(addr);
-
-	/*
-	// wydobycie z bazy rekordu dla tego serwera
-	int recordId;
-	if((recordId = ServerDataBase::GetInstance()->Find(addr)) < 0)
-		return;
-
-	ServerDataBase::GetInstance()->DeleteRecord(recordId);
-	*/
 
 	// stworzenie obiektu z danymi dla obserwatora
 	RemoteObserverData observData;
@@ -142,6 +127,7 @@ IServerServer_impl::AddServer(const ::DomainData::Address& serverAddress)
 	{
 		std::cout << i+1 << ". " << servers[i].GetAddress().localization << std::endl;
 	}
+	std::cout << "---------------------------------------" << std::endl;
 }
 
 //
