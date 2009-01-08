@@ -23,7 +23,7 @@ class ClientsDataBase;
 
 //    1)Znajdz klienta docelowego(adresata) - musi byc do nas pod³¹czony (Je¿eli nie to b³¹d.)
 //    2)Przekaz mu wiadomoœæ
-class PassMessageObserver : IRemoteObserver
+class PassMessageObserver : public IRemoteObserver
 {
 
     //Begin section for PassMessageObserver

@@ -32,7 +32,7 @@ class ServerDataBase;
 //    2) Je¿eli takiego nie ma to znajdŸ takiego który jest pod³¹czony do innego serwera i przeka¿ temu serwerowi
 //    odpowiedni komunikat (PassCreatePipe?)
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-class RemoteClientCreatePipeObserver : IRemoteObserver
+class RemoteClientCreatePipeObserver : public  IRemoteObserver
 {
 
     //Begin section for RemoteClientCreatePipeObserver

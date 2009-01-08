@@ -29,7 +29,7 @@ class ServerDataBase;
 //    1) Znajdz klienta
 //    2) zaktualizuj jego wpis w bazie (dodaj jak nie ma)
 //    3) Powiadom wszystkie serwery o zmianie
-class RemoteClientConnectedObserver : IRemoteObserver
+class RemoteClientConnectedObserver : public  IRemoteObserver
 {
 
     //Begin section for RemoteClientConnectedObserver

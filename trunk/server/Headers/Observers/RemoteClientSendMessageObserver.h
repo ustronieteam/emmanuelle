@@ -29,7 +29,7 @@ class ServerDataBase;
 //    1) Znajdz odpowiedniego klienta (adresata)
 //    2) Jezeli jest do nas pod³¹czony przekaz mu wiadomoœæ
 //    3) Je¿eli nie jest to wykonaj PassMessage na serwerze do którego jest pod³¹czony
-class RemoteClientSendMessageObserver : IRemoteObserver
+class RemoteClientSendMessageObserver : public  IRemoteObserver
 {
 
     //Begin section for RemoteClientSendMessageObserver

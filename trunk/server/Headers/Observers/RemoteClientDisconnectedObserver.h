@@ -32,7 +32,7 @@ class ServerDataBase;
 //    2)Powiadom wszystkie serwery o zmianie
 //</p>
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-class RemoteClientDisconnectedObserver : IRemoteObserver
+class RemoteClientDisconnectedObserver : public IRemoteObserver
 {
 
     //Begin section for RemoteClientDisconnectedObserver

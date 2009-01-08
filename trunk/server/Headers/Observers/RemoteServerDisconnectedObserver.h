@@ -27,7 +27,7 @@ class ServerDataBase;
 //    1) ZnajdŸ odpowiedni serwer(ten który siê roz³¹cza)
 //    2) zaktualizuj jego wpis(usun?)
 //    3)Powiadom wszystkie serwery o zmianie
-class RemoteServerDisconnectedObserver : IRemoteObserver
+class RemoteServerDisconnectedObserver : public IRemoteObserver
 {
 
     //Begin section for RemoteServerDisconnectedObserver
