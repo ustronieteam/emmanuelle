@@ -16,6 +16,11 @@ ServerCreatePipeObserver::ServerCreatePipeObserver(ServerCreatePipeObserver & ar
     this->clientsDataBase = arg.clientsDataBase;
 }
 
+ServerCreatePipeObserver::ServerCreatePipeObserver(boost::shared_ptr<ClientsDataBase> & clntDB) 
+{
+	 this->clientsDataBase = clntDB;
+}
+
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 ServerCreatePipeObserver & ServerCreatePipeObserver::operator =(const ServerCreatePipeObserver & arg) 
 {

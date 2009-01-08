@@ -9,12 +9,16 @@
 #define ___IServerServer_impl_h__
 
 #include <IServerServer_skel.h>
+#include "IRemoteObjects.h"
+#include "RemoteObserverData.h"
+#include "EventType.h"
 
 //
 // IDL:IServerServer:1.0
 //
 class IServerServer_impl : virtual public POA_IServerServer,
-                           virtual public PortableServer::RefCountServantBase
+                           virtual public PortableServer::RefCountServantBase,
+						   virtual public IRemoteObjects
 {
     IServerServer_impl(const IServerServer_impl&);
     void operator=(const IServerServer_impl&);

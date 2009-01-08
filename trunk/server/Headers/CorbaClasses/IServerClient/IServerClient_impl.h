@@ -9,12 +9,14 @@
 #define ___IServerClient_impl_h__
 
 #include <IServerClient_skel.h>
+#include "IRemoteObjects.h"
 
 //
 // IDL:IServerClient:1.0
 //
 class IServerClient_impl : virtual public POA_IServerClient,
-                           virtual public PortableServer::RefCountServantBase
+                           virtual public PortableServer::RefCountServantBase,
+						   virtual public IRemoteObjects
 {
     IServerClient_impl(const IServerClient_impl&);
     void operator=(const IServerClient_impl&);

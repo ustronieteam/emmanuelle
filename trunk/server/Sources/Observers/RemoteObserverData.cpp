@@ -43,7 +43,7 @@ EventType & RemoteObserverData::get_eventType()
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-void RemoteObserverData::set_eventType(EventType & eventType) 
+void RemoteObserverData::set_eventType(EventType eventType) 
 {
     //TODO Auto-generated method stub
     this->eventType = eventType;
