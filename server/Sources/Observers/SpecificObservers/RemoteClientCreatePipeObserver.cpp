@@ -74,6 +74,8 @@ void RemoteClientCreatePipeObserver::set_serverDataBase(boost::shared_ptr<Server
 //@return ??
 int RemoteClientCreatePipeObserver::Refresh(RemoteObserverData observerData)
 {
+	if(observerData.get_eventType()!=CLIENT_CREATE_PIPE_REQUEST)
+		return 0; 
 	//Utworz logike watku
 	RemoteClientCreatePipeObserverLogicRunnable threadLogic(serverDataBase ,clientsDataBase, observerData);
 	//Utworz i uruchom watki
