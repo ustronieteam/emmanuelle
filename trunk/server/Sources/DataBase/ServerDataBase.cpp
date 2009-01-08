@@ -188,3 +188,22 @@ int ServerDataBase::Find(const struct DomainData::Address & address)
 
 	return -1;
 }
+
+///
+/// Przeciazony operator wypisu bazy danych do strumienia.
+/// @param[in] os Strumien wyjsciowy.
+/// @param[in] db Baza danych.
+/// @return Strumien wyjsciowy.
+std::ostream & operator<<(std::ostream & os, const ServerDataBase & db)
+{
+	int k = 1;
+	for(std::map<int, ServerRecord>::const_iterator i = db._records.begin(); i != db._records.end(); i++, ++k)
+	{
+		os	<< k << "\t" 
+			<< (*i).second.GetRecordId() << "\t"
+			<< (*i).second.GetAddress().localization.in()
+			<< std::endl;
+	}
+
+	return os;
+}
