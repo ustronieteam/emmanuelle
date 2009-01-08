@@ -84,7 +84,7 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 	int serverId = serverDataBase->Find(servAddr); //id nowego serwera
 	if(serverId<=0)
 	{
-		LOG4CXX_ERROR(logger,"Brak nowego serwera na lokalnej bazie. Nie zostal dodany wiec nigdzie.");
+		LOG4CXX_ERROR(logger,"Brak nowego serwera na lokalnej bazie. Nie zostal dodany wiec nigdzie. serv addr:" <<servAddr.localization <<"servId:"<< serverId);
 		return -1;
 	}
 	//Zdobadz wlasne id
