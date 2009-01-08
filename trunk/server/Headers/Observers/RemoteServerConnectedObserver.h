@@ -18,6 +18,7 @@
 #include "IServerServer.h"
 #include <iostream>
 #include "DomainData.h"
+#include "Server.h"
 
 //Do utworzenia logow w przypadkyu bledow
 #include <log4cxx/logger.h>

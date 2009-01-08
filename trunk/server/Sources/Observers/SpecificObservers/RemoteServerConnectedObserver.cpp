@@ -57,7 +57,7 @@ void RemoteServerConnectedObserver::set_serverDataBase(boost::shared_ptr<ServerD
 ///@return ??
 int RemoteServerConnectedObserver::Refresh(RemoteObserverData observerData)
 {
-	if(observerData.get_eventType()!=EventType::SERVER_CONNECTED)
+	if(observerData.get_eventType()!=SERVER_CONNECTED)
 		return 0; //Odfiltrowanie niechcianych zdarzen
 	//Utworz logike watku
 	RemoteServerConnectedObserverLogicRunnable threadLogic(serverDataBase, observerData);
@@ -74,79 +74,70 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 {
 	LOG4CXX_INFO(logger, "Przetwarzanie logiki");
 	//Odpowiedz na Join()		 -> wtedy rozsylamy info do innych serverow
-	//Lub odpowiedz na AddServer -> wtedy nie rozsylamy info do innych serverow
 
 	//	1) Dodaj nowy serwer do bazy(lub zmodyfikuj istniejacy rekord)
 	struct DomainData::Address servAddr = observerData.getServerAddress();
-	int serverId = serverDataBase->Find(servAddr);//Mozliwe ze rekord jest w bazie(nie zostal usuniety wczesniej)
-	if(serverId >0)
-	{//Rekord jest w bazie z jakis powodow, trzeba wiec go zmodyfikowac
-		try
-		{
-			ServerRecord servRec = serverDataBase->GetRecord(serverId);
-			//Modyfikuj rekord zgodnie z observerData
-			IServerServer_var newRemoteInstance;
-			servRec.SetServerRemoteInstance(newRemoteInstance);//Zresetowanie zdalnej instancji
-			int status = serverDataBase->ModifyRecord(servRec);
-			if(status<0)
-			{
-				LOG4CXX_ERROR(logger, "Blad modyfikacji rekordu servera");
-				return -2;
-			}
-			
-		}
-		catch(std::exception & exc)
-		{
-			LOG4CXX_ERROR(logger, "Zlapano wyjotek podczas pobierania rekordu z bazy danych servera serverId: "<<serverId<< ".Powod: "<< exc.what());
-			return -2;
-		}
-		
-	}
-	else
-	{//Rekordu nie ma w bazie trzeba dodac nowy
-		ServerRecord newRecord; //do dokonczenia (wype³niæ pola z observerData) !!!
-		newRecord.SetAddress(observerData.getServerAddress());
-		int status = serverDataBase->InsertRecord(newRecord);
-		if(status < 0)
-		{
-			LOG4CXX_ERROR(logger, "Blad podczas wstawiania nowego rekordu servera");
-			return -1;
-		}
-	}
+	int serverId = serverDataBase->Find(servAddr); //id nowego serwera
+
+	//Zdobadz wlasne id
+	struct DomainData::Address localServAddr = Server::GetMyIp();
+	int localId = serverDataBase->Find(localServAddr); //wlasne id w bazie
+
 	//Utworz licznik serwerow z listy(tylko dla odp dla Join ma sens)
 	int serverCounter =0;
-	//na podstawie observerData ocen czy jest to odpowiedz na join czy AddServer
-	if(true/*jest to odp na Join */)
-	{
+
+	//	2) Pobierz liste wszystkich serwerów
+	std::vector<ServerRecord> allRecords = serverDataBase->GetAllRecords();
 
 	
-		//	2) Pobierz liste wszystkich serwerów
-		std::vector<ServerRecord> allRecords = serverDataBase->GetAllRecords();
-
-		
-		//	3) Do ka¿dego serwera z listy dodaj nowy serwer (AddServer)
-		LOG4CXX_INFO(logger, "Petla wysylania wiadomosci do serwerow");
-		for(std::vector<ServerRecord>::iterator it = allRecords.begin();
-				it != allRecords.end();	//Dopuki nie doszlismy do konca zbioru
-					it++)
+	//	3) Do ka¿dego serwera z listy dodaj nowy serwer (AddServer)
+	LOG4CXX_INFO(logger, "Petla wysylania wiadomosci do serwerow");
+	for(std::vector<ServerRecord>::iterator it = allRecords.begin();
+			it != allRecords.end();	//Dopuki nie doszlismy do konca zbioru
+				it++)
+	{
+		ServerRecord servRec = (*it);
+		if(servRec.GetRecordId()==serverId || servRec.GetRecordId()==localId)
 		{
-			ServerRecord servRec = (*it);
-			IServerServer_var remoteServer = servRec.GetServerRemoteInstance();
-			try
-			{
-				struct DomainData::Address ownAddr;
-				remoteServer->AddServer(ownAddr);//Dodac dane z observer Data
-				LOG4CXX_INFO(logger, "Wiadomosc wyslana do serwera nr"<<serverCounter);
-			}
-			catch(std::exception & exc) //chyba rzuca jakis wyjatek??
-			{
-				LOG4CXX_ERROR(logger, "Blad wysylania do serwera: " << serverCounter<< ".Powod: "<< exc.what());
-			}
-			serverCounter++;
-
+			continue;
 		}
-		//Sleep(5000);
+		IServerServer_var remoteServer = servRec.GetServerRemoteInstance();
+		if(CORBA::is_nil(remoteServer))
+		{
+			LOG4CXX_DEBUG(logger, "Pozyskiwanie zdalnej instancji servera");
+			CORBA::ORB_var orb;
+			IServerServer_var remInstance;
+			if(Server::connectToServer(servRec.GetAddress(),orb, remInstance)==false)
+			{
+				//TODO: zastanowic sie czy tu nie usunac serwer
+				LOG4CXX_ERROR(logger, "Nie mozna pozyskac zdalnej instancji servera");
+				continue; //Nie mozna wywolac zdalnej metody
+			}
+			else
+			{
+				LOG4CXX_DEBUG(logger, "Pozyskano zdalna instancje serwera");
+				servRec.SetServerRemoteInstance(remInstance);
+				servRec.SetBroker(orb);
+				remoteServer = remInstance;
+			}
+		}
+		try
+		{
+			struct DomainData::Address ownAddr;
+			remoteServer->AddServer(ownAddr);//Dodac dane z observer Data
+			LOG4CXX_INFO(logger, "Wiadomosc wyslana do serwera nr"<<serverCounter);
+		}
+		catch(std::exception & exc) //chyba rzuca jakis wyjatek??
+		{
+			LOG4CXX_ERROR(logger, "Blad wysylania do serwera: " << serverCounter<< ".Powod: "<< exc.what());
+		}
+		serverCounter++;
+
 	}
+	//TODO: dodac wywolanie na rekordzie o id serverID wywolanie w petli dodanie wszystkich klientow
+	//TODO: aby ustawic baze klientow
+
+	//Sleep(5000);
 	LOG4CXX_INFO(logger, "Koniec przetwarzania logiki");
 	return serverCounter;
 }
