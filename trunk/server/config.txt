@@ -1,3 +1,3 @@
 # adres serwera mecierzystego, do ktorego laczymy sie zeby zebrac potrzebne dane o serwerach i klientach;
 # jesli ma  byc to serwer macierzyty nalezy usunac/wykomentowac dana linie
-address = localhost
+address = 10.3.2.90
