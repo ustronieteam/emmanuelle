@@ -56,6 +56,7 @@ bool Server::init(string address, string port)
 		LOG4CXX_DEBUG(logger, "Poczatek komunikacji z serwerem macierzystym ... ");
 
 		parentServer->Join();
+
 		// TODO: dokonczyc ...	nawiazanie kontaktu z macierzystym serwerem, zapisanie obiektu zdalnego
 		//						zapisanie obiektu orb
 
@@ -193,18 +194,34 @@ void Server::activateListning()
 		LOG4CXX_DEBUG(logger, "utworzono boot manager'a");
 
 		// <dla serwerów>
-		IServerServer_impl * serverImpl = new IServerServer_impl(poa);
+		serverImpl = new IServerServer_impl(poa);
+		
+		// dodanie i zarejestrowanie observatorow
+		serverImpl->RegisterObserv(new RemoteServerConnectedObserver(serverDataBaseObj));
+		serverImpl->RegisterObserv(new RemoteServerDisconnectedObserver(serverDataBaseObj));
+		serverImpl->RegisterObserv(new ServerCreatePipeObserver(clientDataBaseObj));
+		serverImpl->RegisterObserv(new PassMessageObserver(clientDataBaseObj));
+
 		PortableServer::ObjectId_var oidServ = PortableServer::string_to_ObjectId("serverserver");
 		PortableServer::ServantBase_var servantServ = serverImpl;
 		poa->activate_object_with_id(oidServ, servantServ);
 		LOG4CXX_DEBUG(logger, "utworzono i zarejestrowano zdalny obiekt serwera (udostepniany serwerom)");
-		
+
 		IServerServer_var server = serverImpl->_this();
 		bootManager->add_binding(oidServ, server);
+
 		// </dla serwerów>
 
 		// </dla klientow>
-		IServerClient_impl * clientImpl = new IServerClient_impl(poa);
+		clientImpl = new IServerClient_impl(poa);
+
+		// dodanie i zarejestrowanie observatorow
+		clientImpl->RegisterObserv(new RemoteClientConnectedObserver(serverDataBaseObj, clientDataBaseObj));
+		clientImpl->RegisterObserv(new RemoteClientCreatePipeObserver(serverDataBaseObj, clientDataBaseObj));
+		clientImpl->RegisterObserv(new RemoteClientDisconnectedObserver(serverDataBaseObj, clientDataBaseObj));
+		clientImpl->RegisterObserv(new RemoteClientSendMessageObserver(serverDataBaseObj, clientDataBaseObj));
+		clientImpl->RegisterObserv(new RemoteServerUpdateClientObserver(serverDataBaseObj, clientDataBaseObj));
+
 		PortableServer::ObjectId_var oidClnt = PortableServer::string_to_ObjectId("serverclient");
 		PortableServer::ServantBase_var servantClnt = clientImpl;
 		poa->activate_object_with_id(oidClnt, servantClnt);

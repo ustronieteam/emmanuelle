@@ -5,7 +5,6 @@
 #include <OB/BootManager.h>
 #include <OB/OCI_IIOP.h>
 
-//#include "DataBase.h"
 #include "DataBase/ClientsDataBase.h"
 #include "DataBase/ServerDataBase.h"
 #include "IServerServer.h"
@@ -13,7 +12,15 @@
 #include "IServerClient.h"
 #include "IServerClient_impl.h"
 
-
+#include "RemoteServerConnectedObserver.h"
+#include "RemoteServerDisconnectedObserver.h"
+#include "RemoteServerUpdateClientObserver.h"
+#include "PassMessageObserver.h"
+#include "RemoteClientConnectedObserver.h"
+#include "RemoteClientCreatePipeObserver.h"
+#include "RemoteClientDisconnectedObserver.h"
+#include "RemoteClientSendMessageObserver.h"
+#include "ServerCreatePipeObserver.h"
 
 #include <iostream>
 #include <fstream>
@@ -45,12 +52,16 @@ class Server
 		///
 		/// wskaznik do bazy danych aktywnych klientow
 		///
-		ClientsDataBase * clientDataBaseObj;
+		boost::shared_ptr<ClientsDataBase> clientDataBaseObj;
 
 		///
 		/// wskaznik do bazy danych aktywnych serwerow
 		///
-		ServerDataBase * serverDataBaseObj;
+		boost::shared_ptr<ServerDataBase> serverDataBaseObj;
+
+		IServerServer_impl * serverImpl;
+
+		IServerClient_impl * clientImpl;
 
 		///
 		/// nazwa pliku konfiguracyjnego
@@ -92,8 +103,10 @@ class Server
         Server(const char * fileName)
 		{
 			// stworzenie obiektow baz danych: klienta i serwera
-			this->clientDataBaseObj = ClientsDataBase::GetInstance();
-			this->serverDataBaseObj = ServerDataBase::GetInstance();
+			clientDataBaseObj = boost::shared_ptr<ClientsDataBase>( ClientsDataBase::GetInstance() );
+			clientDataBaseObj->Initialize();
+			serverDataBaseObj = boost::shared_ptr<ServerDataBase>(ServerDataBase::GetInstance() );
+			serverDataBaseObj->Initialize();
 
 			// nazwa pliku konfiguracyjnego
 			configFileName = fileName;

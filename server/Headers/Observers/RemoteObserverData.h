@@ -35,7 +35,7 @@ class RemoteObserverData
         RemoteObserverData & operator =(const RemoteObserverData & arg);
         virtual ~RemoteObserverData();
         EventType & get_eventType();
-        void set_eventType(EventType & eventType);
+        void set_eventType(EventType eventType);
 		
 		DomainData::Address & getServerAddress(){return _serverAddress;}
 		void setServerAddress(DomainData::Address & serverAddress){_serverAddress = serverAddress;}

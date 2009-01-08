@@ -29,8 +29,26 @@ IServerServer_impl::Join()
 {
 	std::cout << "WYWOLANIE JOIN z adresu: " << Server::GetRemotedAddress() << std::endl;
 
-    // TODO: Implementation
-    ::AddressesList* _r = new ::AddressesList;
+	std::vector<ServerRecord> & serversList = ServerDataBase::GetInstance()->GetAllRecords();
+
+	RemoteObserverData observData;
+	observData.set_eventType(EventType::SERVER_CONNECTED);
+	
+	::DomainData::Address adres;
+	adres.localization = Server::GetRemotedAddress();
+	
+	observData.setServerAddress(adres);
+
+	this->Notify(observData);
+
+	// TODO: dokonczyc
+	::AddressesList* _r = new ::AddressesList(serversList.size() + 1);
+	
+	std::cout << "dlugosc: " << _r->length()  << ", max: " << _r->maximum() << std::endl;
+
+	//for(int i = 0; i < serversList.size(); ++i)
+	//	(*_r)[i] = serversList[i].GetAddress();
+
     return _r;
 }
 
