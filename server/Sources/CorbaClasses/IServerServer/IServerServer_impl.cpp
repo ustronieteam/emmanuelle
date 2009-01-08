@@ -28,49 +28,39 @@ IServerServer_impl::Join(const ::DomainData::Address& serverAddress)
 {
 	std::cout << "WYWOLANIE JOIN z adresu: " << Server::GetRemotedAddress() << std::endl;
 
+	// zapisanie adresu wlasnego serwera
+	Server::SetMyIP(serverAddress);
+
 	//pobranie instancji bazy danych
 	ServerDataBase * serverDB = ServerDataBase::GetInstance();
+
+	if(!serverDB->Size())
+	{
+		this->AddServer(serverAddress);
+	}
 
 	// dodanie nowego serwera do bazy danych
 	DomainData::Address addr;
 	addr.localization = CORBA::string_dup( Server::GetRemotedAddress() );
 	this->AddServer(addr);
+	
 	/*
 	ServerRecord * record = new ServerRecord();
 	// TODO: dodac dane
 	serverDB->InsertRecord(*record);
    */
 
-	//pobranie wszystkich rekordow z bazy danych serwera
-	std::vector<ServerRecord> & serversList = serverDB->GetAllRecords();
-
-	if(serversList.size() == 1)
-	{
-		// w bazie nei bylo jeszcze adresu serwera mecierzystego a wiec trzeba go dodac
-		this->AddServer(serverAddress);
-		/*
-		ServerRecord * mRecord = new ServerRecord();
-		// TODO: dodac dane
-		serverDB->InsertRecord(*mRecord);
-		*/
-
-		// dolozenie do kolekcji serwerow tego ktory przed chwila zostal dodany
-		serversList = serverDB->GetAllRecords();
-		// serversList.push_back(*mRecord);
-	}
-
 	// stworzenie obiektu z danymi dla obserwatora
 	RemoteObserverData observData;
 	observData.set_eventType(SERVER_CONNECTED);
-	
-	DomainData::Address adres;
-	adres.localization = Server::GetRemotedAddress();
-	
-	observData.setServerAddress(adres);
+	observData.setServerAddress(addr);
 
 	// wywolanie notify() na obserwatorach (jesli dany obserwator w kolekcji obserwatorow
 	// bedzie zobowiazany do zareagowania na zdarzenie to to zrobi)
 	this->Notify(observData);
+
+	//pobranie wszystkich rekordow z bazy danych serwera
+	std::vector<ServerRecord> & serversList = serverDB->GetAllRecords();
 
 	// utworzenie listy typu AddressList i przepisanie danych uzyskanych z bazy
 	AddressesList * _r =  new  AddressesList();
@@ -119,15 +109,39 @@ void
 IServerServer_impl::AddServer(const ::DomainData::Address& serverAddress)
     throw(::CORBA::SystemException)
 {
+	int serverId;
 	ServerRecord record;
-	record.SetAddress(serverAddress);
 
-	try
+	if((serverId = ServerDataBase::GetInstance()->Find(serverAddress)) < 0)
 	{
-		ServerDataBase::GetInstance()->InsertRecord(record);
+		record.SetAddress(serverAddress);
+	
+		try
+		{
+			ServerDataBase::GetInstance()->InsertRecord(record);
+		}
+		catch(std::exception &)
+		{}
 	}
-	catch(std::exception &)
-	{}
+	else
+	{
+		record = ServerDataBase::GetInstance()->GetRecord(serverId);
+		CORBA::ORB_var orb = record.GetBroker();
+		orb->destroy();
+		record.SetBroker(orb);
+
+		IServerServer_var serv = record.GetServerRemoteInstance();
+		CORBA::release(serv);
+		record.SetServerRemoteInstance(serv);
+
+		ServerDataBase::GetInstance()->ModifyRecord(record);
+	}
+
+	std::vector<ServerRecord> servers = ServerDataBase::GetInstance()->GetAllRecords();
+	for(int i = 0; i < servers.size(); ++i)
+	{
+		std::cout << i+1 << ". " << servers[i].GetAddress().localization << std::endl;
+	}
 }
 
 //
