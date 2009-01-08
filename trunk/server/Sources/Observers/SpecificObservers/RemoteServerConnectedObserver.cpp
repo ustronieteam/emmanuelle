@@ -60,7 +60,7 @@ int RemoteServerConnectedObserver::Refresh(RemoteObserverData observerData)
 	log4cxx::LoggerPtr logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("RemoteServerConnectedObserver"));
 	logger->setLevel(log4cxx::Level::getAll());
 
-	LOG4CXX_DEBUG(logger, "Refresh obserwatora : start");
+	LOG4CXX_DEBUG(logger, "Refresh obserwatora : start. ServerAddres" <<observerData.getServerAddress().localization.in());
 	if(observerData.get_eventType()!=SERVER_CONNECTED)
 		return 0; //Odfiltrowanie niechcianych zdarzen
 	//Utworz logike watku
