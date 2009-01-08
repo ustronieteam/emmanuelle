@@ -20,6 +20,9 @@ IRemoteObjects::~IRemoteObjects()
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 int IRemoteObjects::Notify(RemoteObserverData observerData)
 {
+	log4cxx::LoggerPtr logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("IRemoteObjects"));
+	logger->setLevel(log4cxx::Level::getAll());
+	LOG4CXX_DEBUG(logger, "ObserverData->serverAddress:" <<observerData.getServerAddress().localization.in());
 	for(std::vector<IRemoteObserver *>::iterator it = RemoteObserversList.begin();
 		it != RemoteObserversList.end();	//Dopuki nie doszlismy do konca zbioru
 			it++)
