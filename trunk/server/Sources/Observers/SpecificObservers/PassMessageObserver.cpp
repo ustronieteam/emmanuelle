@@ -56,6 +56,8 @@ void PassMessageObserver::set_clientsDataBase(boost::shared_ptr<ClientsDataBase>
 //@return ??
 int PassMessageObserver::Refresh(RemoteObserverData observerData)
 {
+	if(observerData.get_eventType()!=SERVER_PASS_MESSAGE)
+		return 0; //Odfiltrowanie niechcianych zdarzen
 	//Utworz logike watku
 	PassMessageObserverLogicRunnable threadLogic(clientsDataBase, observerData);
 	//Utworz i uruchom watki

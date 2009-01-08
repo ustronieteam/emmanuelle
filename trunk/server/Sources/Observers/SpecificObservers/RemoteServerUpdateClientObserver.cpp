@@ -71,6 +71,8 @@ void RemoteServerUpdateClientObserver::set_serverDataBase(boost::shared_ptr<Serv
 //@return ??
 int RemoteServerUpdateClientObserver::Refresh(RemoteObserverData observerData)
 {
+	if(observerData.get_eventType()!=SERVER_UPDATE_CLIENT)
+		return 0;
 	//Utworz logike watku
 	RemoteServerUpdateClientObserverLogicRunnable threadLogic(serverDataBase, clientsDataBase, observerData);
 	//Utworz i uruchom watki
