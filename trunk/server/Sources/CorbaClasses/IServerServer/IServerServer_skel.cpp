@@ -31,9 +31,11 @@
 void
 POA_IServerServer::_OB_op_Join(OB::Upcall_ptr _ob_up)
 {
-    _OB_preUnmarshal(_ob_up);
+    ::DomainData::Address _ob_a0;
+    OB::InputStreamImpl* _ob_in = _OB_preUnmarshal(_ob_up);
+    ::DomainData::Address::_OB_unmarshal(_ob_a0, _ob_in);
     _OB_postUnmarshal(_ob_up);
-    ::AddressesList_var _ob_r = Join();
+    ::AddressesList_var _ob_r = Join(_ob_a0);
     _OB_postinvoke(_ob_up);
     OB::OutputStreamImpl* _ob_out = _OB_preMarshal(_ob_up);
     ::CORBA::ULong _ob_len0 = _ob_r.in().length();
@@ -257,10 +259,10 @@ OBDirectStubImpl_IServerServer::OBDirectStubImpl_IServerServer(
 // IDL:IServerServer/Join:1.0
 //
 ::AddressesList*
-OBDirectStubImpl_IServerServer::Join()
+OBDirectStubImpl_IServerServer::Join(const ::DomainData::Address& _ob_a0)
 {
     OB::InvocationHandler _ob_handler(this, "Join");
-    return dynamic_cast<POA_IServerServer*>(_ob_servant_) -> Join();
+    return dynamic_cast<POA_IServerServer*>(_ob_servant_) -> Join(_ob_a0);
 }
 
 //

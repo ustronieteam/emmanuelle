@@ -55,7 +55,10 @@ bool Server::init(string address, string port)
 		
 		LOG4CXX_DEBUG(logger, "Poczatek komunikacji z serwerem macierzystym ... ");
 
-		parentServer->Join();
+		DomainData::Address addr;
+		addr.localization = CORBA::string_dup(address.c_str());
+		AddressesList * l = parentServer->Join(addr);
+		std::cout << "return: lista.count = " << l->length();
 
 		// TODO: dokonczyc ...	nawiazanie kontaktu z macierzystym serwerem, zapisanie obiektu zdalnego
 		//						zapisanie obiektu orb
@@ -65,7 +68,7 @@ bool Server::init(string address, string port)
 	}
 	catch(const CORBA::SystemException& e)
 	{
-		LOG4CXX_ERROR(logger, "WYJ¥TEK: " << e._name());
+		LOG4CXX_ERROR(logger, "WYJ¥TEK: " << e._name() << ": " << e._to_string());
 
 		if (!CORBA::is_nil(orb))
 		{
