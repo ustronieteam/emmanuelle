@@ -57,13 +57,14 @@ void RemoteServerConnectedObserver::set_serverDataBase(boost::shared_ptr<ServerD
 ///@return ??
 int RemoteServerConnectedObserver::Refresh(RemoteObserverData observerData)
 {
+	LOG4CXX_DEBUG(logger, "Refresh obserwatora : start");
 	if(observerData.get_eventType()!=SERVER_CONNECTED)
 		return 0; //Odfiltrowanie niechcianych zdarzen
 	//Utworz logike watku
 	RemoteServerConnectedObserverLogicRunnable threadLogic(serverDataBase, observerData);
 	//Utworz i uruchom watki
 	boost::thread threadRemoteServerConnected(threadLogic);
-
+	LOG4CXX_DEBUG(logger, "Refresh obserwatora : end");
 	return 0;
 }
 ///@author Marian Szczykulski
