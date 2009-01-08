@@ -4,6 +4,7 @@
 #include "IServerServer.h"
 #include "IClientServer.h"
 
+#include <iostream>
 #include <boost/thread/mutex.hpp>
 
 ///

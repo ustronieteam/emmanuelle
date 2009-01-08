@@ -14,6 +14,8 @@
 ///
 class ClientsDataBase
 {
+		friend std::ostream & operator<<(std::ostream & os, const ClientsDataBase & db);
+
 	private:
 
 		///
@@ -115,5 +117,12 @@ class ClientsDataBase
 		/// @return Id rekordu aktywnego klienta. -1 gdy nie znajdzie.
 		int FindActiveClientOnServer(int serverId);
 };
+
+///
+/// Przeciazony operator wypisu bazy danych do strumienia.
+/// @param[in] os Strumien wyjsciowy.
+/// @param[in] db Baza danych.
+/// @return Strumien wyjsciowy.
+std::ostream & operator<<(std::ostream & os, const ClientsDataBase & db);
 
 #endif

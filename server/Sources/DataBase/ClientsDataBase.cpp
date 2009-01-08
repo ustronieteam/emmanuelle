@@ -218,3 +218,22 @@ int ClientsDataBase::FindActiveClientOnServer(int serverId)
 
 	return -1;
 }
+
+///
+/// Przeciazony operator wypisu bazy danych do strumienia.
+/// @param[in] os Strumien wyjsciowy.
+/// @param[in] db Baza danych.
+/// @return Strumien wyjsciowy.
+std::ostream & operator<<(std::ostream & os, const ClientsDataBase & db)
+{
+	int k = 1;
+	for(std::map<int, ClientRecord>::const_iterator i = db._records.begin(); i != db._records.end(); i++, ++k)
+	{
+		os	<< k << "\t" 
+			<< (*i).second.GetRecordId() << "\t"
+			<< (*i).second.GetAddress().localization.in()
+			<< std::endl;
+	}
+
+	return os;
+}

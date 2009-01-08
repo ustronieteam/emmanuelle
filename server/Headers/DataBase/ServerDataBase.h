@@ -14,6 +14,8 @@
 ///
 class ServerDataBase
 {
+		friend std::ostream & operator<<(std::ostream & os, const ServerDataBase & db);
+
 	private:
 
 		///
@@ -105,5 +107,12 @@ class ServerDataBase
 		/// @return ID wyszukanego rekordu.
 		int Find(const struct DomainData::Address & address);
 };
+
+///
+/// Przeciazony operator wypisu bazy danych do strumienia.
+/// @param[in] os Strumien wyjsciowy.
+/// @param[in] db Baza danych.
+/// @return Strumien wyjsciowy.
+std::ostream & operator<<(std::ostream & os, const ServerDataBase & db);
 
 #endif
