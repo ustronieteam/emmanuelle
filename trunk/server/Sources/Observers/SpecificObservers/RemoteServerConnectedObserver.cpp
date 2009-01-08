@@ -57,6 +57,9 @@ void RemoteServerConnectedObserver::set_serverDataBase(boost::shared_ptr<ServerD
 ///@return ??
 int RemoteServerConnectedObserver::Refresh(RemoteObserverData observerData)
 {
+	log4cxx::LoggerPtr logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("RemoteServerConnectedObserver"));
+	logger->setLevel(log4cxx::Level::getAll());
+
 	LOG4CXX_DEBUG(logger, "Refresh obserwatora : start");
 	if(observerData.get_eventType()!=SERVER_CONNECTED)
 		return 0; //Odfiltrowanie niechcianych zdarzen

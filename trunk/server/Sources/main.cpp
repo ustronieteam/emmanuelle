@@ -37,9 +37,5 @@ int main(int argc, char * argv[])
 		return 1;
 	}
 
-/*
-	Server * serv = Server::GetInstance("test.txt");
-	serv->Run();
-*/	
 	return 0;
 }
