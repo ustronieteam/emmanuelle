@@ -59,8 +59,14 @@ class Server
 		///
 		boost::shared_ptr<ServerDataBase> serverDataBaseObj;
 
+		///
+		/// wskaznik do obiektu zdalnego udostepnianego serwerom
+		///
 		IServerServer_impl * serverImpl;
 
+		///
+		/// wskaznik do obiektu zdalnego udostepnianego klientom
+		///
 		IServerClient_impl * clientImpl;
 
 		///
@@ -154,7 +160,22 @@ class Server
 
 			return iiopInfo->remote_addr();
 		}
+/*
+		static char * GetServerAddress(CORBA::Object_ptr obj)
+		{
+			OCI::ConnectorInfo_var info = obj->_get_oci_connector_info();
+			OCI::IIOP::ConnectorInfo_var iiopInfo = OCI::IIOP::ConnectorInfo::_narrow(info);
+ 
+			if(!CORBA::is_nil(iiopInfo))
+			{
+				OCI::IIOP::InetAddr_var remoteAddr = iiopInfo->remote_addr();
+				
+				return remoteAddr;
+			}
 
+			return "";
+		}
+*/
 		///
 		/// @param [in]		address	adres serwera do ktorego chcemy sie polaczyc
 		/// @param [out]	orb		wsk na obiekt brokera - trzyma polaczenie
@@ -204,6 +225,30 @@ class Server
 		///
 		static bool connectToClient(std::string address, CORBA::ORB_out orb, IClientServer_out client)
 		{
+			char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(LPORT.c_str()) };
+			int optc = sizeof(orb_options)/sizeof(char *);
+
+			orb = CORBA::ORB_init(optc, orb_options);
+
+			CORBA::String_var strIOR = CORBA::string_dup("corbaloc:iiop:");
+			strIOR += address.c_str();
+			strIOR += ":";
+			strIOR += LPORT.c_str();
+			strIOR += "/serverclient";
+
+			CORBA::Object_var oClient = orb->string_to_object(strIOR);
+			if (CORBA::is_nil(oClient))
+			{
+				return 1;
+			}
+
+			client = IClientServer::_narrow(oClient);
+		    
+			if (CORBA::is_nil(client))
+			{
+				return 1;
+			}
+
 			return 0;
 		}
 

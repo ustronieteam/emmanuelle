@@ -1,17 +1,13 @@
-///
-/// @author	Mateusz Ko³odziejczyk
-/// @date	06.01.2009
-///
-/// @brief	Wygenerowano z IServerServer.idl
-///
-
 #ifndef ___IServerServer_impl_h__
 #define ___IServerServer_impl_h__
 
+#include <OB/CORBA.h>
 #include <IServerServer_skel.h>
 #include "IRemoteObjects.h"
 #include "RemoteObserverData.h"
 #include "EventType.h"
+#include "ServerRecord.h"
+#include "ClientRecord.h"
 
 //
 // IDL:IServerServer:1.0
@@ -35,7 +31,7 @@ public:
     //
     // IDL:IServerServer/Join:1.0
     //
-    virtual ::AddressesList* Join()
+    virtual ::AddressesList* Join(const ::DomainData::Address& serverAddress)
         throw(::CORBA::SystemException);
 
     //

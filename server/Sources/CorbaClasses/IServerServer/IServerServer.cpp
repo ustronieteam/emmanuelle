@@ -281,7 +281,7 @@ OBProxy_IServerServer::_OB_ids() const
 // IDL:IServerServer/Join:1.0
 //
 ::AddressesList*
-OBProxy_IServerServer::Join()
+OBProxy_IServerServer::Join(const ::DomainData::Address& _ob_a0)
 {
     ::CORBA::ULong _ob_retry = 0, _ob_hop = 0;
     while(true)
@@ -291,7 +291,7 @@ OBProxy_IServerServer::Join()
             OB::StubImplBase_var _ob_stubImplBase = _OB_getStubImpl();
             OBStubImpl_IServerServer_ptr _ob_stubImpl = 
                 dynamic_cast< OBStubImpl_IServerServer_ptr>(_ob_stubImplBase.in());
-            return _ob_stubImpl -> Join();
+            return _ob_stubImpl -> Join(_ob_a0);
         }
         catch(const OB::ExceptionBase& _ob_ex)
         {
@@ -470,14 +470,22 @@ OBRelease(OBStubImpl_IServerServer_ptr p)
 // IDL:IServerServer/Join:1.0
 //
 ::AddressesList*
-OBMarshalStubImpl_IServerServer::Join()
+OBMarshalStubImpl_IServerServer::Join(const ::DomainData::Address& _ob_a0)
 {
     while(true)
     {
         OB::Downcall_var _ob_down = _OB_createDowncall("Join", true);
         try
         {
-            _OB_preMarshal(_ob_down);
+            OB::OutputStreamImpl* _ob_out = _OB_preMarshal(_ob_down);
+            try
+            {
+                _ob_a0._OB_marshal(_ob_out);
+            }
+            catch(const ::CORBA::SystemException& _ob_ex)
+            {
+                _OB_marshalEx(_ob_down, _ob_ex);
+            }
             _OB_postMarshal(_ob_down);
             _OB_request(_ob_down);
             bool _ob_uex;
