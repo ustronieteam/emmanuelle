@@ -165,6 +165,15 @@ int ClientsDataBase::Size()
 }
 
 ///
+/// Usuwa wszystkie rekordy z bazy.
+void ClientsDataBase::Clear()
+{
+	boost::mutex::scoped_lock sl(_mutex);
+
+	this->_records.clear();
+}
+
+///
 /// Znajdz rekord klienta.
 /// @param[in] address Adres do wyszukania rekordu.
 /// @return ID wyszukanego rekordu. -1 gdy nie znajdzie.

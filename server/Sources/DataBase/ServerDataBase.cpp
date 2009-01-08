@@ -165,6 +165,15 @@ int ServerDataBase::Size()
 }
 
 ///
+/// Usuwa wszystkie rekordy z bazy.
+void ServerDataBase::Clear()
+{
+	boost::mutex::scoped_lock sl(_mutex);
+
+	this->_records.clear();
+}
+
+///
 /// Znajdz rekord servera.
 /// @param[in] address Adres do wyszukania rekordu.
 /// @return ID wyszukanego rekordu.

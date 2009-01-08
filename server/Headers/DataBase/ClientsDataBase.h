@@ -93,6 +93,10 @@ class ClientsDataBase
 		/// @return Liczba elementow w kolekcji.
 		int Size();
 
+		///
+		/// Usuwa wszystkie rekordy z bazy.
+		void Clear();
+
 		/// Metody szukajace.
 
 		///
