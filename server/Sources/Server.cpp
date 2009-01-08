@@ -60,6 +60,9 @@ bool Server::init(string address, string port)
 		AddressesList * l = parentServer->Join(addr);
 		std::cout << "return: lista.count = " << l->length();
 
+		for(int i=0; i < l->length(); ++i)
+			std::cout << i+1 << ". " << (*l)[i].localization << std::endl;
+
 		// TODO: dokonczyc ...	nawiazanie kontaktu z macierzystym serwerem, zapisanie obiektu zdalnego
 		//						zapisanie obiektu orb
 

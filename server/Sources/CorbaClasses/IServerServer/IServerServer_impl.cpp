@@ -61,7 +61,7 @@ IServerServer_impl::Join(const ::DomainData::Address& serverAddress)
 
 	// stworzenie obiektu z danymi dla obserwatora
 	RemoteObserverData observData;
-	observData.set_eventType(EventType::SERVER_CONNECTED);
+	observData.set_eventType(SERVER_CONNECTED);
 	
 	DomainData::Address adres;
 	adres.localization = Server::GetRemotedAddress();
@@ -106,7 +106,7 @@ IServerServer_impl::Unjoin()
 
 	// stworzenie obiektu z danymi dla obserwatora
 	RemoteObserverData observData;
-	observData.set_eventType(EventType::SERVER_DISCONNECTED);
+	observData.set_eventType(SERVER_DISCONNECTED);
 	observData.setServerAddress(addr); // ??? czy napewno??
 
 	this->Notify(observData);
