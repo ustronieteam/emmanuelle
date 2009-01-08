@@ -64,10 +64,10 @@ const int & Record::GetRecordId() const
 ///
 /// Ustawia identyfikator rekordu.
 /// @param[in] recordId Identyfikator do ustawienia.
-void Record::SetRecordId(const int & recordId) 
-{
-    this->_recordId = recordId;
-}
+//void Record::SetRecordId(const int & recordId) 
+//{
+//    this->_recordId = recordId;
+//}
 
 ///
 /// Pobiera adresu.

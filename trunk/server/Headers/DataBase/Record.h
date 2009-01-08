@@ -66,7 +66,7 @@ class Record
 		///
 		/// Ustawia identyfikator rekordu.
 		/// @param[in] recordId Identyfikator do ustawienia.
-        void SetRecordId(const int & recordId);
+        //void SetRecordId(const int & recordId);
 
 		///
 		/// Pobiera adresu.

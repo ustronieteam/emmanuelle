@@ -168,7 +168,7 @@ int ClientsDataBase::Size()
 /// Znajdz rekord klienta.
 /// @param[in] address Adres do wyszukania rekordu.
 /// @return ID wyszukanego rekordu. -1 gdy nie znajdzie.
-int ClientsDataBase::Find(struct DomainData::Address & address)
+int ClientsDataBase::Find(const struct DomainData::Address & address)
 {
 	boost::mutex::scoped_lock sl(_mutex);
 
