@@ -87,8 +87,6 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 			//Modyfikuj rekord zgodnie z observerData
 			IServerServer_var newRemoteInstance;
 			servRec.SetServerRemoteInstance(newRemoteInstance);//Zresetowanie zdalnej instancji
-			CORBA::ORB_var
-			servRec.S
 			int status = serverDataBase->ModifyRecord(servRec);
 			if(status<0)
 			{
