@@ -8,6 +8,8 @@
 #include "IRemoteObserver.h"
 #include <iostream>
 #include <vector>
+#include <log4cxx/logger.h>
+#include <log4cxx/level.h>
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 class IRemoteObjects
