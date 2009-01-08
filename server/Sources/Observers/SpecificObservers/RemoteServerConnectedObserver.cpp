@@ -8,10 +8,6 @@
 #include "IServerServer.h"
 #include <iostream>
 
-//Begin section for file RemoteServerConnectedObserver.cpp
-//TODO: Add definitions that you want preserved
-//End section for file RemoteServerConnectedObserver.cpp
-
 RemoteServerConnectedObserver::RemoteServerConnectedObserver() 
 {
 	this->serverDataBase = boost::shared_ptr<ServerDataBase>();
@@ -44,23 +40,25 @@ boost::shared_ptr<ServerDataBase> & RemoteServerConnectedObserver::get_serverDat
 {
     return serverDataBase;
 }
-//@author Marian Szczykulski
-//@date 27-12-2008
-//@note Ustawieni bazy serwerow
-//@brief Funkcja ustawjajaca baze serwera
-//@param[in] sprytny wskaznik na baze danych serwera
+///@author Marian Szczykulski
+///@date 27-12-2008
+///@note Ustawieni bazy serwerow
+///@brief Funkcja ustawjajaca baze serwera
+///@param[in] sprytny wskaznik na baze danych serwera
 void RemoteServerConnectedObserver::set_serverDataBase(boost::shared_ptr<ServerDataBase> & serverDataBase)
 {
 	this->serverDataBase = serverDataBase;
 }
-//@author Marian Szczykulski
-//@date 27-12-2008
-//@note Obserwator podlaczenia sie nowego serwera
-//@brief Glowna funkcja obserwatora, odpowiedzialna za logike przetwarzania.
-//@param[in] Dane obserwatora potrzebne do podejmowania decyzji podczas przetwarzania
-//@return ??
+///@author Marian Szczykulski
+///@date 27-12-2008
+///@note Obserwator podlaczenia sie nowego serwera
+///@brief Glowna funkcja obserwatora, odpowiedzialna za logike przetwarzania.
+///@param[in] Dane obserwatora potrzebne do podejmowania decyzji podczas przetwarzania
+///@return ??
 int RemoteServerConnectedObserver::Refresh(RemoteObserverData observerData)
 {
+	if(observerData.get_eventType()!=EventType::SERVER_CONNECTED)
+		return 0; //Odfiltrowanie niechcianych zdarzen
 	//Utworz logike watku
 	RemoteServerConnectedObserverLogicRunnable threadLogic(serverDataBase, observerData);
 	//Utworz i uruchom watki
@@ -68,10 +66,10 @@ int RemoteServerConnectedObserver::Refresh(RemoteObserverData observerData)
 
 	return 0;
 }
-//@author Marian Szczykulski
-//@date 27-12-2008
-//@note Logika watku
-//@brief Zawiera logike przetwarzania ktora moze byc uruchomiona w odzielnym watku
+///@author Marian Szczykulski
+///@date 27-12-2008
+///@note Logika watku
+///@brief Zawiera logike przetwarzania ktora moze byc uruchomiona w odzielnym watku
 int RemoteServerConnectedObserverLogicRunnable::operator()()
 {
 	LOG4CXX_INFO(logger, "Przetwarzanie logiki");
@@ -80,16 +78,17 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 
 	//	1) Dodaj nowy serwer do bazy(lub zmodyfikuj istniejacy rekord)
 	struct DomainData::Address servAddr = observerData.getServerAddress();
-	int serverId = serverDataBase->Find(servAddr);
+	int serverId = serverDataBase->Find(servAddr);//Mozliwe ze rekord jest w bazie(nie zostal usuniety wczesniej)
 	if(serverId >0)
 	{//Rekord jest w bazie z jakis powodow, trzeba wiec go zmodyfikowac
 		try
 		{
 			ServerRecord servRec = serverDataBase->GetRecord(serverId);
 			//Modyfikuj rekord zgodnie z observerData
-			//ServerRecord servRec_spec = *(dynamic_cast<ServerRecord *>(&servRec));
-			//servRec_spec.
-			//servRec.
+			IServerServer_var newRemoteInstance;
+			servRec.SetServerRemoteInstance(newRemoteInstance);//Zresetowanie zdalnej instancji
+			CORBA::ORB_var
+			servRec.S
 			int status = serverDataBase->ModifyRecord(servRec);
 			if(status<0)
 			{
@@ -108,6 +107,7 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 	else
 	{//Rekordu nie ma w bazie trzeba dodac nowy
 		ServerRecord newRecord; //do dokonczenia (wype³niæ pola z observerData) !!!
+		newRecord.SetAddress(observerData.getServerAddress());
 		int status = serverDataBase->InsertRecord(newRecord);
 		if(status < 0)
 		{
