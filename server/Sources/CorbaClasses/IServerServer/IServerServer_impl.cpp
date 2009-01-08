@@ -122,11 +122,7 @@ IServerServer_impl::AddServer(const ::DomainData::Address& serverAddress)
 		ServerDataBase::GetInstance()->ModifyRecord(record);
 	}
 
-	std::vector<ServerRecord> servers = ServerDataBase::GetInstance()->GetAllRecords();
-	for(int i = 0; i < servers.size(); ++i)
-	{
-		std::cout << i+1 << ". " << servers[i].GetAddress().localization << std::endl;
-	}
+	std::cout << *(ServerDataBase::GetInstance());
 	std::cout << "---------------------------------------" << std::endl;
 }
 
