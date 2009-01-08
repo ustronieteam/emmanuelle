@@ -99,7 +99,7 @@ class ClientsDataBase
 		/// Znajdz rekord klienta.
 		/// @param[in] address Adres do wyszukania rekordu.
 		/// @return ID wyszukanego rekordu. -1 gdy nie znajdzie.
-		int Find(struct DomainData::Address & address);
+		int Find(const struct DomainData::Address & address);
 
 		///
 		/// Znajduje aktywnego klienta w bazie danych.

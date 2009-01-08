@@ -99,7 +99,7 @@ class ServerDataBase
 		/// Znajdz rekord servera.
 		/// @param[in] address Adres do wyszukania rekordu.
 		/// @return ID wyszukanego rekordu.
-		int Find(struct DomainData::Address & address);
+		int Find(const struct DomainData::Address & address);
 };
 
 #endif
