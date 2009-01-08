@@ -84,7 +84,7 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 		return -1;
 	}
 	//Zdobadz wlasne id
-	struct DomainData::Address localServAddr = Server::GetMyIp();
+	struct DomainData::Address localServAddr = Server::GetMyIP();
 	int localId = serverDataBase->Find(localServAddr); //wlasne id w bazie
 	if(localId<=0)
 	{
@@ -115,7 +115,7 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 			LOG4CXX_DEBUG(logger, "Pozyskiwanie zdalnej instancji servera");
 			CORBA::ORB_var orb;
 			IServerServer_var remInstance;
-			if(Server::connectToServer(servRec.GetAddress(),orb, remInstance)==false)
+			if(Server::connectToServer(servRec.GetAddress().localization.in(), orb, remInstance)==false)
 			{
 				//TODO: zastanowic sie czy tu nie usunac serwer
 				LOG4CXX_ERROR(logger, "Nie mozna pozyskac zdalnej instancji servera");

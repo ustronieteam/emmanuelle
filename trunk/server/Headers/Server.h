@@ -21,6 +21,8 @@
 #include "RemoteClientDisconnectedObserver.h"
 #include "RemoteClientSendMessageObserver.h"
 #include "ServerCreatePipeObserver.h"
+#include "ServerRecord.h"
+#include "ClientRecord.h"
 
 #include <iostream>
 #include <fstream>
@@ -73,6 +75,11 @@ class Server
 		/// nazwa pliku konfiguracyjnego
 		///
         const char * configFileName;
+
+		///
+		/// numer indeksu wlasnego rekordu 
+		///
+		static DomainData::Address myIPAddress;
 
 		// logger
 		log4cxx::LoggerPtr logger;
@@ -136,6 +143,16 @@ class Server
 			static Server * instance = new Server(fileName);
 
 			return instance;
+		}
+
+		static DomainData::Address GetMyIP()
+		{
+			return Server::myIPAddress;
+		}
+
+		static void SetMyIP(DomainData::Address addr)
+		{
+			myIPAddress = addr;
 		}
 
 		///

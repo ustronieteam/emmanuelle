@@ -2,6 +2,8 @@
 
 using namespace std;
 
+DomainData::Address Server::myIPAddress;
+
 bool Server::Run() 
 {
 	string address = "";
@@ -58,7 +60,15 @@ bool Server::init(string address, string port)
 		DomainData::Address addr;
 		addr.localization = CORBA::string_dup(address.c_str());
 		AddressesList * l = parentServer->Join(addr);
-		std::cout << "return: lista.count = " << l->length();
+
+		ServerDataBase::GetInstance()->Clear();
+		for(unsigned int i = 0; i < l->length(); ++i)
+		{
+			ServerRecord rcd;
+			rcd.SetAddress((*l)[i]);
+
+			ServerDataBase::GetInstance()->InsertRecord(rcd);
+		}
 
 		for(int i=0; i < l->length(); ++i)
 			std::cout << i+1 << ". " << (*l)[i].localization << std::endl;
