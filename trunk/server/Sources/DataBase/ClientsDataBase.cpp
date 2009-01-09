@@ -183,7 +183,7 @@ int ClientsDataBase::Find(const struct DomainData::Address & address)
 
 	if ( this->_records.size() != 0 )
 		for(std::map<int, ClientRecord>::iterator i = this->_records.begin(); i != this->_records.end(); i++)
-			if ( (*i).second.GetAddress().name == address.name )
+			if ( strcmp((*i).second.GetAddress().name.in(), address.name.in()) == 0 )
 				return (*i).second.GetRecordId();
 
 	return -1;
