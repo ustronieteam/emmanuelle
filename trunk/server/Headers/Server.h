@@ -199,16 +199,10 @@ class Server
 		///
 		static bool connectToServer(std::string address, CORBA::ORB_out orb, IServerServer_out server)
 		{
-			std::cout << "CONNECT_TO_SERVER: address [" << address << "]" << std::endl;
-
 			char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(LPORT.c_str()) };
 			int optc = sizeof(orb_options)/sizeof(char *);
 
-			std::cout << "INIT" << std::endl;
-
 			orb = CORBA::ORB_init(optc, orb_options);
-
-			std::cout << "CREATE CORBALOC" << std::endl;
 
 			CORBA::String_var strIOR = CORBA::string_dup("corbaloc:iiop:");
 			strIOR += address.c_str();
@@ -216,7 +210,6 @@ class Server
 			strIOR += LPORT.c_str();
 			strIOR += "/serverserver";
 
-			std::cout << "string_to_object" << std::endl;
 			CORBA::Object_var oServer = orb->string_to_object(strIOR);
 			if (CORBA::is_nil(oServer))
 			{
@@ -224,7 +217,6 @@ class Server
 				return false;
 			}
 
-			std::cout << "_narrow" << std::endl;
 			server = IServerServer::_narrow(oServer);
 		    
 			if (CORBA::is_nil(server))
@@ -233,7 +225,6 @@ class Server
 				return false;
 			}
 
-			std::cout << "KONIEC" << std::endl;
 			return true;
 		}
 
