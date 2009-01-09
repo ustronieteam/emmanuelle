@@ -47,6 +47,8 @@ bool Server::Run()
 		LOG4CXX_DEBUG(logger, "odpalono serwer macierzysty ...");
 	}
 
+	thrd.join();
+
     return 0;
 }
 
