@@ -183,7 +183,7 @@ int ServerDataBase::Find(const struct DomainData::Address & address)
 
 	if ( _records.size() != 0 )
 		for(std::map<int, ServerRecord>::iterator i = this->_records.begin(); i != this->_records.end(); i++)
-			if ( (*i).second.GetAddress().localization == address.localization )
+			if ( strcmp((*i).second.GetAddress().localization.in(), address.localization.in()) == 0 )
 				return (*i).second.GetRecordId();
 
 	return -1;

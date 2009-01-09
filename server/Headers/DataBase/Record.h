@@ -5,6 +5,7 @@
 #include "IClientServer.h"
 
 #include <iostream>
+#include <string>
 #include <boost/thread/mutex.hpp>
 
 ///
