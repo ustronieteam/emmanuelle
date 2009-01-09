@@ -142,7 +142,8 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 		}
 		try
 		{
-			struct DomainData::Address ownAddr;
+			struct DomainData::Address Addr;
+			Addr = observerData.getServerAddress();
 			remoteServer->AddServer(ownAddr);//Dodac dane z observer Data
 			LOG4CXX_INFO(logger, "Wiadomosc wyslana do serwera nr"<<serverCounter);
 		}
