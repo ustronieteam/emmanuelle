@@ -221,7 +221,7 @@ class Server
 			if (CORBA::is_nil(oServer))
 			{
 				std::cout << "oServer nil" << std::endl;
-				return 1;
+				return false;
 			}
 
 			std::cout << "_narrow" << std::endl;
@@ -230,11 +230,11 @@ class Server
 			if (CORBA::is_nil(server))
 			{
 				std::cout << "server nil" << std::endl;
-				return 1;
+				return false;
 			}
 
 			std::cout << "KONIEC" << std::endl;
-			return 0;
+			return true;
 		}
 
 		///
