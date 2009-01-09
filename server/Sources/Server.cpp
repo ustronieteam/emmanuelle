@@ -59,7 +59,7 @@ bool Server::init(string address, string port)
 
 	try
 	{
-		if(connectToServer(address, orb, parentServer))
+		if(!connectToServer(address, orb, parentServer))
 		{
 			LOG4CXX_ERROR(logger, "Nie mo¿na po³¹czyc z sewerem macierzystym");
 			return 1;
