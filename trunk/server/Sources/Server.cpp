@@ -4,6 +4,11 @@ using namespace std;
 
 DomainData::Address Server::myIPAddress;
 
+void activateRunnable()
+{
+	Server::GetInstance("")->ActivateListning();
+}
+
 bool Server::Run() 
 {
 	string address = "";
@@ -19,6 +24,9 @@ bool Server::Run()
 		LOG4CXX_DEBUG(logger, "Wczytano plik konfiguracyjny " << configFileName << " (" << address.c_str() << ")");
 	}
 	
+	boost::thread thrd(&activateRunnable);
+	Sleep(5000);
+
 	// jesli uruchomilismy serwer macierzysty to nie podlaczamy sie do zadnego 
 	if(!address.empty())
 	{
@@ -36,8 +44,6 @@ bool Server::Run()
 	{
 		LOG4CXX_DEBUG(logger, "odpalono serwer macierzysty ...");
 	}
-
-	activateListning();
 
     return 0;
 }
@@ -151,7 +157,7 @@ bool Server::openConfFile(string & address)
 	return 0;
 }
 
-void Server::activateListning()
+void Server::ActivateListning()
 {
 	// uruchomienie brokera, stworzenie obiektow zdalnych, udostepnienie ich i wlaczenie nasluchiwania
 	CORBA::ORB_var orb;

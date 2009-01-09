@@ -27,6 +27,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <boost/thread.hpp>
 
 #include <log4cxx/logger.h>
 #include <log4cxx/level.h>
@@ -101,12 +102,6 @@ class Server
 		/// addresu serwera i przekazanie go do 'address'
 		///
 		bool openConfFile(std::string & address);
-
-		///
-		/// Stworzenie brokera po stronie serwera, zarejestrownie obiektow zdalnych i uruchomienie
-		/// nasluchiwania na porcie PORT
-		///
-		void activateListning();
 
 		///
 		/// @param [in]	fileName	nazwa pliku konfiguracyjnego
@@ -204,10 +199,16 @@ class Server
 		///
 		static bool connectToServer(std::string address, CORBA::ORB_out orb, IServerServer_out server)
 		{
+			std::cout << "CONNECT_TO_SERVER: address [" << address << "]" << std::endl;
+
 			char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(LPORT.c_str()) };
 			int optc = sizeof(orb_options)/sizeof(char *);
 
+			std::cout << "INIT" << std::endl;
+
 			orb = CORBA::ORB_init(optc, orb_options);
+
+			std::cout << "CREATE CORBALOC" << std::endl;
 
 			CORBA::String_var strIOR = CORBA::string_dup("corbaloc:iiop:");
 			strIOR += address.c_str();
@@ -215,19 +216,24 @@ class Server
 			strIOR += LPORT.c_str();
 			strIOR += "/serverserver";
 
+			std::cout << "string_to_object" << std::endl;
 			CORBA::Object_var oServer = orb->string_to_object(strIOR);
 			if (CORBA::is_nil(oServer))
 			{
+				std::cout << "oServer nil" << std::endl;
 				return 1;
 			}
 
+			std::cout << "_narrow" << std::endl;
 			server = IServerServer::_narrow(oServer);
 		    
 			if (CORBA::is_nil(server))
 			{
+				std::cout << "server nil" << std::endl;
 				return 1;
 			}
 
+			std::cout << "KONIEC" << std::endl;
 			return 0;
 		}
 
@@ -277,6 +283,12 @@ class Server
 		/// i wymiana danych a nastepnie przejscie w stan nasluchiwania)
 		///
 		bool Run();
+
+		///
+		/// Stworzenie brokera po stronie serwera, zarejestrownie obiektow zdalnych i uruchomienie
+		/// nasluchiwania na porcie PORT
+		///
+		void ActivateListning();
 }; 
 
 #endif
