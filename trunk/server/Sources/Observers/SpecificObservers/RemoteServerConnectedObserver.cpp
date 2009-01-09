@@ -144,7 +144,7 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 		{
 			struct DomainData::Address Addr;
 			Addr = observerData.getServerAddress();
-			remoteServer->AddServer(ownAddr);//Dodac dane z observer Data
+			remoteServer->AddServer(Addr);//Dodac dane z observer Data
 			LOG4CXX_INFO(logger, "Wiadomosc wyslana do serwera nr"<<serverCounter);
 		}
 		catch(CORBA::SystemException & e) //chyba rzuca jakis wyjatek??
