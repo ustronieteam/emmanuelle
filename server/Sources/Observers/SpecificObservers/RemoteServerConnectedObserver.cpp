@@ -137,7 +137,9 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 			}
 			catch(CORBA::SystemException & e)
 			{
+				//TODO Usuwanie
 				LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas pozyskiwania zdalnej instancji: "<<e._name());
+				continue;
 			}
 		}
 		try
