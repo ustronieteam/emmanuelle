@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)\server\Headers\Observers&quot;;&quot;$(SolutionDir)\log4cxx\include&quot;;&quot;C:\Program Files\boost\boost_1_36_0&quot;;&quot;$(SolutionDir)\server\Headers&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses\DomainData&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses\IServerServer&quot;;&quot;$(SolutionDir)\server\Headers\DataBase&quot;;&quot;$(SolutionDir)\server\HeadersObservers&quot;;&quot;$(SolutionDir)\CORBA\include&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses\IClientServer&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses\IServerClient&quot;"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\server\Headers\CorbaClasses&quot;;&quot;$(SolutionDir)\server\Headers\Observers&quot;;&quot;$(SolutionDir)\log4cxx\include&quot;;&quot;C:\Program Files\boost\boost_1_36_0&quot;;&quot;$(SolutionDir)\server\Headers&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\DomainData&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IServerServer&quot;;&quot;$(SolutionDir)\server\Headers\DataBase&quot;;&quot;$(SolutionDir)\server\HeadersObservers&quot;;&quot;$(SolutionDir)\CORBA\include&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IClientServer&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IServerClient&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -212,10 +212,6 @@
 				Name="Observers"
 				>
 				<File
-					RelativePath=".\Sources\Observers\IRemoteObjects.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\Sources\Observers\IRemoteObserver.cpp"
 					>
 				</File>
@@ -267,11 +263,15 @@
 			<Filter
 				Name="CorbaClasses"
 				>
+				<File
+					RelativePath=".\Sources\CorbaClasses\IRemoteObjects.cpp"
+					>
+				</File>
 				<Filter
 					Name="DomainData"
 					>
 					<File
-						RelativePath=".\Sources\CorbaClasses\DomainData\DomainData.cpp"
+						RelativePath="..\CorbaClasses\Sources\DomainData\DomainData.cpp"
 						>
 					</File>
 				</Filter>
@@ -279,15 +279,15 @@
 					Name="IServerServer"
 					>
 					<File
-						RelativePath=".\Sources\CorbaClasses\IServerServer\IServerServer.cpp"
+						RelativePath="..\CorbaClasses\Sources\IServerServer\IServerServer.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Sources\CorbaClasses\IServerServer\IServerServer_impl.cpp"
+						RelativePath="..\CorbaClasses\Sources\IServerServer\IServerServer_impl.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Sources\CorbaClasses\IServerServer\IServerServer_skel.cpp"
+						RelativePath="..\CorbaClasses\Sources\IServerServer\IServerServer_skel.cpp"
 						>
 					</File>
 				</Filter>
@@ -295,15 +295,15 @@
 					Name="IServerClient"
 					>
 					<File
-						RelativePath=".\Sources\CorbaClasses\IServerClient\IServerClient.cpp"
+						RelativePath="..\CorbaClasses\Sources\IServerClient\IServerClient.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Sources\CorbaClasses\IServerClient\IServerClient_impl.cpp"
+						RelativePath="..\CorbaClasses\Sources\IServerClient\IServerClient_impl.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Sources\CorbaClasses\IServerClient\IServerClient_skel.cpp"
+						RelativePath="..\CorbaClasses\Sources\IServerClient\IServerClient_skel.cpp"
 						>
 					</File>
 				</Filter>
@@ -311,11 +311,11 @@
 					Name="IClientServer"
 					>
 					<File
-						RelativePath=".\Sources\CorbaClasses\IClientServer\IClientServer.cpp"
+						RelativePath="..\CorbaClasses\Sources\IClientServer\IClientServer.cpp"
 						>
 					</File>
 					<File
-						RelativePath=".\Sources\CorbaClasses\IClientServer\IClientServer_skel.cpp"
+						RelativePath="..\CorbaClasses\Sources\IClientServer\IClientServer_skel.cpp"
 						>
 					</File>
 				</Filter>
@@ -341,7 +341,7 @@
 					Name="DomainData"
 					>
 					<File
-						RelativePath=".\Headers\CorbaClasses\DomainData\DomainData.h"
+						RelativePath="..\CorbaClasses\Headers\DomainData\DomainData.h"
 						>
 					</File>
 				</Filter>
@@ -349,15 +349,15 @@
 					Name="IServerServer"
 					>
 					<File
-						RelativePath=".\Headers\CorbaClasses\IServerServer\IServerServer.h"
+						RelativePath="..\CorbaClasses\Headers\IServerServer\IServerServer.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\CorbaClasses\IServerServer\IServerServer_impl.h"
+						RelativePath="..\CorbaClasses\Headers\IServerServer\IServerServer_impl.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\CorbaClasses\IServerServer\IServerServer_skel.h"
+						RelativePath="..\CorbaClasses\Headers\IServerServer\IServerServer_skel.h"
 						>
 					</File>
 				</Filter>
@@ -365,15 +365,15 @@
 					Name="IServerClient"
 					>
 					<File
-						RelativePath=".\Headers\CorbaClasses\IServerClient\IServerClient.h"
+						RelativePath="..\CorbaClasses\Headers\IServerClient\IServerClient.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\CorbaClasses\IServerClient\IServerClient_impl.h"
+						RelativePath="..\CorbaClasses\Headers\IServerClient\IServerClient_impl.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\CorbaClasses\IServerClient\IServerClient_skel.h"
+						RelativePath="..\CorbaClasses\Headers\IServerClient\IServerClient_skel.h"
 						>
 					</File>
 				</Filter>
@@ -381,11 +381,11 @@
 					Name="IClientServer"
 					>
 					<File
-						RelativePath=".\Headers\CorbaClasses\IClientServer\IClientServer.h"
+						RelativePath="..\CorbaClasses\Headers\IClientServer\IClientServer.h"
 						>
 					</File>
 					<File
-						RelativePath=".\Headers\CorbaClasses\IClientServer\IClientServer_skel.h"
+						RelativePath="..\CorbaClasses\Headers\IClientServer\IClientServer_skel.h"
 						>
 					</File>
 				</Filter>
