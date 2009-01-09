@@ -11,25 +11,6 @@ RemoteObserverData::RemoteObserverData()
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-RemoteObserverData::RemoteObserverData(RemoteObserverData & arg) 
-{
-    //TODO Auto-generated method stub
-    this->eventType = arg.eventType;
-}
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-RemoteObserverData & RemoteObserverData::operator =(const RemoteObserverData & arg) 
-{
-    //TODO Auto-generated method stub
-    if (this != &arg)
-    {
-        this->eventType = arg.eventType;
-    }
-
-	return const_cast<RemoteObserverData &>(arg);
-}
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 RemoteObserverData::~RemoteObserverData() 
 {
     //TODO Auto-generated method stub

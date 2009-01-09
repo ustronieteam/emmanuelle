@@ -31,8 +31,6 @@ class RemoteObserverData
 
    
         RemoteObserverData();
-        RemoteObserverData(RemoteObserverData & arg);
-        RemoteObserverData & operator =(const RemoteObserverData & arg);
         virtual ~RemoteObserverData();
         EventType & get_eventType();
         void set_eventType(EventType eventType);
