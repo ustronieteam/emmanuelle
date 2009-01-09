@@ -25,7 +25,9 @@ bool Server::Run()
 	}
 	
 	boost::thread thrd(&activateRunnable);
+	LOG4CXX_DEBUG(logger, "Usypianie lokalnego watku ...");
 	Sleep(5000);
+	LOG4CXX_DEBUG(logger, "... wybudzenie lokalnego watku!");
 
 	// jesli uruchomilismy serwer macierzysty to nie podlaczamy sie do zadnego 
 	if(!address.empty())
