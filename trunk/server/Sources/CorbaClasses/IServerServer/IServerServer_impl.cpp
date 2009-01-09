@@ -42,8 +42,9 @@ IServerServer_impl::Join(const ::DomainData::Address& serverAddress)
 	// dodanie nowego serwera do bazy danych
 	DomainData::Address addr;
 	addr.localization = CORBA::string_dup( Server::GetRemotedAddress() );
+
 	this->AddServer(addr);
-	
+
 	// stworzenie obiektu z danymi dla obserwatora
 	RemoteObserverData observData;
 	observData.set_eventType(SERVER_CONNECTED);
@@ -63,7 +64,7 @@ IServerServer_impl::Join(const ::DomainData::Address& serverAddress)
 	for(unsigned int i = 0; i < serversList.size(); ++i)
 		(*_r)[i] = serversList[i].GetAddress();
 
-    return _r;
+	return _r;
 }
 
 //
@@ -94,11 +95,15 @@ void
 IServerServer_impl::AddServer(const ::DomainData::Address& serverAddress)
     throw(::CORBA::SystemException)
 {
+//std::cout << "addaddress:begin" << std::endl;
 	int serverId;
 	ServerRecord record;
-
-	if((serverId = ServerDataBase::GetInstance()->Find(serverAddress)) < 0)
+//std::cout << "tu1" << std::endl;
+	serverId = ServerDataBase::GetInstance()->Find(serverAddress);
+//std::cout << "tu2" << std::endl;
+	if(serverId < 0)
 	{
+//std::cout << "taki serwer nie istnieje" << std::endl;
 		record.SetAddress(serverAddress);
 	
 		try
@@ -110,20 +115,31 @@ IServerServer_impl::AddServer(const ::DomainData::Address& serverAddress)
 	}
 	else
 	{
+//std::cout << "taki serwer juz istanije" << std::endl;
 		record = ServerDataBase::GetInstance()->GetRecord(serverId);
+//std::cout << "1" << std::endl;
 		CORBA::ORB_var orb = record.GetBroker();
-		orb->destroy();
+//std::cout << "2" << std::endl;
+		if(!CORBA::is_nil(orb))
+		{
+			orb->destroy();
+		}
 		record.SetBroker(orb);
-
+//std::cout << "3" << std::endl;
 		IServerServer_var serv = record.GetServerRemoteInstance();
-		CORBA::release(serv);
+//std::cout << "4" << std::endl;
+		if(!CORBA::is_nil(serv))
+		{
+			CORBA::release(serv);
+		}
 		record.SetServerRemoteInstance(serv);
-
+//std::cout << "5" << std::endl;
 		ServerDataBase::GetInstance()->ModifyRecord(record);
 	}
 
 	std::cout << *(ServerDataBase::GetInstance());
 	std::cout << "---------------------------------------" << std::endl;
+//	std::cout << "addaddress:end" <<std::endl;
 }
 
 //
