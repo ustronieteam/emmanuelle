@@ -156,6 +156,7 @@ class Server
 		///
 		static char * GetRemotedAddress()
 		{
+
 			char* orb_options[] = { "-OAport", const_cast<char *>(LPORT.c_str()) };
 			int optc = sizeof(orb_options)/sizeof(char *);
 
@@ -163,14 +164,16 @@ class Server
 
 			CORBA::Object_var baseCurrent = orb->resolve_initial_references("OCICurrent");
 			OCI::Current_var current = OCI::Current::_narrow(baseCurrent);
-		 
+
 			OCI::TransportInfo_var info = current->get_oci_transport_info();
 			OCI::IIOP::TransportInfo_var iiopInfo = OCI::IIOP::TransportInfo::_narrow(info);
 
 			if(CORBA::is_nil(iiopInfo))
 				return "";
 
-			return iiopInfo->remote_addr();
+			char * str = iiopInfo->remote_addr();
+
+			return str;
 		}
 /*
 		static char * GetServerAddress(CORBA::Object_ptr obj)

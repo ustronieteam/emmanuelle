@@ -52,115 +52,6 @@ bool Server::Run()
     return 0;
 }
 
-bool Server::init(string address, string port) 
-{
-	CORBA::ORB_var orb;
-	IServerServer_var parentServer;
-
-	try
-	{
-		if(!connectToServer(address, orb, parentServer))
-		{
-			LOG4CXX_ERROR(logger, "Nie mo¿na po³¹czyc z sewerem macierzystym");
-			return 1;
-		}
-		
-		LOG4CXX_DEBUG(logger, "Poczatek komunikacji z serwerem macierzystym ... ");
-
-		DomainData::Address addr;
-		addr.localization = CORBA::string_dup(address.c_str());
-		AddressesList * l = parentServer->Join(addr);
-
-		ServerDataBase::GetInstance()->Clear();
-		for(unsigned int i = 0; i < l->length(); ++i)
-		{
-			ServerRecord rcd;
-			rcd.SetAddress((*l)[i]);
-
-			ServerDataBase::GetInstance()->InsertRecord(rcd);
-		}
-
-		cout << *(ServerDataBase::GetInstance());
-		
-		// TODO: dokonczyc ...	nawiazanie kontaktu z macierzystym serwerem, zapisanie obiektu zdalnego
-		//						zapisanie obiektu orb
-
-		LOG4CXX_DEBUG(logger, "... koniec komunikacji z serwerem macierzystym. ");
-
-	}
-	catch(const CORBA::SystemException& e)
-	{
-		LOG4CXX_ERROR(logger, "WYJ¥TEK: " << e._name() << ": " << e._to_string());
-
-		if (!CORBA::is_nil(orb))
-		{
-			orb->destroy();
-		}
-
-		return 1;
-	}
-
-    return 0;
-}
-
-bool Server::openConfFile(string & address)
-{
-	fstream conf;
-	conf.open(configFileName, ios_base::out | ios_base::in);
-
-	if(!conf.is_open())
-	{
-		LOG4CXX_ERROR(logger, "Nie ma takiego pliku konfiguracyjnego !");
-
-		return 1;
-	}
-
-	if(conf.fail())
-		conf.clear();
-
-	conf.seekp(0, ios_base::beg);
-
-	string line;
-	while(getline(conf, line))
-	{
-		string::const_iterator it = line.begin();
-
-		if(*it == '#')
-			continue;
-
-		string name = "";
-		string value = "";
-
-		for(it; it < line.end(); ++it)
-		{
-			if(*it != ' ' && *it != '=')
-			{
-				name += *it;
-			}
-			else if(*it == '=')
-				break;
-		}
-
-		if(*it == '=')
-		{		
-			for(++it; it < line.end(); ++it)
-			{
-				if(*it != '\n' && *it != ' ')
-					value += *it;
-			}
-
-			if(!name.compare(NADDRESS))
-			{
-				address = value;
-			}
-		}
-	}
-
-	conf.close();
-
-	return 0;
-}
-
 void Server::ActivateListning()
 {
 	// uruchomienie brokera, stworzenie obiektow zdalnych, udostepnienie ich i wlaczenie nasluchiwania
@@ -279,4 +170,113 @@ void Server::ActivateListning()
 			orb->destroy();
 		}
 	}
+}
+
+bool Server::init(string address, string port) 
+{
+	CORBA::ORB_var orb;
+	IServerServer_var parentServer;
+
+	try
+	{
+		if(!connectToServer(address, orb, parentServer))
+		{
+			LOG4CXX_ERROR(logger, "Nie mo¿na po³¹czyc z sewerem macierzystym");
+			return 1;
+		}
+		
+		LOG4CXX_DEBUG(logger, "Poczatek komunikacji z serwerem macierzystym ... ");
+
+		DomainData::Address addr;
+		addr.localization = CORBA::string_dup(address.c_str());
+		AddressesList * l = parentServer->Join(addr);
+
+		ServerDataBase::GetInstance()->Clear();
+		for(unsigned int i = 0; i < l->length(); ++i)
+		{
+			ServerRecord rcd;
+			rcd.SetAddress((*l)[i]);
+
+			ServerDataBase::GetInstance()->InsertRecord(rcd);
+		}
+
+		cout << *(ServerDataBase::GetInstance());
+		
+		// TODO: dokonczyc ...	nawiazanie kontaktu z macierzystym serwerem, zapisanie obiektu zdalnego
+		//						zapisanie obiektu orb
+
+		LOG4CXX_DEBUG(logger, "... koniec komunikacji z serwerem macierzystym. ");
+
+	}
+	catch(const CORBA::SystemException& e)
+	{
+		LOG4CXX_ERROR(logger, "WYJ¥TEK: " << e._name() << ": " << e._to_string());
+
+		if (!CORBA::is_nil(orb))
+		{
+			orb->destroy();
+		}
+
+		return 1;
+	}
+
+    return 0;
+}
+
+bool Server::openConfFile(string & address)
+{
+	fstream conf;
+	conf.open(configFileName, ios_base::out | ios_base::in);
+
+	if(!conf.is_open())
+	{
+		LOG4CXX_ERROR(logger, "Nie ma takiego pliku konfiguracyjnego !");
+
+		return 1;
+	}
+
+	if(conf.fail())
+		conf.clear();
+
+	conf.seekp(0, ios_base::beg);
+
+	string line;
+	while(getline(conf, line))
+	{
+		string::const_iterator it = line.begin();
+
+		if(*it == '#')
+			continue;
+
+		string name = "";
+		string value = "";
+
+		for(it; it < line.end(); ++it)
+		{
+			if(*it != ' ' && *it != '=')
+			{
+				name += *it;
+			}
+			else if(*it == '=')
+				break;
+		}
+
+		if(*it == '=')
+		{		
+			for(++it; it < line.end(); ++it)
+			{
+				if(*it != '\n' && *it != ' ')
+					value += *it;
+			}
+
+			if(!name.compare(NADDRESS))
+			{
+				address = value;
+			}
+		}
+	}
+
+	conf.close();
+
+	return 0;
 }
