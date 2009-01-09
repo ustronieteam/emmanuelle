@@ -119,18 +119,25 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 			LOG4CXX_DEBUG(logger, "Pozyskiwanie zdalnej instancji servera");
 			CORBA::ORB_var orb;
 			IServerServer_var remInstance;
-			if(Server::connectToServer(servRec.GetAddress().localization.in(), orb, remInstance)==false)
+			try
 			{
-				//TODO: zastanowic sie czy tu nie usunac serwer
-				LOG4CXX_ERROR(logger, "Nie mozna pozyskac zdalnej instancji servera");
-				continue; //Nie mozna wywolac zdalnej metody
+				if(Server::connectToServer(servRec.GetAddress().localization.in(), orb, remInstance)==false)
+				{
+					//TODO: zastanowic sie czy tu nie usunac serwer
+					LOG4CXX_ERROR(logger, "Nie mozna pozyskac zdalnej instancji servera");
+					continue; //Nie mozna wywolac zdalnej metody
+				}
+				else
+				{
+					LOG4CXX_DEBUG(logger, "Pozyskano zdalna instancje serwera");
+					servRec.SetServerRemoteInstance(remInstance);
+					servRec.SetBroker(orb);
+					remoteServer = remInstance;
+				}
 			}
-			else
+			catch(CORBA::SystemException & e)
 			{
-				LOG4CXX_DEBUG(logger, "Pozyskano zdalna instancje serwera");
-				servRec.SetServerRemoteInstance(remInstance);
-				servRec.SetBroker(orb);
-				remoteServer = remInstance;
+				LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas pozyskiwania zdalnej instancji: "<<e._name());
 			}
 		}
 		try
@@ -139,9 +146,9 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 			remoteServer->AddServer(ownAddr);//Dodac dane z observer Data
 			LOG4CXX_INFO(logger, "Wiadomosc wyslana do serwera nr"<<serverCounter);
 		}
-		catch(std::exception & exc) //chyba rzuca jakis wyjatek??
+		catch(CORBA::SystemException & e) //chyba rzuca jakis wyjatek??
 		{
-			LOG4CXX_ERROR(logger, "Blad wysylania do serwera: " << serverCounter<< ".Powod: "<< exc.what());
+			LOG4CXX_ERROR(logger, "Blad wysylania do serwera: " << serverCounter<< ".Powod: "<< e._name());
 		}
 		serverCounter++;
 
