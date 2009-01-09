@@ -200,8 +200,11 @@ bool Server::init(string address, string port)
 			ServerDataBase::GetInstance()->InsertRecord(rcd);
 		}
 
+		cout << "WYPISANIE BAZY Z INITA: " << endl;
+		cout << "***************************" << endl;
 		cout << *(ServerDataBase::GetInstance());
-		
+		cout << "***************************" << endl;
+
 		// TODO: dokonczyc ...	nawiazanie kontaktu z macierzystym serwerem, zapisanie obiektu zdalnego
 		//						zapisanie obiektu orb
 

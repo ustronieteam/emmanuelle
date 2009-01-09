@@ -137,6 +137,8 @@ IServerServer_impl::AddServer(const ::DomainData::Address& serverAddress)
 		ServerDataBase::GetInstance()->ModifyRecord(record);
 	}
 
+	std::cout << "WYPISANIE BAZY Z JOINA" << std::endl;
+	std::cout << "---------------------------------------" << std::endl;
 	std::cout << *(ServerDataBase::GetInstance());
 	std::cout << "---------------------------------------" << std::endl;
 //	std::cout << "addaddress:end" <<std::endl;
