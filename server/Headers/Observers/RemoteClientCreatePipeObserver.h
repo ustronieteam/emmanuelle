@@ -1,8 +1,5 @@
 #ifndef REMOTECLIENTCREATEPIPEOBSERVER_H
 #define REMOTECLIENTCREATEPIPEOBSERVER_H
-//Begin section for file RemoteClientCreatePipeObserver.h
-//TODO: Add definitions that you want preserved
-//End section for file RemoteClientCreatePipeObserver.h
 
 #include "IRemoteObserver.h"
 #include "ServerDataBase.h"
@@ -27,28 +24,14 @@ class ClientsDataBase;
 class ServerDataBase;
 
 
-//    1) Znajdz w bazie o klientach, takiego który nie blokuje po³¹czeñ przychodz¹cych i jest pod³¹czony
-//    z aktualnym serwerem i przekaz mu odpowiedni komunikat o tworzeniu pipe'u
-//    2) Je¿eli takiego nie ma to znajdŸ takiego który jest pod³¹czony do innego serwera i przeka¿ temu serwerowi
-//    odpowiedni komunikat (PassCreatePipe?)
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///@author Marian Szczykulski
+///@date 2009-01-09
+///@brief Klasa obserwatora obslugujacego logike obslugi rzadania klienta o utworzenie pipe-u
 class RemoteClientCreatePipeObserver : public  IRemoteObserver
 {
-
-    //Begin section for RemoteClientCreatePipeObserver
-    //TODO: Add attributes that you want preserved
-    //End section for RemoteClientCreatePipeObserver
-
     private:
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         boost::shared_ptr<ClientsDataBase> clientsDataBase;
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         boost::shared_ptr<ServerDataBase> serverDataBase;
-
-
-
     public:
 
         RemoteClientCreatePipeObserver();
@@ -69,9 +52,9 @@ class RemoteClientCreatePipeObserver : public  IRemoteObserver
 };  //end class RemoteClientCreatePipeObserver
 
 
-//@author Marian Szczykulski
-//@brief Funktor odpowiedzialny za logike przetwarzania. 
-//@brief Potrzebny do wywo³ania w odzielnym watku
+///@author Marian Szczykulski
+///@brief Funktor odpowiedzialny za logike przetwarzania. 
+///@brief Potrzebny do wywo³ania w odzielnym watku
 class RemoteClientCreatePipeObserverLogicRunnable
 {
 	private: 

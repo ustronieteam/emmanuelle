@@ -1,8 +1,5 @@
 #ifndef PASSMESSAGEOBSERVER_H
 #define PASSMESSAGEOBSERVER_H
-//Begin section for file PassMessageObserver.h
-//TODO: Add definitions that you want preserved
-//End section for file PassMessageObserver.h
 
 #include "IRemoteObserver.h"
 #include "ClientsDataBase.h"
@@ -21,18 +18,15 @@
 
 class ClientsDataBase;
 
-//    1)Znajdz klienta docelowego(adresata) - musi byc do nas pod³¹czony (Je¿eli nie to b³¹d.)
-//    2)Przekaz mu wiadomoœæ
+///@author Marian Szczykulski
+///@date 2009-01-09
+///@brief Klasa obserwatora obslugujacego logike podczas przesylania wiadomosci pomiedzy serwerami
+///@brief    1)Znajdz klienta docelowego(adresata) - musi byc do nas pod³¹czony (Je¿eli nie to b³¹d.)
+///@brief    2)Przekaz mu wiadomoœæ
 class PassMessageObserver : public IRemoteObserver
 {
 
-    //Begin section for PassMessageObserver
-    //TODO: Add attributes that you want preserved
-    //End section for PassMessageObserver
-
     private:
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         boost::shared_ptr<ClientsDataBase> clientsDataBase;
 
 
@@ -53,9 +47,9 @@ class PassMessageObserver : public IRemoteObserver
 
 };  //end class PassMessageObserver
 
-//@author Marian Szczykulski
-//@brief Funktor odpowiedzialny za logike przetwarzania. 
-//@brief Potrzebny do wywo³ania w odzielnym watku
+///@author Marian Szczykulski
+///@brief Funktor odpowiedzialny za logike przetwarzania. 
+///@brief Potrzebny do wywo³ania w odzielnym watku
 class PassMessageObserverLogicRunnable
 {
 	private: 

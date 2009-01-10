@@ -1,8 +1,6 @@
 #ifndef REMOTECLIENTDISCONNECTEDOBSERVER_H
 #define REMOTECLIENTDISCONNECTEDOBSERVER_H
-//Begin section for file RemoteClientDisconnectedObserver.h
-//TODO: Add definitions that you want preserved
-//End section for file RemoteClientDisconnectedObserver.h
+
 #include "IRemoteObserver.h"
 #include "ServerDataBase.h"
 #include "ServerRecord.h"
@@ -26,26 +24,15 @@
 class ClientsDataBase;
 class ServerDataBase;
 
-//<p>
-//    1) Zaktualizuj wpis o kliencie(roz³¹cz)
-//</p>
-//<p>
-//    2)Powiadom wszystkie serwery o zmianie
-//</p>
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///@author Marian Szczykulski
+///@date 2009-01-09
+///@brief Klasa obserwatora obslugujacego logike rozlaczania sie klienta
 class RemoteClientDisconnectedObserver : public IRemoteObserver
 {
 
-    //Begin section for RemoteClientDisconnectedObserver
-    //TODO: Add attributes that you want preserved
-    //End section for RemoteClientDisconnectedObserver
 
     private:
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         boost::shared_ptr<ClientsDataBase> clientsDataBase;
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         boost::shared_ptr<ServerDataBase> serverDataBase;
 
 
@@ -69,9 +56,9 @@ class RemoteClientDisconnectedObserver : public IRemoteObserver
 
 };  //end class RemoteClientDisconnectedObserver
 
-//@author Marian Szczykulski
-//@brief Funktor odpowiedzialny za logike przetwarzania. 
-//@brief Potrzebny do wywo³ania w odzielnym watku
+///@author Marian Szczykulski
+///@brief Funktor odpowiedzialny za logike przetwarzania. 
+///@brief Potrzebny do wywo³ania w odzielnym watku
 class RemoteClientDisconnectedObserverLogicRunnable
 {
 	private: 

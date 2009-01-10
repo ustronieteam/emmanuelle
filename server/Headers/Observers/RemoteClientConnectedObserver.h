@@ -1,8 +1,5 @@
 #ifndef REMOTECLIENTCONNECTEDOBSERVER_H
 #define REMOTECLIENTCONNECTEDOBSERVER_H
-//Begin section for file RemoteClientConnectedObserver.h
-//TODO: Add definitions that you want preserved
-//End section for file RemoteClientConnectedObserver.h
 
 #include "IRemoteObserver.h"
 #include "ServerDataBase.h"
@@ -27,22 +24,16 @@
 class ClientsDataBase;
 class ServerDataBase;
 
-//    1) Znajdz klienta
-//    2) zaktualizuj jego wpis w bazie (dodaj jak nie ma)
-//    3) Powiadom wszystkie serwery o zmianie
+///@author Marian Szczykulski
+///@date 2009-01-09
+///@brief Klasa obserwatora obslugujacego logike podczas podlaczania sie nowego klienta
+///    1) Znajdz klienta
+///    2) Powiadom wszystkie serwery o zmianie
 class RemoteClientConnectedObserver : public  IRemoteObserver
 {
 
-    //Begin section for RemoteClientConnectedObserver
-    //TODO: Add attributes that you want preserved
-    //End section for RemoteClientConnectedObserver
-
     private:
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         boost::shared_ptr<ClientsDataBase> clientsDataBase;
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         boost::shared_ptr<ServerDataBase> serverDataBase;
 
 
@@ -65,9 +56,9 @@ class RemoteClientConnectedObserver : public  IRemoteObserver
 
 };  //end class RemoteClientConnectedObserver
 
-//@author Marian Szczykulski
-//@brief Funktor odpowiedzialny za logike przetwarzania. 
-//@brief Potrzebny do wywo³ania w odzielnym watku
+///@author Marian Szczykulski
+///@brief Funktor odpowiedzialny za logike przetwarzania. 
+///@brief Potrzebny do wywo³ania w odzielnym watku
 class RemoteClientConnectedObserverLogicRunnable
 {
 	private: 
