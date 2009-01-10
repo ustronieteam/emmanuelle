@@ -15,6 +15,11 @@ int Aplication::Run()
 
 	// TODO: tu cos trzeba dodac ... jakies wywolanie ktore nie zakonczy aplikacji ... nie wiem - chyba jakas metode na widoku
 
+	// Uruchomienie widoku.
+	// Tutaj sie cala aplikacja blokuje, wyjscie z tej funkcji nastepuje 
+	// wtedy kiedy uzytkownik chce zakonczyc prace.
+	this->view->Run();
+
     return 0;
 }
 
