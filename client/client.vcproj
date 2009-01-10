@@ -64,7 +64,7 @@
 				AdditionalDependencies="ob.lib jtc.lib advapi32.lib wsock32.lib log4cxx.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;C:\Program Files\boost\boost_1_36_0\lib&quot;;&quot;$(SolutionDir)\log4cxx&quot;;&quot;$(SolutionDir)\CORBA\lib&quot;"
-				GenerateDebugInformation="true"
+				GenerateDebugInformation="false"
 				SubSystem="1"
 				TargetMachine="1"
 			/>
