@@ -18,14 +18,19 @@ using namespace std;
 
 int main(int argc, char * argv[])
 {
+	if(argc < 2)
+	{
+		cout << "Zla liczba paramaetrow";
+		return 1;
+	}
+
 	log4cxx::File confFile("logger.properties");
 	log4cxx::PropertyConfigurator::configure(confFile);
 
 	log4cxx::LoggerPtr logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("MAIN"));
 	logger->setLevel(log4cxx::Level::getAll());
 
-	Aplication * app = Aplication::GetInstance();
-	if(app->Run())
+	if(Aplication::GetInstance(argv[1])->Run())
 	{
 		LOG4CXX_ERROR(logger, "Klient zosta³ nieprawidlowo zamkniety z powodu b³êdu");
 		return 1;

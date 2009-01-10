@@ -4,14 +4,25 @@
 //TODO: Add definitions that you want preserved
 //End section for file Model.h
 
+#include "CorbaConnector.h"
+
 #include "IModel.h"
 
+#include "IClientClient.h"
+#include "IClientClient_impl.h"
+#include "IClientServer.h"
+#include "IClientServer_impl.h"
+
+#include "DomainData.h"
+
+#include <log4cxx/logger.h>
+#include <log4cxx/level.h>
 
 class Client;
 class ClientsData;
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-class Model : IModel
+class Model : public IModel, public CorbaConnector
 {
 
     //Begin section for Model
@@ -26,7 +37,39 @@ class Model : IModel
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         ClientsData * clientsData;
 
-		Model();
+		///
+		/// wskaznik do obiektu zdalnego udostepnianego serwerom
+		///
+		IClientServer_impl * serverImpl;
+
+		///
+		/// wskaznik do obiektu zdalnego udostepnianego klientom
+		///
+		IClientClient_impl * clientImpl;
+
+		///
+		/// adres serwera do ktorego powinien sie podlaczyc klient
+		///
+		DomainData::Address serverAddress;
+
+		// logger
+		log4cxx::LoggerPtr logger;
+
+		///
+		/// prywatny konstruktor
+		///
+		Model()
+		{
+			//logger
+			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("AplicationClass"));
+			logger->setLevel(log4cxx::Level::getAll());
+		}
+
+		///
+		/// Stworzenie brokera po stronie klienta, zarejestrownie obiektow zdalnych i uruchomienie
+		/// nasluchiwania na porcie CLNTPORT; musi zostac wywolana dopiero po polaczeniu z serwerem
+		///
+		void activateListning();
 
     public:
 
@@ -37,24 +80,45 @@ class Model : IModel
 			return instance;
 		}
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual ~Model();
+		///
+		/// destruktor
+		///
+        virtual ~Model()
+		{}
 
-        //get client
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Client * & get_client();
+        Client * GetClient()
+		{}
 
-        //set client
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        void set_client(Client * & client);
+        void SetClient(Client * clnt)
+		{}
 
-        //get clientsData
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        ClientsData * & get_clientsData();
+        ClientsData *  GetClientsData()
+		{}
 
-        //set clientsData
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        void set_clientsData(ClientsData * & clientsData);
+		void SetClientsData(ClientsData * clientsData)
+		{}
+
+		///
+		/// @return adres serwera do ktorego laczy sie klient
+		///
+		/// address getter
+		///
+		DomainData::Address GetServerAddress() const
+		{
+			return serverAddress;
+		}
+
+		///
+		/// @param [in] addr	adres serwera do ktorego laczy sie klient
+		///
+		/// address setter
+		///
+		void SetServerAddress(const char * addr)
+		{
+			DomainData::Address a;
+			a.localization = CORBA::string_dup(addr);
+			this->serverAddress = a;
+		}
 
 		//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
          int AddStatusObserver(DataObserver & observer) ;
