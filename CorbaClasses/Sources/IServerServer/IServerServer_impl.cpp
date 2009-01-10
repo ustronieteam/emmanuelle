@@ -26,7 +26,7 @@ IServerServer_impl::_default_POA()
 IServerServer_impl::Join(const ::DomainData::Address& serverAddress)
     throw(::CORBA::SystemException)
 {
-	std::cout << "WYWOLANIE JOIN z adresu: " << Server::GetRemotedAddress() << std::endl;
+	std::cout << "WYWOLANIE JOIN z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()) << std::endl;
 
 	// zapisanie adresu wlasnego serwera
 	Server::SetMyIP(serverAddress);
@@ -41,7 +41,7 @@ IServerServer_impl::Join(const ::DomainData::Address& serverAddress)
 
 	// dodanie nowego serwera do bazy danych
 	DomainData::Address addr;
-	addr.localization = CORBA::string_dup( Server::GetRemotedAddress() );
+	addr.localization = CORBA::string_dup( Server::GetRemotedAddress(SRVPORT.c_str()) );
 
 	this->AddServer(addr);
 
@@ -76,7 +76,7 @@ IServerServer_impl::Unjoin()
 {
     // adres serwera do usuniecia
 	DomainData::Address addr;
-	addr.localization = CORBA::string_dup(Server::GetRemotedAddress());
+	addr.localization = CORBA::string_dup(Server::GetRemotedAddress(SRVPORT.c_str()));
 
 	this->RemoveServer(addr);
 

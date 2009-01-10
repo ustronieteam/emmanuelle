@@ -32,9 +32,9 @@ bool Server::Run()
 	// jesli uruchomilismy serwer macierzysty to nie podlaczamy sie do zadnego 
 	if(!address.empty())
 	{
-		if(!init(address, LPORT))
+		if(!init(address, SRVPORT))
 		{
-			LOG4CXX_DEBUG(logger, "polaczono z serverem " << address.c_str() << " nasluchujacym na porcie " << LPORT.c_str());
+			LOG4CXX_DEBUG(logger, "polaczono z serverem " << address.c_str() << " nasluchujacym na porcie " << SRVPORT.c_str());
 		}
 		else
 		{
@@ -59,7 +59,7 @@ void Server::ActivateListning()
 
 	try
 	{
-		char* orb_options[] = { "-OAport", const_cast<char *>(LPORT.c_str()) };
+		char* orb_options[] = { "-OAport", const_cast<char *>(SRVPORT.c_str()) };
 		int optc = sizeof(orb_options)/sizeof(char *);
 
 		orb = CORBA::ORB_init(optc, orb_options);
