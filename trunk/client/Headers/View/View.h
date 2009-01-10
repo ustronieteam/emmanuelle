@@ -1,47 +1,88 @@
 #ifndef VIEW_H
 #define VIEW_H
-//Begin section for file View.h
-//TODO: Add definitions that you want preserved
-//End section for file View.h
 
+#include <iostream>
+#include <string>
+#include <list>
 
+#include "Window.h"
+#include "ConfigWindow.h"
+#include "WelcomeWindow.h"
+
+using namespace std;
+
+///
+/// Redefinicja klasy.
+///
 class Controller;
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Widok.
+/// Widok z architektury MVC (Model, View, Controler)
+/// @author Wojciech Grzeskowiak
+/// @date 2009.01.10
+///
 class View
 {
+	public:
 
-    //Begin section for View
-    //TODO: Add attributes that you want preserved
-    //End section for View
+		///
+		/// Zwraca instancje. Singleton.
+		///
+		static View * GetInstance();
 
     private:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Controller * controller;
+        ///
+		/// Kontroler.
+		///
+        Controller * _controller;
 
+		///
+		/// Okna.
+		///
+		list<Window *> _windows;
+
+		///
+		/// Konstruktor.
+		/// Prywatny bo Singleton.
+		///
 		View();
 
     public:
 
-		static View * GetInstance()
-		{
-			static View * instance = new View();
-
-			return instance;
-		}
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Destruktor.
+		///
         virtual ~View();
 
-        //get controller
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+		///
+		/// Uruchamia widok.
+		///
+		void Run();
+
+        ///
+		/// Zwraca kontroler.
+		/// @return Kontroler.
+		///
         Controller * GetController();
 
-        //set controller
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Ustawia kontroler.
+		/// @param[in] controller Kontroler.
         void SetController(Controller * controller);
 
-};  //end class View
+		///
+		/// Dodanie okna.
+		/// @param[in] window Okno jakie nalezy dodac.
+		///
+		void AddWindow(Window * window);
+
+		///
+		/// Usuniecie okna.
+		/// @param[in] window Okno jakie nalezy usunac.
+		///
+		void DelWindow(Window * window);
+};
 
 #endif
