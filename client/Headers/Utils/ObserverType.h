@@ -5,7 +5,6 @@
 //End section for file ObserverType.h
 
 
-
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 enum ObserverType
 {
@@ -17,7 +16,7 @@ enum ObserverType
         MESSAGE = 1,
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        FILE = 2
+        FFILE = 2
 
 }; //end enum ObserverType 
 

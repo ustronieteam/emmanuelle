@@ -41,7 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)\client\Headers\CorbaClasses&quot;;&quot;$(SolutionDir)\log4cxx\include&quot;;&quot;C:\Program Files\boost\boost_1_36_0&quot;;&quot;$(SolutionDir)\client\Headers&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\DomainData&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IClientClient&quot;;&quot;$(SolutionDir)\CORBA\include&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IClientServer&quot;;&quot;$(SolutionDir)\client\Headers\View&quot;;&quot;$(SolutionDir)\client\Headers\Utils&quot;;&quot;$(SolutionDir)\client\Headers\Model&quot;;&quot;$(SolutionDir)\client\Headers\Controller&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IServerClient&quot;"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\CorbaClasses\Headers\IServerServer&quot;;&quot;$(SolutionDir)\client\Headers\CorbaClasses&quot;;&quot;$(SolutionDir)\log4cxx\include&quot;;&quot;C:\Program Files\boost\boost_1_36_0&quot;;&quot;$(SolutionDir)\client\Headers&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\DomainData&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IClientClient&quot;;&quot;$(SolutionDir)\CORBA\include&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IClientServer&quot;;&quot;$(SolutionDir)\client\Headers\View&quot;;&quot;$(SolutionDir)\client\Headers\Utils&quot;;&quot;$(SolutionDir)\client\Headers\Model&quot;;&quot;$(SolutionDir)\client\Headers\Controller&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IServerClient&quot;"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -378,6 +378,10 @@
 			<Filter
 				Name="CorbaClasses"
 				>
+				<File
+					RelativePath="..\CorbaClasses\Headers\CorbaConnector.h"
+					>
+				</File>
 				<File
 					RelativePath=".\Headers\CorbaClasses\IRemoteObserverObject.h"
 					>
