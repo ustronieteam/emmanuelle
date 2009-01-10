@@ -4,9 +4,9 @@
 //TODO: Add definitions that you want preserved
 //End section for file Controller.h
 
-#include "../Utils/IRemoteObserver_0.h"
-#include "../Utils/ObserverType.h"
-#include "../Utils/DataObserver.h"
+#include "IRemoteObserver.h"
+#include "ObserverType.h"
+#include "DataObserver.h"
 
 
 class IModel;
@@ -32,27 +32,21 @@ class Controller
         Controller();
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Controller(Controller & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Controller & operator =(const Controller & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~Controller();
 
         //get iModel
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline IModel * & get_iModel();
+        IModel * & get_iModel();
 
         //set iModel
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline void set_iModel(IModel * & iModel);
+        void set_iModel(IModel * & iModel);
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        int AddRemoteObserver(IRemoteObserver_0 & observer, ObserverType observerType);
+        int AddRemoteObserver(IRemoteObserver & observer, ObserverType observerType);
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        bool SendFile(int adresat, const char * fileName); // TODO: poprawic typ adresata
+        bool SendFile(int adresat, const char * fileName); // TODO: zmienic typ adresata
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         int DeleteContact(const char * name, int number);
@@ -73,7 +67,7 @@ class Controller
         bool ConnectToServer(const char * adres, int port);
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        int GetContactsList(); // TODO: poprawic typ zwracany
+        int GetContactsList(); // TODO: zmienic typ zwracany
 
 };  //end class Controller
 

@@ -4,11 +4,11 @@
 //TODO: Add definitions that you want preserved
 //End section for file FileObserver.h
 
-#include "IRemoteObserver_0.h"
+#include "IRemoteObserver.h"
 
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-class FileObserver : IRemoteObserver_0
+class FileObserver : IRemoteObserver
 {
 
     //Begin section for FileObserver
@@ -21,12 +21,6 @@ class FileObserver : IRemoteObserver_0
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         FileObserver();
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        FileObserver(FileObserver & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        FileObserver & operator =(const FileObserver & arg);
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~FileObserver();

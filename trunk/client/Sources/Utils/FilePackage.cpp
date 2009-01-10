@@ -12,29 +12,6 @@ FilePackage::FilePackage()
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-FilePackage::FilePackage(FilePackage & arg) 
-{
-    //TODO Auto-generated method stub
-    this->packageData = arg.packageData;
-    this->packageNumber = arg.packageNumber;
-    this->packageAmount = arg.packageAmount;
-}
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-FilePackage & FilePackage::operator =(const FilePackage & arg) 
-{
-    //TODO Auto-generated method stub
-    if (this != &arg)
-    {
-        this->packageData = arg.packageData;
-        this->packageNumber = arg.packageNumber;
-        this->packageAmount = arg.packageAmount;
-    }
-
-	return *this;
-}
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 FilePackage::~FilePackage() 
 {
     //TODO Auto-generated method stub
@@ -55,14 +32,14 @@ void FilePackage::set_PACKAGE_SIZE(int & PACKAGE_SIZE)
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-int FilePackage::get_packageData() // TODO: poprawic typ zwracany
+int FilePackage::get_packageData() // TODO: zmienic typ zwracany
 {
     //TODO Auto-generated method stub
-    return packageData;
+    return 0;
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-void FilePackage::set_packageData(int packageData) // TODO: poprawic typ packageData
+void FilePackage::set_packageData(int packageData) // TODO: zmienic typ packageData
 {
     //TODO Auto-generated method stub
     this->packageData = packageData;

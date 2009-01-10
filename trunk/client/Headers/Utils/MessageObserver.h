@@ -4,11 +4,11 @@
 //TODO: Add definitions that you want preserved
 //End section for file MessageObserver.h
 
-#include "IRemoteObserver_0.h"
+#include "IRemoteObserver.h"
 
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-class MessageObserver : IRemoteObserver_0
+class MessageObserver : IRemoteObserver
 {
 
     //Begin section for MessageObserver
@@ -21,12 +21,6 @@ class MessageObserver : IRemoteObserver_0
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         MessageObserver();
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        MessageObserver(MessageObserver & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        MessageObserver & operator =(const MessageObserver & arg);
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~MessageObserver();

@@ -4,7 +4,7 @@
 //TODO: Add definitions that you want preserved
 //End section for file Client.h
 
-#include "../Utils/IRemoteObserver_0.h"
+#include "IRemoteObserver.h"
 
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
@@ -23,16 +23,10 @@ class Client
         Client();
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Client(Client & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Client & operator =(const Client & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~Client();
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        int AddFileObserver(IRemoteObserver_0 & fileObserver);
+        int AddFileObserver(IRemoteObserver & fileObserver);
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         int SendPackage();
@@ -47,7 +41,7 @@ class Client
         int SendMessage();
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        int AddMessageObserver(IRemoteObserver_0 & messageObserver);
+        int AddMessageObserver(IRemoteObserver & messageObserver);
 
 };  //end class Client
 

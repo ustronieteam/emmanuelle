@@ -233,11 +233,19 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Sources\Utils\IRemoteObserver.cpp"
+					>
+				</File>
+				<File
 					RelativePath=".\Sources\Utils\IRemoteObserver_0.cpp"
 					>
 				</File>
 				<File
 					RelativePath=".\Sources\Utils\MessageObserver.cpp"
+					>
+				</File>
+				<File
+					RelativePath=".\Sources\Utils\RemoteObserverData.cpp"
 					>
 				</File>
 				<File
@@ -447,6 +455,10 @@
 					>
 				</File>
 				<File
+					RelativePath=".\Headers\Utils\IRemoteObserver.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Headers\Utils\IRemoteObserver_0.h"
 					>
 				</File>
@@ -456,6 +468,10 @@
 				</File>
 				<File
 					RelativePath=".\Headers\Utils\ObserverType.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\Utils\RemoteObserverData.h"
 					>
 				</File>
 				<File

@@ -37,37 +37,31 @@ class Aplication
         Aplication();
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Aplication(Aplication & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Aplication & operator =(const Aplication & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~Aplication();
 
         //get controller
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline Controller * & get_controller();
+        Controller * & get_controller();
 
         //set controller
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline void set_controller(Controller * & controller);
+        void set_controller(Controller * & controller);
 
         //get view
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline View * & get_view();
+        View * & get_view();
 
         //set view
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline void set_view(View * & view);
+        void set_view(View * & view);
 
         //get iModel
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline IModel * & get_iModel();
+        IModel * & get_iModel();
 
         //set iModel
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline void set_iModel(IModel * & iModel);
+        void set_iModel(IModel * & iModel);
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         int Run();

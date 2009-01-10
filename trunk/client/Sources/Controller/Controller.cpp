@@ -11,25 +11,6 @@ Controller::Controller()
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-Controller::Controller(Controller & arg) 
-{
-    //TODO Auto-generated method stub
-    this->iModel = arg.iModel;
-}
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-Controller & Controller::operator =(const Controller & arg) 
-{
-    //TODO Auto-generated method stub
-    if (this != &arg)
-    {
-        this->iModel = arg.iModel;
-    }
-
-	return *this;
-}
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 Controller::~Controller() 
 {
     //TODO Auto-generated method stub
@@ -49,14 +30,14 @@ void Controller::set_iModel(IModel * & iModel)
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-int Controller::AddRemoteObserver(IRemoteObserver_0 & observer, ObserverType observerType) 
+int Controller::AddRemoteObserver(IRemoteObserver & observer, ObserverType observerType) 
 {
     //TODO Auto-generated method stub
     return 0;
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-bool Controller::SendFile(int adresat, const char * fileName) 
+bool Controller::SendFile(int adresat, const char * fileName) // TODO: zmienic typ adresata 
 {
     //TODO Auto-generated method stub
     return 0;
@@ -105,7 +86,7 @@ bool Controller::ConnectToServer(const char * adres, int port)
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-int Controller::GetContactsList() // TODO: poprawic typ zwracany
+int Controller::GetContactsList() // TODO: zmienic typ zwracany
 {
     //TODO Auto-generated method stub
     return 0;

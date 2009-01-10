@@ -11,19 +11,6 @@ MessageObserver::MessageObserver()
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-MessageObserver::MessageObserver(MessageObserver & arg) 
-{
-    //TODO Auto-generated method stub
-}
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-MessageObserver & MessageObserver::operator =(const MessageObserver & arg) 
-{
-    //TODO Auto-generated method stub
-	return *this;
-}
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 MessageObserver::~MessageObserver() 
 {
     //TODO Auto-generated method stub

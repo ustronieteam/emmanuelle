@@ -11,25 +11,6 @@ View::View()
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-View::View(View & arg) 
-{
-    //TODO Auto-generated method stub
-    this->controller = arg.controller;
-}
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-View & View::operator =(const View & arg) 
-{
-    //TODO Auto-generated method stub
-    if (this != &arg)
-    {
-        this->controller = arg.controller;
-    }
-
-	return *this;
-}
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 View::~View() 
 {
     //TODO Auto-generated method stub

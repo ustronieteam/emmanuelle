@@ -23,12 +23,6 @@ class StatusObserver : DataObserver
         StatusObserver();
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        StatusObserver(StatusObserver & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        StatusObserver & operator =(const StatusObserver & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~StatusObserver();
 
 };  //end class StatusObserver
