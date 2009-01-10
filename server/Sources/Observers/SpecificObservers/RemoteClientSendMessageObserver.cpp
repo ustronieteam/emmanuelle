@@ -66,12 +66,12 @@ void RemoteClientSendMessageObserver::set_serverDataBase(boost::shared_ptr<Serve
 {
 	this->serverDataBase = serverDataBase;
 }
-//@author Marian Szczykulski
-//@date 02-01-2009
-//@note Obserwator wysy³ania wiadomosci przez klienta
-//@brief Glowna funkcja obserwatora, odpowiedzialna za logike przetwarzania.
-//@param[in] Dane obserwatora potrzebne do podejmowania decyzji podczas przetwarzania
-//@return ??
+///@author Marian Szczykulski
+///@date 02-01-2009
+///@note Obserwator wysy³ania wiadomosci przez klienta
+///@brief Glowna funkcja obserwatora, odpowiedzialna za logike przetwarzania.
+///@param[in] Dane obserwatora potrzebne do podejmowania decyzji podczas przetwarzania
+///@return ??
 int RemoteClientSendMessageObserver::Refresh(RemoteObserverData observerData)
 {
 	if(observerData.get_eventType()!=CLIENT_SEND_MESSAGE)
@@ -82,23 +82,23 @@ int RemoteClientSendMessageObserver::Refresh(RemoteObserverData observerData)
 	boost::thread threadSendMessage(threadLogic);
 	return 0;
 }
-//@author Marian Szczykulski
-//@date 02-01-2009
-//@note Logika watku
-//@brief Zawiera logike przetwarzania ktora moze byc uruchomiona w odzielnym watku
+///@author Marian Szczykulski
+///@date 02-01-2009
+///@note Logika watku
+///@brief Zawiera logike przetwarzania ktora moze byc uruchomiona w odzielnym watku
 int RemoteClientSendMessageObserverLogicRunnable::operator()()
 {
 	LOG4CXX_INFO(logger, "Przetwarzanie logiki RemoteClientSendMessageObserver");
 
 	//    1) Znajdz odpowiedniego klienta (adresata)
 	struct DomainData::Address clientAddr = observerData.getClientAddress();
-	int clientId = clientsDataBase->Find(clientAddr/*Dane z observerData*/);
+	int clientId = clientsDataBase->Find(clientAddr);
 	if(clientId<0)
 	{
 		LOG4CXX_ERROR(logger, "Blad w odnajdowaniu klienta- nie ma go w bazie");
 		return -1;
 	}
-	ClientRecord clRec;
+	ClientRecord clRec; //Rekord adresata
 	try
 	{
 		clRec = clientsDataBase->GetRecord(clientId);
@@ -108,16 +108,41 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 		LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas odszukiwania rekordu klienta. ClientId: "<<clientId<< ".Powod: "<< exc.what());
 		return -2;
 	}
-	//Znajdz serwer do którego jest on podlaczony (trzeba rzutowaæ)
+	//Znajdz serwer do którego jest on podlaczony
 	int servId = clRec.GetClientServerId();
 	
 	// Wyznacz nasz serverId
-	int localServerId ;//= serverDataBase->getLocalServerId();
+	struct DomainData::Address localServAddr = Server::GetMyIP();
+	int localServerId = serverDataBase->Find(localServAddr);
 
 	
 	if(servId == localServerId)
 	{//    2) Jezeli jest do nas pod³¹czony przekaz mu wiadomoœæ
 		IClientServer_var remoteClientInterface= clRec.GetClientRemoteInstance();
+		if(CORBA::is_nil(remoteClientInterface))
+		{
+			LOG4CXX_DEBUG(logger, "Pozyskiwanie zdalnej instancji klienta");
+			CORBA::ORB_var orb;
+			try
+			{
+				if(Server::connectToClientServer(clientAddr.localization.in(),orb, remoteClientInterface)==false)
+				{
+						LOG4CXX_ERROR(logger, "Nie mozna pozyskac zdalnej instancji klienta");
+						return -3; //Nie mozna wywolac zdalnej metody
+				}
+				else
+				{
+						LOG4CXX_DEBUG(logger, "Pozyskano zdalna instancje klienta");
+						clRec.SetClientRemoteInstance(remoteClientInterface);
+						clRec.SetBroker(orb);
+				}
+			}
+			catch(CORBA::SystemException & e)
+			{
+				LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas pozyskiwania zdalnej instancji klienta: "<<e._name());
+				return -4;
+			}
+		}//Zdalna instancje klienta pobrano
 		try
 		{
 			struct DomainData::Address senderAddr = observerData.getSenderClientAddress();
@@ -144,6 +169,31 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 			return -5;
 		}
 		IServerServer_var remoteInstance = remoteServRecord.GetServerRemoteInstance();
+		if(CORBA::is_nil(remoteInstance))//Pozyskiwanie zdalnej instancji
+		{
+			LOG4CXX_DEBUG(logger, "Pozyskiwanie zdalnej instancji serwera");
+			CORBA::ORB_var orb;
+			try
+			{
+				if(Server::connectToServerServer(remoteServRecord.GetAddress().localization.in(), orb, remoteInstance)==false)
+				{
+					LOG4CXX_ERROR(logger, "Nie mozna pozyskac zdalnej instancji servera");
+					return -4; //Nie mozna wywolac zdalnej metody
+				}
+				else
+				{
+					LOG4CXX_DEBUG(logger, "Pozyskano zdalna instancje servera");
+					remoteServRecord.SetServerRemoteInstance(remoteInstance);
+					remoteServRecord.SetBroker(orb);
+				}
+			}
+			catch(CORBA::SystemException & e)
+			{
+				LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas pozyskiwania zdalnej instancji klienta: "<<e._name());
+				return -5;
+			}
+
+		}//Zdalna instancja jest pozyskana
 		try
 		{
 			struct DomainData::Address senderAddr = observerData.getSenderClientAddress();
