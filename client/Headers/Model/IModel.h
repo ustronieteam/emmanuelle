@@ -4,9 +4,9 @@
 //TODO: Add definitions that you want preserved
 //End section for file IModel.h
 
-#include "../Utils/DataObserver.h"
-#include "../Utils/FilePackage.h"
-#include "../Utils/IRemoteObserver_0.h"
+#include "DataObserver.h"
+#include "FilePackage.h"
+#include "IRemoteObserver.h"
 
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
@@ -49,13 +49,13 @@ class IModel
         virtual bool ConnectToServer() = 0;
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual int AddFileObserver(IRemoteObserver_0 & observer) = 0;
+        virtual int AddFileObserver(IRemoteObserver & observer) = 0;
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual int AddMessageObserver(IRemoteObserver_0 & observer) = 0;
+        virtual int AddMessageObserver(IRemoteObserver & observer) = 0;
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual  int GetContactsList() = 0; // TODO: poprawic typ zwracany
+        virtual  int GetContactsList() = 0; // TODO: zmienic typ zwracany
 
 };  //end class IModel
 

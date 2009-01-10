@@ -28,21 +28,15 @@ class View
         View();
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        View(View & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        View & operator =(const View & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~View();
 
         //get controller
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline Controller * & get_controller();
+        Controller * & get_controller();
 
         //set controller
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline void set_controller(Controller * & controller);
+        void set_controller(Controller * & controller);
 
 };  //end class View
 

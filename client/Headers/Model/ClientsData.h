@@ -23,16 +23,10 @@ class ClientsData : ClientDataObject
         ClientsData();
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        ClientsData(ClientsData & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        ClientsData & operator =(const ClientsData & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~ClientsData();
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        int GetContactsList(); // poprawic typ zwracany
+        int GetContactsList(); // TODO: zmienic typ zwracany
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         int DeleteContact();

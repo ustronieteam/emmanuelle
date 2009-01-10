@@ -11,29 +11,6 @@ Aplication::Aplication()
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-Aplication::Aplication(Aplication & arg) 
-{
-    //TODO Auto-generated method stub
-    this->controller = arg.controller;
-    this->view = arg.view;
-    this->iModel = arg.iModel;
-}
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-Aplication & Aplication::operator =(const Aplication & arg) 
-{
-    //TODO Auto-generated method stub
-    if (this != &arg)
-    {
-        this->controller = arg.controller;
-        this->view = arg.view;
-        this->iModel = arg.iModel;
-    }
-
-	return *this;
-}
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 Aplication::~Aplication() 
 {
     //TODO Auto-generated method stub

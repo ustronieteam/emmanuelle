@@ -21,12 +21,6 @@ class DataObserverData
         DataObserverData();
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        DataObserverData(DataObserverData & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        DataObserverData & operator =(const DataObserverData & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~DataObserverData();
 
 };  //end class DataObserverData

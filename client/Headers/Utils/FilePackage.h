@@ -28,7 +28,7 @@ class FilePackage
         static int PACKAGE_SIZE;
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        int packageData; // TODO: poprawic typ
+        int packageData; // TODO: zmienic typ zwracany
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         int packageNumber;
@@ -44,45 +44,39 @@ class FilePackage
         FilePackage();
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        FilePackage(FilePackage & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        FilePackage & operator =(const FilePackage & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~FilePackage();
 
         //get PACKAGE_SIZE
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline static int & get_PACKAGE_SIZE();
+        static int & get_PACKAGE_SIZE();
 
         //set PACKAGE_SIZE
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline static void set_PACKAGE_SIZE(int & PACKAGE_SIZE);
+        static void set_PACKAGE_SIZE(int & PACKAGE_SIZE);
 
         //get packageData
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline  int get_packageData(); // TODO: poprawic typ zwracany
+        int get_packageData(); // TODO: zmienic typ zwracany
 
         //set packageData
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline void set_packageData(int packageData); // TODO: poprawic typ packagedata
+        void set_packageData(int packageData); // TODO: zmienic typ packageData
 
         //get packageNumber
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline int & get_packageNumber();
+        int & get_packageNumber();
 
         //set packageNumber
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline void set_packageNumber(int & packageNumber);
+        void set_packageNumber(int & packageNumber);
 
         //get packageAmount
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline int & get_packageAmount();
+        int & get_packageAmount();
 
         //set packageAmount
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline void set_packageAmount(int & packageAmount);
+        void set_packageAmount(int & packageAmount);
 
 };  //end class FilePackage
 

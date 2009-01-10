@@ -11,26 +11,13 @@ ClientsData::ClientsData()
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-ClientsData::ClientsData(ClientsData & arg) 
-{
-    //TODO Auto-generated method stub
-}
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-ClientsData & ClientsData::operator =(const ClientsData & arg) 
-{
-	//TODO Auto-generated method stub
-	return *this;
-}
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 ClientsData::~ClientsData() 
 {
     //TODO Auto-generated method stub
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-int ClientsData::GetContactsList() // typ zwracany poprawic - dodane zeby sie kompilowalo (Couto) 
+int ClientsData::GetContactsList() // TODO: zmienic typ zwracany 
 {
     //TODO Auto-generated method stub
     return 0;

@@ -11,19 +11,6 @@ FileObserver::FileObserver()
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-FileObserver::FileObserver(FileObserver & arg) 
-{
-    //TODO Auto-generated method stub
-}
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-FileObserver & FileObserver::operator =(const FileObserver & arg) 
-{
-    //TODO Auto-generated method stub
-	return *this;
-}
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 FileObserver::~FileObserver() 
 {
     //TODO Auto-generated method stub

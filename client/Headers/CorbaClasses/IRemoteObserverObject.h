@@ -4,10 +4,10 @@
 //TODO: Add definitions that you want preserved
 //End section for file IRemoteObserverObject.h
 
-#include "Utils/RemoteObserverData_0.h"
+#include "RemoteObserverData.h"
 
 
-class IRemoteObserver_0;
+class IRemoteObserver;
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 class IRemoteObserverObject
@@ -20,7 +20,7 @@ class IRemoteObserverObject
     private:
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        IRemoteObserver_0 * iObserver;
+        IRemoteObserver * iObserver;
 
 
 
@@ -34,14 +34,14 @@ class IRemoteObserverObject
 
         //get iObserver
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual IRemoteObserver_0 * & get_iObserver() = 0;
+        virtual IRemoteObserver * & get_iObserver() = 0;
 
         //set iObserver
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual void set_iObserver(IRemoteObserver_0 * & iObserver) = 0;
+        virtual void set_iObserver(IRemoteObserver * & iObserver) = 0;
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual int Notify(RemoteObserverData_0 objectData) = 0;
+        virtual int Notify(RemoteObserverData objectData) = 0;
 
 };  //end class IRemoteObserverObject
 

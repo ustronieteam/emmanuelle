@@ -4,8 +4,8 @@
 //TODO: Add definitions that you want preserved
 //End section for file ClientDataObject.h
 
-#include "../Utils/DataObserverData.h"
-#include "../Utils/DataObserver.h"
+#include "DataObserverData.h"
+#include "DataObserver.h"
 
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"

@@ -34,29 +34,23 @@ class Model : IModel
         Model();
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Model(Model & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Model & operator =(const Model & arg);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~Model();
 
         //get client
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline Client * & get_client();
+        Client * & get_client();
 
         //set client
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline void set_client(Client * & client);
+        void set_client(Client * & client);
 
         //get clientsData
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline ClientsData * & get_clientsData();
+        ClientsData * & get_clientsData();
 
         //set clientsData
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        inline void set_clientsData(ClientsData * & clientsData);
+        void set_clientsData(ClientsData * & clientsData);
 
 };  //end class Model
 
