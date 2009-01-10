@@ -26,12 +26,16 @@ class Model : IModel
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         ClientsData * clientsData;
 
-
+		Model();
 
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Model();
+        static Model * GetInstance()
+		{
+			static Model * instance = new Model();
+
+			return instance;
+		}
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~Model();
@@ -51,6 +55,36 @@ class Model : IModel
         //set clientsData
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         void set_clientsData(ClientsData * & clientsData);
+
+		//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+         int AddStatusObserver(DataObserver & observer) ;
+
+        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+         int SendPackage(FilePackage package);
+
+        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+         int DeleteContact() ;
+
+        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+         int SendMessage() ;
+
+        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+         int AddContact() ;
+
+        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+         int Disconnect() ;
+
+        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+         bool ConnectToServer() ;
+
+        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+         int AddFileObserver(IRemoteObserver & observer) ;
+
+        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+         int AddMessageObserver(IRemoteObserver & observer) ;
+
+        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+          int GetContactsList(); // TODO: zmienic typ zwracany
 
 };  //end class Model
 

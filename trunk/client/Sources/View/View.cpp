@@ -17,14 +17,14 @@ View::~View()
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-Controller * & View::get_controller() 
+Controller * View::GetController() 
 {
     //TODO Auto-generated method stub
     return controller;
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-void View::set_controller(Controller * & controller) 
+void View::SetController(Controller * controller) 
 {
     //TODO Auto-generated method stub
 }

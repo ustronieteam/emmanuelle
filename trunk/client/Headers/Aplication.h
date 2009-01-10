@@ -1,69 +1,74 @@
 #ifndef APLICATION_H
 #define APLICATION_H
-//Begin section for file Aplication.h
-//TODO: Add definitions that you want preserved
-//End section for file Aplication.h
 
+#include <iostream>
+#include <string>
+#include <boost/thread.hpp>
+
+#include <log4cxx/logger.h>
+#include <log4cxx/level.h>
 
 class Controller;
 class View;
 class IModel;
 
-//G³ówna klasa aplikacji. Startuje program klienta i wi¹¿e odpowiednie warstwy ze sob¹.
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// @author	Mateusz Ko³odziejczyk
+/// @date	06.01.2009
+///
+/// @brief	G³ówna klasa aplikacji. Startuje program klienta i wi¹¿e odpowiednie warstwy ze sob¹.
+///
 class Aplication
 {
-
-    //Begin section for Aplication
-    //TODO: Add attributes that you want preserved
-    //End section for Aplication
-
     private:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Controller * controller;
+		///
+		/// obiekt kontrolera
+		///
+		boost::shared_ptr<Controller> controller;
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        View * view;
+		/// 
+		/// obiekt widoku
+		///
+        boost::shared_ptr<View> view;
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        IModel * iModel;
+		///
+		/// obiekt modelu
+		///
+        boost::shared_ptr<IModel> iModel;
 
+		// logger
+		log4cxx::LoggerPtr logger;
 
+		///
+		/// konstruktor prywatny
+		///
+        Aplication()
+		{
+			//logger
+			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("ServerLogicRunnable"));
+			logger->setLevel(log4cxx::Level::getAll());
+		}
 
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Aplication();
+		///
+		/// statyczna metoda zwracajaca wskaznik do obiektu klasy Server jesli
+		/// istnieje badz tworzaca go jesli nie istnieje
+		///
+		static Aplication * GetInstance()
+		{
+			static Aplication * instance = new Aplication();
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual ~Aplication();
+			return instance;
+		}
 
-        //get controller
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Controller * & get_controller();
+		///
+		/// destruktor
+		///
+        ~Aplication()
+		{}
 
-        //set controller
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        void set_controller(Controller * & controller);
-
-        //get view
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        View * & get_view();
-
-        //set view
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        void set_view(View * & view);
-
-        //get iModel
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        IModel * & get_iModel();
-
-        //set iModel
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        void set_iModel(IModel * & iModel);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         int Run();
 
 };  //end class Aplication
