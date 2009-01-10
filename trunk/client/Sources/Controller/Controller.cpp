@@ -17,14 +17,14 @@ Controller::~Controller()
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-IModel * & Controller::get_iModel() 
+IModel * Controller::GetModel() 
 {
     //TODO Auto-generated method stub
-    return iModel;
+    return model;
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-void Controller::set_iModel(IModel * & iModel) 
+void Controller::SetModel(IModel * iModel) 
 {
     //TODO Auto-generated method stub
 }

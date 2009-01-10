@@ -22,7 +22,7 @@ class Controller
     private:
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        IModel * iModel;
+        IModel * model;
 
 		//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         Controller();
@@ -41,11 +41,11 @@ class Controller
 
         //get iModel
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        IModel * & get_iModel();
+        IModel * GetModel();
 
         //set iModel
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        void set_iModel(IModel * & iModel);
+        void SetModel(IModel * iModel);
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         int AddRemoteObserver(IRemoteObserver & observer, ObserverType observerType);

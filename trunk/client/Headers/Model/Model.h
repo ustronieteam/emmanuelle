@@ -30,9 +30,9 @@ class Model : IModel
 
     public:
 
-        static Model * GetInstance()
+        static IModel * GetInstance()
 		{
-			static Model * instance = new Model();
+			static IModel * instance = new Model();
 
 			return instance;
 		}

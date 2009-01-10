@@ -23,6 +23,7 @@
 #include "ServerCreatePipeObserver.h"
 #include "ServerRecord.h"
 #include "ClientRecord.h"
+#include "CorbaConnector.h"
 
 #include <iostream>
 #include <fstream>
@@ -35,8 +36,6 @@
 
 const std::string NADDRESS = "address";
 
-static const std::string LPORT = "7080";
-
 ///
 /// @author	Mateusz Ko³odziejczyk
 /// @date	06.01.2009
@@ -48,7 +47,7 @@ static const std::string LPORT = "7080";
 /// albo nowy serwer i podlacza sie do ktoregos juz pierwotnie utworzonego; wlacza nasluchiwanie na 
 /// nowe serwery i klientow
 ///
-class Server
+class Server : public CorbaConnector
 {
     private:
 
@@ -78,7 +77,7 @@ class Server
         const char * configFileName;
 
 		///
-		/// numer indeksu wlasnego rekordu 
+		/// address instancji serwera
 		///
 		static DomainData::Address myIPAddress;
 
@@ -140,133 +139,24 @@ class Server
 			return instance;
 		}
 
+		///
+		/// @return	adres uruchomionego serwera
+		///
+		/// myIPAddress getter
+		///
 		static DomainData::Address GetMyIP()
 		{
 			return Server::myIPAddress;
 		}
 
-		static void SetMyIP(DomainData::Address addr)
+		///
+		/// @param [in]	addr	adres serwera
+		///
+		/// myIPAddress	setter
+		///
+		static void SetMyIP(const DomainData::Address addr)
 		{
 			myIPAddress = addr;
-		}
-
-		///
-		/// statyczna metoda sluzaca do pobrania adresu serwera juz podlaczonego
-		/// do danego serwera
-		///
-		static char * GetRemotedAddress()
-		{
-
-			char* orb_options[] = { "-OAport", const_cast<char *>(LPORT.c_str()) };
-			int optc = sizeof(orb_options)/sizeof(char *);
-
-			CORBA::ORB_var orb = CORBA::ORB_init(optc, orb_options);
-
-			CORBA::Object_var baseCurrent = orb->resolve_initial_references("OCICurrent");
-			OCI::Current_var current = OCI::Current::_narrow(baseCurrent);
-
-			OCI::TransportInfo_var info = current->get_oci_transport_info();
-			OCI::IIOP::TransportInfo_var iiopInfo = OCI::IIOP::TransportInfo::_narrow(info);
-
-			if(CORBA::is_nil(iiopInfo))
-				return "";
-
-			char * str = iiopInfo->remote_addr();
-
-			return str;
-		}
-/*
-		static char * GetServerAddress(CORBA::Object_ptr obj)
-		{
-			OCI::ConnectorInfo_var info = obj->_get_oci_connector_info();
-			OCI::IIOP::ConnectorInfo_var iiopInfo = OCI::IIOP::ConnectorInfo::_narrow(info);
- 
-			if(!CORBA::is_nil(iiopInfo))
-			{
-				OCI::IIOP::InetAddr_var remoteAddr = iiopInfo->remote_addr();
-				
-				return remoteAddr;
-			}
-
-			return "";
-		}
-*/
-		///
-		/// @param [in]		address	adres serwera do ktorego chcemy sie polaczyc
-		/// @param [out]	orb		wsk na obiekt brokera - trzyma polaczenie
-		/// @param [out]	server	wsk na obiekt namiastki
-		/// @return			0 - powodznie, 1 - niepowodzenie
-		///
-		/// Laczy sie do serwera o zadanym adresie nasluchujacym na porcie LPORT; efektem polaczenia jest 
-		/// zwrocenie wskaznikow do brokera polaczenia i obiektu namastki
-		///
-		static bool connectToServer(std::string address, CORBA::ORB_out orb, IServerServer_out server)
-		{
-			char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(LPORT.c_str()) };
-			int optc = sizeof(orb_options)/sizeof(char *);
-
-			orb = CORBA::ORB_init(optc, orb_options);
-
-			CORBA::String_var strIOR = CORBA::string_dup("corbaloc:iiop:");
-			strIOR += address.c_str();
-			strIOR += ":";
-			strIOR += LPORT.c_str();
-			strIOR += "/serverserver";
-
-			CORBA::Object_var oServer = orb->string_to_object(strIOR);
-			if (CORBA::is_nil(oServer))
-			{
-				std::cout << "oServer nil" << std::endl;
-				return false;
-			}
-
-			server = IServerServer::_narrow(oServer);
-		    
-			if (CORBA::is_nil(server))
-			{
-				std::cout << "server nil" << std::endl;
-				return false;
-			}
-
-			return true;
-		}
-
-		///
-		/// @param [in]		address	adres serwera do ktorego chcemy sie polaczyc
-		/// @param [out]	orb		wsk na obiekt brokera - trzyma polaczenie
-		/// @param [out]	client	wsk na obiekt namiastki
-		/// @return			0 - powodznie, 1 - niepowodzenie
-		///
-		/// Laczy sie do klienta o zadanym adresie nasluchujacym na porcie LPORT; efektem polaczenia jest 
-		/// zwrocenie wskaznikow do brokera polaczenia i obiektu namastki
-		///
-		static bool connectToClient(std::string address, CORBA::ORB_out orb, IClientServer_out client)
-		{
-			char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(LPORT.c_str()) };
-			int optc = sizeof(orb_options)/sizeof(char *);
-
-			orb = CORBA::ORB_init(optc, orb_options);
-
-			CORBA::String_var strIOR = CORBA::string_dup("corbaloc:iiop:");
-			strIOR += address.c_str();
-			strIOR += ":";
-			strIOR += LPORT.c_str();
-			strIOR += "/serverclient";
-
-			CORBA::Object_var oClient = orb->string_to_object(strIOR);
-			if (CORBA::is_nil(oClient))
-			{
-				return 1;
-			}
-
-			client = IClientServer::_narrow(oClient);
-		    
-			if (CORBA::is_nil(client))
-			{
-				return 1;
-			}
-
-			return 0;
 		}
 
 		///

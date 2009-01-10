@@ -121,7 +121,7 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 			IServerServer_var remInstance;
 			try
 			{
-				if(Server::connectToServer(servRec.GetAddress().localization.in(), orb, remInstance)==false)
+				if(Server::connectToServerServer(servRec.GetAddress().localization.in(), orb, remInstance)==false)
 				{
 					//TODO: zastanowic sie czy tu nie usunac serwer
 					LOG4CXX_ERROR(logger, "Nie mozna pozyskac zdalnej instancji servera");
@@ -171,7 +171,7 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 			LOG4CXX_DEBUG(logger, "Pozyskiwanie zdalnej instancji nowego serwera");
 			CORBA::ORB_var orb;
 			IServerServer_var remInstance;
-			if(Server::connectToServer(newServerRec.GetAddress().localization.in(), orb, remInstance)==false)
+			if(Server::connectToServerServer(newServerRec.GetAddress().localization.in(), orb, remInstance)==false)
 			{
 					//TODO: zastanowic sie czy tu nie usunac serwer
 					LOG4CXX_ERROR(logger, "Nie mozna pozyskac zdalnej instancji nowo podlaczonego servera");

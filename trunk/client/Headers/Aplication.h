@@ -1,16 +1,21 @@
 #ifndef APLICATION_H
 #define APLICATION_H
 
+#include "CorbaConnector.h"
+
 #include <iostream>
 #include <string>
 #include <boost/thread.hpp>
 
+#include "CorbaConnector.h"
+
+#include "IModel.h"
+#include "Model.h"
+#include "Controller.h"
+#include "View.h"
+
 #include <log4cxx/logger.h>
 #include <log4cxx/level.h>
-
-class Controller;
-class View;
-class IModel;
 
 ///
 /// @author	Mateusz Ko³odziejczyk
@@ -18,24 +23,24 @@ class IModel;
 ///
 /// @brief	G³ówna klasa aplikacji. Startuje program klienta i wi¹¿e odpowiednie warstwy ze sob¹.
 ///
-class Aplication
+class Aplication : CorbaConnector
 {
     private:
 
 		///
 		/// obiekt kontrolera
 		///
-		boost::shared_ptr<Controller> controller;
+		Controller * controller;
 
 		/// 
 		/// obiekt widoku
 		///
-        boost::shared_ptr<View> view;
+		View * view;
 
 		///
 		/// obiekt modelu
 		///
-        boost::shared_ptr<IModel> iModel;
+        IModel * model;
 
 		// logger
 		log4cxx::LoggerPtr logger;
@@ -46,12 +51,30 @@ class Aplication
         Aplication()
 		{
 			//logger
-			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("ServerLogicRunnable"));
+			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("AplicationClass"));
 			logger->setLevel(log4cxx::Level::getAll());
+
+			LOG4CXX_DEBUG(logger, "Stworzenie i powiazanie obiektow klienta ... ");
+
+			// stworzenie obietku modelu
+			model = Model::GetInstance();
+			LOG4CXX_DEBUG(logger, "... stworzono model!");
+
+			// stworzenie obiektu kontrolera i powiazanie go z modelem
+			controller = Controller::GetInstance();
+			controller->SetModel(model);
+			LOG4CXX_DEBUG(logger, "... stworzono kontroler!");
+
+			// utworzenie obiektu widoku i powiazanie go z kontrolerem
+			view = View::GetInstance();
+			view->SetController(controller);
+			LOG4CXX_DEBUG(logger, "... stworzono widok!");
 		}
 
     public:
 
+		///
+		/// @return	obiekt aplikacji, ktory jest obiektem typu singleton
 		///
 		/// statyczna metoda zwracajaca wskaznik do obiektu klasy Server jesli
 		/// istnieje badz tworzaca go jesli nie istnieje
@@ -69,6 +92,11 @@ class Aplication
         ~Aplication()
 		{}
 
+		///
+		/// @return	0 - poprawne zamkniecie, 1 - niepoparwne zamkniecie
+		///
+		/// uruchomienie klienta
+		///
         int Run();
 
 };  //end class Aplication
