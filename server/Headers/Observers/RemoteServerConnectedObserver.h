@@ -19,7 +19,7 @@
 #include <iostream>
 #include "DomainData.h"
 #include "Server.h"
-
+#include "ClientRecord.h"
 //Do utworzenia logow w przypadkyu bledow
 #include <log4cxx/logger.h>
 #include <log4cxx/level.h>

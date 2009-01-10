@@ -151,13 +151,60 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 		}
 		catch(CORBA::SystemException & e) //chyba rzuca jakis wyjatek??
 		{
+			//TODO: Usuwanie
 			LOG4CXX_ERROR(logger, "Blad wysylania do serwera: " << serverCounter<< ".Powod: "<< e._name());
+			continue;
 		}
 		serverCounter++;
 
 	}
 	//TODO: dodac wywolanie na rekordzie o id serverID wywolanie w petli dodanie wszystkich klientow
 	//TODO: aby ustawic baze klientow
+	//Przekazywanie bazy klientow do nowego serwera
+	//	Zdobycie zdalnej instancji
+	try
+	{
+		ServerRecord newServerRec = serverDataBase->GetRecord(serverId);
+		IServerServer_var newServerInstance = newServerRec.GetServerRemoteInstance();
+		if(CORBA::is_nil(newServerInstance))
+		{
+			LOG4CXX_DEBUG(logger, "Pozyskiwanie zdalnej instancji nowego serwera");
+			CORBA::ORB_var orb;
+			IServerServer_var remInstance;
+			if(Server::connectToServer(newServerRec.GetAddress().localization.in(), orb, remInstance)==false)
+			{
+					//TODO: zastanowic sie czy tu nie usunac serwer
+					LOG4CXX_ERROR(logger, "Nie mozna pozyskac zdalnej instancji nowo podlaczonego servera");
+					return serverCounter;
+			}
+			else
+			{//Udalo sie pozyskac zdalna instancje servera
+				LOG4CXX_DEBUG(logger, "Pozyskano zdalna instancje nowo podlaczonego serwera");
+				newServerRec.SetServerRemoteInstance(remInstance);
+				newServerRec.SetBroker(orb); //Czy nie trzeba wykonac jeszcze modifyRecord?? nie bo record pozyskany przez referencje
+				newServerInstance = remInstance;
+			}
+		}
+		std::vector<ClientRecord> allClientRecord = ClientsDataBase::GetInstance()->GetAllRecords();
+		for(std::vector<ClientRecord>::iterator it = allClientRecord.begin();
+			it != allClientRecord.end();
+			it++)
+		{
+			//Przekarz dane o kliencie
+			newServerInstance->ClientStatusChanged(it->GetAddress(),it->GetEnability());
+			LOG4CXX_DEBUG(logger, "Przekazano dane o kliencie: " <<it->GetAddress().localization.in());
+		}
+
+	}
+	catch(std::exception & exc)
+	{
+		LOG4CXX_ERROR(logger, "Wystapil wyjatek: " << exc.what());
+	}
+	catch(CORBA::SystemException & e) //chyba rzuca jakis wyjatek??
+	{
+		//TODO: Usuwanie
+		LOG4CXX_ERROR(logger, "Wyjatek CORBY: " << serverCounter<< ".Powod: "<< e._name());
+	}
 
 	//Sleep(5000);
 	LOG4CXX_INFO(logger, "Koniec przetwarzania logiki");
