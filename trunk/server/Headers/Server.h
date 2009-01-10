@@ -170,7 +170,7 @@ class Server : public CorbaConnector
 
 		///
 		/// Stworzenie brokera po stronie serwera, zarejestrownie obiektow zdalnych i uruchomienie
-		/// nasluchiwania na porcie PORT
+		/// nasluchiwania na porcie SRVPORT
 		///
 		void ActivateListning();
 }; 

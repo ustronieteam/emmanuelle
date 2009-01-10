@@ -12,7 +12,8 @@
 
 #include <iostream>
 
-static const std::string LPORT = "7080";
+static const std::string SRVPORT = "7080";
+static const std::string CLNTPORT = "7081";
 
 class CorbaConnector
 {
@@ -22,9 +23,9 @@ class CorbaConnector
 		/// statyczna metoda sluzaca do pobrania adresu serwera juz podlaczonego
 		/// do danego serwera
 		///
-		static char * GetRemotedAddress()
+		static char * GetRemotedAddress(const char * port)
 		{
-			char* orb_options[] = { "-OAport", const_cast<char *>(LPORT.c_str()) };
+			char* orb_options[] = { "-OAport", const_cast<char *>(port) };
 			int optc = sizeof(orb_options)/sizeof(char *);
 
 			CORBA::ORB_var orb = CORBA::ORB_init(optc, orb_options);
@@ -55,7 +56,7 @@ class CorbaConnector
 		///
 		static bool connectToServerServer(std::string address, CORBA::ORB_out orb, IServerServer_out server)
 		{
-			char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(LPORT.c_str()) };
+			char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(SRVPORT.c_str()) };
 			int optc = sizeof(orb_options)/sizeof(char *);
 
 			orb = CORBA::ORB_init(optc, orb_options);
@@ -63,7 +64,7 @@ class CorbaConnector
 			CORBA::String_var strIOR = CORBA::string_dup("corbaloc:iiop:");
 			strIOR += address.c_str();
 			strIOR += ":";
-			strIOR += LPORT.c_str();
+			strIOR += SRVPORT.c_str();
 			strIOR += "/serverserver";
 
 			CORBA::Object_var oServer = orb->string_to_object(strIOR);
@@ -95,7 +96,7 @@ class CorbaConnector
 		///
 		static bool connectToClientServer(std::string address, CORBA::ORB_out orb, IClientServer_out client)
 		{
-			char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(LPORT.c_str()) };
+			char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(SRVPORT.c_str()) };
 			int optc = sizeof(orb_options)/sizeof(char *);
 
 			orb = CORBA::ORB_init(optc, orb_options);
@@ -103,23 +104,23 @@ class CorbaConnector
 			CORBA::String_var strIOR = CORBA::string_dup("corbaloc:iiop:");
 			strIOR += address.c_str();
 			strIOR += ":";
-			strIOR += LPORT.c_str();
+			strIOR += SRVPORT.c_str();
 			strIOR += "/serverclient";
 
 			CORBA::Object_var oClient = orb->string_to_object(strIOR);
 			if (CORBA::is_nil(oClient))
 			{
-				return 1;
+				return false;
 			}
 
 			client = IClientServer::_narrow(oClient);
 		    
 			if (CORBA::is_nil(client))
 			{
-				return 1;
+				return false;
 			}
 
-			return 0;
+			return true;
 		}
 
 		///
@@ -133,7 +134,7 @@ class CorbaConnector
 		///
 		static bool connectToServerClient(std::string address, CORBA::ORB_out orb, IServerClient_out server)
 		{
-			char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(LPORT.c_str()) };
+			char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(CLNTPORT.c_str()) };
 			int optc = sizeof(orb_options)/sizeof(char *);
 
 			orb = CORBA::ORB_init(optc, orb_options);
@@ -141,23 +142,23 @@ class CorbaConnector
 			CORBA::String_var strIOR = CORBA::string_dup("corbaloc:iiop:");
 			strIOR += address.c_str();
 			strIOR += ":";
-			strIOR += LPORT.c_str();
+			strIOR += CLNTPORT.c_str();
 			strIOR += "/clientserver";
 
 			CORBA::Object_var oServer = orb->string_to_object(strIOR);
 			if (CORBA::is_nil(oServer))
 			{
-				return 1;
+				return false;
 			}
 
 			server = IServerClient::_narrow(oServer);
 		    
 			if (CORBA::is_nil(server))
 			{
-				return 1;
+				return false;
 			}
 
-			return 0;
+			return true;
 		}
 
 		///
@@ -171,7 +172,7 @@ class CorbaConnector
 		///
 		static bool connectToClientClient(std::string address, CORBA::ORB_out orb, IClientClient_out client)
 		{
-			char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(LPORT.c_str()) };
+			char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(CLNTPORT.c_str()) };
 			int optc = sizeof(orb_options)/sizeof(char *);
 
 			orb = CORBA::ORB_init(optc, orb_options);
@@ -179,23 +180,23 @@ class CorbaConnector
 			CORBA::String_var strIOR = CORBA::string_dup("corbaloc:iiop:");
 			strIOR += address.c_str();
 			strIOR += ":";
-			strIOR += LPORT.c_str();
+			strIOR += CLNTPORT.c_str();
 			strIOR += "/clientclient";
 
 			CORBA::Object_var oClient = orb->string_to_object(strIOR);
 			if (CORBA::is_nil(oClient))
 			{
-				return 1;
+				return false;
 			}
 
 			client = IClientClient::_narrow(oClient);
 		    
 			if (CORBA::is_nil(client))
 			{
-				return 1;
+				return false;
 			}
 
-			return 0;
+			return true;
 		}
 };
 

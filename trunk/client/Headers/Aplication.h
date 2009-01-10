@@ -8,6 +8,10 @@
 #include <boost/thread.hpp>
 
 #include "CorbaConnector.h"
+#include "IClientClient.h"
+#include "IClientClient_impl.h"
+#include "IClientServer.h"
+#include "IClientServer_impl.h"
 
 #include "IModel.h"
 #include "Model.h"
@@ -41,6 +45,16 @@ class Aplication : CorbaConnector
 		/// obiekt modelu
 		///
         IModel * model;
+
+		///
+		/// wskaznik do obiektu zdalnego udostepnianego serwerom
+		///
+		IClientServer_impl * serverImpl;
+
+		///
+		/// wskaznik do obiektu zdalnego udostepnianego klientom
+		///
+		IClientClient_impl * clientImpl;
 
 		// logger
 		log4cxx::LoggerPtr logger;
@@ -98,6 +112,12 @@ class Aplication : CorbaConnector
 		/// uruchomienie klienta
 		///
         int Run();
+
+		///
+		/// Stworzenie brokera po stronie klienta, zarejestrownie obiektow zdalnych i uruchomienie
+		/// nasluchiwania na porcie CLNTPORT
+		///
+		void ActivateListning();
 
 };  //end class Aplication
 
