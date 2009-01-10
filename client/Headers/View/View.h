@@ -20,23 +20,27 @@ class View
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         Controller * controller;
 
-
+		View();
 
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        View();
+		static View * GetInstance()
+		{
+			static View * instance = new View();
+
+			return instance;
+		}
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~View();
 
         //get controller
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Controller * & get_controller();
+        Controller * GetController();
 
         //set controller
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        void set_controller(Controller * & controller);
+        void SetController(Controller * controller);
 
 };  //end class View
 

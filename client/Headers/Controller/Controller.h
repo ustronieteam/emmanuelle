@@ -24,12 +24,17 @@ class Controller
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         IModel * iModel;
 
-
+		//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        Controller();
 
     public:
+	
+        static Controller * GetInstance()
+		{
+			static Controller * instance = new Controller();
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        Controller();
+			return instance;
+		}
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~Controller();
