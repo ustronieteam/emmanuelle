@@ -1,8 +1,5 @@
 #ifndef REMOTESERVERCONNECTEDOBSERVER_H
 #define REMOTESERVERCONNECTEDOBSERVER_H
-//Begin section for file RemoteServerConnectedObserver.h
-//TODO: Add definitions that you want preserved
-//End section for file RemoteServerConnectedObserver.h
 
 #include "IRemoteObserver.h"
 #include "RemoteObserverData.h"
@@ -27,28 +24,12 @@
 
 class ServerDataBase;
 
-//<h4>
-//    Odpowiedz na Join()
-//</h4>
-//<p>
-//    1) Dodaj nowy serwer do bazy
-//</p>
-//<p>
-//    2) Pobierz liste wszystkich serwerów
-//</p>
-//<p>
-//    3) Do ka¿dego serwera z listy dodaj nowy serwer (AddServer)
-//</p>
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///@author Marian Szczykulski
+///@date 2009-01-09
+///@brief Klasa obserwatora obslugujacego logike podczas podlaczania sie nowego serwera
 class RemoteServerConnectedObserver : public IRemoteObserver
 {
-
-    //Begin section for RemoteServerConnectedObserver
-    //TODO: Add attributes that you want preserved
-    //End section for RemoteServerConnectedObserver
-
     private:
-        //ServerDataBase * serverDataBase;
 		boost::shared_ptr<ServerDataBase> serverDataBase;
 
 
@@ -71,9 +52,9 @@ class RemoteServerConnectedObserver : public IRemoteObserver
 };  
 //end class RemoteServerConnectedObserver
 
-//@author Marian Szczykulski
-//@brief Funktor odpowiedzialny za logike przetwarzania. 
-//@brief Potrzebny do wywo³ania w odzielnym watku
+///@author Marian Szczykulski
+///@brief Funktor odpowiedzialny za logike przetwarzania. 
+///@brief Potrzebny do wywo³ania w odzielnym watku
 class RemoteServerConnectedObserverLogicRunnable
 {
 	private: 

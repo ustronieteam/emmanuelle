@@ -1,8 +1,5 @@
 #ifndef REMOTESERVERDISCONNECTEDOBSERVER_H
 #define REMOTESERVERDISCONNECTEDOBSERVER_H
-//Begin section for file RemoteServerDisconnectedObserver.h
-//TODO: Add definitions that you want preserved
-//End section for file RemoteServerDisconnectedObserver.h
 
 #include "IRemoteObserver.h"
 #include "ServerDataBase.h"
@@ -24,19 +21,12 @@
 
 class ServerDataBase;
 
-//    1) ZnajdŸ odpowiedni serwer(ten który siê roz³¹cza)
-//    2) zaktualizuj jego wpis(usun?)
-//    3)Powiadom wszystkie serwery o zmianie
+///@author Marian Szczykulski
+///@date 2009-01-09
+///@brief Klasa obserwatora obslugujacego logike podczas rozlaczania sie serwera
 class RemoteServerDisconnectedObserver : public IRemoteObserver
 {
-
-    //Begin section for RemoteServerDisconnectedObserver
-    //TODO: Add attributes that you want preserved
-    //End section for RemoteServerDisconnectedObserver
-
     private:
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         boost::shared_ptr<ServerDataBase> serverDataBase;
 
 
@@ -58,9 +48,9 @@ class RemoteServerDisconnectedObserver : public IRemoteObserver
 };  //end class RemoteServerDisconnectedObserver
 
 
-//@author Marian Szczykulski
-//@brief Funktor odpowiedzialny za logike przetwarzania. 
-//@brief Potrzebny do wywo³ania w odzielnym watku
+///@author Marian Szczykulski
+///@brief Funktor odpowiedzialny za logike przetwarzania. 
+///@brief Potrzebny do wywo³ania w odzielnym watku
 class RemoteServerDisconnectedObserverLogicRunnable
 {
 	private: 

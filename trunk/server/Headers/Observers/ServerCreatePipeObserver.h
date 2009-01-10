@@ -1,8 +1,5 @@
 #ifndef SERVERCREATEPIPEOBSERVER_H
 #define SERVERCREATEPIPEOBSERVER_H
-//Begin section for file ServerCreatePipeObserver.h
-//TODO: Add definitions that you want preserved
-//End section for file ServerCreatePipeObserver.h
 
 #include "IRemoteObserver.h"
 #include "ClientsDataBase.h"
@@ -22,15 +19,13 @@
 
 class ClientsDataBase;
 
-
-//    1)Klientowi który ma tworzyæ pipe przeka¿ odpowiedni¹ wiadomoœæ.
-//Klient ten musi byæ z nami pod³¹czony, je¿eli nie to b³ad integralnoœci danych w bazie.
+///@author Marian Szczykulski
+///@date 2009-01-09
+///@brief Klasa obserwatora obslugujacego logike podczas tworzenia pipe-e (komunikacja serwerow)
+///@brief    1)Klientowi który ma tworzyæ pipe przeka¿ odpowiedni¹ wiadomoœæ.
+///@brief      Klient ten musi byæ z nami pod³¹czony, je¿eli nie to b³ad integralnoœci danych w bazie.
 class ServerCreatePipeObserver : public IRemoteObserver
 {
-
-    //Begin section for ServerCreatePipeObserver
-    //TODO: Add attributes that you want preserved
-    //End section for ServerCreatePipeObserver
 
     private:
 
@@ -54,9 +49,9 @@ class ServerCreatePipeObserver : public IRemoteObserver
 
 };  //end class ServerCreatePipeObserver
 
-//@author Marian Szczykulski
-//@brief Funktor odpowiedzialny za logike przetwarzania. 
-//@brief Potrzebny do wywo³ania w odzielnym watku
+///@author Marian Szczykulski
+///@brief Funktor odpowiedzialny za logike przetwarzania. 
+///@brief Potrzebny do wywo³ania w odzielnym watku
 class ServerCreatePipeObserverLogicRunnable
 {
 	private: 

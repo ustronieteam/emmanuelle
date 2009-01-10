@@ -1,13 +1,8 @@
 #ifndef REMOTESERVERUPDATECLIENTOBSERVER_H
 #define REMOTESERVERUPDATECLIENTOBSERVER_H
-//Begin section for file RemoteServerUpdateClientObserver.h
-//TODO: Add definitions that you want preserved
-//End section for file RemoteServerUpdateClientObserver.h
 
-//@note	Zdarzenie modyfikacji rekordu klienta lub dodanie nowego rekordu
-//		jest odpowiedzi¹ na zdalne metody: ClientStatusChanged - wysylane przez inne serwery
-//		ktore moze byc rozsylane gdy: podlaczyl sie nowy klient, podlaczyl sie klient juz istniejacy w bazie
-//		analogicznie dla rozlaczania
+
+
 #include "IRemoteObserver.h"
 #include "ServerDataBase.h"
 #include "ServerRecord.h"
@@ -33,6 +28,13 @@ class ServerDataBase;
 //    1)Znajdz klienta
 //    2) Wprowaz zmiany w jego rekordzie
 //    3)Powiadom wszystkie serwery o zmianie
+///@author Marian Szczykulski
+///@date 2009-01-09
+///@brief Klasa obserwatora obslugujacego logike podczas modyfikacji danych klienta
+///@brief	Zdarzenie modyfikacji rekordu klienta lub dodanie nowego rekordu
+///@brief	jest odpowiedzi¹ na zdalne metody: ClientStatusChanged - wysylane przez inne serwery
+///@brief	ktore moze byc rozsylane gdy: podlaczyl sie nowy klient, podlaczyl sie klient juz istniejacy w bazie
+///@brief	analogicznie dla rozlaczania
 class RemoteServerUpdateClientObserver : public IRemoteObserver
 {
 
