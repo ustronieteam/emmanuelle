@@ -94,7 +94,12 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 	//    1) Zaktualizuj wpis o kliencie(roz³¹cz)
 	//Znajdz klienta w bazie klientow
 	struct DomainData::Address clientAddr = observerData.getClientAddress();
-	int clientId = clientsDataBase->Find(clientAddr/*dane z observerData*/); //Dodac dane!!!
+	int clientId = clientsDataBase->Find(clientAddr); 
+	if(clientId <=0)
+	{
+		LOG4CXX_ERROR(logger, "Rozlaczanego klienta nie ma w bazie!!!");
+		return -1;
+	}
 	ClientRecord clRec;
 	try
 	{
@@ -102,21 +107,36 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 	}
 	catch(std::exception & exc)
 	{
-		LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas pobierania rekordu recordId: "<<clientId<< ".Powod: "<< exc.what());
+		LOG4CXX_ERROR(logger, "Zlapano nieoczekiwany wyjatek: " <<exc.what() );
 		return -2;
 	}
+	//try
+	//{
+	//	clRec = clientsDataBase->GetRecord(clientId);
+	//}
+	//catch(std::exception & exc)
+	//{
+	//	LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas pobierania rekordu recordId: "<<clientId<< ".Powod: "<< exc.what());
+	//	return -2;
+	//}
 
-	//Aktualizuj wpis clRec
+	////Aktualizuj wpis clRec
 
-	int status = clientsDataBase->ModifyRecord(clRec);
-	if(status < 0)
+	//int status = clientsDataBase->ModifyRecord(clRec);
+	//if(status < 0)
+	//{
+	//	LOG4CXX_ERROR(logger, "Blad modyfikowania rekordu w bazie");
+	//	return -1;
+	//}
+	//Zdobadz wlasne Id
+	struct DomainData::Address localServAddr = Server::GetMyIP();
+	int localId = serverDataBase->Find(localServAddr); //wlasne id w bazie
+	if(localId<=0)
 	{
-		LOG4CXX_ERROR(logger, "Blad modyfikowania rekordu w bazie");
-		return -1;
+		LOG4CXX_ERROR(logger,"Brak danych o lokalnym serwerze w bazie");
+		return -2;
 	}
-
 	//    2)Powiadom wszystkie serwery o zmianie
-
 	std::vector<ServerRecord> allRecords = serverDataBase->GetAllRecords();
 
 	//Utworz licznik serwerow z listy
@@ -128,12 +148,44 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 				it++)
 	{
 		ServerRecord servRec = (*it);
+		if(servRec.GetRecordId()==localId)//Samemu sobie juz nie przesylamy
+		{
+			continue;
+		}
 		IServerServer_var remoteServer = servRec.GetServerRemoteInstance();
+		if(CORBA::is_nil(remoteServer))
+		{
+			LOG4CXX_DEBUG(logger, "Pozyskiwanie zdalnej instancji servera");
+			CORBA::ORB_var orb;
+			IServerServer_var remInstance;
+			try
+			{
+				if(Server::connectToServer(servRec.GetAddress().localization.in(), orb, remInstance)==false)
+				{
+					//TODO: zastanowic sie czy tu nie usunac serwer
+					LOG4CXX_ERROR(logger, "Nie mozna pozyskac zdalnej instancji servera");
+					continue; //Nie mozna wywolac zdalnej metody
+				}
+				else
+				{
+					LOG4CXX_DEBUG(logger, "Pozyskano zdalna instancje serwera");
+					servRec.SetServerRemoteInstance(remInstance);
+					servRec.SetBroker(orb);
+					remoteServer = remInstance;
+				}
+			}
+			catch(CORBA::SystemException & e)
+			{
+				//TODO Usuwanie
+				LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas pozyskiwania zdalnej instancji: "<<e._name());
+				continue;
+			}
+		}
 		try
 		{
-			struct DomainData::Enability enab = observerData.getClientEnability();
-			remoteServer->ClientStatusChanged(clientAddr, enab/*dodac dane z observerData*/);//Dodac dane z observer Data
-			LOG4CXX_INFO(logger, "Wiadomosc wyslana do serwera nr"<<serverCounter);
+			struct DomainData::Enability enab = clRec.GetEnability();
+			remoteServer->ClientStatusChanged(clientAddr, enab);
+			LOG4CXX_INFO(logger, "Wiadomosc wyslana do serwera "<<it->GetAddress().localization.in());
 		}
 		catch(std::exception & exc) //chyba rzuca jakis wyjatek??
 		{
