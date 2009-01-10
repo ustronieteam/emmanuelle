@@ -1,0 +1,2 @@
+# adres serwera do ktorego ma sie polaczyc klient
+server_address = localhost

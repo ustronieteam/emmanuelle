@@ -1,17 +1,9 @@
 #ifndef APLICATION_H
 #define APLICATION_H
 
-#include "CorbaConnector.h"
-
 #include <iostream>
+#include <fstream>
 #include <string>
-#include <boost/thread.hpp>
-
-#include "CorbaConnector.h"
-#include "IClientClient.h"
-#include "IClientClient_impl.h"
-#include "IClientServer.h"
-#include "IClientServer_impl.h"
 
 #include "IModel.h"
 #include "Model.h"
@@ -21,13 +13,17 @@
 #include <log4cxx/logger.h>
 #include <log4cxx/level.h>
 
+
+
+const std::string NADDRESS = "server_address";
+
 ///
 /// @author	Mateusz Ko³odziejczyk
 /// @date	06.01.2009
 ///
 /// @brief	G³ówna klasa aplikacji. Startuje program klienta i wi¹¿e odpowiednie warstwy ze sob¹.
 ///
-class Aplication : CorbaConnector
+class Aplication
 {
     private:
 
@@ -47,14 +43,9 @@ class Aplication : CorbaConnector
         IModel * model;
 
 		///
-		/// wskaznik do obiektu zdalnego udostepnianego serwerom
+		/// nazwa pliku konfiguracyjnego
 		///
-		IClientServer_impl * serverImpl;
-
-		///
-		/// wskaznik do obiektu zdalnego udostepnianego klientom
-		///
-		IClientClient_impl * clientImpl;
+        const char * configFileName;
 
 		// logger
 		log4cxx::LoggerPtr logger;
@@ -62,13 +53,16 @@ class Aplication : CorbaConnector
 		///
 		/// konstruktor prywatny
 		///
-        Aplication()
+        Aplication(const char * fileName)
 		{
 			//logger
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("AplicationClass"));
 			logger->setLevel(log4cxx::Level::getAll());
 
 			LOG4CXX_DEBUG(logger, "Stworzenie i powiazanie obiektow klienta ... ");
+
+			// zapisanie nazwy pliku konfiguracyjnego
+			configFileName = fileName;
 
 			// stworzenie obietku modelu
 			model = Model::GetInstance();
@@ -85,6 +79,15 @@ class Aplication : CorbaConnector
 			LOG4CXX_DEBUG(logger, "... stworzono widok!");
 		}
 
+		///
+		///	@param [out]	address		miejsce gdzie ma byc zapisany adress serwera odczytany z pliku
+		/// @return						0 - powodzenie, 1 - niepowodzenie
+		///
+		/// Otwarcie pliku konfiguracyjnego o nawie 'configFileName' i odczytanie 
+		/// addresu serwera i przekazanie go do 'address'
+		///
+		bool openConfFile(std::string & address);
+
     public:
 
 		///
@@ -93,9 +96,9 @@ class Aplication : CorbaConnector
 		/// statyczna metoda zwracajaca wskaznik do obiektu klasy Server jesli
 		/// istnieje badz tworzaca go jesli nie istnieje
 		///
-		static Aplication * GetInstance()
+		static Aplication * GetInstance(const char * configFileName)
 		{
-			static Aplication * instance = new Aplication();
+			static Aplication * instance = new Aplication(configFileName);
 
 			return instance;
 		}
@@ -112,12 +115,6 @@ class Aplication : CorbaConnector
 		/// uruchomienie klienta
 		///
         int Run();
-
-		///
-		/// Stworzenie brokera po stronie klienta, zarejestrownie obiektow zdalnych i uruchomienie
-		/// nasluchiwania na porcie CLNTPORT
-		///
-		void ActivateListning();
 
 };  //end class Aplication
 

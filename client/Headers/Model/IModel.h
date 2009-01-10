@@ -27,6 +27,8 @@ class IModel
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~IModel();
 
+		virtual void SetServerAddress(const char * addr) = 0;
+
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual int AddStatusObserver(DataObserver & observer) = 0;
 
@@ -37,7 +39,7 @@ class IModel
         virtual int DeleteContact() = 0;
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual int SendMessage() = 0;
+        //virtual int SendMessage() = 0;
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual int AddContact() = 0;
