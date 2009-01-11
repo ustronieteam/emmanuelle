@@ -1,7 +1,5 @@
 #include "Model.h"
-//Begin section for file Model.cpp
-//TODO: Add definitions that you want preserved
-//End section for file Model.cpp
+
 
 void Model::activateListning()
 {
@@ -131,10 +129,19 @@ int Model::AddStatusObserver(DataObserver & observer)
  {
 	 return 0;
  }
-
- int Model::SendMessage() 
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief Wysylanie wiadomosci do klienta
+///@param[in] recAddr	adresat wiadomosci
+///@param[in] msg		wiadomosc
+///@return				status (-2 zdalna instancja serwera nie zainicjowana,
+///								-1 blad podczas wywolywania zdalnej metody serwera)
+ int Model::SendMessage(DomainData::Address recAddr, DomainData::Message msg) 
  {
-	 return 0;
+	 int result = 0;
+	 result = client->SendMessage(recAddr, msg);
+	 return result;
  }
 
  int Model::AddContact() 
