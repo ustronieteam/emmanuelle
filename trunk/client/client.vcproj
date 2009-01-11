@@ -332,6 +332,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\Sources\View\Windows\HelpWindow.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\Sources\View\Windows\WelcomeWindow.cpp"
 						>
 					</File>
@@ -395,6 +399,10 @@
 					>
 					<File
 						RelativePath=".\Headers\View\Windows\ConfigWindow.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Headers\View\Windows\HelpWindow.h"
 						>
 					</File>
 					<File

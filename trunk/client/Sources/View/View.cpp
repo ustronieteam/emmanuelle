@@ -39,8 +39,7 @@ void View::Run()
 	std::list<Window *>::iterator activeWindow;
 
 	// Stworzenie glowny okien.
-	_windows.push_back(new WelcomeWindow(_controller));
-	_windows.push_back(new ConfigWindow(_controller));
+	_windows.push_front(new WelcomeWindow(_controller));
 
 	// Ustawienie aktywnego okna na pierwszego z listy.
 	activeWindow = _windows.begin();
@@ -57,8 +56,8 @@ void View::Run()
 		// Pobranie instrukcji.
 		std::cin >> cmd;
 
-		// Jesli wcisnieto ENTER -> zmiana okna.
-		if (cmd.compare(CHANGE_WINDOW) == 0)
+		// Zmiana okna.
+		if (!cmd.compare(CHANGE_WINDOW))
 		{
 			// Czyszczenie ekranu.
 			system("CLS");
@@ -67,14 +66,79 @@ void View::Run()
 			if ( ++activeWindow == _windows.end() )
 				activeWindow = _windows.begin();
 		}
+		// Wyjscie z aplikacji.
+		else if (!cmd.compare(EXIT_APP))
+		{
+			// TODO: Wywo³anie czegos na kontrolerze.
+
+			break;
+		}
+		// Otwarcie nowego okna.
+		else if (!cmd.compare(OPEN_WINDOW))
+		{
+			cmd.clear();
+			std::cin >> cmd;
+
+			// Okno powitalne.
+			if (!cmd.compare(WIN_WELCOME))
+			{
+				this->_windows.push_front(new WelcomeWindow(_controller));
+				activeWindow = _windows.begin();
+			}
+			// Okno pomocy.
+			else if (!cmd.compare(WIN_HELP))
+			{
+				this->_windows.push_front(new HelpWindow(_controller));
+				activeWindow = _windows.begin();
+			}
+			// Okno konfiguracji.
+			else if (!cmd.compare(WIN_CONF))
+			{
+				this->_windows.push_front(new ConfigWindow(_controller));
+				activeWindow = _windows.begin();
+			}
+			// Nie ma takiego okna.
+			else
+				(*activeWindow)->SetMsg(ER_NO_WIN);
+		}
+		// Zamykanie okna.
+		else if (!cmd.compare(CLOSE_WINDOW))
+		{
+			// Jesli jest to ostatnie okno.
+			if ( this->_windows.size() == 1 )
+				(*activeWindow)->SetMsg(ER_LAST_WIN);
+			else
+			{
+				//Zwolnenie pamieci.
+				delete *activeWindow;
+
+				// Usuniecie z listy okien.
+				this->_windows.erase(activeWindow);
+
+				// Ustawienie nowego okna.
+				activeWindow = this->_windows.begin();
+			}
+		}
+		// Lista okien
+		else if (!cmd.compare(LIST_WIN))
+		{
+			std::string windows("Otwarte okna: ");
+			for(std::list<Window *>::iterator i = _windows.begin(); i != _windows.end(); i++)
+			{
+				windows.append((*i)->GetName());
+				windows.append(", ");
+			}
+
+			(*activeWindow)->SetMsg(windows);
+		}
 		else
 		{
 			// Przekazanie komendy do okna.
 			(*activeWindow)->Command(cmd);
-
-			// Czyszczenie ekranu.
-			system("CLS");
 		}
+
+		// Czyszczenie ekranu.
+		system("CLS");
 	}
 }
 

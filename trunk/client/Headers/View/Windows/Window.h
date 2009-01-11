@@ -7,11 +7,26 @@
 #include <stdio.h>
 
 // Pomocne definicje.
-#define HEADLINE		"+---------------------------------------------[_][O][X]-+\n"
-#define LINE			"+-------------------------------------------------------+\n"
+#define HEADLINE		"+-------------------------------------------------------[_][O][X]-+\n"
+#define LINE			"+-----------------------------------------------------------------+\n"
 #define SIDE			"| "
-#define CHANGE_WINDOW	"`"
 #define NO_COMMAND		"!@# Brak takiej komendy!"
+// Polecenia
+#define CHANGE_WINDOW	"`"
+#define EXIT_APP		"exit"
+#define OPEN_WINDOW		"op"
+#define CLOSE_WINDOW	"cl"
+#define LIST_WIN		"wins"		
+// Okna
+#define WIN_WELCOME		"welcome"
+#define WIN_CONF		"conf"
+#define WIN_HELP		"help"
+// Bledy
+#define ER_NO_WIN		"!@# Nie ma takiego okna!"
+#define ER_LAST_WIN		"!@# Nie mozna zamknac ostatniego okna!"
+#define ER_NO_PARAM		"!@# Brak takiego parametru."
+// Info
+#define INF_NEW_SRV		"^^ Adres serwera zostal zmieniony."
 
 ///
 /// Redefinicja klasy.
@@ -38,7 +53,12 @@ class Window
 		/// 
 		std::string _msg;
 
-	protected:
+		///
+		/// Nazwa.
+		///
+		std::string _name;
+
+	public:
 		
 		///
 		/// Ustawienie kontrolera.
@@ -69,13 +89,11 @@ class Window
 		///
 		void ClearMsg();
 
-	public:
-
 		///
 		/// Konstruktor.
 		/// @param[in] controller Kontroller.
 		///
-		Window(Controller * controller);
+		Window(Controller * controller, std::string name);
 
 		///
 		/// Odrysowanie okna.
@@ -88,6 +106,12 @@ class Window
 		/// @param[in] cmd Komenda.
 		///
 		virtual void Command(std::string & cmd) = 0;
+
+		///
+		/// Pobiera nazwe okna.
+		/// @return Nazwa okna.
+		///
+		std::string & GetName();
 };
 
 #endif /* _WINDOW_H_ */
