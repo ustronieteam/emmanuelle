@@ -7,6 +7,10 @@
 #include "IRemoteObserver.h"
 #include "ObserverType.h"
 #include "DataObserver.h"
+#include <boost/shared_ptr.hpp>
+#include "IModel.h"
+#include "Model.h"
+
 
 
 class IModel;
@@ -22,7 +26,7 @@ class Controller
     private:
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        IModel * model;
+		boost::shared_ptr<IModel> model;
 
 		//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         Controller();
@@ -41,7 +45,7 @@ class Controller
 
         //get iModel
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        IModel * GetModel();
+		IModel * GetModel();
 
         //set iModel
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"

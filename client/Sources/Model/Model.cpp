@@ -141,15 +141,44 @@ int Model::AddStatusObserver(DataObserver & observer)
  {
 	 return 0;
  }
-
- int Model::Disconnect() 
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief Rozlaczanie sie z serwera
+int Model::Disconnect() 
+{
+	if(client != boost::shared_ptr<Client>())
+	{
+		return client->Disconnect();
+	}
+	else
+		return -1;
+}
+///
+///@author Marian Szczykulski
+///@date	2009-01-12
+///@brief	Pod³¹czanie do servera
+ bool Model::ConnectToServer()
  {
-	 return 0;
- }
+	 int result;
+	 try
+	 {
+		client->setServerAddress(serverAddress);//Ustawiam, ale nie jest to konieczne
 
- bool Model::ConnectToServer() 
- {
-	 return true;
+		result = client->ConnectToServer();
+		//mogla zajsc jakas zmiana wiec dla spojnosci danych nalezy uaktualnic
+		this->serverAddress = client->getServerAddress(); 
+		
+	 }
+	 catch(std::exception & e)
+	 {
+		LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas podlaczania sie do zdalnego serwera");
+		throw e;
+	 }
+	 if(result==1)
+		 return true;
+	 else
+		return false;
  }
 
  int Model::AddFileObserver(IRemoteObserver & observer) 

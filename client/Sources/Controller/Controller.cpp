@@ -16,17 +16,22 @@ Controller::~Controller()
     //TODO Auto-generated method stub
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief getter modelu
 IModel * Controller::GetModel() 
 {
-    //TODO Auto-generated method stub
-    return model;
+    return model->get();
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief setter modelu
 void Controller::SetModel(IModel * iModel) 
 {
-    //TODO Auto-generated method stub
+	model = boost::shared_ptr<IModel>(iModel);
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
@@ -71,18 +76,40 @@ int Controller::AddContact(const char * name, int number)
     return 0;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief Rozlaczanie sie klienta od serwera
+///@return -2 nie zainicjowana zdalna instancja (nie podlaczylismy sie)
+///@return -1 serwer nie jest dostepny (wystapil wyjatek przy wywolywaniu zdalnej metody)
+///@return	0 udalo sie rozlaczyc
 int Controller::Disconnect() 
 {
-    //TODO Auto-generated method stub
-    return 0;
+	int result = 0;
+	result = model->Disconnect();
+	return result;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief  skupia logike, wykonywana podczas ³¹czenia siê do serwera.
 bool Controller::ConnectToServer(const char * adres, int port) 
 {
-    //TODO Auto-generated method stub
-    return 0;
+	try
+	{
+		LOG4CXX_DEBUG(logger "Podlaczanie do pierwszego servera");
+		while(!model->ConnectToServer())//Dopuki serwer nam odsyla inny adres do podlaczenia
+		{
+			LOG4CXX_INFO(logger "Podlaczanie do kolejnego servera");
+		}
+	}
+	catch(std::exception & e)
+	{
+		LOG4CXX_DEBUG(logger "Wyjatek kontrolera - podczas podlaczania sie do serwera");
+		return false;
+	}
+    return true;
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
