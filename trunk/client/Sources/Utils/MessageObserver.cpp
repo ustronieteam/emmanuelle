@@ -15,3 +15,8 @@ MessageObserver::~MessageObserver()
 {
     //TODO Auto-generated method stub
 }
+
+int MessageObserver::Refresh(RemoteObserverData objectData)
+{
+	return 0;
+}

@@ -64,10 +64,8 @@ void Model::activateListning()
 		serverImpl = new IClientServer_impl(poa);
 		
 		// dodanie i zarejestrowanie observatorow
-		//serverImpl->RegisterObserv(new RemoteServerConnectedObserver(serverDataBaseObj));
-		//serverImpl->RegisterObserv(new RemoteServerDisconnectedObserver(serverDataBaseObj));
-		//serverImpl->RegisterObserv(new ServerCreatePipeObserver(clientDataBaseObj));
-		//serverImpl->RegisterObserv(new PassMessageObserver(clientDataBaseObj));
+		serverImpl->RegisterObserv(new MessageObserver());
+		serverImpl->RegisterObserv(new FileObserver());
 
 		PortableServer::ObjectId_var oidServ = PortableServer::string_to_ObjectId("clientserver");
 		PortableServer::ServantBase_var servantServ = serverImpl;
@@ -83,11 +81,7 @@ void Model::activateListning()
 		clientImpl = new IClientClient_impl(poa);
 
 		// dodanie i zarejestrowanie observatorow
-		//clientImpl->RegisterObserv(new RemoteClientConnectedObserver(serverDataBaseObj, clientDataBaseObj));
-		//clientImpl->RegisterObserv(new RemoteClientCreatePipeObserver(serverDataBaseObj, clientDataBaseObj));
-		//clientImpl->RegisterObserv(new RemoteClientDisconnectedObserver(serverDataBaseObj, clientDataBaseObj));
-		//clientImpl->RegisterObserv(new RemoteClientSendMessageObserver(serverDataBaseObj, clientDataBaseObj));
-		//clientImpl->RegisterObserv(new RemoteServerUpdateClientObserver(serverDataBaseObj, clientDataBaseObj));
+		clientImpl->RegisterObserv(new FileObserver());
 
 		PortableServer::ObjectId_var oidClnt = PortableServer::string_to_ObjectId("clientclient");
 		PortableServer::ServantBase_var servantClnt = clientImpl;
@@ -128,55 +122,46 @@ int Model::AddStatusObserver(DataObserver & observer)
 	 return 0;
  }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
  int Model::SendPackage(FilePackage package)
  {
 	 return 0;
  }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
  int Model::DeleteContact() 
  {
 	 return 0;
  }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
  int Model::SendMessage() 
  {
 	 return 0;
  }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
  int Model::AddContact() 
  {
 	 return 0;
  }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
  int Model::Disconnect() 
  {
 	 return 0;
  }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
  bool Model::ConnectToServer() 
  {
 	 return true;
  }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
  int Model::AddFileObserver(IRemoteObserver & observer) 
  {
 	 return 0;
  }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
  int Model::AddMessageObserver(IRemoteObserver & observer) 
  {
 	 return 0;
  }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 int Model::GetContactsList() // TODO: zmienic typ zwracany
 {
 	return 0;

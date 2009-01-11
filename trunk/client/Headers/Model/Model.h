@@ -1,8 +1,5 @@
 #ifndef MODEL_H
 #define MODEL_H
-//Begin section for file Model.h
-//TODO: Add definitions that you want preserved
-//End section for file Model.h
 
 #include "CorbaConnector.h"
 
@@ -12,8 +9,11 @@
 #include "IClientClient_impl.h"
 #include "IClientServer.h"
 #include "IClientServer_impl.h"
-
 #include "DomainData.h"
+
+#include "FileObserver.h"
+#include "MessageObserver.h"
+#include "StatusObserver.h"
 
 #include <log4cxx/logger.h>
 #include <log4cxx/level.h>
@@ -21,20 +21,19 @@
 class Client;
 class ClientsData;
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// @author	Mateusz Ko³odziejczyk, Marian Szczykulski
+/// @date	10.01.2009
+///
+/// @brief	klasa Modelu - implementuje interfejs IModel i dziedziczy z klasy CorbaConnector
+///
 class Model : public IModel, public CorbaConnector
 {
 
-    //Begin section for Model
-    //TODO: Add attributes that you want preserved
-    //End section for Model
-
     private:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         Client * client;
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         ClientsData * clientsData;
 
 		///
@@ -72,7 +71,13 @@ class Model : public IModel, public CorbaConnector
 		void activateListning();
 
     public:
-
+	
+		///
+		/// @return	obiekt modelu, ktory jest obiektem typu singleton
+		///
+		/// statyczna metoda zwracajaca wskaznik do obiektu klasy Model jesli
+		/// istnieje badz tworzaca go jesli nie istnieje
+		///
         static IModel * GetInstance()
 		{
 			static IModel * instance = new Model();
@@ -120,35 +125,26 @@ class Model : public IModel, public CorbaConnector
 			this->serverAddress = a;
 		}
 
-		//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
          int AddStatusObserver(DataObserver & observer) ;
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
          int SendPackage(FilePackage package);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
          int DeleteContact() ;
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
          int SendMessage() ;
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
          int AddContact() ;
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
          int Disconnect() ;
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
          bool ConnectToServer() ;
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
          int AddFileObserver(IRemoteObserver & observer) ;
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
          int AddMessageObserver(IRemoteObserver & observer) ;
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-          int GetContactsList(); // TODO: zmienic typ zwracany
+         int GetContactsList(); // TODO: zmienic typ zwracany
 
 };  //end class Model
 

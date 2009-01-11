@@ -8,7 +8,7 @@
 
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-class MessageObserver : IRemoteObserver
+class MessageObserver : public IRemoteObserver
 {
 
     //Begin section for MessageObserver
@@ -24,6 +24,9 @@ class MessageObserver : IRemoteObserver
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~MessageObserver();
+		
+		int Refresh(RemoteObserverData objectData);
+
 
 };  //end class MessageObserver
 

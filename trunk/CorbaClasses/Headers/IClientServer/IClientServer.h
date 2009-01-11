@@ -22,7 +22,7 @@
 #ifndef ___IClientServer_h__
 #define ___IClientServer_h__
 
-#include <domaindata.h>
+#include <DomainData.h>
 
 #ifndef OB_INTEGER_VERSION
 #   error No ORBacus version defined! Is <OB/CORBA.h> included?
