@@ -243,39 +243,30 @@ bool Server::openConfFile(string & address)
 
 	conf.seekp(0, ios_base::beg);
 
+	string s = "^\\s*";
+	s += NADDRESS;
+	s += "\\s*=\\s*(.*)\\s*$";
+
+	static const boost::regex addr(s.c_str());
+	static const boost::regex comment("^#(.*)$");
+
 	string line;
 	while(getline(conf, line))
 	{
-		string::const_iterator it = line.begin();
-
-		if(*it == '#')
-			continue;
-
-		string name = "";
-		string value = "";
-
-		for(it; it < line.end(); ++it)
+		boost::smatch what;
+		if(boost::regex_match(line, what, comment))
 		{
-			if(*it != ' ' && *it != '=')
-			{
-				name += *it;
-			}
-			else if(*it == '=')
-				break;
+			// znaleziono komentarz
 		}
-
-		if(*it == '=')
-		{		
-			for(++it; it < line.end(); ++it)
-			{
-				if(*it != '\n' && *it != ' ')
-					value += *it;
-			}
-
-			if(!name.compare(NADDRESS))
-			{
-				address = value;
-			}
+		else if(boost::regex_match(line, what, addr))
+		{
+			// znaleziono address
+			address = what[1];
+		}
+		else
+		{
+			LOG4CXX_ERROR(logger, "Niedozwolone wyrazenie w pliku !");
+			return 1;
 		}
 	}
 

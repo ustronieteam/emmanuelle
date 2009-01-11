@@ -5,8 +5,9 @@
 #include <OB/BootManager.h>
 #include <OB/OCI_IIOP.h>
 
-#include "DataBase/ClientsDataBase.h"
-#include "DataBase/ServerDataBase.h"
+#include "ClientsDataBase.h"
+#include "ServerDataBase.h"
+
 #include "IServerServer.h"
 #include "IServerServer_impl.h"
 #include "IServerClient.h"
@@ -21,14 +22,17 @@
 #include "RemoteClientDisconnectedObserver.h"
 #include "RemoteClientSendMessageObserver.h"
 #include "ServerCreatePipeObserver.h"
+
 #include "ServerRecord.h"
 #include "ClientRecord.h"
+
 #include "CorbaConnector.h"
 
 #include <iostream>
 #include <fstream>
 #include <string>
 #include <boost/thread.hpp>
+#include <boost/regex.hpp>
 
 #include <log4cxx/logger.h>
 #include <log4cxx/level.h>
@@ -117,6 +121,9 @@ class Server : public CorbaConnector
 
 			// nazwa pliku konfiguracyjnego
 			configFileName = fileName;
+
+			// nadanie wartosci domyslnej dla adresu ip serwera
+			myIPAddress.localization = CORBA::string_dup("null");
 
 			//logger
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("ServerLogicRunnable"));
