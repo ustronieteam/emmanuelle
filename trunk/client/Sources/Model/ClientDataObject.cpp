@@ -15,3 +15,17 @@ ClientDataObject::~ClientDataObject()
 {
     //TODO Auto-generated method stub
 }
+
+int ClientDataObject::Notify(DataObserverData data)
+{
+	return 0;
+}
+int ClientDataObject::Unregister(DataObserver & dataObserver)
+{
+	return 0;
+}
+int ClientDataObject::Register(DataObserver & dataObserver)
+{
+	return 0;
+}
+

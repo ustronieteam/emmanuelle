@@ -8,7 +8,7 @@
 
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-class ClientsData : ClientDataObject
+class ClientsData : public ClientDataObject
 {
 
     //Begin section for ClientsData

@@ -10,11 +10,12 @@
 #include "IClientServer.h"
 #include "IClientServer_impl.h"
 #include "DomainData.h"
-
+#include "Client.h"
+#include "ClientsData.h"
 #include "FileObserver.h"
 #include "MessageObserver.h"
 #include "StatusObserver.h"
-
+#include <boost/shared_ptr.hpp>
 #include <log4cxx/logger.h>
 #include <log4cxx/level.h>
 
@@ -32,9 +33,9 @@ class Model : public IModel, public CorbaConnector
 
     private:
 
-        Client * client;
+		boost::shared_ptr<Client> client;
 
-        ClientsData * clientsData;
+		boost::shared_ptr<ClientsData> clientsData;
 
 		///
 		/// wskaznik do obiektu zdalnego udostepnianego serwerom
@@ -62,6 +63,8 @@ class Model : public IModel, public CorbaConnector
 			//logger
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("AplicationClass"));
 			logger->setLevel(log4cxx::Level::getAll());
+			client = boost::shared_ptr<Client>(new Client(serverAddress) );
+			clientsData = boost::shared_ptr<ClientsData>(new ClientsData());
 		}
 
 		///
@@ -123,6 +126,7 @@ class Model : public IModel, public CorbaConnector
 			DomainData::Address a;
 			a.localization = CORBA::string_dup(addr);
 			this->serverAddress = a;
+			client->setServerAddress(a);
 		}
 
 
