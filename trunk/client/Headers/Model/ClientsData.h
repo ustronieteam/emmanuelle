@@ -1,39 +1,54 @@
 #ifndef CLIENTSDATA_H
 #define CLIENTSDATA_H
-//Begin section for file ClientsData.h
-//TODO: Add definitions that you want preserved
-//End section for file ClientsData.h
 
 #include "ClientDataObject.h"
+#include "Domaindata.h"
+#include <iostream>
+#include <string>
+#include <map>
+#include <vector>
+#include <boost/thread/mutex.hpp>
+#include "Model/Exceptions/ModelExceptions.h"
 
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+struct ContactRecord
+{
+	DomainData::User userDesc;
+	bool isAvailable;
+};
+typedef struct ContactRecord ContactRecord;
+///
+///@author	Marian Szczykulski
+///@date	2009-01-12
+///@brief	Klasa zawierajaca liste kontaktow klienta
 class ClientsData : public ClientDataObject
 {
+	private:
+		///
+		/// Mutex, gdy¿ kolekcja moze byc uzywana w odzielnych watkach
+		boost::mutex _mutex;
 
-    //Begin section for ClientsData
-    //TODO: Add attributes that you want preserved
-    //End section for ClientsData
+		///
+		/// Kolekcja trzymajaca kontakty klienta
+		std::map<std::string, ContactRecord> _records;
 
 
-
+		///
+		/// Flaga okreslajaca czy kolekcja ma byc wielowatkowa
+		bool isConcurrent;
+		///
+		///Metody synchronizacji watkow
+		void lock_mutex();
+		void unlock_mutex();
     public:
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        ClientsData();
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+		ClientsData(bool con = true);
         virtual ~ClientsData();
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        int GetContactsList(); // TODO: zmienic typ zwracany
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        int DeleteContact();
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        int AddContact();
+		std::vector<ContactRecord> GetContactsList() const; 
+        int DeleteContact(DomainData::User usr);
+        int AddContact(DomainData::User usr);
+		const ContactRecord & FindByName(std::string name);
 
 };  //end class ClientsData
-
 #endif
