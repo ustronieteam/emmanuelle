@@ -5,10 +5,12 @@
 #include <string>
 #include <list>
 
+#include "ViewData.h"
 #include "Window.h"
 #include "ConfigWindow.h"
 #include "WelcomeWindow.h"
 #include "HelpWindow.h"
+#include "ContactWindow.h"
 
 using namespace std;
 
@@ -25,6 +27,11 @@ class Controller;
 ///
 class View
 {
+		// Przyjaznie.
+
+		// Okno kontaktów musi miec odstep do listy kontaktow.
+		//friend class ContactWindow;
+
 	public:
 
 		///
@@ -42,7 +49,12 @@ class View
 		///
 		/// Okna.
 		///
-		list<Window *> _windows;
+		std::list<Window *> _windows;
+
+		///
+		/// Lista kontaktow.
+		///
+		std::list<CONTACT> _contacts;
 
 		///
 		/// Konstruktor.

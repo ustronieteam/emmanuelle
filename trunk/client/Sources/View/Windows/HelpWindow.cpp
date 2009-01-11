@@ -23,7 +23,9 @@ void HelpWindow::Render(std::ostream & out)
 		<< SIDE << "* Aby zamknac okno nalezy je wybrac i wpisac polecenie 'cl'.\n"
 		<< SIDE << "* Jedno okno zawsze musi byc otwarte!\n"
 		<< SIDE << "* Lista okien pod poleceniem 'wins'.\n"
-		<< SIDE << "* Dostepne okna: 'welcome', 'help', 'conf'\n"
+		<< SIDE << "* Dostepne okna: 'welcome', 'help', 'conf', 'con'\n"
+		<< SIDE << "* Dodanie kontaktu w oknie 'con': 'add nazwa numer'\n"
+		<< SIDE << "* Usuniecie kontaktu w oknie 'con': 'del nazwa'\n"
 		<< SIDE << "* Zawsze mozna zakonczyc aplikacje poleceniem 'exit'\n"
 		<< LINE;
 
@@ -33,7 +35,7 @@ void HelpWindow::Render(std::ostream & out)
 			this->ClearMsg();
 		}
 
-		out << ">> ";
+		out << PROMPT;
 }
 
 ///
