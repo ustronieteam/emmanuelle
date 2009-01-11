@@ -10,7 +10,7 @@
 #define HEADLINE		"+-------------------------------------------------------[_][O][X]-+\n"
 #define LINE			"+-----------------------------------------------------------------+\n"
 #define SIDE			"| "
-#define NO_COMMAND		"!@# Brak takiej komendy!"
+#define PROMPT			">> "
 // Polecenia
 #define CHANGE_WINDOW	"`"
 #define EXIT_APP		"exit"
@@ -21,12 +21,13 @@
 #define WIN_WELCOME		"welcome"
 #define WIN_CONF		"conf"
 #define WIN_HELP		"help"
+#define WIN_CONTACT		"con"
+// Wspolne komunikaty.
+#define NO_COMMAND		"!@# Brak takiej komendy!"
 // Bledy
 #define ER_NO_WIN		"!@# Nie ma takiego okna!"
 #define ER_LAST_WIN		"!@# Nie mozna zamknac ostatniego okna!"
 #define ER_NO_PARAM		"!@# Brak takiego parametru."
-// Info
-#define INF_NEW_SRV		"^^ Adres serwera zostal zmieniony."
 
 ///
 /// Redefinicja klasy.

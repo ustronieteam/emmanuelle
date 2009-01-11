@@ -332,6 +332,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\Sources\View\Windows\ContactWindow.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\Sources\View\Windows\HelpWindow.cpp"
 						>
 					</File>
@@ -394,11 +398,19 @@
 					RelativePath=".\Headers\View\View.h"
 					>
 				</File>
+				<File
+					RelativePath=".\Headers\View\ViewData.h"
+					>
+				</File>
 				<Filter
 					Name="Windows"
 					>
 					<File
 						RelativePath=".\Headers\View\Windows\ConfigWindow.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Headers\View\Windows\ContactWindow.h"
 						>
 					</File>
 					<File

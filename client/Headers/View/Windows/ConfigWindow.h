@@ -3,6 +3,11 @@
 
 #include "Window.h"
 
+// Komunikaty
+#define INF_NEW_SRV		"^^ Adres serwera zostal zmieniony."
+#define INF_NEW_UNAME	"^^ Nazwa uzytkownika zostala zmieniona."
+#define INF_NEW_UNUM	"^^ Numer uzytkownika zostal zmieniony."
+
 ///
 /// ConfigWindow
 /// @brief Okienko konfiguracyjne.
@@ -17,6 +22,16 @@ class ConfigWindow : public Window
 		/// Adres serwera do ktorego jest sie podlaczonym.
 		///
 		std::string _serverAddress;
+
+		///
+		/// Nazwa uzytkownika.
+		///
+		std::string _userName;
+
+		///
+		/// Numer uzytkownika.
+		///
+		int _userNumber;
 
 	public:
 

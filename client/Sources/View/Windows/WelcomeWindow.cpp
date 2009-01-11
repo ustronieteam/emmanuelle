@@ -39,7 +39,7 @@ void WelcomeWindow::Render(std::ostream & out)
 			this->ClearMsg();
 		}
 
-		out << ">> ";
+		out << PROMPT;
 }
 
 ///

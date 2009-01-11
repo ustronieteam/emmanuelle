@@ -47,6 +47,9 @@ void View::Run()
 	// Petla pobierania instrukcji od uzytkownika.
 	while(true)
 	{
+		// Czyszczenie ekranu.
+		system("CLS");
+
 		// Czyszczenie ostatniej komendy.
 		cmd.clear();
 
@@ -97,6 +100,12 @@ void View::Run()
 				this->_windows.push_front(new ConfigWindow(_controller));
 				activeWindow = _windows.begin();
 			}
+			// Okno kontaktow.
+			else if (!cmd.compare(WIN_CONTACT))
+			{
+				this->_windows.push_front(new ContactWindow(_controller, &_contacts));
+				activeWindow = _windows.begin();
+			}
 			// Nie ma takiego okna.
 			else
 				(*activeWindow)->SetMsg(ER_NO_WIN);
@@ -126,7 +135,7 @@ void View::Run()
 			for(std::list<Window *>::iterator i = _windows.begin(); i != _windows.end(); i++)
 			{
 				windows.append((*i)->GetName());
-				windows.append(", ");
+				windows.append("/");
 			}
 
 			(*activeWindow)->SetMsg(windows);
@@ -136,9 +145,6 @@ void View::Run()
 			// Przekazanie komendy do okna.
 			(*activeWindow)->Command(cmd);
 		}
-
-		// Czyszczenie ekranu.
-		system("CLS");
 	}
 }
 
