@@ -5,7 +5,7 @@
 #include "DataObserver.h"
 #include "FilePackage.h"
 #include "IRemoteObserver.h"
-
+#include "DomainData.h"
 
 class IModel
 {
@@ -16,7 +16,10 @@ class IModel
 
         virtual ~IModel();
 
-		virtual void SetServerAddress(const char * addr) = 0;
+		virtual void SetServerAddress(const char * addr)=0;
+		virtual const DomainData::Address & GetServerAddress() const=0;
+		virtual void SetPortNumber(const int & p)=0;
+		virtual int GetPortNumber()const=0;
 
         virtual int AddStatusObserver(DataObserver & observer) = 0;
 

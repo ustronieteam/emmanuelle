@@ -21,6 +21,7 @@ class Client
 {
 
 	private:
+		static const int defaultPortNumber;
 		static const std::string configFileName;
 		///
 		///Namiastka serwera
@@ -30,6 +31,10 @@ class Client
 		///
 		///Adres zdalnego serwera do ktorego podlaczamy sie
 		DomainData::Address serverAddress;
+
+		///
+		///port
+		int port;
 		///
 		///tryb polaczenia (active/passive)
 		DomainData::Mode mode;
@@ -66,11 +71,22 @@ class Client
         int SendMessage(DomainData::Address recAddr, DomainData::Message msg);
         int AddMessageObserver(IRemoteObserver & messageObserver);
 
+		///
+		///gettery i settery dla nazwy serwera do ktorego sie podlaczamy
 		void setServerAddress(const DomainData::Address & a) {serverAddress = a;}//TODO dokonczyc
-		DomainData::Address getServerAddress() { return serverAddress;}
+		const DomainData::Address & getServerAddress() const{ return serverAddress;}
 
-		void setClientName(std::string n){clientName = n;}
-		std::string getClientName(){return clientName;}
+		///
+		///gettery i settery dla nazwy lokalnego klienta
+		void setClientName(const std::string & n){clientName = n;}
+		const std::string & getClientName() const {return clientName;}
+
+		///
+		///gettery i settery dla portu
+		void setPortNumber(const int & p){port = p;}
+		const int & getPortNumber()const {return port;}
+
+
 
 };  //end class Client
 

@@ -111,7 +111,7 @@ class Model : public IModel, public CorbaConnector
 		///
 		/// address getter
 		///
-		DomainData::Address GetServerAddress() const
+		virtual const DomainData::Address & GetServerAddress() const
 		{
 			return serverAddress;
 		}
@@ -121,14 +121,15 @@ class Model : public IModel, public CorbaConnector
 		///
 		/// address setter
 		///
-		void SetServerAddress(const char * addr)
+		virtual void SetServerAddress(const char * addr)
 		{
 			DomainData::Address a;
 			a.localization = CORBA::string_dup(addr);
 			this->serverAddress = a;
 			client->setServerAddress(a);
 		}
-
+		virtual void SetPortNumber(const int & p);
+		virtual int GetPortNumber() const;
 
          int AddStatusObserver(DataObserver & observer) ;
 

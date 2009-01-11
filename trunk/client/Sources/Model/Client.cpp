@@ -1,6 +1,7 @@
 #include "Client.h"
 
 const std::string Client::configFileName = "client.config";
+const int Client::defaultPortNumber = 6666;
 ///
 ///@author Marian Szczykulski
 ///@date 2009-01-11
@@ -10,12 +11,14 @@ Client::Client()
 	logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("Client"));
 	logger->setLevel(log4cxx::Level::getAll());		
 	readServerAddress();
+	port = defaultPortNumber;
 }
 Client::Client(DomainData::Address servAddr)
 {
 	logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("Client"));
 	logger->setLevel(log4cxx::Level::getAll());		
 	serverAddress = servAddr;
+	port = defaultPortNumber;
 }
 Client::~Client() 
 {
