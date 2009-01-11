@@ -15,3 +15,8 @@ FileObserver::~FileObserver()
 {
     //TODO Auto-generated method stub
 }
+
+int FileObserver::Refresh(RemoteObserverData objectData)
+{
+	return 0;
+}

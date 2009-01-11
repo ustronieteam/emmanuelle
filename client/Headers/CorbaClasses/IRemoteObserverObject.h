@@ -1,47 +1,82 @@
 #ifndef IREMOTEOBSERVEROBJECT_H
 #define IREMOTEOBSERVEROBJECT_H
-//Begin section for file IRemoteObserverObject.h
-//TODO: Add definitions that you want preserved
-//End section for file IRemoteObserverObject.h
 
 #include "RemoteObserverData.h"
 
+#include "IRemoteObserver.h"
+#include <iostream>
+#include <vector>
 
-class IRemoteObserver;
+#include <log4cxx/logger.h>
+#include <log4cxx/level.h>
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// @author	Mateusz Ko³odziejczyk
+/// @date	10.01.2009
+///
+/// @brief	Interfejs ktory implementuja klasy namistek udostapnianych przez klienta
+///
+/// Rejestruje i wyrejestrowuje obiekty obserwatorw \; posiada metode Notify ktora
+/// wywoluje metode Refresh na kazdym obserwatorze w koleksji obserwatorow (ktora
+/// takze znajduje sie w tej klasie)
+///
 class IRemoteObserverObject
 {
 
-    //Begin section for IRemoteObserverObject
-    //TODO: Add attributes that you want preserved
-    //End section for IRemoteObserverObject
-
     private:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        IRemoteObserver * iObserver;
+		///
+		/// kolekcji obserwatorow, czyli obiektow klasy IRemoteObserver
+		///
+        std::vector<IRemoteObserver *> RemoteObserversList;
 
-
+		// logger
+		log4cxx::LoggerPtr logger;
 
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        IRemoteObserverObject();
+		///
+		/// konstruktor
+		///
+        IRemoteObserverObject()
+		{
+			log4cxx::LoggerPtr logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("IRemoteObjects"));
+			logger->setLevel(log4cxx::Level::getAll());
+		}
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual ~IRemoteObserverObject();
+		///
+		/// destruktor
+		///
+        virtual ~IRemoteObserverObject()
+		{
+			for(std::vector<IRemoteObserver *>::const_iterator it = RemoteObserversList.begin();
+				it != RemoteObserversList.end();
+				++it)
+			{
+				delete *it;
+			}
+		}
 
-        //get iObserver
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual IRemoteObserver * & get_iObserver() = 0;
+		///
+		/// @param [in] observer	obiekt obserwatora
+		///
+		/// wyrejestrowuje danego obserwatora
+		///
+        virtual int UnregisterObserv(IRemoteObserver * observer);
 
-        //set iObserver
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual void set_iObserver(IRemoteObserver * & iObserver) = 0;
+		///
+		/// @param [in] observer	obiekt obserwatora
+		///
+		/// rejestruje obserwatora observer
+		///
+        virtual int RegisterObserv(IRemoteObserver * observer);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual int Notify(RemoteObserverData objectData) = 0;
+		///
+		/// @param [in] objectData	dane 
+		///
+		/// wywoluje metode Refresh na kazdym obserwatorze z kolekcji RemoteObserversList
+		///
+        virtual void Notify(RemoteObserverData objectData);
 
 };  //end class IRemoteObserverObject
 

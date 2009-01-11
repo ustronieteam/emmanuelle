@@ -6,8 +6,10 @@
 
 #include "RemoteObserverData.h"
 #include "IRemoteObserver.h"
+
 #include <iostream>
 #include <vector>
+
 #include <log4cxx/logger.h>
 #include <log4cxx/level.h>
 
@@ -23,19 +25,27 @@ class IRemoteObjects
 
 		std::vector<IRemoteObserver *> RemoteObserversList;
 
+		// logger
+		log4cxx::LoggerPtr logger;
+
     public:
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        IRemoteObjects();
+        IRemoteObjects()
+		{
+			log4cxx::LoggerPtr logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("IRemoteObjects"));
+			logger->setLevel(log4cxx::Level::getAll());
+		}
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual ~IRemoteObjects();
+        virtual ~IRemoteObjects()
+		{}
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual int Notify(RemoteObserverData observerData);
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual int UnregisterObserv(IRemoteObserver & observer);
+        virtual int UnregisterObserv(IRemoteObserver * observer);
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual int RegisterObserv(IRemoteObserver * observer);

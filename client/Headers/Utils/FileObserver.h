@@ -8,7 +8,7 @@
 
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-class FileObserver : IRemoteObserver
+class FileObserver : public IRemoteObserver
 {
 
     //Begin section for FileObserver
@@ -24,6 +24,8 @@ class FileObserver : IRemoteObserver
 
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~FileObserver();
+
+		int Refresh(RemoteObserverData objectData);
 
 };  //end class FileObserver
 

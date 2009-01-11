@@ -1,17 +1,22 @@
 #include "IRemoteObserverObject.h"
-//Begin section for file IRemoteObserverObject.cpp
-//TODO: Add definitions that you want preserved
-//End section for file IRemoteObserverObject.cpp
 
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-IRemoteObserverObject::IRemoteObserverObject() 
+int IRemoteObserverObject::RegisterObserv(IRemoteObserver * observer)
 {
-    //TODO Auto-generated method stub
+	LOG4CXX_DEBUG(logger, "Zarejestrowanie obserwatora.");
+	RemoteObserversList.push_back(observer);
+	return 0;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-IRemoteObserverObject::~IRemoteObserverObject() 
+int IRemoteObserverObject::UnregisterObserv(IRemoteObserver * observer)
 {
-    //TODO Auto-generated method stub
+	LOG4CXX_DEBUG(logger, "Wyrejestrowanie obserwatora.");
+	return 0;
+}
+
+void IRemoteObserverObject::Notify(RemoteObserverData objectData)
+{
+	LOG4CXX_DEBUG(logger, "Wywolanie 'Refresh' na kazdym obserwatorze w kolekcji.");
+	for(std::vector<IRemoteObserver *>::iterator it = RemoteObserversList.begin(); it != RemoteObserversList.end(); ++it)
+		(*it)->Refresh(objectData);
 }

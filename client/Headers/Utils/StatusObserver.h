@@ -8,7 +8,7 @@
 
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-class StatusObserver : DataObserver
+class StatusObserver : public DataObserver
 {
 
     //Begin section for StatusObserver

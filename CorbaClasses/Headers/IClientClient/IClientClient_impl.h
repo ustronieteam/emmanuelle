@@ -2,12 +2,14 @@
 #define ___IClientClient_impl_h__
 
 #include <IClientClient_skel.h>
+#include "IRemoteObserverObject.h"
 
 //
 // IDL:IClientClient:1.0
 //
 class IClientClient_impl : virtual public POA_IClientClient,
-                           virtual public PortableServer::RefCountServantBase
+                           virtual public PortableServer::RefCountServantBase,
+						   virtual public IRemoteObserverObject
 {
     IClientClient_impl(const IClientClient_impl&);
     void operator=(const IClientClient_impl&);
