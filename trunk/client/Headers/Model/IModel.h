@@ -27,7 +27,7 @@ class IModel
 
         virtual int DeleteContact() = 0;
 
-        //virtual int SendMessage() = 0;
+        virtual int SendMessage(DomainData::Address recAddr, DomainData::Message msg)= 0;
 
         virtual int AddContact() = 0;
 

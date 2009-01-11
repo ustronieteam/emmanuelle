@@ -47,7 +47,7 @@ class Controller
         int AddDataObserver(DataObserver & dataObserver);
         int AddContact(const char * name, int number);
         int Disconnect();
-        bool ConnectToServer(const char * adres, int port);
+        bool ConnectToServer();
         int GetContactsList(); // TODO: zmienic typ zwracany
 
 		///

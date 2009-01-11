@@ -10,7 +10,7 @@
 Controller::Controller() 
 {
 	//Do tworzenia logow
-    logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("Model"));
+    logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("Kontroler"));
 	logger->setLevel(log4cxx::Level::getAll());
 }
 
@@ -68,9 +68,25 @@ int Controller::DeleteContact(const char * name, int number)
 ///						false - w przeciwnym przypadku
 bool Controller::SendMessage(const char * content, const char * dest) 
 {
-	//1) Znajdz klienta w naszych kontaktach
-	//2) Wypelnij struktury DomainData::Address i DomainData::Message
-	//3) wywolaj metode na modelu SendMessage
+	DomainData::Address addr;
+	addr.localization = CORBA::string_dup(dest);
+
+	DomainData::Message msg;
+	msg.content = CORBA::string_dup(content);
+
+	int result = 0;
+	result = model->SendMessage(addr, msg);
+	
+	if(result < 0)
+	{
+		LOG4CXX_DEBUG(logger, "Blad podczas wysylania wiadomosci. Kod bledu: "<<result);
+		return false;
+	}
+	else
+	{
+		LOG4CXX_DEBUG(logger, "Wiadomosc wyslana poprawnie ze statusem: "<<result);
+		return true;
+	}
     return 0;
 }
 
@@ -106,7 +122,7 @@ int Controller::Disconnect()
 ///@author Marian Szczykulski
 ///@date 2009-01-12
 ///@brief  skupia logike, wykonywana podczas ³¹czenia siê do serwera.
-bool Controller::ConnectToServer(const char * adres, int port) 
+bool Controller::ConnectToServer() 
 {
 	try
 	{

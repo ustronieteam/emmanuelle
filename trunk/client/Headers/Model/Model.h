@@ -137,7 +137,7 @@ class Model : public IModel, public CorbaConnector
 
          int DeleteContact() ;
 
-         int SendMessage(DomainData::Address recAddr, DomainData::Message msg);
+         virtual int SendMessage(DomainData::Address recAddr, DomainData::Message msg);
 
          int AddContact() ;
 
