@@ -128,6 +128,8 @@ class Model : public IModel, public CorbaConnector
 			this->serverAddress = a;
 			client->setServerAddress(a);
 		}
+
+
 		virtual void SetPortNumber(const int & p);
 		virtual int GetPortNumber() const;
 
@@ -135,11 +137,11 @@ class Model : public IModel, public CorbaConnector
 
          int SendPackage(FilePackage package);
 
-         int DeleteContact() ;
+         int DeleteContact(const DomainData::User & usr) ;
 
          virtual int SendMessage(DomainData::Address recAddr, DomainData::Message msg);
 
-         int AddContact() ;
+         int AddContact(const DomainData::User &usr) ;
 
          int Disconnect() ;
 
@@ -149,7 +151,7 @@ class Model : public IModel, public CorbaConnector
 
          int AddMessageObserver(IRemoteObserver & observer) ;
 
-         int GetContactsList(); // TODO: zmienic typ zwracany
+		 virtual std::vector<ContactRecord> GetContactsList(); 
 
 };  //end class Model
 

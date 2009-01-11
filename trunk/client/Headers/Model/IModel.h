@@ -6,7 +6,7 @@
 #include "FilePackage.h"
 #include "IRemoteObserver.h"
 #include "DomainData.h"
-
+#include "ClientsData.h"
 class IModel
 {
 
@@ -25,11 +25,11 @@ class IModel
 
         virtual int SendPackage(FilePackage package) = 0;
 
-        virtual int DeleteContact() = 0;
+		virtual int DeleteContact(const DomainData::User & usr) = 0;
 
         virtual int SendMessage(DomainData::Address recAddr, DomainData::Message msg)= 0;
 
-        virtual int AddContact() = 0;
+        virtual int AddContact(const DomainData::User &usr) = 0;
 
         virtual int Disconnect() = 0;
 
@@ -39,7 +39,7 @@ class IModel
 
         virtual int AddMessageObserver(IRemoteObserver & observer) = 0;
 
-        virtual  int GetContactsList() = 0; // TODO: zmienic typ zwracany
+        virtual  std::vector<ContactRecord> GetContactsList() = 0; // TODO: zmienic typ zwracany
 
 };  //end class IModel
 

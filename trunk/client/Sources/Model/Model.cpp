@@ -116,19 +116,34 @@ void Model::activateListning()
 }
 
 int Model::AddStatusObserver(DataObserver & observer) 
- {
-	 return 0;
- }
+{
+ return 0;
+}
 
- int Model::SendPackage(FilePackage package)
- {
-	 return 0;
- }
+int Model::SendPackage(FilePackage package)
+{
+ return 0;
+}
 
- int Model::DeleteContact() 
- {
-	 return 0;
- }
+///
+///@author Marian Szczykulski
+///@date	2009-01-12
+///@brief	Usuwa kontakt z bazy
+///@param[in]	usr	Dane o usuwanym kontakcie
+///@return		0 udalo sie usunac lub rzuca wyjatek ContactNotFoundException jak sie nie udalo
+int Model::DeleteContact(const DomainData::User & usr) 
+{
+	try
+	{
+		clientsData->DeleteContact(usr);
+	}
+	catch(ContactNotFoundException & e)
+	{
+		LOG4CXX_DEBUG(logger, "Zlapano wyjatek podczas usuwania kontakty: ContactNotFoundException : "<<e.what());
+		throw e;
+	}
+	return 0;
+}
 ///
 ///@author Marian Szczykulski
 ///@date 2009-01-12
@@ -143,11 +158,26 @@ int Model::AddStatusObserver(DataObserver & observer)
 	 result = client->SendMessage(recAddr, msg);
 	 return result;
  }
-
- int Model::AddContact() 
- {
-	 return 0;
- }
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief	Dodaje kontakt do bazy kontaktow
+///@param[in]	usr	Dane o dodawanym uzytkowniku
+///@return		0	lub rzuca wyjatek jezeli nie udalo sie dodac
+ int Model::AddContact(const DomainData::User &usr) 
+{
+	try
+	{
+		clientsData->AddContact(usr);
+		return 0;
+	}
+	catch(ContactAlreadyExistsException & e)
+	{
+		LOG4CXX_DEBUG(logger, "Wyjatek w modelu: ContactAlreadyExists : "<<e.what());
+		throw e;
+	}
+	return 0;
+}
 ///
 ///@author Marian Szczykulski
 ///@date 2009-01-12
@@ -198,9 +228,14 @@ int Model::Disconnect()
 	 return 0;
  }
 
-int Model::GetContactsList() // TODO: zmienic typ zwracany
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief Pobiera liste kontaktow z bazy
+///@return	vector kontaktow
+std::vector<ContactRecord> Model::GetContactsList()
 {
-	return 0;
+	return clientsData->GetContactsList();
 }
 ///
 ///@author Marian Szczykulski
