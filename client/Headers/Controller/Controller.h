@@ -15,21 +15,20 @@
 
 class IModel;
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+///@author Mateusz Ko³odziejszczyk, Marian Szczykulski
+///@date 2009-01-12
+///@brief klasa kontrolera
 class Controller
 {
-
-    //Begin section for Controller
-    //TODO: Add attributes that you want preserved
-    //End section for Controller
-
     private:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        //model
 		boost::shared_ptr<IModel> model;
-
-		//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+		//prywatny konstruktor (klasa jest singleton-em)
         Controller();
+		// logger
+		log4cxx::LoggerPtr logger;
 
     public:
 	

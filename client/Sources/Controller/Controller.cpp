@@ -3,11 +3,15 @@
 //TODO: Add definitions that you want preserved
 //End section for file Controller.cpp
 
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief prywatny konstruktor domyslny
 Controller::Controller() 
 {
-    //TODO Auto-generated method stub
+	//Do tworzenia logow
+    logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("Model"));
+	logger->setLevel(log4cxx::Level::getAll());
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
@@ -22,7 +26,7 @@ Controller::~Controller()
 ///@brief getter modelu
 IModel * Controller::GetModel() 
 {
-    return model->get();
+    return model.get();
 }
 
 ///
@@ -98,15 +102,15 @@ bool Controller::ConnectToServer(const char * adres, int port)
 {
 	try
 	{
-		LOG4CXX_DEBUG(logger "Podlaczanie do pierwszego servera");
+		LOG4CXX_DEBUG(logger, "Podlaczanie do pierwszego servera");
 		while(!model->ConnectToServer())//Dopuki serwer nam odsyla inny adres do podlaczenia
 		{
-			LOG4CXX_INFO(logger "Podlaczanie do kolejnego servera");
+			LOG4CXX_INFO(logger, "Podlaczanie do kolejnego servera");
 		}
 	}
 	catch(std::exception & e)
 	{
-		LOG4CXX_DEBUG(logger "Wyjatek kontrolera - podczas podlaczania sie do serwera");
+		LOG4CXX_DEBUG(logger, "Wyjatek kontrolera - podczas podlaczania sie do serwera");
 		return false;
 	}
     return true;
