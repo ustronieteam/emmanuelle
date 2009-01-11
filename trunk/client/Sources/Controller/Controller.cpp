@@ -58,11 +58,19 @@ int Controller::DeleteContact(const char * name, int number)
     //TODO Auto-generated method stub
     return 0;
 }
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief Metoda wykonuje logike potrzebna do wyslania wiadomosci do innego klienta
+///@param[in] content	tresc wiadomosci do wyslania
+///@param[in] dest		nazwa klienta do ktorego wysylana jest wiadomosc
+///@return				true  - wiadomosc wyslana pomyslnie
+///						false - w przeciwnym przypadku
 bool Controller::SendMessage(const char * content, const char * dest) 
 {
-    //TODO Auto-generated method stub
+	//1) Znajdz klienta w naszych kontaktach
+	//2) Wypelnij struktury DomainData::Address i DomainData::Message
+	//3) wywolaj metode na modelu SendMessage
     return 0;
 }
 

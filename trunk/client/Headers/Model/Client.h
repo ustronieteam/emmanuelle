@@ -59,9 +59,11 @@ class Client
         virtual ~Client();
         int AddFileObserver(IRemoteObserver & fileObserver);
         int SendPackage();
+
         int ConnectToServer();
         int Disconnect();
-        int SendMessage();
+
+        int SendMessage(DomainData::Address recAddr, DomainData::Message msg);
         int AddMessageObserver(IRemoteObserver & messageObserver);
 
 		void setServerAddress(const DomainData::Address & a) {serverAddress = a;}//TODO dokonczyc

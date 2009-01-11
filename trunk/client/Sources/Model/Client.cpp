@@ -190,9 +190,30 @@ int Client::Disconnect()
 	}
     return 0;
 }
-
-int Client::SendMessage() 
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief Wysylanie wiadomosci do klienta(poprzez serwer)
+///@param[in] recAddr	adresat wiadomosci
+///@param[in] msg		wiadomosc
+///@return				status (-2 zdalna instancja serwera nie zainicjowana,
+///								-1 blad podczas wywolywania zdalnej metody serwera)
+int Client::SendMessage(DomainData::Address recAddr, DomainData::Message msg) 
 {
+	if(CORBA::is_nil(connectedServerInstance))
+	{//nie jestesmy podlaczeni do zdalnej instancji serwera
+		LOG4CXX_DEBUG(logger, "Wysylanie wiadomosci przy niezainicjowanej zdalnej instancji serwera");
+		return -2;
+	}
+	try
+	{
+		connectedServerInstance->SendMessageW(recAddr, msg);
+	}
+	catch(CORBA::SystemException & e)
+	{
+		LOG4CXX_ERROR(logger, "wyjatek ze zdalnej instancji serwera podczas wysylania wiadomosci");
+		return -1;
+	}
     return 0;
 }
 int Client::AddMessageObserver(IRemoteObserver & messageObserver) 
