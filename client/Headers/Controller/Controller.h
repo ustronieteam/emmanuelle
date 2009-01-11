@@ -37,18 +37,31 @@ class Controller
 		}
         virtual ~Controller();
 
+		//imp
 		IModel * GetModel();
+		//imp
         void SetModel(IModel * iModel);
 
         int AddRemoteObserver(IRemoteObserver & observer, ObserverType observerType);
         bool SendFile(int adresat, const char * fileName); // TODO: zmienic typ adresata
-        int DeleteContact(const char * name, int number);
-        bool SendMessage(const char * content, const char * dest);
-        int AddDataObserver(DataObserver & dataObserver);
-        int AddContact(const char * name, int number);
+		int AddDataObserver(DataObserver & dataObserver);
+
+
+		//imp
+        int DeleteContact(const char * name, long number);
+		//imp
+		bool SendMessage(const char * content, const char * dest);
+        
+		
+		
+		//imp
+        int AddContact(const char * name, long number);
+		//imp
         int Disconnect();
+		//imp
         bool ConnectToServer();
-        int GetContactsList(); // TODO: zmienic typ zwracany
+		//imp
+		std::vector<ContactRecord> GetContactsList(); // TODO: zmienic typ zwracany
 
 		///
 		///Parametry polaczenia

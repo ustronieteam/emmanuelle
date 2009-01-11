@@ -86,7 +86,7 @@ int ClientsData::AddContact(DomainData::User usr)
 
 		this->_records[usr.name.in()] = contRec;
 		unlock_mutex();
-		return 1;
+		return 0;
 	}
 	else
 	{

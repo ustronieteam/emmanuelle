@@ -1,7 +1,5 @@
 #include "Controller.h"
-//Begin section for file Controller.cpp
-//TODO: Add definitions that you want preserved
-//End section for file Controller.cpp
+
 
 ///
 ///@author Marian Szczykulski
@@ -14,10 +12,8 @@ Controller::Controller()
 	logger->setLevel(log4cxx::Level::getAll());
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 Controller::~Controller() 
 {
-    //TODO Auto-generated method stub
 }
 
 ///
@@ -52,10 +48,26 @@ bool Controller::SendFile(int adresat, const char * fileName) // TODO: zmienic t
     return 0;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-int Controller::DeleteContact(const char * name, int number) 
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief	Usuwa kontakt z bazy kontaktow
+///@return	0  udalo sie usunac kontakt
+///			-1 nie udalo sie usunac
+int Controller::DeleteContact(const char * name, long number) 
 {
-    //TODO Auto-generated method stub
+	try
+	{
+		DomainData::User usr;
+		usr.name = CORBA::string_dup(name);
+		usr.number = number;
+		model->DeleteContact(usr);
+	}
+	catch(ContactNotFoundException & e)
+	{
+		LOG4CXX_DEBUG(logger, "Zlapano wyjatek w kontrolerze: ContactNotFoundException: "<<e.what());
+		return -1;
+	}
     return 0;
 }
 ///
@@ -90,17 +102,35 @@ bool Controller::SendMessage(const char * content, const char * dest)
     return 0;
 }
 
+
+
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 int Controller::AddDataObserver(DataObserver & dataObserver) 
 {
     //TODO Auto-generated method stub
     return 0;
 }
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-int Controller::AddContact(const char * name, int number) 
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief Dodanie kontaktu do bazy
+///@param[in]	name	nazwa klienta(ktorego chcemy miec w liscie kontaktow)
+///@param[in]	number	numer klienta(ktorego chcemy miec w liscie kontaktow)
+///@return		?
+int Controller::AddContact(const char * name, long number) 
 {
-    //TODO Auto-generated method stub
+	try
+	{
+		DomainData::User usr;
+		usr.name = CORBA::string_dup(name);
+		usr.number	= number;
+		model->AddContact(usr);
+	}
+	catch(ContactAlreadyExistsException & e)
+	{
+		LOG4CXX_DEBUG(logger, "Zlapano wyjatek w kontrolerze: ContactAlreadyExists : " << e.what());
+		return -1;
+	}
     return 0;
 }
 
@@ -140,12 +170,19 @@ bool Controller::ConnectToServer()
     return true;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-int Controller::GetContactsList() // TODO: zmienic typ zwracany
+
+
+
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief Pobiera liste kontaktow z Modelu
+///@return	vector kontaktow
+std::vector<ContactRecord> Controller::GetContactsList() // TODO: zmienic typ zwracany
 {
-    //TODO Auto-generated method stub
-    return 0;
+	return model->GetContactsList();
 }
+
 ///
 ///@author Marian Szczykulski
 ///@date 2009-01-12
