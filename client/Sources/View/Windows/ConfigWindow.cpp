@@ -4,7 +4,7 @@
 /// Konstruktor.
 /// @param[in] controller Kontroler.
 ///
-ConfigWindow::ConfigWindow(Controller * controller) : Window(controller)
+ConfigWindow::ConfigWindow(Controller * controller) : Window(controller, WIN_CONF)
 {
 
 }
@@ -58,10 +58,10 @@ void ConfigWindow::Command(std::string & cmd)
 		if ( !mcmd.compare("srv") )
 		{
 			std::cin >> this->_serverAddress;
-			this->SetMsg("^^ Adres serwera zostal zmieniony.");
+			this->SetMsg(INF_NEW_SRV);
 		}
 		else
-			this->SetMsg("!@# Brak takiego parametru.");
+			this->SetMsg(ER_NO_PARAM);
 	}
 	else
 		this->SetMsg(NO_COMMAND);

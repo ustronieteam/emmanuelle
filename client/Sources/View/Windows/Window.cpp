@@ -4,7 +4,7 @@
 /// Konstruktor.
 /// @param[in] controller Kontroller.
 ///
-Window::Window(Controller * controller) : _controller(controller)
+Window::Window(Controller * controller, std::string name) : _controller(controller), _name(name)
 {
 
 }
@@ -51,4 +51,13 @@ const std::string & Window::GetMsg()
 void Window::ClearMsg()
 {
 	this->_msg.clear();
+}
+
+///
+/// Pobiera nazwe okna.
+/// @return Nazwa okna.
+///
+std::string & Window::GetName()
+{
+	return this->_name;
 }

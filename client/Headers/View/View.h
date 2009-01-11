@@ -8,6 +8,7 @@
 #include "Window.h"
 #include "ConfigWindow.h"
 #include "WelcomeWindow.h"
+#include "HelpWindow.h"
 
 using namespace std;
 

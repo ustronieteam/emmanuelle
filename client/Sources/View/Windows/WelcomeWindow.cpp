@@ -4,7 +4,7 @@
 /// Konstruktor.
 /// @param[in] controller Kontroler.
 ///
-WelcomeWindow::WelcomeWindow(Controller * controller) : Window(controller)
+WelcomeWindow::WelcomeWindow(Controller * controller) : Window(controller, WIN_WELCOME)
 {
 
 }
@@ -24,10 +24,13 @@ void WelcomeWindow::Render(std::ostream & out)
 		<< SIDE << "\t|  [--+  \t  Wymiany\n"
 		<< SIDE << "\t|  [--+  \t     Komunikatow\n"
 		<< SIDE << "\t|  |\n"
-		<< SIDE << "\t|  [----+\tWpisz 'help' aby\n"
+		<< SIDE << "\t|  [----+\tWpisz 'op help' aby\n"
 		<< SIDE << "\t|       |\t  usyskac pomoc.\n"
 		<< SIDE << "\t+-------+\n"
 		<< SIDE << '\n'
+		<< SIDE << "\t Autorzy: \tMarian Szczykulski\n"
+		<< SIDE << "\t\t\tMateusz Kolodziejczyk\n"
+		<< SIDE << "\t\t\tWojciech Grzeskowiak\n"
 		<< LINE;
 
 		if ( ! this->GetMsg().empty() )
