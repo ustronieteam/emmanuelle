@@ -4,6 +4,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <boost/regex.hpp>
 
 #include "IModel.h"
 #include "Model.h"
