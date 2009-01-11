@@ -130,3 +130,39 @@ int Controller::GetContactsList() // TODO: zmienic typ zwracany
     //TODO Auto-generated method stub
     return 0;
 }
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief setter adresu serwera do ktorego mamy sie podlaczyc
+///@param[in]	serv	adres serwera do ktorego mamy sie podlaczyc
+void Controller::SetServerAddress(const char * serv)
+{
+	model->SetServerAddress(serv);
+}
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief getter adresu serwera do ktorego mamy sie podlaczyc
+///@return	adres serwera do ktorego mamy sie podlaczyc
+const char * Controller::GetServerAddress() const
+{
+	return model->GetServerAddress().localization.in();
+}
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief setter portu przez ktory mamy sie laczyc
+///@param[in]	p	port przez ktory mamy sie laczyc
+void Controller::SetPortNumber(int p)
+{
+	model->SetPortNumber(p);
+}
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief getter portu przez ktory mamy sie laczyc
+///@return	port przez ktory mamy sie laczyc
+int Controller::GetPortNumber() const
+{
+	return model->GetPortNumber();
+}

@@ -202,3 +202,19 @@ int Model::GetContactsList() // TODO: zmienic typ zwracany
 {
 	return 0;
 }
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief setter portu
+void Model::SetPortNumber(const int & p)
+{
+	client->setPortNumber(p);
+}
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief getter portu
+int Model::GetPortNumber() const
+{
+	return client->getPortNumber();
+}
