@@ -26,11 +26,14 @@
 #endif
 
 ::OB::TypeCodeConst _tc_AddressesList(
-"019e630015000000b00000000102917c1600000049444c3a4164647265737365734c6973743a3"
-"12e300063000e0000004164647265737365734c697374004c001300000074000000010000000f"
-"0000006400000001e612001b00000049444c3a446f6d61696e446174612f416464726573733a3"
-"12e30000008000000416464726573730002000000050000006e616d650001917c120000000000"
-"00000d0000006c6f63616c697a6174696f6e00e61200120000000000000000000000"
+"019e630015000000140100000102917c1600000049444c3a4164647265737365734c6973743a3"
+"12e300063000e0000004164647265737365734c697374004c0013000000d8000000010000000f"
+"000000c800000001e612001b00000049444c3a446f6d61696e446174612f416464726573733a3"
+"12e3000000800000041646472657373000300000004000000757372000f000000540000000109"
+"56001800000049444c3a446f6d61696e446174612f557365723a312e300005000000557365720"
+"000390002000000050000006e616d6500e812001200000000000000070000006e756d62657200"
+"7c03000000050000006e616d650000917c12000000000000000d0000006c6f63616c697a61746"
+"96f6e00003900120000000000000000000000"
 );
 
 ::OB::TypeCodeConst _tc_IServerServer(
@@ -429,7 +432,8 @@ OBProxy_IServerServer::PassCreatePipeRequest(const ::DomainData::Address& _ob_a0
 //
 void
 OBProxy_IServerServer::ClientStatusChanged(const ::DomainData::Address& _ob_a0,
-                                           const ::DomainData::Enability& _ob_a1)
+                                           const ::DomainData::Enability& _ob_a1,
+                                           const ::DomainData::User& _ob_a2)
 {
     ::CORBA::ULong _ob_retry = 0, _ob_hop = 0;
     while(true)
@@ -439,7 +443,7 @@ OBProxy_IServerServer::ClientStatusChanged(const ::DomainData::Address& _ob_a0,
             OB::StubImplBase_var _ob_stubImplBase = _OB_getStubImpl();
             OBStubImpl_IServerServer_ptr _ob_stubImpl = 
                 dynamic_cast< OBStubImpl_IServerServer_ptr>(_ob_stubImplBase.in());
-            _ob_stubImpl -> ClientStatusChanged(_ob_a0, _ob_a1);
+            _ob_stubImpl -> ClientStatusChanged(_ob_a0, _ob_a1, _ob_a2);
             return;
         }
         catch(const OB::ExceptionBase& _ob_ex)
@@ -693,7 +697,8 @@ OBMarshalStubImpl_IServerServer::PassCreatePipeRequest(const ::DomainData::Addre
 //
 void
 OBMarshalStubImpl_IServerServer::ClientStatusChanged(const ::DomainData::Address& _ob_a0,
-                                                     const ::DomainData::Enability& _ob_a1)
+                                                     const ::DomainData::Enability& _ob_a1,
+                                                     const ::DomainData::User& _ob_a2)
 {
     while(true)
     {
@@ -705,6 +710,7 @@ OBMarshalStubImpl_IServerServer::ClientStatusChanged(const ::DomainData::Address
             {
                 _ob_a0._OB_marshal(_ob_out);
                 _ob_a1._OB_marshal(_ob_out);
+                _ob_a2._OB_marshal(_ob_out);
             }
             catch(const ::CORBA::SystemException& _ob_ex)
             {

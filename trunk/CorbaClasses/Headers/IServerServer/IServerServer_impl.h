@@ -8,7 +8,6 @@
 #include "EventType.h"
 #include "ServerRecord.h"
 #include "ClientRecord.h"
-
 //
 // IDL:IServerServer:1.0
 //
@@ -72,7 +71,8 @@ public:
     // IDL:IServerServer/ClientStatusChanged:1.0
     //
     virtual void ClientStatusChanged(const ::DomainData::Address& clientAddress,
-                                     const ::DomainData::Enability& en)
+                                     const ::DomainData::Enability& en,
+                                     const ::DomainData::User& usr)
         throw(::CORBA::SystemException);
 };
 
