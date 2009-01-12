@@ -83,7 +83,7 @@ void ContactWindow::Command(std::string & cmd)
 		}
 		else
 		{
-			if ( this->GetController()->AddContact(uname.c_str(), unumber) > 0 )
+			if ( this->GetController()->AddContact(uname.c_str(), unumber) >= 0 )
 				this->SetMsg(WIN_CONTACT_NEW_CON);
 			else
 				this->SetMsg(WIN_CONTACT_ER_NEW_CON2);
@@ -95,7 +95,7 @@ void ContactWindow::Command(std::string & cmd)
 		// Nazwa kontaktu do usuniecia.
 		std::cin >> mcmd;
 
-		if ( this->GetController()->DeleteContact(mcmd.c_str(), 0) > 0 )
+		if ( this->GetController()->DeleteContact(mcmd.c_str(), 0) >= 0 )
 			this->SetMsg(WIN_CONTACT_DEL_CON);
 		else
 			this->SetMsg(WIN_CONTACT_ER_NO_CON);
