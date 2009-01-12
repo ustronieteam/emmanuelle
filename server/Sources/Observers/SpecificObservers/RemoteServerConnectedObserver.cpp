@@ -133,6 +133,7 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 					LOG4CXX_DEBUG(logger, "Pozyskano zdalna instancje serwera");
 					servRec.SetServerRemoteInstance(remInstance);
 					servRec.SetBroker(orb);
+					serverDataBase->ModifyRecord(servRec);
 					remoteServer = remInstance;
 				}
 			}
@@ -182,7 +183,8 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 			{//Udalo sie pozyskac zdalna instancje servera
 				LOG4CXX_DEBUG(logger, "Pozyskano zdalna instancje nowo podlaczonego serwera");
 				newServerRec.SetServerRemoteInstance(remInstance);
-				newServerRec.SetBroker(orb); //Czy nie trzeba wykonac jeszcze modifyRecord?? nie bo record pozyskany przez referencje
+				newServerRec.SetBroker(orb);
+				serverDataBase->ModifyRecord(newServerRec);
 				newServerInstance = remInstance;
 			}
 		}
