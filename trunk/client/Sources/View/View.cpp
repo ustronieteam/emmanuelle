@@ -212,10 +212,10 @@ void View::Run()
 				std::cout << PROMPT << INFO_CONN_STILL;
 
 				// !!! Podlaczenie od serwera.
-				int result = _controller->ConnectToServer();
+				bool result = _controller->ConnectToServer();
 
 				// Nie udalo sie podlaczyc.
-				if ( result < 0 )
+				if ( !result )
 					(*activeWindow)->SetMsg(ER_CONN_NO_CONN);
 				else
 				{
