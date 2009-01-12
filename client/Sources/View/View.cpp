@@ -239,10 +239,14 @@ void View::Run()
 				else
 				{
 					_information.connected = true;
+					_information.connectedDate = boost::posix_time::second_clock::local_time();
 
 					(*GetActiveWindow())->SetMsg(INFO_CONN_CONN_OK);
 
-					_information.connectedDate = boost::posix_time::second_clock::local_time();
+					// Rejestracja obserwatorow.
+					LOG4CXX_DEBUG(this->_logger, "Rejestracja obserwatorow!");
+
+					_controller->AddRemoteObserver(new MessageObserver(), MESSAGE);
 				}
 			}
 		}

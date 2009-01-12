@@ -1,33 +1,41 @@
 #ifndef MESSAGEOBSERVER_H
 #define MESSAGEOBSERVER_H
-//Begin section for file MessageObserver.h
-//TODO: Add definitions that you want preserved
-//End section for file MessageObserver.h
 
+#include "View.h"
+#include "RemoteObserverData.h"
 #include "IRemoteObserver.h"
 
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// MessageObserver
+/// @brief Obserwator czekajacy na wiadomosci.
+/// @author Wojciech Grzeskowiak
+/// @date 2009.01.11
+///
 class MessageObserver : public IRemoteObserver
 {
+	private:
 
-    //Begin section for MessageObserver
-    //TODO: Add attributes that you want preserved
-    //End section for MessageObserver
-
-
+		///
+		/// Obiekt logowania.
+		///
+		log4cxx::LoggerPtr _logger;
 
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+		///
+		/// Konstruktor.
+		///
         MessageObserver();
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+		///
+		/// Destruktor.
+		///
         virtual ~MessageObserver();
 		
+		///
+		/// Metoda wywolujaca.
+		///
 		int Refresh(RemoteObserverData objectData);
-
-
-};  //end class MessageObserver
+};
 
 #endif

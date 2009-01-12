@@ -1,22 +1,36 @@
 #include "MessageObserver.h"
-//Begin section for file MessageObserver.cpp
-//TODO: Add definitions that you want preserved
-//End section for file MessageObserver.cpp
 
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Konstruktor.
+///
 MessageObserver::MessageObserver() 
 {
-    //TODO Auto-generated method stub
+	// Inicjalizacja loggera.
+	_logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("MessageObserver"));
+	_logger->setLevel(log4cxx::Level::getAll());
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Destruktor.
+///
 MessageObserver::~MessageObserver() 
 {
-    //TODO Auto-generated method stub
+
 }
 
+///
+/// Metoda wywolujaca.
+///
 int MessageObserver::Refresh(RemoteObserverData objectData)
 {
+	LOG4CXX_DEBUG(_logger, "Uruchomiono obserwatora wiadomosci. Typ: " << objectData.GetObserverType() );
+
+	if ( objectData.GetObserverType() != MESSAGE )
+		return -1;
+
+	LOG4CXX_DEBUG(_logger, "Prawidlowy typ zdarzenia. Wywolanie obiektu widoku.");
+
+	View::GetInstance()->Obsrv_ReciveMessage(objectData.GetSenderAddress(), objectData.GetSenderMessage());
+
 	return 0;
 }
