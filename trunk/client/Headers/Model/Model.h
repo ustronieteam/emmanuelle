@@ -71,14 +71,14 @@ class Model : public IModel
 			clientsData = boost::shared_ptr<ClientsData>(new ClientsData(true));
 		}
 
+
+
+    public:
 		///
 		/// Stworzenie brokera po stronie klienta, zarejestrownie obiektow zdalnych i uruchomienie
 		/// nasluchiwania na porcie CLNTPORT; musi zostac wywolana dopiero po polaczeniu z serwerem
 		///
-		void activateListning();
-
-    public:
-
+		virtual void activateListning();
 		///
 		/// @return	obiekt modelu, ktory jest obiektem typu singleton
 		///
