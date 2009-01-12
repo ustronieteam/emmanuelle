@@ -29,8 +29,8 @@ class IModel
 		virtual void SetPortNumber(const int & p)=0;
 		virtual int GetPortNumber()const=0;
 
-		virtual int RegisterObserver(const IRemoteObserver & observ, ObserverType type) = 0 ;
-		virtual int UnregisterObserver(ObserverType type) = 0;
+		virtual int RegisterObserver(IRemoteObserver * observ, ObserverType type) = 0 ;
+		virtual int UnregisterObserver() = 0;
 
         virtual int AddStatusObserver(DataObserver & observer) = 0;
 
