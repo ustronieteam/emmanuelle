@@ -49,7 +49,7 @@ IServerClient_impl::Connect(const ::DomainData::Address& server,
 	// TODO: dokonczyc - tu u gory tez cos pojebane
 
     ::DomainData::Address* _r = new ::DomainData::Address;
-	_r.localozation = CORBA::string_dup(Server::GetMyIP());
+	_r->localization = CORBA::string_dup(Server::GetMyIP().localization.in());
     return _r;
 }
 
