@@ -15,9 +15,12 @@ class RemoteObserverData
 		DomainData::Address _serverAddress;
 		DomainData::Address _clientAddress;
 		DomainData::Address _senderClientAddress;
+
 		DomainData::Message _clientMessage;
 		DomainData::Enability _clientEnability;
 		DomainData::Address _pipeHolderAddress;
+
+		DomainData::User	_clientUserData;
 
     public:
 
@@ -44,6 +47,10 @@ class RemoteObserverData
 
 		DomainData::Address & getPipeHolderAddress(){return _pipeHolderAddress;}
 		void setPipeHolderAddress(DomainData::Address & pipeHolderAddress){_pipeHolderAddress = pipeHolderAddress;}
+
+		DomainData::User & getClientUserData(){return _clientUserData;}
+		void setClientUserData(DomainData::User & clientUserData){_clientUserData = clientUserData;}
+
 
 
 
