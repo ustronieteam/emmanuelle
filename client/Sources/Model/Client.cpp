@@ -65,7 +65,7 @@ bool Client::getRemoteServerInstance()
 	{
 		if(! CORBA::is_nil(connectedServerInstance))
 		{
-			connectedServerInstance->_remove_ref();
+			CORBA::release(connectedServerInstance);
 		}
 		if(! CORBA::is_nil(orb))
 		{
@@ -80,6 +80,7 @@ bool Client::getRemoteServerInstance()
 	LOG4CXX_DEBUG(logger, "Pozyskiwanie zdalnej instancji servera");
 	try
 	{
+		std::cout << "serv addr: " << serverAddress.localization.in();
 		if(connectToServerClient(serverAddress.localization.in(), orb, connectedServerInstance)==false)
 		{
 			LOG4CXX_ERROR(logger, "Nie mozna pozyskac zdalnej instancji servera");
@@ -98,10 +99,7 @@ bool Client::getRemoteServerInstance()
 	}
 	return false;
 }
-bool Client::connectToServerClient(std::string address, CORBA::ORB_out orb, IServerClient_out server)
-{
-	return true;
-}
+
 int Client::AddFileObserver(IRemoteObserver & fileObserver) 
 {
     return 0;

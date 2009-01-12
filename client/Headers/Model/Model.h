@@ -10,12 +10,15 @@
 #include "IClientServer.h"
 #include "IClientServer_impl.h"
 #include "DomainData.h"
+
 #include "Client.h"
 #include "ClientsData.h"
 #include "FileObserver.h"
 #include "MessageObserver.h"
 #include "StatusObserver.h"
+
 #include <boost/shared_ptr.hpp>
+
 #include <log4cxx/logger.h>
 #include <log4cxx/level.h>
 
@@ -28,7 +31,7 @@ class ClientsData;
 ///
 /// @brief	klasa Modelu - implementuje interfejs IModel i dziedziczy z klasy CorbaConnector
 ///
-class Model : public IModel, public CorbaConnector
+class Model : public IModel
 {
 
     private:
@@ -105,6 +108,26 @@ class Model : public IModel, public CorbaConnector
 
 		void SetClientsData(ClientsData * clientsData)
 		{}
+
+		///
+		/// @return	namistaka, ktora jest udostepniana serwerom
+		///
+		/// getter serverImpl
+		///
+		IClientServer_impl * GetServerImpl()
+		{
+			return serverImpl;
+		}
+
+		///
+		/// @return	namistaka, ktora jest udostepniana klientom
+		///
+		/// getter clientImpl
+		///
+		IClientClient_impl * GetClientImpl()
+		{
+			return clientImpl;
+		}
 
 		///
 		/// @return adres serwera do ktorego laczy sie klient

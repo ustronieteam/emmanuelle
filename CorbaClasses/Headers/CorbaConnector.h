@@ -96,7 +96,7 @@ class CorbaConnector
 		///
 		static bool connectToClientServer(std::string address, CORBA::ORB_out orb, IClientServer_out client)
 		{
-			char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(SRVPORT.c_str()) };
+			char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(CLNTPORT.c_str()) };
 			int optc = sizeof(orb_options)/sizeof(char *);
 
 			orb = CORBA::ORB_init(optc, orb_options);
@@ -134,7 +134,7 @@ class CorbaConnector
 		///
 		static bool connectToServerClient(std::string address, CORBA::ORB_out orb, IServerClient_out server)
 		{
-			char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(CLNTPORT.c_str()) };
+			char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(SRVPORT.c_str()) };
 			int optc = sizeof(orb_options)/sizeof(char *);
 
 			orb = CORBA::ORB_init(optc, orb_options);
