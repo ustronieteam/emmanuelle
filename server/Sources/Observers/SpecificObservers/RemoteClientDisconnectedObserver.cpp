@@ -94,7 +94,9 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 	//    1) Zaktualizuj wpis o kliencie(roz³¹cz)
 	//Znajdz klienta w bazie klientow
 	struct DomainData::Address clientAddr = observerData.getClientAddress();
-	int clientId = clientsDataBase->Find(clientAddr); 
+	struct DomainData::User	usr	= observerData.getClientUserData();
+
+	int clientId = clientsDataBase->Find(usr); 
 	if(clientId <=0)
 	{
 		LOG4CXX_ERROR(logger, "Rozlaczanego klienta nie ma w bazie!!!");
