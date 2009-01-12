@@ -184,7 +184,7 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 		try
 		{
 			struct DomainData::Enability enab = clRec.GetEnability();
-			remoteServer->ClientStatusChanged(clientAddr, enab);
+			//remoteServer->ClientStatusChanged(clientAddr, enab);
 			LOG4CXX_INFO(logger, "Wiadomosc wyslana do serwera "<<it->GetAddress().localization.in());
 		}
 		catch(std::exception & exc) //chyba rzuca jakis wyjatek??
