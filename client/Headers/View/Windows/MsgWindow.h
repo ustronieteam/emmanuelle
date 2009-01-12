@@ -6,7 +6,7 @@
 
 // Opjcie konfiguracyjne.
 #define MSG_MAX_MSG_LEN		100
-#define MSG_MAX_SEE_MSG		3
+#define MSG_MAX_SEE_MSG		10
 // Informacje
 #define MSG_INF_NO_MSG		"Brak wiadomosci."
 #define MSG_INF_SND_MSG		"Wysylanie wiadomosci..."

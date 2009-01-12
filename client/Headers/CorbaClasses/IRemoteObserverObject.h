@@ -40,7 +40,7 @@ class IRemoteObserverObject
 		///
         IRemoteObserverObject()
 		{
-			log4cxx::LoggerPtr logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("IRemoteObjects"));
+			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("IRemoteObjects"));
 			logger->setLevel(log4cxx::Level::getAll());
 		}
 
