@@ -86,7 +86,7 @@ void View::Run()
 			{
 				LOG4CXX_DEBUG(this->_logger, "Rozlaczanie przy wyjsciu z aplikacji...");
 				int result = this->GetController()->Disconnect();
-				LOG4CXX_DEBUG(this->_logger, "rezultat rozlaczania przy wyjsciu z aplikacji: " << result);
+				LOG4CXX_DEBUG(this->_logger, "Rezultat rozlaczania przy wyjsciu z aplikacji: " << result);
 			}
 
 			// TODO: Wywo³anie czegos na kontrolerze.
@@ -339,7 +339,7 @@ void View::ChangeActiveWindow()
 		this->_activeWindow = _windows.begin();
 
 	// Przepisanie wiadomosci.
-	if ( (*old)->GetMsg().size() != 0 )
+	if ( ! (*old)->GetMsg().empty() )
 		(*_activeWindow)->SetMsg((*old)->GetMsg());
 }
 
