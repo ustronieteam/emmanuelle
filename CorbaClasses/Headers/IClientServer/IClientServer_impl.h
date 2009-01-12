@@ -3,6 +3,11 @@
 
 #include <IClientServer_skel.h>
 #include "IRemoteObserverObject.h"
+
+
+#include <log4cxx/logger.h>
+#include <log4cxx/level.h>
+
 //
 // IDL:IClientServer:1.0
 //
@@ -14,6 +19,9 @@ class IClientServer_impl : virtual public POA_IClientServer,
     void operator=(const IClientServer_impl&);
 
     PortableServer::POA_var poa_;
+
+	// logger
+	log4cxx::LoggerPtr logger;
 
 public:
 

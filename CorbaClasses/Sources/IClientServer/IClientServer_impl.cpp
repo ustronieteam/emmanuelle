@@ -7,6 +7,9 @@
 IClientServer_impl::IClientServer_impl(PortableServer::POA_ptr poa)
     : poa_(PortableServer::POA::_duplicate(poa))
 {
+	//logger
+	logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("IClientServer_impl"));
+	logger->setLevel(log4cxx::Level::getAll());
 }
 
 IClientServer_impl::~IClientServer_impl()

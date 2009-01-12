@@ -7,6 +7,9 @@
 IServerServer_impl::IServerServer_impl(PortableServer::POA_ptr poa)
     : poa_(PortableServer::POA::_duplicate(poa))
 {
+	//logger
+	logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("IServerServer_impl"));
+	logger->setLevel(log4cxx::Level::getAll());
 }
 
 IServerServer_impl::~IServerServer_impl()
@@ -26,6 +29,7 @@ IServerServer_impl::_default_POA()
 IServerServer_impl::Join(const ::DomainData::Address& serverAddress)
     throw(::CORBA::SystemException)
 {
+	LOG4CXX_DEBUG(logger, "WYWOLANIE JOIN z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()));
 	std::cout << "WYWOLANIE JOIN z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()) << std::endl;
 
 	// zapisanie adresu wlasnego serwera
