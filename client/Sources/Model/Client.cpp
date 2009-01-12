@@ -80,7 +80,6 @@ bool Client::getRemoteServerInstance()
 	LOG4CXX_DEBUG(logger, "Pozyskiwanie zdalnej instancji servera");
 	try
 	{
-		std::cout << "serv addr: " << serverAddress.localization.in();
 		if(connectToServerClient(serverAddress.localization.in(), orb, connectedServerInstance)==false)
 		{
 			LOG4CXX_ERROR(logger, "Nie mozna pozyskac zdalnej instancji servera");
@@ -135,7 +134,7 @@ int Client::ConnectToServer()
 		{
 			LOG4CXX_INFO(logger, "Wywolywanie metody zdalnej connect()");
 			servAddr = connectedServerInstance->Connect(serverAddress,mode, user);
-			LOG4CXX_DEBUG(logger, "Metoda zdalna connect wywolana");
+			LOG4CXX_DEBUG(logger, "Metoda zdalna connect wywolana; servAddr[" << servAddr->localization.in() << "]; MyServerAddres[ "<< serverAddress.localization.in() <<"]" );	
 			if(strcmp(servAddr->localization.in(),serverAddress.localization.in())!=0)
 			{
 				if(servAddr!=NULL)

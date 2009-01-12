@@ -62,7 +62,9 @@ void
 IServerClient_impl::Disconnect()
     throw(::CORBA::SystemException)
 {
-    // TODO: Implementation
+	std::cout << "WYWOLANIE DISCONNECT z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()) << std::endl;
+
+
 }
 
 //
