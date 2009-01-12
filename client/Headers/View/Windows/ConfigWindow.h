@@ -23,11 +23,6 @@ class ConfigWindow : public Window
 	private:
 
 		///
-		/// Konfiguracja.
-		///
-		CONFIGURATION * _configuration;
-
-		///
 		/// Informacje.
 		///
 		INFO * _information;
@@ -38,7 +33,7 @@ class ConfigWindow : public Window
 		/// Konstruktor.
 		/// @param[in] controller Kontroler.
 		///
-		ConfigWindow(Controller * controller, CONFIGURATION * configuration, INFO * information);
+		ConfigWindow(Controller * controller, INFO * information);
 
 		///
 		/// Renderowanie okienka konfiguracji.

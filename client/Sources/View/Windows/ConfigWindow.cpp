@@ -4,10 +4,9 @@
 /// Konstruktor.
 /// @param[in] controller Kontroler.
 ///
-ConfigWindow::ConfigWindow(Controller * controller, CONFIGURATION * configuration, INFO * information) 
+ConfigWindow::ConfigWindow(Controller * controller, INFO * information) 
 	: Window(controller, WIN_CONF)
 {
-	_configuration = configuration;
 	_information = information;
 }
 

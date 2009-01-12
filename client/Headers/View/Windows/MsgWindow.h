@@ -37,6 +37,16 @@ class MsgWindow : public Window
 		std::list<MYMESSAGE> * _talk;
 
 		///
+		/// Mutex na rozmowe.
+		///
+		boost::mutex * _mxTalk;
+
+		///
+		/// Mutex na renderowanie.
+		///
+		boost::mutex _mxRender;
+
+		///
 		/// Bufor do pobranie jednej wiadomosci.
 		///
 		char _singleMsg[MSG_MAX_MSG_LEN];
@@ -45,6 +55,11 @@ class MsgWindow : public Window
 		/// Typ wyswietlania. 
 		///
 		bool _showLast;
+
+		///
+		/// Obiekt logowania.
+		///
+		log4cxx::LoggerPtr _logger;
 
 	public:
 
@@ -68,8 +83,17 @@ class MsgWindow : public Window
 
 		///
 		/// Ustawia rozmowe.
+		/// @param[in] talk Wskaznik na rozmowe.
 		///
 		void SetTalk(std::list<MYMESSAGE> * talk);
+
+		///
+		/// Ustawia mutex na rozmowe.
+		/// @param[in] mxTalk Wskaznik na mutex do rozmowy.
+		///
+		void SetMutexTalk(boost::mutex * mxTalk);
+
+
 };
 
 #endif /* _MSGWINDOW_H_ */

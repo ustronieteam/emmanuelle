@@ -37,6 +37,7 @@
 #define INFO_CONN_STILL		"Trwa laczenie..."
 #define INFO_DCONN_DCONN_OK "^^ Rozlaczono z serwerem."
 #define INFO_DCONN_STILL	"Trwa rozlaczanie..."
+#define INFO_GET_NEW_MSG	"^^ Otrzymales nowa rozmowe od "
 
 using namespace std;
 
@@ -74,14 +75,9 @@ class View
 		std::list<Window *> _windows;
 
 		///
-		/// Lista kontaktow.
+		/// Aktywne okno.
 		///
-		std::list<CONTACT> _contacts;
-
-		///
-		/// Konfiguracja.
-		///
-		CONFIGURATION _configuration;
+		std::list<Window *>::iterator _activeWindow;
 
 		///
 		/// Informacje.
@@ -94,10 +90,35 @@ class View
 		std::map<std::string, std::list<MYMESSAGE> *> _talks;
 
 		///
+		/// Mutexy na aktualne rozmowy.
+		///
+		std::map<std::string, boost::mutex *> _mxsTalks;
+
+		///
 		/// Konstruktor.
 		/// Prywatny bo Singleton.
 		///
 		View();
+
+		///
+		/// Mutex do aktywnego okna.
+		///
+		boost::mutex _mxActiveWindow;
+
+		///
+		/// Mutex do zbioru okien.
+		///
+		boost::mutex _mxWindows;
+
+		///
+		/// Mutex na tworzenie, otwieranie okien rozmow.
+		///
+		boost::mutex _mxCreateTalks;
+
+		///
+		/// Obiekt logowania.
+		///
+		log4cxx::LoggerPtr _logger;
 
     public:
 
@@ -121,6 +142,49 @@ class View
 		/// Ustawia kontroler.
 		/// @param[in] controller Kontroler.
         void SetController(Controller * controller);
+
+		///
+		/// Ustawia aktywne okno.
+		/// @param[in] window Iterator na okno ktore ma byc aktywne.
+		///
+		void SetActiveWindow(std::list<Window *>::iterator window);
+
+		///
+		/// Pobiera aktywne okno.
+		/// @return Iterator na aktywne okno.
+		///
+		std::list<Window *>::iterator GetActiveWindow();
+
+		///
+		/// Zmien aktywne okno na nastepne.
+		///
+		void ChangeActiveWindow();
+
+		///
+		/// Dodaje okno.
+		/// @param[in] window Okno ktore nalezy dodac.
+		///
+		std::list<Window *>::iterator AddWindow(Window * window);
+
+		///
+		/// Usuwa okno.
+		/// @param[in] window Iterator na okno jakie naleyz usunac.
+		///
+		bool DelWindow(std::list<Window *>::iterator window);
+
+		///
+		/// Pobiera liste okien
+		/// @return Lista okien.
+		std::list<Window *> GetAllWindows();
+
+		/// Metody wywolywane przez obserwatorów
+
+		///
+		/// Odebranie wiadomosci
+		/// @param[in] senderAddress Adres nadawcy.
+		/// @param[in] message Wiadomosc.
+		///
+		void Obsrv_ReciveMessage(const DomainData::Address & senderAddress, const DomainData::Message & message);
 };
 
 #endif

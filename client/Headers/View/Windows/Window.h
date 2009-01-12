@@ -6,7 +6,11 @@
 
 #include <iostream>
 #include <string>
-#include <stdio.h>
+
+#include <log4cxx/logger.h>
+#include <log4cxx/level.h>
+
+#include <boost/thread/mutex.hpp>
 
 // Pomocne definicje.
 #define HEADLINE			"+-------------------------------------------------------[_][O][X]-+\n"
@@ -52,6 +56,11 @@ class Window
 		/// Nazwa.
 		///
 		std::string _name;
+
+		///
+		/// Mutex na wiadomosci.
+		///
+		boost::mutex _mxMsg;
 
 	public:
 		
