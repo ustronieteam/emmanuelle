@@ -8,6 +8,7 @@ const std::string ClientsData::configFileName = config::configFileName;
 ///@param[in] con	flaga okreslajaca czy kolekcja ma byc wielowatkowa (domyslnie jest wielowatkowa)
 ClientsData::ClientsData(bool con)
 {
+	readClientName();
 	isConcurrent = con;
 }
 ///

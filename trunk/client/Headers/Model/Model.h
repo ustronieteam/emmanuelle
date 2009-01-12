@@ -64,7 +64,7 @@ class Model : public IModel, public CorbaConnector
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("Model"));
 			logger->setLevel(log4cxx::Level::getAll());
 			client = boost::shared_ptr<Client>(new Client(serverAddress) );
-			clientsData = boost::shared_ptr<ClientsData>(new ClientsData());
+			clientsData = boost::shared_ptr<ClientsData>(new ClientsData(true));
 		}
 
 		///
