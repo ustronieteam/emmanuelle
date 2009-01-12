@@ -25,20 +25,13 @@
 ///
 class ContactWindow : public Window
 {
-	private:
-
-		///
-		/// Kontakty.
-		///
-		std::list<CONTACT> * _contacts;
-
 	public:
 
 		///
 		/// Konstruktor.
 		/// @param[in] controller Kontroler.
 		///
-		ContactWindow(Controller * controller, std::list<CONTACT> * contacts);
+		ContactWindow(Controller * controller);
 
 		///
 		/// Renderowanie okienka z kontaktami.

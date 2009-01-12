@@ -33,7 +33,16 @@ Controller * Window::GetController()
 ///
 void Window::SetMsg(const std::string & msg)
 {
-	this->_msg = msg;
+	boost::mutex::scoped_lock sl(_mxMsg);
+
+	if ( this->_msg.size() != 0 )
+	{
+		this->_msg.append("\n");
+		this->_msg.append(SIDE);
+		this->_msg.append(msg);
+	}
+	else
+		this->_msg = msg;
 }
 
 ///

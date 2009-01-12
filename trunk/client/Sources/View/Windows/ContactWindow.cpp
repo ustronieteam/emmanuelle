@@ -4,9 +4,10 @@
 /// Konstruktor.
 /// @param[in] controller Kontroler.
 ///
-ContactWindow::ContactWindow(Controller * controller, std::list<CONTACT> * contacts) : Window(controller, WIN_CONTACT)
+ContactWindow::ContactWindow(Controller * controller) 
+	: Window(controller, WIN_CONTACT)
 {
-	_contacts = contacts;
+
 }
 
 ///
