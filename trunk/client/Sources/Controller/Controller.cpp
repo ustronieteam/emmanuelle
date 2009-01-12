@@ -78,7 +78,7 @@ int Controller::DeleteContact(const char * name, long number)
 ///@param[in] dest		nazwa klienta do ktorego wysylana jest wiadomosc
 ///@return				true  - wiadomosc wyslana pomyslnie
 ///						false - w przeciwnym przypadku
-bool Controller::SendMessage(const char * content, const char * dest) 
+bool Controller::SendMessageToClient(const char * content, const char * dest) 
 {
 	DomainData::Address addr;
 	addr.localization = CORBA::string_dup(dest);
