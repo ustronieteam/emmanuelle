@@ -1,5 +1,5 @@
-#include <OB/CORBA.h>
 #include <IServerClient_impl.h>
+#include "Server.h"
 
 //
 // IDL:IServerClient:1.0
@@ -28,7 +28,26 @@ IServerClient_impl::Connect(const ::DomainData::Address& server,
                             const ::DomainData::User& usr)
     throw(::CORBA::SystemException)
 {
-    // TODO: Implementation
+	std::cout << "WYWOLANIE CONNECT z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()) << std::endl;
+
+	// zapisanie adresu wlasnego serwera
+    if(Server::GetMyIP().localization == CORBA::string_dup("null"))
+		Server::SetMyIP(server);
+
+	//pobranie instancji bazy danych
+	ClientsDataBase * clientDB = ClientsDataBase::GetInstance();
+
+	DomainData::Enability en;
+	en.status = true;
+	en.mode_ = m;
+	
+
+	// dodanie nowego klienta do bazy danych
+	DomainData::Address addr;
+	addr.localization = CORBA::string_dup( Server::GetRemotedAddress(SRVPORT.c_str()) );
+
+	// TODO: dokonczyc - tu u gory tez cos pojebane
+
     ::DomainData::Address* _r = new ::DomainData::Address;
     return _r;
 }

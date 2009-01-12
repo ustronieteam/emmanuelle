@@ -12,6 +12,9 @@
 #include <fstream>
 #include "ClientsData.h"
 #include "ContactRecord.h"
+
+#include "CorbaConnector.h"
+
 namespace po = boost::program_options;
 
 ///
@@ -19,7 +22,7 @@ namespace po = boost::program_options;
 ///@date	2009-01-10
 ///@brief	Model klienta zapewnia komunikacje sieciowa, poprzez objekt CORBY
 ///
-class Client
+class Client : public CorbaConnector
 {
 
 	private:
@@ -56,7 +59,7 @@ class Client
 		//Pobiera zdalna instancje
 		bool getRemoteServerInstance();
 		//Laczy sie z serverem(pobiera instancje)
-		bool connectToServerClient(std::string address, CORBA::ORB_out orb, IServerClient_out server);
+		//bool connectToServerClient(std::string address, CORBA::ORB_out orb, IServerClient_out server);
     public:
 
 		//korzysta z pliku konfiguracyjnego

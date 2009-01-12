@@ -29,7 +29,8 @@ IServerServer_impl::Join(const ::DomainData::Address& serverAddress)
 	std::cout << "WYWOLANIE JOIN z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()) << std::endl;
 
 	// zapisanie adresu wlasnego serwera
-	Server::SetMyIP(serverAddress);
+	if(Server::GetMyIP().localization == CORBA::string_dup("null"))
+		Server::SetMyIP(serverAddress);
 
 	//pobranie instancji bazy danych
 	ServerDataBase * serverDB = ServerDataBase::GetInstance();
@@ -95,15 +96,14 @@ void
 IServerServer_impl::AddServer(const ::DomainData::Address& serverAddress)
     throw(::CORBA::SystemException)
 {
-//std::cout << "addaddress:begin" << std::endl;
+
 	int serverId;
 	ServerRecord record;
-//std::cout << "tu1" << std::endl;
+
 	serverId = ServerDataBase::GetInstance()->Find(serverAddress);
-//std::cout << "tu2" << std::endl;
+
 	if(serverId < 0)
 	{
-//std::cout << "taki serwer nie istnieje" << std::endl;
 		record.SetAddress(serverAddress);
 	
 		try
@@ -115,33 +115,32 @@ IServerServer_impl::AddServer(const ::DomainData::Address& serverAddress)
 	}
 	else
 	{
-//std::cout << "taki serwer juz istanije" << std::endl;
 		record = ServerDataBase::GetInstance()->GetRecord(serverId);
-//std::cout << "1" << std::endl;
+
 		CORBA::ORB_var orb = record.GetBroker();
-//std::cout << "2" << std::endl;
+
 		if(!CORBA::is_nil(orb))
 		{
 			orb->destroy();
 		}
 		record.SetBroker(orb);
-//std::cout << "3" << std::endl;
+
 		IServerServer_var serv = record.GetServerRemoteInstance();
-//std::cout << "4" << std::endl;
+
 		if(!CORBA::is_nil(serv))
 		{
 			CORBA::release(serv);
 		}
 		record.SetServerRemoteInstance(serv);
-//std::cout << "5" << std::endl;
+
 		ServerDataBase::GetInstance()->ModifyRecord(record);
 	}
 
-	std::cout << "WYPISANIE BAZY Z JOINA" << std::endl;
+	std::cout << "WYPISANIE BAZY Z ADDSERVER" << std::endl;
 	std::cout << "---------------------------------------" << std::endl;
 	std::cout << *(ServerDataBase::GetInstance());
 	std::cout << "---------------------------------------" << std::endl;
-//	std::cout << "addaddress:end" <<std::endl;
+
 }
 
 //

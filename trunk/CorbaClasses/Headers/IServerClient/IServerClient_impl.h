@@ -1,7 +1,6 @@
 #ifndef ___IServerClient_impl_h__
 #define ___IServerClient_impl_h__
 
-
 #include <OB/CORBA.h>
 #include <IServerClient_skel.h>
 #include "IRemoteObjects.h"

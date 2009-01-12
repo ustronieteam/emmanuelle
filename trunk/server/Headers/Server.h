@@ -167,6 +167,25 @@ class Server : public CorbaConnector
 		}
 
 		///
+		/// @return wskaznik do obiektu zdalnego udostepnianego serwerom
+		///
+		/// getter serverImpl
+		IServerServer_impl * GetServerImpl()
+		{
+			return serverImpl;
+		}
+
+		///
+		/// @return wskaznik do obiektu zdalnego udostepnianego klientom
+		///
+		/// getter clientImpl;
+		///
+		IServerClient_impl * GetClientImpl()
+		{
+			return clientImpl;
+		}
+
+		///
 		/// @return		 1 - niepowodznie, 0 - zakonczono bez niepowodzen
 		///
 		/// Odpowiada za wczytanie i pozyskanie danych z pliku konfiguracyjnego i wlaczenie serwera
