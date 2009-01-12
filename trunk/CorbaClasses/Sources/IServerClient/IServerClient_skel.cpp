@@ -52,9 +52,11 @@ POA_IServerClient::_OB_op_Connect(OB::Upcall_ptr _ob_up)
 void
 POA_IServerClient::_OB_op_Disconnect(OB::Upcall_ptr _ob_up)
 {
-    _OB_preUnmarshal(_ob_up);
+    ::DomainData::User _ob_a0;
+    OB::InputStreamImpl* _ob_in = _OB_preUnmarshal(_ob_up);
+    ::DomainData::User::_OB_unmarshal(_ob_a0, _ob_in);
     _OB_postUnmarshal(_ob_up);
-    Disconnect();
+    Disconnect(_ob_a0);
     _OB_postinvoke(_ob_up);
     _OB_preMarshal(_ob_up);
     _OB_postMarshal(_ob_up);
@@ -243,10 +245,10 @@ OBDirectStubImpl_IServerClient::Connect(const ::DomainData::Address& _ob_a0,
 // IDL:IServerClient/Disconnect:1.0
 //
 void
-OBDirectStubImpl_IServerClient::Disconnect()
+OBDirectStubImpl_IServerClient::Disconnect(const ::DomainData::User& _ob_a0)
 {
     OB::InvocationHandler _ob_handler(this, "Disconnect");
-    dynamic_cast<POA_IServerClient*>(_ob_servant_) -> Disconnect();
+    dynamic_cast<POA_IServerClient*>(_ob_servant_) -> Disconnect(_ob_a0);
 }
 
 //

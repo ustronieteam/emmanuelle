@@ -230,7 +230,7 @@ OBProxy_IServerClient::Connect(const ::DomainData::Address& _ob_a0,
 // IDL:IServerClient/Disconnect:1.0
 //
 void
-OBProxy_IServerClient::Disconnect()
+OBProxy_IServerClient::Disconnect(const ::DomainData::User& _ob_a0)
 {
     ::CORBA::ULong _ob_retry = 0, _ob_hop = 0;
     while(true)
@@ -240,7 +240,7 @@ OBProxy_IServerClient::Disconnect()
             OB::StubImplBase_var _ob_stubImplBase = _OB_getStubImpl();
             OBStubImpl_IServerClient_ptr _ob_stubImpl = 
                 dynamic_cast< OBStubImpl_IServerClient_ptr>(_ob_stubImplBase.in());
-            _ob_stubImpl -> Disconnect();
+            _ob_stubImpl -> Disconnect(_ob_a0);
             return;
         }
         catch(const OB::ExceptionBase& _ob_ex)
@@ -420,14 +420,22 @@ OBMarshalStubImpl_IServerClient::Connect(const ::DomainData::Address& _ob_a0,
 // IDL:IServerClient/Disconnect:1.0
 //
 void
-OBMarshalStubImpl_IServerClient::Disconnect()
+OBMarshalStubImpl_IServerClient::Disconnect(const ::DomainData::User& _ob_a0)
 {
     while(true)
     {
         OB::Downcall_var _ob_down = _OB_createDowncall("Disconnect", true);
         try
         {
-            _OB_preMarshal(_ob_down);
+            OB::OutputStreamImpl* _ob_out = _OB_preMarshal(_ob_down);
+            try
+            {
+                _ob_a0._OB_marshal(_ob_out);
+            }
+            catch(const ::CORBA::SystemException& _ob_ex)
+            {
+                _OB_marshalEx(_ob_down, _ob_ex);
+            }
             _OB_postMarshal(_ob_down);
             _OB_request(_ob_down);
             _OB_preUnmarshal(_ob_down);
