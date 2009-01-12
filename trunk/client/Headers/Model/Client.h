@@ -71,7 +71,7 @@ class Client : public CorbaConnector
         int SendPackage();
 
         int ConnectToServer();
-        int Disconnect();
+		int Disconnect(DomainData::User & usr);
 
         int SendMessage(DomainData::Address recAddr, DomainData::Message msg);
         int AddMessageObserver(IRemoteObserver & messageObserver);

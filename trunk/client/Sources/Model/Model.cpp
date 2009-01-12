@@ -185,7 +185,10 @@ int Model::Disconnect()
 {
 	if(client != boost::shared_ptr<Client>())
 	{
-		return client->Disconnect();
+		DomainData::User ownUsrDt;
+		ownUsrDt.name = CORBA::string_dup(GetOwnName().c_str());
+		ownUsrDt.number = GetOwnNumber();
+		return client->Disconnect(ownUsrDt);
 	}
 	else
 		return -1;
