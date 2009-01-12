@@ -102,10 +102,16 @@ class ClientsDataBase
 		/// Metody szukajace.
 
 		///
-		/// Znajdz rekord klienta.
+		/// Znajdz rekord klienta po adresie.
 		/// @param[in] address Adres do wyszukania rekordu.
 		/// @return ID wyszukanego rekordu. -1 gdy nie znajdzie.
 		int Find(const struct DomainData::Address & address);
+
+		///
+		/// Znajdz rekord klienta po uzytkowniku
+		/// @param[in] user Uzytkownik do wyszukania rekordu.
+		/// @return ID wyszukanego rekordu. -1 gdy nie znajdzie.
+		int Find(const struct DomainData::User & user);
 
 		///
 		/// Znajduje aktywnego klienta w bazie danych.

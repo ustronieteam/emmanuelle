@@ -25,6 +25,11 @@ class ClientRecord : public Record
 		/// Dostepnosc klienta.
 		struct DomainData::Enability _enability;
 
+		///
+		/// Uzytkownik.
+		///
+		struct DomainData::User _user;
+
     public:
 
         ///
@@ -74,6 +79,18 @@ class ClientRecord : public Record
 		/// Ustawia dostepnosc klienta.
 		/// @param[in] enability Dostepnosc klienta.
 		void SetEnability(const struct DomainData::Enability & enability);
+
+		///
+		/// Pobiera uzytkownika.
+		/// @return Uzytkownik.
+		///
+		const struct DomainData::User & GetUser() const;
+
+		///
+		/// Ustawia uzytkownika.
+		/// @param[in] user Uzytkownik.
+		///
+		void SetUser(const struct DomainData::User & user);
 };
 
 #endif
