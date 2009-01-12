@@ -13,6 +13,7 @@
 #include "HelpWindow.h"
 #include "ContactWindow.h"
 #include "MsgWindow.h"
+#include "IObserverView.h"
 
 // Polecenia.
 #define CHANGE_WINDOW		"`"
@@ -47,7 +48,7 @@ using namespace std;
 /// @author Wojciech Grzeskowiak
 /// @date 2009.01.10
 ///
-class View
+class View : public IObserverView
 {
 		// Przyjaznie.
 
@@ -184,7 +185,7 @@ class View
 		/// @param[in] senderAddress Adres nadawcy.
 		/// @param[in] message Wiadomosc.
 		///
-		void Obsrv_ReciveMessage(const DomainData::Address & senderAddress, const DomainData::Message & message);
+		virtual void Obsrv_ReciveMessage(const DomainData::Address & senderAddress, const DomainData::Message & message);
 };
 
 #endif
