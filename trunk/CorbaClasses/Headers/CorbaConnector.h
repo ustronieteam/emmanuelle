@@ -104,8 +104,8 @@ class CorbaConnector
 			CORBA::String_var strIOR = CORBA::string_dup("corbaloc:iiop:");
 			strIOR += address.c_str();
 			strIOR += ":";
-			strIOR += SRVPORT.c_str();
-			strIOR += "/serverclient";
+			strIOR += CLNTPORT.c_str();
+			strIOR += "/clientserver";
 
 			CORBA::Object_var oClient = orb->string_to_object(strIOR);
 			if (CORBA::is_nil(oClient))
@@ -142,8 +142,8 @@ class CorbaConnector
 			CORBA::String_var strIOR = CORBA::string_dup("corbaloc:iiop:");
 			strIOR += address.c_str();
 			strIOR += ":";
-			strIOR += CLNTPORT.c_str();
-			strIOR += "/clientserver";
+			strIOR += SRVPORT.c_str();
+			strIOR += "/serverclient";
 
 			CORBA::Object_var oServer = orb->string_to_object(strIOR);
 			if (CORBA::is_nil(oServer))
