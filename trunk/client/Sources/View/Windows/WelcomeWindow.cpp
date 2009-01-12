@@ -48,5 +48,5 @@ void WelcomeWindow::Render(std::ostream & out)
 ///
 void WelcomeWindow::Command(std::string & cmd)
 {
-	this->SetMsg(NO_COMMAND);
+	this->SetMsg(ER_NO_COMMAND);
 }

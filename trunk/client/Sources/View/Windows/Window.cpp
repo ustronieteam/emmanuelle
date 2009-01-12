@@ -61,3 +61,12 @@ std::string & Window::GetName()
 {
 	return this->_name;
 }
+
+///
+/// Ustawia nazwe okna.
+/// @param[in] name Nazwa okna.
+///
+void Window::SetName(const std::string & name)
+{
+	this->_name = name;
+}

@@ -15,30 +15,32 @@ ContactWindow::ContactWindow(Controller * controller, std::list<CONTACT> * conta
 ///
 void ContactWindow::Render(std::ostream & out)
 {
+	std::vector<ContactRecord> contacts = this->GetController()->GetContactsList();
+
 	out	<< HEADLINE
 		<< SIDE << "^ Kontakty\n" << SIDE << '\n';
-
+	
 	// Brak kontatkow na liscie.
-	if ( this->_contacts->size() == 0 )
+	if ( contacts.size() == 0 )
 	{
 		out << SIDE << WIN_CONTACT_NO_CON << '\n';
 	}
 	// Istnieja kontakty na liscie.
 	else
 	{
-		// Wypisywanie kontaktow.
-		for(std::list<CONTACT>::iterator i = this->_contacts->begin(); i != this->_contacts->end(); i++)
+		//Wypisywanie kontaktow.
+		for(std::vector<ContactRecord>::iterator i = contacts.begin(); i != contacts.end(); i++)
 		{
 			out << SIDE << '\t';
 
 			// Status.
-			if ( (*i).status )
+			if ( (*i).isAvailable )
 				out << WIN_CONTACT_CON_EN;
 			else
 				out << WIN_CONTACT_CON_DI;
 
 			// Nazwa oraz numer.
-			out << ' ' << (*i).name << " (" << (*i).number << ")\n";
+			out << ' ' << (*i).userDesc.name << " (" << (*i).userDesc.number << ")\n";
 		}
 	}
 
@@ -64,12 +66,11 @@ void ContactWindow::Command(std::string & cmd)
 	// Dodanie kontaktu.
 	if ( !cmd.compare("add") )
 	{
-		CONTACT newContact;
+		std::string uname;
+		int	unumber;
 
-		newContact.status = false;
-
-		std::cin >> newContact.name;
-		std::cin >> newContact.number;
+		std::cin >> uname;
+		std::cin >> unumber;
 
 		/* Sprawdzanie poprawnosci. */
 		if ( std::cin.fail() )
@@ -82,30 +83,23 @@ void ContactWindow::Command(std::string & cmd)
 		}
 		else
 		{
-			this->_contacts->push_back(newContact);
-			this->SetMsg(WIN_CONTACT_NEW_CON);
+			if ( this->GetController()->AddContact(uname.c_str(), unumber) > 0 )
+				this->SetMsg(WIN_CONTACT_NEW_CON);
+			else
+				this->SetMsg(WIN_CONTACT_ER_NEW_CON2);
 		}
 	}
 	// Usuniecie kontaktu.
 	else if ( !cmd.compare("del") )
 	{
-		std::list<CONTACT>::iterator i;
-
 		// Nazwa kontaktu do usuniecia.
 		std::cin >> mcmd;
 
-		for(i = this->_contacts->begin(); i != this->_contacts->end(); i++)
-			if ( !(*i).name.compare(mcmd) )
-				break;
-
-		if ( i != this->_contacts->end() )
-		{
-			this->_contacts->erase(i);
+		if ( this->GetController()->DeleteContact(mcmd.c_str(), 0) > 0 )
 			this->SetMsg(WIN_CONTACT_DEL_CON);
-		}
 		else
 			this->SetMsg(WIN_CONTACT_ER_NO_CON);
 	}
 	else
-		this->SetMsg(NO_COMMAND);
+		this->SetMsg(ER_NO_COMMAND);
 }
