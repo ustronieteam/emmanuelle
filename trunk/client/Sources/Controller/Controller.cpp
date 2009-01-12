@@ -219,3 +219,56 @@ int Controller::GetPortNumber() const
 {
 	return model->GetPortNumber();
 }
+
+
+///
+///@author Marian Szczykulski
+///@date 2009-01-13
+///@brief	Zwraca wlasny rekord z danymi
+///@return	wlasny rekord z danymi
+std::string Controller::GetOwnName()
+{
+	return model->GetOwnName();
+}
+///
+///@author Marian Szczykulski
+///@date 2009-01-13
+///@brief	Zwraca wlasny rekord z danymi
+///@return	wlasny rekord z danymi
+const long & Controller::GetOwnNumber()
+{
+	return model->GetOwnNumber();
+}
+///
+///@author Marian Szczykulski
+///@date 2009-01-13
+///@brief	Zwraca wlasny rekord z danymi
+///@return	wlasny rekord z danymi
+bool Controller::GetMyAvailability()
+{
+	return model->GetMyAvailability();
+}
+///
+///@author Marian Szczykulski
+///@date 2009-01-13
+///@brief setter nazwy lokalnego klienta
+void Controller::SetOwnName(const char * c)
+{
+	model->SetOwnName(c);
+} 
+///
+///@author Marian Szczykulski
+///@date 2009-01-13
+///@brief setter numeru lokalnego klienta
+void Controller::SetOwnNumber(long l)
+{
+	model->SetOwnNumber(l);
+}
+///
+///@author Marian Szczykulski
+///@date 2009-01-13
+///@brief setter dostepnosci lokalnego klienta
+void Controller::SetMyAvailability(bool b)
+{
+	model->SetMyAvailability(b);
+}

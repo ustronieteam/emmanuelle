@@ -503,6 +503,10 @@
 				Name="Utils"
 				>
 				<File
+					RelativePath=".\Headers\Utils\ContactRecord.h"
+					>
+				</File>
+				<File
 					RelativePath=".\Headers\Utils\DataObserver.h"
 					>
 				</File>

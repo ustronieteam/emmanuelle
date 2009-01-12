@@ -1,5 +1,6 @@
 #include "ClientsData.h"
 
+const std::string ClientsData::configFileName = config::configFileName;
 
 ///
 ///@author Marian Szczykulski
@@ -115,4 +116,71 @@ const ContactRecord & ClientsData::FindByName(std::string name)
 		return _records[name];
 	}
 
+}
+///
+///@author Marian Szczykulski
+///@date 2009-01-12
+///@brief czyta nazwe klienta z pliku konfiguracyjnego
+void ClientsData::readClientName()
+{
+	std::string clName="";
+	long clNumber = 0;
+	po::options_description configOption( "Opcje pliku konfiguracyjnego" );
+	configOption.add_options()
+			   ("clientName", po::value<std::string>(&clName),
+     "Adres Ip servera domyslnego")
+				("clientNumber", po::value<long>(&clNumber),
+     "Adres Ip servera domyslnego") 
+	;
+	po::variables_map vm;
+	std::ifstream file;
+	file.open(configFileName.c_str());
+
+	try
+	{
+		store( parse_config_file(file,configOption), vm );
+		po::notify( vm );
+		file.close();
+		ownRecord.userDesc.name = CORBA::string_dup(clName.c_str());
+		ownRecord.userDesc.number = clNumber;
+		ownRecord.isAvailable = true;
+	}
+	catch(std::exception &exc)
+	{
+		file.close();
+	}
+	
+}
+///
+///@author Marian Szczykulski
+///@date 2009-01-13
+///@brief	Zwraca wlasny rekord z danymi
+///@return	wlasny rekord z danymi
+const ContactRecord & ClientsData::GetOwnRecord() const
+{
+	return ownRecord;
+}
+///
+///@author Marian Szczykulski
+///@date 2009-01-13
+///@brief setter nazwy lokalnego klienta
+void ClientsData::SetOwnName(const char * c)
+{
+	ownRecord.userDesc.name = CORBA::string_dup(c);
+}
+///
+///@author Marian Szczykulski
+///@date 2009-01-13
+///@brief setter numeru lokalnego klienta
+void ClientsData::SetOwnNumber(long l)
+{
+	ownRecord.userDesc.number = l;
+}
+///
+///@author Marian Szczykulski
+///@date 2009-01-13
+///@brief setter dostepnosci lokalnego klienta
+void ClientsData::SetMyAvailability(bool b)
+{
+	ownRecord.isAvailable = b;
 }

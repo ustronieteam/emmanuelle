@@ -1,6 +1,6 @@
 #include "Client.h"
 
-const std::string Client::configFileName = "client.config";
+const std::string Client::configFileName = config::configFileName;
 const int Client::defaultPortNumber = 6666;
 ///
 ///@author Marian Szczykulski
@@ -44,7 +44,7 @@ void Client::readServerAddress()
 	{
 		store( parse_config_file(file,configOption), vm );
 		po::notify( vm );
-		serverAddress.localization.out() = CORBA::string_dup(servAddr.c_str());//???
+		serverAddress.localization = CORBA::string_dup(servAddr.c_str());//???
 		file.close();
 	}
 	catch(std::exception &exc)

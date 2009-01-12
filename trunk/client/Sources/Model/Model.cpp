@@ -1,6 +1,5 @@
 #include "Model.h"
 
-
 void Model::activateListning()
 {
 	// uruchomienie brokera, stworzenie obiektow zdalnych, udostepnienie ich i wlaczenie nasluchiwania
@@ -252,4 +251,57 @@ void Model::SetPortNumber(const int & p)
 int Model::GetPortNumber() const
 {
 	return client->getPortNumber();
+}
+///
+///@author Marian Szczykulski
+///@date 2009-01-13
+///@brief	Zwraca wlasny rekord z danymi
+///@return	wlasny rekord z danymi
+std::string Model::GetOwnName()
+{
+	return clientsData->GetOwnRecord().userDesc.name.in();
+}
+///
+///@author Marian Szczykulski
+///@date 2009-01-13
+///@brief	Zwraca wlasny rekord z danymi
+///@return	wlasny rekord z danymi
+const long & Model::GetOwnNumber()
+{
+	ContactRecord c = clientsData->GetOwnRecord();
+	return c.userDesc.number;
+}
+///
+///@author Marian Szczykulski
+///@date 2009-01-13
+///@brief	Zwraca wlasny rekord z danymi
+///@return	wlasny rekord z danymi
+bool Model::GetMyAvailability()
+{
+	ContactRecord c = clientsData->GetOwnRecord();
+	return c.isAvailable;
+}
+///
+///@author Marian Szczykulski
+///@date 2009-01-13
+///@brief setter nazwy lokalnego klienta
+void Model::SetOwnName(const char * c)
+{
+	clientsData->SetOwnName(c);
+} 
+///
+///@author Marian Szczykulski
+///@date 2009-01-13
+///@brief setter numeru lokalnego klienta
+void Model::SetOwnNumber(long l)
+{
+	clientsData->SetOwnNumber(l);
+}
+///
+///@author Marian Szczykulski
+///@date 2009-01-13
+///@brief setter dostepnosci lokalnego klienta
+void Model::SetMyAvailability(bool b)
+{
+	clientsData->SetMyAvailability(b);
 }
