@@ -34,12 +34,12 @@ class RemoteObserverData
 			eventType = type;
 		}
 
-		const DomainData::Message & GetMessage() const
+		const DomainData::Message & GetSenderMessage() const
 		{
 			return message;
 		}
 
-		void SetMessage(const DomainData::Message & msg)
+		void SetSenderMessage(const DomainData::Message & msg)
 		{
 			message = msg;
 		}

@@ -415,10 +415,6 @@
 				Name="View"
 				>
 				<File
-					RelativePath=".\Headers\View\IObserverView.h"
-					>
-				</File>
-				<File
 					RelativePath=".\Headers\View\View.h"
 					>
 				</File>

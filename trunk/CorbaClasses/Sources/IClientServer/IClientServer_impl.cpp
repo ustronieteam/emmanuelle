@@ -32,7 +32,7 @@ IClientServer_impl::ReceiveMessage(const ::DomainData::Address& senderAddress,
 {
 	RemoteObserverData observData;
 	observData.SetObserverType(MESSAGE);
-	observData.SetMessage(msg);
+	observData.SetSenderMessage(msg);
 	observData.SetSenderAddress(senderAddress);
 
 	this->Notify(observData);
