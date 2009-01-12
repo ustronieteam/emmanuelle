@@ -24,7 +24,7 @@ int main(int argc, char * argv[])
 		return 1;
 	}
 
-	log4cxx::File confFile("logger.properties");
+	log4cxx::File confFile("clientLogger.properties");
 	log4cxx::PropertyConfigurator::configure(confFile);
 
 	log4cxx::LoggerPtr logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("MAIN"));
