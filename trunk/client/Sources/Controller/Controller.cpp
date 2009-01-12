@@ -34,11 +34,13 @@ void Controller::SetModel(IModel * iModel)
 	model = boost::shared_ptr<IModel>(iModel);
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-int Controller::AddRemoteObserver(IRemoteObserver & observer, ObserverType observerType) 
+///
+///@author Marian szczykulski
+///@date 2009-01-14
+///@brief Rejestruje odpowiedniego obserwatora zdalnej instancji
+int Controller::AddRemoteObserver(IRemoteObserver * observer, ObserverType observerType) 
 {
-    //TODO Auto-generated method stub
-    return 0;
+	return model->RegisterObserver(observer, observerType);
 }
 
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"

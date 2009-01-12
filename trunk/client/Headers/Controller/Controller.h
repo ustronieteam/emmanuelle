@@ -42,7 +42,7 @@ class Controller
 		//imp
         void SetModel(IModel * iModel);
 
-        int AddRemoteObserver(IRemoteObserver & observer, ObserverType observerType);
+        int AddRemoteObserver(IRemoteObserver * observer, ObserverType observerType);
         bool SendFile(int adresat, const char * fileName); // TODO: zmienic typ adresata
 		int AddDataObserver(DataObserver & dataObserver);
 
