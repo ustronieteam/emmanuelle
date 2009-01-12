@@ -89,6 +89,7 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 	}
 	//Zdobadz wlasne id
 	struct DomainData::Address localServAddr = Server::GetMyIP();
+	LOG4CXX_ERROR(logger,"Brak danych o lokalnym serwerze w bazie. Local addr: "<<Server::GetMyIP().localization.in());
 	int localId = serverDataBase->Find(localServAddr); //wlasne id w bazie
 	if(localId<=0)
 	{
