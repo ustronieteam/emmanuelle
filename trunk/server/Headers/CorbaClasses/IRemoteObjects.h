@@ -33,7 +33,7 @@ class IRemoteObjects
         //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         IRemoteObjects()
 		{
-			log4cxx::LoggerPtr logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("IRemoteObjects"));
+			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("IRemoteObjects"));
 			logger->setLevel(log4cxx::Level::getAll());
 		}
 
