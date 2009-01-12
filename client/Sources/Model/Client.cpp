@@ -133,12 +133,14 @@ int Client::ConnectToServer()
 		user.number = clientNumber;
 		try
 		{
+			LOG4CXX_INFO(logger, "Wywolywanie metody zdalnej connect()");
 			servAddr = connectedServerInstance->Connect(serverAddress,mode, user);
-
+			LOG4CXX_DEBUG(logger, "Metoda zdalna connect wywolana");
 			if(strcmp(servAddr->localization.in(),serverAddress.localization.in())!=0)
 			{
 				if(servAddr!=NULL)
 				{
+					LOG4CXX_INFO(logger, "Connect zwrocil wartosc rozna od NULL");
 					serverAddress = *servAddr;
 					return 0; //Kontroler moze jeszcze raz sprobowac sie polaczyc
 				}
