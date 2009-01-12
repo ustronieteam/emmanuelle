@@ -73,9 +73,6 @@ void RemoteClientConnectedObserver::set_serverDataBase(boost::shared_ptr<ServerD
 //@return ??
 int RemoteClientConnectedObserver::Refresh(RemoteObserverData observerData)
 {
-	std::cout<<"aaa\n";
-	clientsDataBase->Find(Server::GetMyIP());
-	std::cout<<"bbb\n";
 	if(observerData.get_eventType()!=CLIENT_CONNECTED)
 		return 0; 
 	//Utworz logike watku
