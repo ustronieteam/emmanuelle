@@ -110,25 +110,6 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 		LOG4CXX_ERROR(logger, "Zlapano nieoczekiwany wyjatek: " <<exc.what() );
 		return -2;
 	}
-	//try
-	//{
-	//	clRec = clientsDataBase->GetRecord(clientId);
-	//}
-	//catch(std::exception & exc)
-	//{
-	//	LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas pobierania rekordu recordId: "<<clientId<< ".Powod: "<< exc.what());
-	//	return -2;
-	//}
-
-	////Aktualizuj wpis clRec
-
-	//int status = clientsDataBase->ModifyRecord(clRec);
-	//if(status < 0)
-	//{
-	//	LOG4CXX_ERROR(logger, "Blad modyfikowania rekordu w bazie");
-	//	return -1;
-	//}
-	//Zdobadz wlasne Id
 	struct DomainData::Address localServAddr = Server::GetMyIP();
 	int localId = serverDataBase->Find(localServAddr); //wlasne id w bazie
 	if(localId<=0)
@@ -184,7 +165,7 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 		try
 		{
 			struct DomainData::Enability enab = clRec.GetEnability();
-			//remoteServer->ClientStatusChanged(clientAddr, enab);
+			struct DomainData::User usr = observerData.getClientUserData();			//remoteServer->ClientStatusChanged(clientAddr, enab);
 			LOG4CXX_INFO(logger, "Wiadomosc wyslana do serwera "<<it->GetAddress().localization.in());
 		}
 		catch(std::exception & exc) //chyba rzuca jakis wyjatek??
