@@ -175,7 +175,7 @@ int Client::ConnectToServer()
 ///@author Marian Szczykulski
 ///@date 2009-01-12
 ///@brief Metoda rozlaczajaca sie z serwerem
-int Client::Disconnect() 
+int Client::Disconnect(DomainData::User & usr) 
 {
 	if(CORBA::is_nil(connectedServerInstance))
 	{//nie jestesmy do niczego podlaczeni
@@ -184,7 +184,7 @@ int Client::Disconnect()
 	try
 	{
 		// TODO: dodac do wywolania metody connect usera
-		//connectedServerInstance->Disconnect();
+		connectedServerInstance->Disconnect(usr);
 	}
 	catch(CORBA::SystemException & e)
 	{
