@@ -5,8 +5,12 @@
 
 // Komunikaty
 #define INF_NEW_SRV		"^^ Adres serwera zostal zmieniony."
+#define INF_NEW_PORT	"^^ Port serwera zostal zmieniony."
 #define INF_NEW_UNAME	"^^ Nazwa uzytkownika zostala zmieniona."
 #define INF_NEW_UNUM	"^^ Numer uzytkownika zostal zmieniony."
+// Bledy
+#define INF_ER_NEW_UNUM	"!@# Nie podano liczby!" 
+#define INF_ER_NEW_PORT "!@# Port serwera powinien byc liczba!"
 
 ///
 /// ConfigWindow
@@ -19,19 +23,14 @@ class ConfigWindow : public Window
 	private:
 
 		///
-		/// Adres serwera do ktorego jest sie podlaczonym.
+		/// Konfiguracja.
 		///
-		std::string _serverAddress;
+		CONFIGURATION * _configuration;
 
 		///
-		/// Nazwa uzytkownika.
+		/// Informacje.
 		///
-		std::string _userName;
-
-		///
-		/// Numer uzytkownika.
-		///
-		int _userNumber;
+		INFO * _information;
 
 	public:
 
@@ -39,7 +38,7 @@ class ConfigWindow : public Window
 		/// Konstruktor.
 		/// @param[in] controller Kontroler.
 		///
-		ConfigWindow(Controller * controller);
+		ConfigWindow(Controller * controller, CONFIGURATION * configuration, INFO * information);
 
 		///
 		/// Renderowanie okienka konfiguracji.

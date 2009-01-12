@@ -1,33 +1,27 @@
 #ifndef _WINDOW_H_
 #define _WINDOW_H_
 
+#include "Controller.h"
+#include "ViewData.h"
+
 #include <iostream>
 #include <string>
-#include <time.h>
 #include <stdio.h>
 
 // Pomocne definicje.
-#define HEADLINE		"+-------------------------------------------------------[_][O][X]-+\n"
-#define LINE			"+-----------------------------------------------------------------+\n"
-#define SIDE			"| "
-#define PROMPT			">> "
-// Polecenia
-#define CHANGE_WINDOW	"`"
-#define EXIT_APP		"exit"
-#define OPEN_WINDOW		"op"
-#define CLOSE_WINDOW	"cl"
-#define LIST_WIN		"wins"		
+#define HEADLINE			"+-------------------------------------------------------[_][O][X]-+\n"
+#define LINE				"+-----------------------------------------------------------------+\n"
+#define SIDE				"| "
+#define PROMPT				">> "
 // Okna
-#define WIN_WELCOME		"welcome"
-#define WIN_CONF		"conf"
-#define WIN_HELP		"help"
-#define WIN_CONTACT		"con"
+#define WIN_WELCOME			"welcome"
+#define WIN_CONF			"conf"
+#define WIN_HELP			"help"
+#define WIN_CONTACT			"con"
+#define WIN_MSG				"msg"
 // Wspolne komunikaty.
-#define NO_COMMAND		"!@# Brak takiej komendy!"
-// Bledy
-#define ER_NO_WIN		"!@# Nie ma takiego okna!"
-#define ER_LAST_WIN		"!@# Nie mozna zamknac ostatniego okna!"
-#define ER_NO_PARAM		"!@# Brak takiego parametru."
+#define ER_NO_COMMAND		"!@# Brak takiej komendy!"
+#define ER_NO_PARAM			"!@# Brak takiego parametru!"
 
 ///
 /// Redefinicja klasy.
@@ -113,6 +107,12 @@ class Window
 		/// @return Nazwa okna.
 		///
 		std::string & GetName();
+
+		///
+		/// Ustawia nazwe okna.
+		/// @param[in] name Nazwa okna.
+		///
+		void SetName(const std::string & name);
 };
 
 #endif /* _WINDOW_H_ */

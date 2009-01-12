@@ -4,9 +4,11 @@
 /// Konstruktor.
 /// @param[in] controller Kontroler.
 ///
-ConfigWindow::ConfigWindow(Controller * controller) : Window(controller, WIN_CONF)
+ConfigWindow::ConfigWindow(Controller * controller, CONFIGURATION * configuration, INFO * information) 
+	: Window(controller, WIN_CONF)
 {
-	_userNumber = 0;
+	_configuration = configuration;
+	_information = information;
 }
 
 ///
@@ -19,29 +21,43 @@ void ConfigWindow::Render(std::ostream & out)
 		<< SIDE << "^ Konfiguracja\n"
 		<< SIDE << std::endl << SIDE << "Serwer [srv]:\t\t\t";
 
-	if ( this->_serverAddress.empty() )
-		out << "NIE PODLACZONO";
+	if ( this->GetController()->GetServerAddress() == NULL )
+		out << "NIE USTALONO";
 	else
-		out << _serverAddress;
+		out << this->GetController()->GetServerAddress();
+
+	out << '\n' << SIDE << "Port [port]:\t\t\t";
+
+	if ( this->GetController()->GetPortNumber() == 0 )
+		out << "NIE USTALONO";
+	else
+		out << this->GetController()->GetPortNumber();
 
 	out << '\n' << SIDE << "Nazwa uzytkownika [uname]:\t";
 
-	if ( this->_userName.empty() )
+	if ( this->GetController()->GetOwnName().size() == 0 )
 		out << "NIE USTALONO";
 	else
-		out << _userName;
+		out << this->GetController()->GetOwnName();
 
 	out << '\n' << SIDE << "Numer uzytkownika [unum]:\t";
 
-	if ( this->_userNumber == 0 )
+	if ( this->GetController()->GetOwnNumber() == 0 )
 		out << "NIE USTALONO";
 	else
-		out << _userNumber;
+		out << this->GetController()->GetOwnNumber();
 
-	out << '\n'<< SIDE << "Data podlaczenia:\t\t2009.01.10\n";
-	out << SIDE << "Ilosc kontaktow:\t\t0\n";	
-	out << SIDE << "Wyslanych wiadomosci:\t\t0\n";	
-	out << SIDE << "Odebranych wiadomosci:\t0\n";	
+	out << '\n' << SIDE << '\n' << SIDE << "^ Informacje:\n" << SIDE << '\n';
+
+	out << SIDE << "Data podlaczenia:\t\t";
+	
+	if ( this->_information->connectedDate.is_not_a_date_time() )
+		out << "NIE PODLACZONO\n";
+	else
+		out << this->_information->connectedDate << '\n';
+
+	out << SIDE << "Wyslanych wiadomosci:\t\t"	<< this->_information->outMsgCount << '\n';
+	out << SIDE << "Odebranych wiadomosci:\t"	<< this->_information->inMsgCount << '\n';
 	out << SIDE << '\n';
 	out << LINE;
 
@@ -60,6 +76,7 @@ void ConfigWindow::Render(std::ostream & out)
 ///
 void ConfigWindow::Command(std::string & cmd)
 {
+	int tmp;
 	std::string mcmd;
 
 	if ( !cmd.compare("set") )
@@ -69,24 +86,63 @@ void ConfigWindow::Command(std::string & cmd)
 		// Adres serwera.
 		if ( !mcmd.compare("srv") )
 		{
-			std::cin >> this->_serverAddress;
+			std::cin >> mcmd;
+			this->GetController()->SetServerAddress(mcmd.c_str());
 			this->SetMsg(INF_NEW_SRV);
+		}
+		// Port
+		else if ( !mcmd.compare("port") )
+		{
+			std::cin >> tmp;
+			
+			/* Sprawdzanie poprawnosci. */
+			if ( std::cin.fail() )
+			{
+				this->SetMsg(INF_ER_NEW_PORT);
+				std::cin.clear( std::cin.rdstate() & ~std::ios::failbit );
+
+				// Pobranie smieci.
+				std::cin >> mcmd;
+			}
+			else
+			{
+				this->GetController()->SetPortNumber(tmp);
+				this->SetMsg(INF_NEW_PORT);
+			}
 		}
 		// Nazwa uzytkownika.
 		else if ( !mcmd.compare("uname") )
 		{
-			std::cin >> this->_userName;
+			std::cin >> mcmd;
+
+			this->GetController()->SetOwnName(mcmd.c_str());
+			//this->_configuration->userName = mcmd;
+
 			this->SetMsg(INF_NEW_UNAME);
 		}
 		// Numer uzytkownika.
 		else if ( !mcmd.compare("unum") )
 		{
-			std::cin >> this->_userNumber;
-			this->SetMsg(INF_NEW_UNUM);
+			std::cin >> tmp;
+
+			this->GetController()->SetOwnNumber(tmp);
+			//this->_configuration->userNumber = tmp;
+
+			/* Sprawdzanie poprawnosci. */
+			if ( std::cin.fail() )
+			{
+				this->SetMsg(INF_ER_NEW_UNUM);
+				std::cin.clear( std::cin.rdstate() & ~std::ios::failbit );
+
+				// Pobranie smieci.
+				std::cin >> mcmd;
+			}
+			else
+				this->SetMsg(INF_NEW_UNUM);
 		}
 		else
 			this->SetMsg(ER_NO_PARAM);
 	}
 	else
-		this->SetMsg(NO_COMMAND);
+		this->SetMsg(ER_NO_COMMAND);
 }

@@ -340,6 +340,10 @@
 						>
 					</File>
 					<File
+						RelativePath=".\Sources\View\Windows\MsgWindow.cpp"
+						>
+					</File>
+					<File
 						RelativePath=".\Sources\View\Windows\WelcomeWindow.cpp"
 						>
 					</File>
@@ -423,6 +427,10 @@
 					</File>
 					<File
 						RelativePath=".\Headers\View\Windows\HelpWindow.h"
+						>
+					</File>
+					<File
+						RelativePath=".\Headers\View\Windows\MsgWindow.h"
 						>
 					</File>
 					<File
