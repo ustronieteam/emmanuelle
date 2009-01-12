@@ -6,15 +6,23 @@
 #include "FilePackage.h"
 #include "IRemoteObserver.h"
 #include "DomainData.h"
-#include "ClientsData.h"
+#include "ContactRecord.h"
+#include <vector>
 class IModel
 {
 
     public:
-
         IModel();
 
         virtual ~IModel();
+
+		virtual std::string GetOwnName() = 0;
+		virtual const long & GetOwnNumber() = 0;
+		virtual bool GetMyAvailability() = 0;
+		
+		virtual void SetOwnName(const char * c) = 0;
+		virtual void SetOwnNumber(long l) = 0;
+		virtual void SetMyAvailability(bool b) = 0;
 
 		virtual void SetServerAddress(const char * addr)=0;
 		virtual const DomainData::Address & GetServerAddress() const=0;

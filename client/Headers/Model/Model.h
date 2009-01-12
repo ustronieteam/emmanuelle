@@ -32,7 +32,7 @@ class Model : public IModel, public CorbaConnector
 {
 
     private:
-
+		
 		boost::shared_ptr<Client> client;
 
 		boost::shared_ptr<ClientsData> clientsData;
@@ -74,7 +74,7 @@ class Model : public IModel, public CorbaConnector
 		void activateListning();
 
     public:
-	
+
 		///
 		/// @return	obiekt modelu, ktory jest obiektem typu singleton
 		///
@@ -152,6 +152,13 @@ class Model : public IModel, public CorbaConnector
          int AddMessageObserver(IRemoteObserver & observer) ;
 
 		 virtual std::vector<ContactRecord> GetContactsList(); 
+		virtual std::string GetOwnName();
+		virtual const long & GetOwnNumber();
+		virtual bool GetMyAvailability();
+
+		virtual void SetOwnName(const char * c);
+		virtual void SetOwnNumber(long l);
+		virtual void SetMyAvailability(bool b);
 
 };  //end class Model
 

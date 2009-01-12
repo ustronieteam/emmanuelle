@@ -10,6 +10,8 @@
 #include <boost/program_options.hpp>
 #include <string>
 #include <fstream>
+#include "ClientsData.h"
+#include "ContactRecord.h"
 namespace po = boost::program_options;
 
 ///

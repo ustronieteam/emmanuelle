@@ -71,6 +71,14 @@ class Controller
 		void SetPortNumber(int p);
 		int GetPortNumber() const;
 
+		std::string GetOwnName();
+		const long & GetOwnNumber();
+		bool GetMyAvailability();
+
+		void SetOwnName(const char * c);
+		void SetOwnNumber(long l);
+		void SetMyAvailability(bool b);
+
 };  //end class Controller
 
 #endif
