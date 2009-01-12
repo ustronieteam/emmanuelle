@@ -79,10 +79,6 @@ void Model::activateListning()
 
 		// <dla serwerów>
 		serverImpl = new IClientServer_impl(poa);
-		
-		// dodanie i zarejestrowanie observatorow
-		serverImpl->RegisterObserv(new MessageObserver());
-		serverImpl->RegisterObserv(new FileObserver());
 
 		PortableServer::ObjectId_var oidServ = PortableServer::string_to_ObjectId("clientserver");
 		PortableServer::ServantBase_var servantServ = serverImpl;
@@ -96,9 +92,6 @@ void Model::activateListning()
 
 		// </dla klientow>
 		clientImpl = new IClientClient_impl(poa);
-
-		// dodanie i zarejestrowanie observatorow
-		clientImpl->RegisterObserv(new FileObserver());
 
 		PortableServer::ObjectId_var oidClnt = PortableServer::string_to_ObjectId("clientclient");
 		PortableServer::ServantBase_var servantClnt = clientImpl;
