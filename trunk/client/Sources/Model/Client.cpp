@@ -128,7 +128,7 @@ int Client::ConnectToServer()
 		}
 		DomainData::Address *servAddr = NULL;
 		DomainData::User user;
-		user.name = clientName.c_str();
+		user.name = CORBA::string_dup(clientName.c_str());
 		user.number = clientNumber;
 		try
 		{
