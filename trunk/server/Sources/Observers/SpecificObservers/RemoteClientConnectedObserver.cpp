@@ -12,8 +12,8 @@ RemoteClientConnectedObserver::RemoteClientConnectedObserver()
 }
 RemoteClientConnectedObserver::RemoteClientConnectedObserver(boost::shared_ptr<ServerDataBase> & servDB, boost::shared_ptr<ClientsDataBase> & clientsDB)
 {
-	this->clientsDataBase = clientsDataBase;
-    this->serverDataBase  = serverDataBase;
+	this->clientsDataBase = clientsDB;
+    this->serverDataBase  = servDB;
 }
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 RemoteClientConnectedObserver::RemoteClientConnectedObserver(RemoteClientConnectedObserver & arg) 
@@ -73,6 +73,9 @@ void RemoteClientConnectedObserver::set_serverDataBase(boost::shared_ptr<ServerD
 //@return ??
 int RemoteClientConnectedObserver::Refresh(RemoteObserverData observerData)
 {
+	std::cout<<"aaa\n";
+	clientsDataBase->Find(Server::GetMyIP());
+	std::cout<<"bbb\n";
 	if(observerData.get_eventType()!=CLIENT_CONNECTED)
 		return 0; 
 	//Utworz logike watku
