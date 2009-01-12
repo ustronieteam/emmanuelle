@@ -31,25 +31,25 @@ class RemoteObserverData
         void set_eventType(EventType eventType);
 		
 		DomainData::Address & getServerAddress(){return _serverAddress;}
-		void setServerAddress(DomainData::Address & serverAddress){_serverAddress = serverAddress;}
+		void setServerAddress(const DomainData::Address & serverAddress){_serverAddress = serverAddress;}
 
 		DomainData::Address & getClientAddress(){return _clientAddress;}
-		void setClientAddress(DomainData::Address & clientAddress){_clientAddress = clientAddress;}
+		void setClientAddress(const DomainData::Address & clientAddress){_clientAddress = clientAddress;}
 
 		DomainData::Message & getClientMessage(){return _clientMessage;}
-		void setClientMessage(DomainData::Message & clientMessage){_clientMessage = clientMessage;}
+		void setClientMessage(const DomainData::Message & clientMessage){_clientMessage = clientMessage;}
 
 		DomainData::Address & getSenderClientAddress(){return _senderClientAddress;}
-		void setSenderClientAddress(DomainData::Address & senderClientAddress){_senderClientAddress = senderClientAddress;}
+		void setSenderClientAddress(const DomainData::Address & senderClientAddress){_senderClientAddress = senderClientAddress;}
 
 		DomainData::Enability & getClientEnability(){return _clientEnability;}
-		void setClientEnability(DomainData::Enability & clientEnability){_clientEnability = clientEnability;}
+		void setClientEnability(const DomainData::Enability & clientEnability){_clientEnability = clientEnability;}
 
 		DomainData::Address & getPipeHolderAddress(){return _pipeHolderAddress;}
-		void setPipeHolderAddress(DomainData::Address & pipeHolderAddress){_pipeHolderAddress = pipeHolderAddress;}
+		void setPipeHolderAddress(const DomainData::Address & pipeHolderAddress){_pipeHolderAddress = pipeHolderAddress;}
 
 		DomainData::User & getClientUserData(){return _clientUserData;}
-		void setClientUserData(DomainData::User & clientUserData){_clientUserData = clientUserData;}
+		void setClientUserData( const DomainData::User & clientUserData){_clientUserData = clientUserData;}
 
 
 

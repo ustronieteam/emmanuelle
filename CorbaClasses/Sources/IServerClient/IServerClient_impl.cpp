@@ -62,7 +62,7 @@ IServerClient_impl::Connect(const ::DomainData::Address& server,
 	
 	DomainData::User u;
 	u = usr;
-	
+	std::cout << "CLIENT name: " << usr.name << std::endl;
 	observData.setClientUserData(u);
 
 	this->Notify(observData);

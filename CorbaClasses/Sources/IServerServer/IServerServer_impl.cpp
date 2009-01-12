@@ -173,7 +173,13 @@ IServerServer_impl::PassMessage(const ::DomainData::Message& msg,
                                 const ::DomainData::Address& receiverAddress)
     throw(::CORBA::SystemException)
 {
-    // TODO: Implementation
+	// stworzenie obiektu z danymi dla obserwatora
+	RemoteObserverData observData;
+	observData.set_eventType(SERVER_PASS_MESSAGE);
+	observData.setSenderClientAddress(senderAddress);
+	observData.setClientAddress(receiverAddress);
+
+	this->Notify(observData);
 }
 
 //
