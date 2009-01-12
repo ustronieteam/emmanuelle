@@ -48,16 +48,14 @@ IServerClient_impl::Connect(const ::DomainData::Address& server,
 	// pobranie instancji bazy danych
 	ClientsDataBase * clientDB = ClientsDataBase::GetInstance();
 
-	// 
-	/*
+	// dodanie klienta do lokalnej bazy danych 
 	DomainData::Enability en;
 	en.status = true;
 	en.mode_ = m;
 	
-	// dodanie nowego klienta do bazy danych
 	DomainData::Address addr;
 	addr.localization = CORBA::string_dup( Server::GetRemotedAddress(SRVPORT.c_str()) );
-	*/
+	
 	// TODO: dokonczyc - tu u gory tez cos pojebane
 
     ::DomainData::Address* _r = new ::DomainData::Address;
