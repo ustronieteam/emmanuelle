@@ -13,8 +13,6 @@
 
 #include "Client.h"
 #include "ClientsData.h"
-#include "FileObserver.h"
-#include "MessageObserver.h"
 #include "StatusObserver.h"
 #include "StatusCheckerFunctor.h"
 
