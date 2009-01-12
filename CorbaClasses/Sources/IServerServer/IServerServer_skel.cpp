@@ -142,11 +142,13 @@ POA_IServerServer::_OB_op_ClientStatusChanged(OB::Upcall_ptr _ob_up)
 {
     ::DomainData::Address _ob_a0;
     ::DomainData::Enability _ob_a1;
+    ::DomainData::User _ob_a2;
     OB::InputStreamImpl* _ob_in = _OB_preUnmarshal(_ob_up);
     ::DomainData::Address::_OB_unmarshal(_ob_a0, _ob_in);
     ::DomainData::Enability::_OB_unmarshal(_ob_a1, _ob_in);
+    ::DomainData::User::_OB_unmarshal(_ob_a2, _ob_in);
     _OB_postUnmarshal(_ob_up);
-    ClientStatusChanged(_ob_a0, _ob_a1);
+    ClientStatusChanged(_ob_a0, _ob_a1, _ob_a2);
     _OB_postinvoke(_ob_up);
     _OB_preMarshal(_ob_up);
     _OB_postMarshal(_ob_up);
@@ -324,8 +326,9 @@ OBDirectStubImpl_IServerServer::PassCreatePipeRequest(const ::DomainData::Addres
 //
 void
 OBDirectStubImpl_IServerServer::ClientStatusChanged(const ::DomainData::Address& _ob_a0,
-                                                    const ::DomainData::Enability& _ob_a1)
+                                                    const ::DomainData::Enability& _ob_a1,
+                                                    const ::DomainData::User& _ob_a2)
 {
     OB::InvocationHandler _ob_handler(this, "ClientStatusChanged");
-    dynamic_cast<POA_IServerServer*>(_ob_servant_) -> ClientStatusChanged(_ob_a0, _ob_a1);
+    dynamic_cast<POA_IServerServer*>(_ob_servant_) -> ClientStatusChanged(_ob_a0, _ob_a1, _ob_a2);
 }

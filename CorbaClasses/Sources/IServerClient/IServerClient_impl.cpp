@@ -37,17 +37,27 @@ IServerClient_impl::Connect(const ::DomainData::Address& server,
 	}
 
 	//pobranie instancji bazy danych
+	ServerDataBase * serverDB = ServerDataBase::GetInstance();
+
+	// dodanie serwera macierzystego do bazy o ile nie istnieje juz w niej
+	if(!serverDB->Size())
+	{
+		Server::GetInstance("")->GetServerImpl()->AddServer(serverAddress);
+	}
+
+	// pobranie instancji bazy danych
 	ClientsDataBase * clientDB = ClientsDataBase::GetInstance();
 
+	// 
+	/*
 	DomainData::Enability en;
 	en.status = true;
 	en.mode_ = m;
 	
-
 	// dodanie nowego klienta do bazy danych
 	DomainData::Address addr;
 	addr.localization = CORBA::string_dup( Server::GetRemotedAddress(SRVPORT.c_str()) );
-
+	*/
 	// TODO: dokonczyc - tu u gory tez cos pojebane
 
     ::DomainData::Address* _r = new ::DomainData::Address;

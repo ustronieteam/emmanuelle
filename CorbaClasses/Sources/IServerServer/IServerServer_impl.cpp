@@ -193,7 +193,8 @@ IServerServer_impl::PassCreatePipeRequest(const ::DomainData::Address& pipeHolde
 //
 void
 IServerServer_impl::ClientStatusChanged(const ::DomainData::Address& clientAddress,
-                                        const ::DomainData::Enability& en)
+                                        const ::DomainData::Enability& en,
+                                        const ::DomainData::User& usr)
     throw(::CORBA::SystemException)
 {
     // TODO: Implementation
