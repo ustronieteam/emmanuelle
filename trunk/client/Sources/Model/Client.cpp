@@ -63,14 +63,11 @@ bool Client::getRemoteServerInstance()
 	//Instancja musi byc niezainicjalizowana
 	try
 	{
-		if(! CORBA::is_nil(connectedServerInstance))
-		{
-			CORBA::release(connectedServerInstance);
-		}
 		if(! CORBA::is_nil(orb))
 		{
 			orb->destroy();
 		}
+		
 	}
 	catch(CORBA::SystemException & e)
 	{
@@ -95,6 +92,10 @@ bool Client::getRemoteServerInstance()
 	{
 		LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas pozyskiwania zdalnej instancji: "<<e._name());
 			return false;
+	}
+	catch(std::exception  &exp)
+	{
+		LOG4CXX_ERROR(logger, "Zlapano wyjatek: " << exp.what());
 	}
 	return false;
 }
