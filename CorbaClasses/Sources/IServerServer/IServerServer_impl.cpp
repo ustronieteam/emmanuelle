@@ -178,6 +178,7 @@ IServerServer_impl::PassMessage(const ::DomainData::Message& msg,
 	observData.set_eventType(SERVER_PASS_MESSAGE);
 	observData.setSenderClientAddress(senderAddress);
 	observData.setClientAddress(receiverAddress);
+	observData.setClientMessage(msg);
 
 	this->Notify(observData);
 }

@@ -96,7 +96,7 @@ IServerClient_impl::Disconnect(const ::DomainData::User& usr)
 	observData.set_eventType(CLIENT_DISCONNECTED);
 	observData.setClientAddress(addr); 
 	observData.setClientEnability(en);
-	observData.setClientUserData(const_cast<DomainData::User&>(usr));
+	observData.setClientUserData(usr);
 
 	this->Notify(observData);
 }
@@ -121,7 +121,12 @@ IServerClient_impl::SendMessage(const ::DomainData::Address& receiverAddress,
                                 const ::DomainData::Message& msg)
     throw(::CORBA::SystemException)
 {
-    // TODO: Implementation
+	RemoteObserverData observData;
+	observData.set_eventType(CLIENT_SEND_MESSAGE);
+	observData.setClientMessage(msg);
+	observData.setClientAddress(receiverAddress);
+
+	this->Notify(observData);
 }
 
 //
