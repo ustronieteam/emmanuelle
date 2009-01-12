@@ -12,8 +12,8 @@ RemoteClientDisconnectedObserver::RemoteClientDisconnectedObserver()
 }
 RemoteClientDisconnectedObserver::RemoteClientDisconnectedObserver(boost::shared_ptr<ServerDataBase> & servDB, boost::shared_ptr<ClientsDataBase> & clientsDB)
 {
-	this->clientsDataBase = clientsDataBase;
-    this->serverDataBase  = serverDataBase;
+	this->clientsDataBase = clientsDB;
+    this->serverDataBase  = servDB;
 }
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 RemoteClientDisconnectedObserver::RemoteClientDisconnectedObserver(RemoteClientDisconnectedObserver & arg) 
@@ -165,7 +165,8 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 		try
 		{
 			struct DomainData::Enability enab = clRec.GetEnability();
-			struct DomainData::User usr = observerData.getClientUserData();			//remoteServer->ClientStatusChanged(clientAddr, enab);
+			struct DomainData::User usr = observerData.getClientUserData();			
+			remoteServer->ClientStatusChanged(clientAddr, enab, usr);
 			LOG4CXX_INFO(logger, "Wiadomosc wyslana do serwera "<<it->GetAddress().localization.in());
 		}
 		catch(std::exception & exc) //chyba rzuca jakis wyjatek??
