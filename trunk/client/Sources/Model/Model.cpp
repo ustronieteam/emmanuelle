@@ -127,6 +127,31 @@ void Model::activateListning()
 	}
 }
 
+
+int Model::RegisterObserver(IRemoteObserver * observ, ObserverType type)
+{
+	if(type == MESSAGE)
+	{
+		this->serverImpl->RegisterObserv(observ);
+	}
+	else if(type == FFILE)
+	{
+		this->clientImpl->RegisterObserv(observ);
+	}
+	else
+		return 1;
+
+	return 0;
+}
+
+int Model::UnregisterObserver()
+{
+	this->serverImpl->UnregisterObserv();
+	this->clientImpl->UnregisterObserv();
+
+	return 0;
+}
+
 int Model::AddStatusObserver(DataObserver & observer) 
 {
  return 0;
@@ -335,7 +360,7 @@ bool Model::runStatusChecker()
 {
 	LOG4CXX_DEBUG(logger, "Rozpoczynanie nasluchiwania statusu, uruchomienie w nowym watku");
 	//Utworz logike watku
-	StatusCheckerFunctor statusChecker(clientsData);
+	StatusCheckerFunctor statusChecker(clientsData, client);
 	//Utworz i uruchom watki
 	boost::thread threadStatusChecker(statusChecker);
 

@@ -28,7 +28,7 @@ class IRemoteObserverObject
 		///
 		/// kolekcji obserwatorow, czyli obiektow klasy IRemoteObserver
 		///
-        std::vector<IRemoteObserver *> RemoteObserversList;
+        IRemoteObserver * observer;
 
 		// logger
 		log4cxx::LoggerPtr logger;
@@ -49,20 +49,13 @@ class IRemoteObserverObject
 		///
         virtual ~IRemoteObserverObject()
 		{
-			for(std::vector<IRemoteObserver *>::const_iterator it = RemoteObserversList.begin();
-				it != RemoteObserversList.end();
-				++it)
-			{
-				delete *it;
-			}
+
 		}
 
 		///
-		/// @param [in] observer	obiekt obserwatora
-		///
 		/// wyrejestrowuje danego obserwatora
 		///
-        virtual int UnregisterObserv(IRemoteObserver * observer);
+        virtual int UnregisterObserv();
 
 		///
 		/// @param [in] observer	obiekt obserwatora
