@@ -252,15 +252,15 @@ std::ostream & operator<<(std::ostream & os, const ClientsDataBase & db)
 {
 	int k = 1;
 
-	os  << "Nr\tId\tAdres.Loc.\tUser.Name\tStatus\n" ;
+	os  << "Nr\tId\tAdres.Loc.\tS\tUser.Name\n";
 
 	for(std::map<int, ClientRecord>::const_iterator i = db._records.begin(); i != db._records.end(); i++, ++k)
 	{
 		os	<< k << "\t" 
 			<< (*i).second.GetRecordId() << '\t'
 			<< (*i).second.GetAddress().localization.in() << '\t'
-			<< (*i).second.GetUser().name.in() << '\t'
-			<< (*i).second.GetEnability().status
+			<< (*i).second.GetEnability().status << '\t'
+			<< (*i).second.GetUser().name.in()
 			<< std::endl;
 	}
 
