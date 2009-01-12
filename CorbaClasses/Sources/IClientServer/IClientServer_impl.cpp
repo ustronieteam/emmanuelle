@@ -30,12 +30,12 @@ IClientServer_impl::ReceiveMessage(const ::DomainData::Address& senderAddress,
                                    const ::DomainData::Message& msg)
     throw(::CORBA::SystemException)
 {
-	//RemoteObserverData observData;
-	//observData.set_eventType(re);
-	//observData.setClientMessage(msg);
-	//observData.setClientAddress(receiverAddress);
+	RemoteObserverData observData;
+	observData.SetObserverType(MESSAGE);
+	observData.SetMessage(msg);
+	observData.SetSenderAddress(senderAddress);
 
-	//this->Notify(observData);
+	this->Notify(observData);
 }
 
 //
