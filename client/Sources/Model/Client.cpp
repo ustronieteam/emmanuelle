@@ -183,7 +183,8 @@ int Client::Disconnect()
 	}
 	try
 	{
-		connectedServerInstance->Disconnect();
+		// TODO: dodac do wywolania metody connect usera
+		//connectedServerInstance->Disconnect();
 	}
 	catch(CORBA::SystemException & e)
 	{

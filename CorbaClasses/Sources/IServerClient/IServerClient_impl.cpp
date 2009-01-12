@@ -45,9 +45,6 @@ IServerClient_impl::Connect(const ::DomainData::Address& server,
 		Server::GetInstance("")->GetServerImpl()->AddServer(server);
 	}
 
-	// pobranie instancji bazy danych
-	ClientsDataBase * clientDB = ClientsDataBase::GetInstance();
-
 	// dodanie klienta do lokalnej bazy danych 
 	DomainData::Enability en;
 	en.status = true;
@@ -56,7 +53,21 @@ IServerClient_impl::Connect(const ::DomainData::Address& server,
 	DomainData::Address addr;
 	addr.localization = CORBA::string_dup( Server::GetRemotedAddress(SRVPORT.c_str()) );
 	
-	// TODO: dokonczyc - tu u gory tez cos pojebane
+	Server::GetInstance("")->GetServerImpl()->ClientStatusChanged(addr, en, usr);
+
+	RemoteObserverData observData;
+	observData.set_eventType(CLIENT_CONNECTED);
+	observData.setClientAddress(addr); 
+	observData.setClientEnability(en);
+	
+	DomainData::User u;
+	u = usr;
+	
+	observData.setClientUserData(u);
+
+	this->Notify(observData);
+
+	//TODO: mozna w przyszlosci dodac obsluge przeciazenia serwera
 
     ::DomainData::Address* _r = new ::DomainData::Address;
 	_r->localization = CORBA::string_dup(Server::GetMyIP().localization.in());
@@ -67,12 +78,27 @@ IServerClient_impl::Connect(const ::DomainData::Address& server,
 // IDL:IServerClient/Disconnect:1.0
 //
 void
-IServerClient_impl::Disconnect()
+IServerClient_impl::Disconnect(const ::DomainData::User& usr)
     throw(::CORBA::SystemException)
 {
 	std::cout << "WYWOLANIE DISCONNECT z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()) << std::endl;
 
+	// dodanie klienta do lokalnej bazy danych 
+	DomainData::Enability en;
+	en.status = false;
+	
+	DomainData::Address addr;
+	addr.localization = CORBA::string_dup( Server::GetRemotedAddress(SRVPORT.c_str()) );
 
+	Server::GetInstance("")->GetServerImpl()->ClientStatusChanged(addr, en, usr);
+
+	RemoteObserverData observData;
+	observData.set_eventType(CLIENT_DISCONNECTED);
+	observData.setClientAddress(addr); 
+	observData.setClientEnability(en);
+	observData.setClientUserData(const_cast<DomainData::User&>(usr));
+
+	this->Notify(observData);
 }
 
 //

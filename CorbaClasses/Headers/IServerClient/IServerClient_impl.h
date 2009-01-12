@@ -8,7 +8,6 @@
 #include "EventType.h"
 #include "ServerRecord.h"
 #include "ClientRecord.h"
-
 //
 // IDL:IServerClient:1.0
 //
@@ -39,7 +38,7 @@ public:
     //
     // IDL:IServerClient/Disconnect:1.0
     //
-    virtual void Disconnect()
+    virtual void Disconnect(const ::DomainData::User& usr)
         throw(::CORBA::SystemException);
 
     //

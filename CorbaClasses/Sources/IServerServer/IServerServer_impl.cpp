@@ -197,5 +197,36 @@ IServerServer_impl::ClientStatusChanged(const ::DomainData::Address& clientAddre
                                         const ::DomainData::User& usr)
     throw(::CORBA::SystemException)
 {
-    // TODO: Implementation
+	// pobranie instancji bazy danych uzytkownikow
+	ClientsDataBase * clientsDB = ClientsDataBase::GetInstance();
+
+	int recordId;
+	ClientRecord record;
+
+	if((recordId = clientsDB->Find(usr)) < 0)
+	{
+		// nie znaleziono w bazie takiego rekordu
+		record.SetAddress(clientAddress);
+		record.SetEnability(en);
+		record.SetUser(usr);
+
+		try
+		{
+			clientsDB->InsertRecord(record);
+		}
+		catch(std::exception &)
+		{}
+	}
+	else
+	{
+		record = clientsDB->GetRecord(recordId);
+		record.SetEnability(en);
+
+		clientsDB->ModifyRecord(record);
+	}
+
+	std::cout << "WYPISANIE BAZY Z CLIENTSTATUSCHANGED" << std::endl;
+	std::cout << "---------------------------------------" << std::endl;
+	std::cout << *(ClientsDataBase::GetInstance());
+	std::cout << "---------------------------------------" << std::endl;
 }

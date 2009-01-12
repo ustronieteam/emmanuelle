@@ -102,7 +102,7 @@ public:
     //
     // IDL:IServerClient/Disconnect:1.0
     //
-    virtual void Disconnect() = 0;
+    virtual void Disconnect(const ::DomainData::User& usr) = 0;
 
     //
     // IDL:IServerClient/Register:1.0
@@ -156,7 +156,7 @@ public:
     //
     // IDL:IServerClient/Disconnect:1.0
     //
-    void Disconnect();
+    void Disconnect(const ::DomainData::User& usr);
 
     //
     // IDL:IServerClient/Register:1.0
@@ -218,7 +218,7 @@ public:
     //
     // IDL:IServerClient/Disconnect:1.0
     //
-    virtual void Disconnect() = 0;
+    virtual void Disconnect(const ::DomainData::User& usr) = 0;
 
     //
     // IDL:IServerClient/Register:1.0
@@ -269,7 +269,7 @@ public:
     //
     // IDL:IServerClient/Disconnect:1.0
     //
-    virtual void Disconnect();
+    virtual void Disconnect(const ::DomainData::User& usr);
 
     //
     // IDL:IServerClient/Register:1.0
