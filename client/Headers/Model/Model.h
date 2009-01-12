@@ -155,6 +155,9 @@ class Model : public IModel
 		virtual void SetPortNumber(const int & p);
 		virtual int GetPortNumber() const;
 
+		virtual int RegisterObserver(const IRemoteObserver & observ, ObserverType type);
+		virtual int UnregisterObserver(ObserverType type);
+
          int AddStatusObserver(DataObserver & observer) ;
 
          int SendPackage(FilePackage package);
