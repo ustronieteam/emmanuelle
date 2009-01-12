@@ -47,7 +47,8 @@ class IModel
 
         virtual int AddMessageObserver(IRemoteObserver & observer) = 0;
 
-        virtual  std::vector<ContactRecord> GetContactsList() = 0; // TODO: zmienic typ zwracany
+        virtual  std::vector<ContactRecord> GetContactsList() = 0; 
+		virtual bool runStatusChecker() = 0;
 
 };  //end class IModel
 

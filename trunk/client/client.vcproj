@@ -212,6 +212,10 @@
 					RelativePath=".\Sources\Model\Model.cpp"
 					>
 				</File>
+				<File
+					RelativePath=".\Sources\Model\StatusCheckerFunctor.cpp"
+					>
+				</File>
 			</Filter>
 			<Filter
 				Name="Utils"
@@ -392,6 +396,10 @@
 				</File>
 				<File
 					RelativePath=".\Headers\Model\Model.h"
+					>
+				</File>
+				<File
+					RelativePath=".\Headers\Model\StatusCheckerFunctor.h"
 					>
 				</File>
 				<Filter

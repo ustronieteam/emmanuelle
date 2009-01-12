@@ -164,9 +164,12 @@ bool Controller::ConnectToServer()
 	}
 	catch(std::exception & e)
 	{
-		LOG4CXX_DEBUG(logger, "Wyjatek kontrolera - podczas podlaczania sie do serwera");
+		LOG4CXX_DEBUG(logger, "Wyjatek kontrolera - podczas podlaczania sie do serwera"<<e.what());
 		return false;
 	}
+	LOG4CXX_DEBUG(logger, "Uruchom nasluchiwanie statusu");
+	model->runStatusChecker();
+	LOG4CXX_DEBUG(logger, "Nasluchiwanie statusu uruchomiono");
     return true;
 }
 

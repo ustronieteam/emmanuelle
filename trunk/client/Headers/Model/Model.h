@@ -16,9 +16,10 @@
 #include "FileObserver.h"
 #include "MessageObserver.h"
 #include "StatusObserver.h"
+#include "StatusCheckerFunctor.h"
 
 #include <boost/shared_ptr.hpp>
-
+#include <boost/thread.hpp>
 #include <log4cxx/logger.h>
 #include <log4cxx/level.h>
 
@@ -182,6 +183,7 @@ class Model : public IModel
 		virtual void SetOwnName(const char * c);
 		virtual void SetOwnNumber(long l);
 		virtual void SetMyAvailability(bool b);
+		virtual bool runStatusChecker();
 
 };  //end class Model
 
