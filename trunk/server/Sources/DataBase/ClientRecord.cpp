@@ -19,6 +19,7 @@ ClientRecord::ClientRecord(const ClientRecord & arg)
 	this->_clientServerId		= arg._clientServerId;
 	this->_clientRemoteInstance = arg._clientRemoteInstance;
 	this->_enability			= arg._enability;
+	this->_user					= arg._user;
 }
 
 ///
@@ -36,6 +37,7 @@ ClientRecord & ClientRecord::operator =(const ClientRecord & arg)
 		this->_clientServerId		= arg._clientServerId;
 		this->_clientRemoteInstance = arg._clientRemoteInstance;
 		this->_enability			= arg._enability;
+		this->_user					= arg._user;
     }
 
 	return *this;
