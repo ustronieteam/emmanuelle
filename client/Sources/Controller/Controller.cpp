@@ -154,6 +154,7 @@ int Controller::Disconnect()
 ///@brief  skupia logike, wykonywana podczas ³¹czenia siê do serwera.
 bool Controller::ConnectToServer() 
 {
+	model->SetOwnName(model->GetOwnName().c_str());
 	try
 	{
 		LOG4CXX_DEBUG(logger, "Podlaczanie do pierwszego servera");
