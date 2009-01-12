@@ -154,7 +154,7 @@ int Client::ConnectToServer()
 		}
 		catch(CORBA::SystemException &e)
 		{
-			LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas podlaczania sie do serwera");
+			LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas podlaczania sie do serwera: " << e._name());
 			std::exception ex("Nie mo¿na podlaczyc sie do serwera");
 			throw ex;
 		}
