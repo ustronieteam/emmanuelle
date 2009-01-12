@@ -49,6 +49,7 @@ class IModel
 
         virtual  std::vector<ContactRecord> GetContactsList() = 0; 
 		virtual bool runStatusChecker() = 0;
+		virtual void activateListning() = 0;
 
 };  //end class IModel
 

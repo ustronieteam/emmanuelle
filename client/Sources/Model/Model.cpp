@@ -1,5 +1,25 @@
 #include "Model.h"
 
+void activateListeningThreadFun()
+{
+	log4cxx::LoggerPtr logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("ActivateListeningThreadFunction"));
+	logger->setLevel(log4cxx::Level::getAll());
+	try
+	{
+		LOG4CXX_DEBUG(logger, "Uruchamianie nasluchu...");
+		Model::GetInstance()->activateListning();
+	}
+	catch(CORBA::SystemException & e)
+	{
+		LOG4CXX_ERROR(logger, "Wyjatek CORBA::SystemException w wyjatku nasluchu klienta" << e._name());
+		return;
+	}
+	catch(std::exception & e)
+	{
+		LOG4CXX_ERROR(logger, "Wyjatek std::exception w wyjatku nasluchu klienta" << e.what());
+		return;
+	}
+}
 void Model::activateListning()
 {
 	// uruchomienie brokera, stworzenie obiektow zdalnych, udostepnienie ich i wlaczenie nasluchiwania
@@ -215,7 +235,10 @@ int Model::Disconnect()
 		throw e;
 	 }
 	 if(result==1)
+	 {
+		 boost::thread watekSluchacza(&activateListeningThreadFun);
 		 return true;
+	 }
 	 else
 		return false;
  }
