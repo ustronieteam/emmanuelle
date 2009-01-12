@@ -92,11 +92,12 @@ int RemoteClientConnectedObserverLogicRunnable::operator()()
 
 	//    1) Znajdz klienta
 	struct DomainData::Address clientAddr = observerData.getClientAddress();
+	struct DomainData::User clientUserData = observerData.getClientUserData();
 	int clientId = 0;
 	ClientRecord clRec;
 	try
 	{
-		clientId = clientsDataBase->Find(clientAddr);
+		clientId = clientsDataBase->Find(clientUserData);
 		clRec = clientsDataBase->GetRecord(clientId);
 	}
 	catch(std::exception & e)
