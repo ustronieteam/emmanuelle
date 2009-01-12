@@ -305,3 +305,19 @@ void Model::SetMyAvailability(bool b)
 {
 	clientsData->SetMyAvailability(b);
 }
+///
+///@author Marian Szczykulski
+///@date 2009-01-13
+///@brief uruchamia w odzielnym watku cheker-a ktory sprawdza 
+///@brief co okreslony czas status wszystkich uzytkownikuw na liscie kontaktow
+bool Model::runStatusChecker()
+{
+	LOG4CXX_DEBUG(logger, "Rozpoczynanie nasluchiwania statusu, uruchomienie w nowym watku");
+	//Utworz logike watku
+	StatusCheckerFunctor statusChecker(clientsData);
+	//Utworz i uruchom watki
+	boost::thread threadStatusChecker(statusChecker);
+
+	LOG4CXX_DEBUG(logger, "Rozpoczeto nasluchiwac status w nowym watku");
+	return true;
+}
