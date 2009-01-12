@@ -8,6 +8,10 @@
 #include "EventType.h"
 #include "ServerRecord.h"
 #include "ClientRecord.h"
+
+#include <log4cxx/logger.h>
+#include <log4cxx/level.h>
+
 //
 // IDL:IServerClient:1.0
 //
@@ -19,6 +23,9 @@ class IServerClient_impl : virtual public POA_IServerClient,
     void operator=(const IServerClient_impl&);
 
     PortableServer::POA_var poa_;
+
+	// logger
+	log4cxx::LoggerPtr logger;
 
 public:
 
