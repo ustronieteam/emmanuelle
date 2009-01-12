@@ -42,7 +42,7 @@ IServerClient_impl::Connect(const ::DomainData::Address& server,
 	// dodanie serwera macierzystego do bazy o ile nie istnieje juz w niej
 	if(!serverDB->Size())
 	{
-		Server::GetInstance("")->GetServerImpl()->AddServer(serverAddress);
+		Server::GetInstance("")->GetServerImpl()->AddServer(server);
 	}
 
 	// pobranie instancji bazy danych

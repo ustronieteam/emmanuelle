@@ -191,7 +191,7 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 			it++)
 		{
 			//Przekarz dane o kliencie
-			newServerInstance->ClientStatusChanged(it->GetAddress(),it->GetEnability());
+			//newServerInstance->ClientStatusChanged(it->GetAddress(),it->GetEnability());
 			LOG4CXX_DEBUG(logger, "Przekazano dane o kliencie: " <<it->GetAddress().localization.in());
 		}
 
