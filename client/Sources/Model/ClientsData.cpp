@@ -185,3 +185,8 @@ void ClientsData::SetMyAvailability(bool b)
 {
 	ownRecord.isAvailable = b;
 }
+
+bool ClientsData::ModifyRecord(const ContactRecord & cr)
+{
+	return true;
+}

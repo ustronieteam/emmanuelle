@@ -62,6 +62,7 @@ class ClientsData : public ClientDataObject
         int DeleteContact(DomainData::User usr);
         int AddContact(DomainData::User usr);
 		const ContactRecord & FindByName(std::string name);
+		bool ModifyRecord(const ContactRecord & cr);
 
 };  //end class ClientsData
 #endif

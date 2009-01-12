@@ -224,3 +224,7 @@ int Client::AddMessageObserver(IRemoteObserver & messageObserver)
 {
     return 0;
 }
+bool Client::CheckStatus(DomainData::Address addr)
+{
+	return true;
+}
