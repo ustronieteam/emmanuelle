@@ -171,7 +171,7 @@ bool Controller::ConnectToServer()
 		return false;
 	}
 	LOG4CXX_DEBUG(logger, "Uruchom nasluchiwanie statusu");
-	model->runStatusChecker();
+	//model->runStatusChecker(); //TODO : Pozniej
 	LOG4CXX_DEBUG(logger, "Nasluchiwanie statusu uruchomiono");
     return true;
 }
