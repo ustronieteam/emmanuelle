@@ -1,28 +1,58 @@
 #ifndef REMOTEOBSERVERDATA_H
 #define REMOTEOBSERVERDATA_H
-//Begin section for file RemoteObserverData.h
-//TODO: Add definitions that you want preserved
-//End section for file RemoteObserverData.h
 
+#include "DomainData.h"
+#include "ObserverType.h"
 
 //Wszystkie dane jakie mog¹ p³yn¹æ z objektu obserwowanego. Te dane bêd¹ wykorzystywane przez widok w celu prezentacji.
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 class RemoteObserverData
 {
+	
+	private:
 
-    //Begin section for RemoteObserverData
-    //TODO: Add attributes that you want preserved
-    //End section for RemoteObserverData
+		ObserverType eventType;
 
+		DomainData::Message message;
+
+		DomainData::Address senderAddress;
 
 
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         RemoteObserverData();
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~RemoteObserverData();
+
+		const ObserverType & GetObserverType() const
+		{
+			return eventType;
+		}
+
+		void SetObserverType(const ObserverType & type)
+		{
+			eventType = type;
+		}
+
+		const DomainData::Message & GetMessage() const
+		{
+			return message;
+		}
+
+		void SetMessage(const DomainData::Message & msg)
+		{
+			message = msg;
+		}
+
+		const DomainData::Address & GetSenderAddress() const
+		{
+			return senderAddress;
+		}
+
+		void SetSenderAddress(const DomainData::Address & addr)
+		{
+			senderAddress = addr;
+		}
 
 };  //end class RemoteObserverData
 
