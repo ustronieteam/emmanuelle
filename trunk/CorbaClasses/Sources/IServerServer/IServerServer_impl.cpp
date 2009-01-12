@@ -29,7 +29,7 @@ IServerServer_impl::Join(const ::DomainData::Address& serverAddress)
 	std::cout << "WYWOLANIE JOIN z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()) << std::endl;
 
 	// zapisanie adresu wlasnego serwera
-	if(strcmp(Server::GetMyIP().localization.in(), "null"))
+	if(!strcmp(Server::GetMyIP().localization.in(), "null"))
 		Server::SetMyIP(serverAddress);
 
 	//pobranie instancji bazy danych
