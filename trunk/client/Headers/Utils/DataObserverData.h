@@ -1,26 +1,21 @@
 #ifndef DATAOBSERVERDATA_H
 #define DATAOBSERVERDATA_H
-//Begin section for file DataObserverData.h
-//TODO: Add definitions that you want preserved
-//End section for file DataObserverData.h
 
+#include "ContactRecord.h"
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 class DataObserverData
 {
 
-    //Begin section for DataObserverData
-    //TODO: Add attributes that you want preserved
-    //End section for DataObserverData
-
-
+	ContactRecord cr;
 
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
         DataObserverData();
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+		void setContactRecord(const ContactRecord & c){cr = c;}
+		const ContactRecord & getContactRecord(){return cr;}
+
         virtual ~DataObserverData();
 
 };  //end class DataObserverData
