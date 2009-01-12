@@ -288,6 +288,7 @@ bool Model::GetMyAvailability()
 void Model::SetOwnName(const char * c)
 {
 	clientsData->SetOwnName(c);
+	client->setClientName(c);
 } 
 ///
 ///@author Marian Szczykulski
@@ -296,6 +297,7 @@ void Model::SetOwnName(const char * c)
 void Model::SetOwnNumber(long l)
 {
 	clientsData->SetOwnNumber(l);
+	
 }
 ///
 ///@author Marian Szczykulski
