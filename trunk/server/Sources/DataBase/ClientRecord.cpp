@@ -95,3 +95,21 @@ void ClientRecord::SetEnability(const struct DomainData::Enability & enability)
 {
 	this->_enability = enability;
 }
+
+///
+/// Pobiera uzytkownika.
+/// @return Uzytkownik.
+///
+const struct DomainData::User & ClientRecord::GetUser() const
+{
+	return this->_user;
+}
+
+///
+/// Ustawia uzytkownika.
+/// @param[in] user Uzytkownik.
+///
+void ClientRecord::SetUser(const struct DomainData::User & user)
+{
+	this->_user = user;
+}

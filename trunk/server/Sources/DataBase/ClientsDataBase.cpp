@@ -89,7 +89,15 @@ int ClientsDataBase::InsertRecord(const ClientRecord & record)
 
 	if ( this->_records.count(record.GetRecordId()) == 0 )
 	{
-		this->_records[record.GetRecordId()] = record;
+		// Triger
+		// Address.Name = User.Name
+		ClientRecord rec(record);
+		DomainData::Address adr = rec.GetAddress();
+		DomainData::User usr = rec.GetUser();
+		adr.name = usr.name;
+		rec.SetAddress(adr);
+
+		this->_records[record.GetRecordId()] = rec;
 		return 1;
 	}
 	else
@@ -190,6 +198,22 @@ int ClientsDataBase::Find(const struct DomainData::Address & address)
 }
 
 ///
+/// Znajdz rekord klienta po uzytkowniku
+/// @param[in] user Uzytkownik do wyszukania rekordu.
+/// @return ID wyszukanego rekordu. -1 gdy nie znajdzie.
+int ClientsDataBase::Find(const struct DomainData::User & user)
+{
+	boost::mutex::scoped_lock sl(_mutex);
+
+	if ( this->_records.size() != 0 )
+		for(std::map<int, ClientRecord>::iterator i = this->_records.begin(); i != this->_records.end(); i++)
+			if ( strcmp((*i).second.GetUser().name.in(), user.name.in()) == 0 )
+				return (*i).second.GetRecordId();
+
+	return -1;
+}
+
+///
 /// Znajduje aktywnego klienta w bazie danych.
 /// @return Id rekordu aktywnego klienta. -1 gdy nie znajdzie.
 int ClientsDataBase::FindActiveClient()
@@ -227,11 +251,15 @@ int ClientsDataBase::FindActiveClientOnServer(int serverId)
 std::ostream & operator<<(std::ostream & os, const ClientsDataBase & db)
 {
 	int k = 1;
+
+	os  << "Nr\tId\tAdres.Loc.\tUser.Name\n" ;
+
 	for(std::map<int, ClientRecord>::const_iterator i = db._records.begin(); i != db._records.end(); i++, ++k)
 	{
 		os	<< k << "\t" 
-			<< (*i).second.GetRecordId() << "\t"
-			<< (*i).second.GetAddress().localization.in()
+			<< (*i).second.GetRecordId() << '\t'
+			<< (*i).second.GetAddress().localization.in() << '\t'
+			<< (*i).second.GetUser().name.in()
 			<< std::endl;
 	}
 
