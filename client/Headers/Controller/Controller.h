@@ -50,7 +50,7 @@ class Controller
 		//imp
         int DeleteContact(const char * name, long number);
 		//imp
-		bool SendMessage(const char * content, const char * dest);
+		bool SendMessageToClient(const char * content, const char * dest);
         
 		
 		
