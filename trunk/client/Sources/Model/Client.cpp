@@ -60,21 +60,6 @@ void Client::readServerAddress()
 ///@brief  Pobiera zdaln¹ instancje servera(jezeli juz jakas jest to ja usuwa)
 bool Client::getRemoteServerInstance()
 {
-	//Instancja musi byc niezainicjalizowana
-	try
-	{
-		if(! CORBA::is_nil(orb))
-		{
-			//orb->shutdown(false);
-			orb->destroy();
-		}
-		
-	}
-	catch(CORBA::SystemException & e)
-	{
-		LOG4CXX_ERROR(logger, "Wyjatek podczas resetowania zdalnej instancji"<<e._name());
-		return false;
-	}
 	LOG4CXX_DEBUG(logger, "Pozyskiwanie zdalnej instancji servera");
 	try
 	{
