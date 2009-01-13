@@ -13,7 +13,7 @@
 #include <iostream>
 
 static const std::string SRVPORT = "7080";
-static const std::string CLNTPORT = "7081";
+static const std::string CLNTPORT = "9999";
 
 class CorbaConnector
 {
@@ -75,7 +75,7 @@ class CorbaConnector
 			}
 
 			server = IServerServer::_narrow(oServer);
-		    
+
 			if (CORBA::is_nil(server))
 			{
 				std::cout << "server nil" << std::endl;
@@ -112,8 +112,9 @@ class CorbaConnector
 			{
 				return false;
 			}
-
-			client = IClientServer::_narrow(oClient);
+			std::cout<<"1-"<<address<<"-\n";
+			/*client =*/ IClientServer::_narrow(oClient);
+			std::cout<<"2\n";
 		    
 			if (CORBA::is_nil(client))
 			{
