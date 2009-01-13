@@ -29,7 +29,7 @@ IClientServer_impl::ReceiveMessage(const ::DomainData::Address& senderAddress,
                                    const ::DomainData::Message& msg)
     throw(::CORBA::SystemException)
 {
-	std::cout << "WYWOLANIE RECEIVEMESSAGE" << std::endl;
+	LOG4CXX_DEBUG(logger, "WYWOLANIE RECEIVEMESSAGE");
 
 	RemoteObserverData observData;
 	observData.SetObserverType(MESSAGE);

@@ -33,6 +33,9 @@ IServerClient_impl::Connect(const ::DomainData::Address& server,
 {
 	std::cout << "WYWOLANIE CONNECT z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()) << std::endl;
 
+    ::DomainData::Address* _r = new ::DomainData::Address;
+	_r->localization = CORBA::string_dup(Server::GetMyIP().localization.in());
+
 	// zapisanie adresu wlasnego serwera
     if(strcmp(Server::GetMyIP().localization.in(),"null")==0)
 	{
@@ -53,10 +56,50 @@ IServerClient_impl::Connect(const ::DomainData::Address& server,
 	en.status = true;
 	en.mode_ = m;
 	
+	//Server::GetInstance("")->GetServerImpl()->ClientStatusChanged(addr, en, usr);
+
+	
+	int recordId;
+	ClientRecord record;
+
+	int servId;
+	if((servId = ServerDataBase::GetInstance()->Find(server)) < 0)
+	{
+		LOG4CXX_ERROR(logger, "Nie znaleziono serwera do ktorego jest podlaczony klient");
+		return _r;
+	}
+	else
+	{
+		LOG4CXX_DEBUG(logger, "Zanaleziono serwer - wstawianie ... ");
+		record.SetClientServerId(servId);
+	}
+	
 	DomainData::Address addr;
 	addr.localization = CORBA::string_dup( Server::GetRemotedAddress(SRVPORT.c_str()) );
-	
-	Server::GetInstance("")->GetServerImpl()->ClientStatusChanged(addr, en, usr);
+
+
+	if((recordId = ClientsDataBase::GetInstance()->Find(usr)) < 0)
+	{
+		// nie znaleziono w bazie takiego rekordu
+		record.SetAddress(addr);
+		record.SetEnability(en);
+		record.SetUser(usr);
+
+		try
+		{
+			ClientsDataBase::GetInstance()->InsertRecord(record);
+		}
+		catch(std::exception &)
+		{}
+	}
+	else
+	{
+		record = ClientsDataBase::GetInstance()->GetRecord(recordId);
+		record.SetEnability(en);
+
+
+		ClientsDataBase::GetInstance()->ModifyRecord(record);
+	}
 
 	RemoteObserverData observData;
 	observData.set_eventType(CLIENT_CONNECTED);
@@ -72,8 +115,6 @@ IServerClient_impl::Connect(const ::DomainData::Address& server,
 
 	//TODO: mozna w przyszlosci dodac obsluge przeciazenia serwera
 
-    ::DomainData::Address* _r = new ::DomainData::Address;
-	_r->localization = CORBA::string_dup(Server::GetMyIP().localization.in());
     return _r;
 }
 

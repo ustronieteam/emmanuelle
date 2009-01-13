@@ -214,6 +214,21 @@ IServerServer_impl::ClientStatusChanged(const ::DomainData::Address& clientAddre
 	int recordId;
 	ClientRecord record;
 
+	DomainData::Address addr;
+	addr.localization = CORBA::string_dup(Server::GetRemotedAddress(SRVPORT.c_str()));
+
+	int servId;
+	if((servId = ServerDataBase::GetInstance()->Find(addr)) < 0)
+	{
+		LOG4CXX_ERROR(logger, "Nie znaleziono serwera do ktorego jest podlaczony klient");
+		return;
+	}
+	else
+	{
+		LOG4CXX_DEBUG(logger, "Zanaleziono serwer - wstawianie ... ");
+		record.SetClientServerId(servId);
+	}
+
 	if((recordId = clientsDB->Find(usr)) < 0)
 	{
 		// nie znaleziono w bazie takiego rekordu
@@ -232,6 +247,7 @@ IServerServer_impl::ClientStatusChanged(const ::DomainData::Address& clientAddre
 	{
 		record = clientsDB->GetRecord(recordId);
 		record.SetEnability(en);
+
 
 		clientsDB->ModifyRecord(record);
 	}
