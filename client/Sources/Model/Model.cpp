@@ -189,7 +189,7 @@ int Model::DeleteContact(const DomainData::User & usr)
 ///@param[in] msg		wiadomosc
 ///@return				status (-2 zdalna instancja serwera nie zainicjowana,
 ///								-1 blad podczas wywolywania zdalnej metody serwera)
- int Model::SendMessage(DomainData::Address recAddr, DomainData::Message msg) 
+ int Model::SendMessageToClient(DomainData::Address recAddr, DomainData::Message msg) 
  {
 	 int result = 0;
 	 result = client->SendMessage(recAddr, msg);
