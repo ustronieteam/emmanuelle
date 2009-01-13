@@ -141,7 +141,7 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 			}
 			catch(CORBA::SystemException & e)
 			{
-				LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas pozyskiwania zdalnej instancji klienta: "<<e._name());
+				LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas pozyskiwania zdalnej instancji klienta: "<<e._name() << ": " << e._to_string());
 				return -4;
 			}
 		}//Zdalna instancje klienta pobrano

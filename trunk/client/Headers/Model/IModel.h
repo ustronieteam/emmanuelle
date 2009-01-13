@@ -54,6 +54,8 @@ class IModel
 		virtual bool runStatusChecker() = 0;
 		virtual void activateListning() = 0;
 
+		 virtual void TestClient(std::string addrClient) = 0;
+
 };  //end class IModel
 
 #endif
