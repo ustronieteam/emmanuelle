@@ -170,7 +170,10 @@ IServerClient_impl::SendMessage(const ::DomainData::Address& receiverAddress,
 	RemoteObserverData observData;
 	observData.set_eventType(CLIENT_SEND_MESSAGE);
 	observData.setClientMessage(msg);
+	DomainData::User usr;
+	usr.name = CORBA::string_dup(receiverAddress.name.in());
 	observData.setClientAddress(receiverAddress);
+	observData.setClientUserData(usr);
 
 	this->Notify(observData);
 }
