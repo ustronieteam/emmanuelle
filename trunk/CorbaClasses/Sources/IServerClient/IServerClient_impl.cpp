@@ -183,15 +183,15 @@ IServerClient_impl::SendMessage(const ::DomainData::Address& receiverAddress,
                                 const ::DomainData::Message& msg)
     throw(::CORBA::SystemException)
 {
-
 	std::cout << "WYWOLANIE SENDMESSAGE z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()) << std::endl;
 
+	LOG4CXX_DEBUG(logger, "WYWOLANIE SENDMESSAGE z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()));
 	RemoteObserverData observData;
 	observData.set_eventType(CLIENT_SEND_MESSAGE);
 	observData.setClientMessage(msg);
-	DomainData::User us;
-	us.name = CORBA::string_dup(receiverAddress.name.in());
-	observData.setClientUserData(us);
+	observData.setClientUserData(usr);
+	LOG4CXX_DEBUG(logger, "usr["<< usr.name.in() <<"], receiverAddress[" << receiverAddress.localization.in() << "], msg[" << msg.content.in() << "]");
+	
 	observData.setClientAddress(receiverAddress);
 
 	this->Notify(observData);
