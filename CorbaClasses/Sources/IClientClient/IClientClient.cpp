@@ -206,7 +206,7 @@ OBProxy_IClientClient::_OB_ids() const
 //
 void
 OBProxy_IClientClient::SendFile(const ::DomainData::File& _ob_a0,
-                                const ::DomainData::Address& _ob_a1)
+                                const ::DomainData::User& _ob_a1)
 {
     ::CORBA::ULong _ob_retry = 0, _ob_hop = 0;
     while(true)
@@ -230,7 +230,7 @@ OBProxy_IClientClient::SendFile(const ::DomainData::File& _ob_a0,
 // IDL:IClientClient/CreatePipe:1.0
 //
 void
-OBProxy_IClientClient::CreatePipe()
+OBProxy_IClientClient::CreatePipe(const ::DomainData::User& _ob_a0)
 {
     ::CORBA::ULong _ob_retry = 0, _ob_hop = 0;
     while(true)
@@ -240,7 +240,7 @@ OBProxy_IClientClient::CreatePipe()
             OB::StubImplBase_var _ob_stubImplBase = _OB_getStubImpl();
             OBStubImpl_IClientClient_ptr _ob_stubImpl = 
                 dynamic_cast< OBStubImpl_IClientClient_ptr>(_ob_stubImplBase.in());
-            _ob_stubImpl -> CreatePipe();
+            _ob_stubImpl -> CreatePipe(_ob_a0);
             return;
         }
         catch(const OB::ExceptionBase& _ob_ex)
@@ -254,7 +254,7 @@ OBProxy_IClientClient::CreatePipe()
 // IDL:IClientClient/GetFile:1.0
 //
 ::DomainData::File*
-OBProxy_IClientClient::GetFile(const ::DomainData::Address& _ob_a0)
+OBProxy_IClientClient::GetFile(const ::DomainData::User& _ob_a0)
 {
     ::CORBA::ULong _ob_retry = 0, _ob_hop = 0;
     while(true)
@@ -295,7 +295,7 @@ OBRelease(OBStubImpl_IClientClient_ptr p)
 //
 void
 OBMarshalStubImpl_IClientClient::SendFile(const ::DomainData::File& _ob_a0,
-                                          const ::DomainData::Address& _ob_a1)
+                                          const ::DomainData::User& _ob_a1)
 {
     while(true)
     {
@@ -329,14 +329,22 @@ OBMarshalStubImpl_IClientClient::SendFile(const ::DomainData::File& _ob_a0,
 // IDL:IClientClient/CreatePipe:1.0
 //
 void
-OBMarshalStubImpl_IClientClient::CreatePipe()
+OBMarshalStubImpl_IClientClient::CreatePipe(const ::DomainData::User& _ob_a0)
 {
     while(true)
     {
         OB::Downcall_var _ob_down = _OB_createDowncall("CreatePipe", true);
         try
         {
-            _OB_preMarshal(_ob_down);
+            OB::OutputStreamImpl* _ob_out = _OB_preMarshal(_ob_down);
+            try
+            {
+                _ob_a0._OB_marshal(_ob_out);
+            }
+            catch(const ::CORBA::SystemException& _ob_ex)
+            {
+                _OB_marshalEx(_ob_down, _ob_ex);
+            }
             _OB_postMarshal(_ob_down);
             _OB_request(_ob_down);
             _OB_preUnmarshal(_ob_down);
@@ -354,7 +362,7 @@ OBMarshalStubImpl_IClientClient::CreatePipe()
 // IDL:IClientClient/GetFile:1.0
 //
 ::DomainData::File*
-OBMarshalStubImpl_IClientClient::GetFile(const ::DomainData::Address& _ob_a0)
+OBMarshalStubImpl_IClientClient::GetFile(const ::DomainData::User& _ob_a0)
 {
     while(true)
     {

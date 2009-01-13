@@ -16,9 +16,6 @@ class IServerServer_impl : virtual public POA_IServerServer,
 
     PortableServer::POA_var poa_;
 
-	//logger
-	log4cxx::LoggerPtr logger;
-
 public:
 
     IServerServer_impl(PortableServer::POA_ptr);
@@ -54,25 +51,24 @@ public:
     // IDL:IServerServer/PassMessage:1.0
     //
     virtual void PassMessage(const ::DomainData::Message& msg,
-                             const ::DomainData::Address& senderAddress,
-                             const ::DomainData::Address& receiverAddress)
+                             const ::DomainData::User& sender,
+                             const ::DomainData::User& receiver)
         throw(::CORBA::SystemException);
 
     //
     // IDL:IServerServer/PassCreatePipeRequest:1.0
     //
-    virtual void PassCreatePipeRequest(const ::DomainData::Address& pipeHolderAddress,
-                                       const ::DomainData::Address& senderAddress,
-                                       const ::DomainData::Address& receiverAddress)
+    virtual void PassCreatePipeRequest(const ::DomainData::User& pipeHolder,
+                                       const ::DomainData::User& sender,
+                                       const ::DomainData::User& receiver)
         throw(::CORBA::SystemException);
 
     //
     // IDL:IServerServer/ClientStatusChanged:1.0
     //
-    virtual void ClientStatusChanged(const ::DomainData::Address& clientAddress,
+    virtual void ClientStatusChanged(const ::DomainData::User& client,
                                      const ::DomainData::Enability& en,
-                                     const ::DomainData::User& usr,
-                                     const ::DomainData::Address& senderAddress)
+                                     const ::DomainData::Address& senderServerAddress)
         throw(::CORBA::SystemException);
 };
 

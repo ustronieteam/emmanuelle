@@ -67,6 +67,11 @@ protected:
     //
     void _OB_op_GetPipeHolder(OB::Upcall_ptr);
 
+    //
+    // IDL:IServerClient/GetUserAddressByName:1.0
+    //
+    void _OB_op_GetUserAddressByName(OB::Upcall_ptr);
+
 public:
 
     POA_IServerClient() { }
@@ -108,21 +113,27 @@ public:
     //
     // IDL:IServerClient/SendMessage:1.0
     //
-    virtual void SendMessage(const ::DomainData::Address& receiverAddress,
-                             const ::DomainData::User& usr,
+    virtual void SendMessage(const ::DomainData::User& ssender,
+                             const ::DomainData::User& receiver,
                              const ::DomainData::Message& msg)
         throw(::CORBA::SystemException) = 0;
 
     //
     // IDL:IServerClient/CheckClientStatus:1.0
     //
-    virtual ::DomainData::Enability CheckClientStatus(const ::DomainData::Address& clientAddress)
+    virtual ::DomainData::Enability CheckClientStatus(const ::DomainData::User& usr)
         throw(::CORBA::SystemException) = 0;
 
     //
     // IDL:IServerClient/GetPipeHolder:1.0
     //
-    virtual ::DomainData::Address* GetPipeHolder(const ::DomainData::Address& receiverAddress)
+    virtual ::DomainData::User* GetPipeHolder(const ::DomainData::User& receiver)
+        throw(::CORBA::SystemException) = 0;
+
+    //
+    // IDL:IServerClient/GetUserAddressByName:1.0
+    //
+    virtual ::DomainData::Address* GetUserAddressByName(const ::DomainData::User& usr)
         throw(::CORBA::SystemException) = 0;
 };
 
@@ -171,19 +182,24 @@ public:
     //
     // IDL:IServerClient/SendMessage:1.0
     //
-    virtual void SendMessage(const ::DomainData::Address& receiverAddress,
-                             const ::DomainData::User& usr,
+    virtual void SendMessage(const ::DomainData::User& ssender,
+                             const ::DomainData::User& receiver,
                              const ::DomainData::Message& msg);
 
     //
     // IDL:IServerClient/CheckClientStatus:1.0
     //
-    virtual ::DomainData::Enability CheckClientStatus(const ::DomainData::Address& clientAddress);
+    virtual ::DomainData::Enability CheckClientStatus(const ::DomainData::User& usr);
 
     //
     // IDL:IServerClient/GetPipeHolder:1.0
     //
-    virtual ::DomainData::Address* GetPipeHolder(const ::DomainData::Address& receiverAddress);
+    virtual ::DomainData::User* GetPipeHolder(const ::DomainData::User& receiver);
+
+    //
+    // IDL:IServerClient/GetUserAddressByName:1.0
+    //
+    virtual ::DomainData::Address* GetUserAddressByName(const ::DomainData::User& usr);
 };
 
 #endif

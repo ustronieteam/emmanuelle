@@ -32,10 +32,10 @@ void
 POA_IClientClient::_OB_op_SendFile(OB::Upcall_ptr _ob_up)
 {
     ::DomainData::File _ob_a0;
-    ::DomainData::Address _ob_a1;
+    ::DomainData::User _ob_a1;
     OB::InputStreamImpl* _ob_in = _OB_preUnmarshal(_ob_up);
     ::DomainData::File::_OB_unmarshal(_ob_a0, _ob_in);
-    ::DomainData::Address::_OB_unmarshal(_ob_a1, _ob_in);
+    ::DomainData::User::_OB_unmarshal(_ob_a1, _ob_in);
     _OB_postUnmarshal(_ob_up);
     SendFile(_ob_a0, _ob_a1);
     _OB_postinvoke(_ob_up);
@@ -49,9 +49,11 @@ POA_IClientClient::_OB_op_SendFile(OB::Upcall_ptr _ob_up)
 void
 POA_IClientClient::_OB_op_CreatePipe(OB::Upcall_ptr _ob_up)
 {
-    _OB_preUnmarshal(_ob_up);
+    ::DomainData::User _ob_a0;
+    OB::InputStreamImpl* _ob_in = _OB_preUnmarshal(_ob_up);
+    ::DomainData::User::_OB_unmarshal(_ob_a0, _ob_in);
     _OB_postUnmarshal(_ob_up);
-    CreatePipe();
+    CreatePipe(_ob_a0);
     _OB_postinvoke(_ob_up);
     _OB_preMarshal(_ob_up);
     _OB_postMarshal(_ob_up);
@@ -63,9 +65,9 @@ POA_IClientClient::_OB_op_CreatePipe(OB::Upcall_ptr _ob_up)
 void
 POA_IClientClient::_OB_op_GetFile(OB::Upcall_ptr _ob_up)
 {
-    ::DomainData::Address _ob_a0;
+    ::DomainData::User _ob_a0;
     OB::InputStreamImpl* _ob_in = _OB_preUnmarshal(_ob_up);
-    ::DomainData::Address::_OB_unmarshal(_ob_a0, _ob_in);
+    ::DomainData::User::_OB_unmarshal(_ob_a0, _ob_in);
     _OB_postUnmarshal(_ob_up);
     ::DomainData::File_var _ob_r = GetFile(_ob_a0);
     _OB_postinvoke(_ob_up);
@@ -162,7 +164,7 @@ OBDirectStubImpl_IClientClient::OBDirectStubImpl_IClientClient(
 //
 void
 OBDirectStubImpl_IClientClient::SendFile(const ::DomainData::File& _ob_a0,
-                                         const ::DomainData::Address& _ob_a1)
+                                         const ::DomainData::User& _ob_a1)
 {
     OB::InvocationHandler _ob_handler(this, "SendFile");
     dynamic_cast<POA_IClientClient*>(_ob_servant_) -> SendFile(_ob_a0, _ob_a1);
@@ -172,17 +174,17 @@ OBDirectStubImpl_IClientClient::SendFile(const ::DomainData::File& _ob_a0,
 // IDL:IClientClient/CreatePipe:1.0
 //
 void
-OBDirectStubImpl_IClientClient::CreatePipe()
+OBDirectStubImpl_IClientClient::CreatePipe(const ::DomainData::User& _ob_a0)
 {
     OB::InvocationHandler _ob_handler(this, "CreatePipe");
-    dynamic_cast<POA_IClientClient*>(_ob_servant_) -> CreatePipe();
+    dynamic_cast<POA_IClientClient*>(_ob_servant_) -> CreatePipe(_ob_a0);
 }
 
 //
 // IDL:IClientClient/GetFile:1.0
 //
 ::DomainData::File*
-OBDirectStubImpl_IClientClient::GetFile(const ::DomainData::Address& _ob_a0)
+OBDirectStubImpl_IClientClient::GetFile(const ::DomainData::User& _ob_a0)
 {
     OB::InvocationHandler _ob_handler(this, "GetFile");
     return dynamic_cast<POA_IClientClient*>(_ob_servant_) -> GetFile(_ob_a0);

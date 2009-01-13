@@ -7,9 +7,6 @@
 IClientClient_impl::IClientClient_impl(PortableServer::POA_ptr poa)
     : poa_(PortableServer::POA::_duplicate(poa))
 {
-	//logger
-	logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("IClientClinet_impl"));
-	logger->setLevel(log4cxx::Level::getAll());
 }
 
 IClientClient_impl::~IClientClient_impl()
@@ -27,7 +24,7 @@ IClientClient_impl::_default_POA()
 //
 void
 IClientClient_impl::SendFile(const ::DomainData::File& f,
-                             const ::DomainData::Address& receiverAddress)
+                             const ::DomainData::User& receiver)
     throw(::CORBA::SystemException)
 {
     // TODO: Implementation
@@ -37,7 +34,7 @@ IClientClient_impl::SendFile(const ::DomainData::File& f,
 // IDL:IClientClient/CreatePipe:1.0
 //
 void
-IClientClient_impl::CreatePipe()
+IClientClient_impl::CreatePipe(const ::DomainData::User& receiver)
     throw(::CORBA::SystemException)
 {
     // TODO: Implementation
@@ -47,7 +44,7 @@ IClientClient_impl::CreatePipe()
 // IDL:IClientClient/GetFile:1.0
 //
 ::DomainData::File*
-IClientClient_impl::GetFile(const ::DomainData::Address& senderAddress)
+IClientClient_impl::GetFile(const ::DomainData::User& sender)
     throw(::CORBA::SystemException)
 {
     // TODO: Implementation

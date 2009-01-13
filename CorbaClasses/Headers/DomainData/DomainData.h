@@ -15,7 +15,7 @@
 #ifndef ___DomainData_h__
 #define ___DomainData_h__
 
-#include "OB/CORBA.h"
+#include <OB/CORBA.h>
 
 #ifndef OB_INTEGER_VERSION
 #   error No ORBacus version defined! Is <OB/CORBA.h> included?

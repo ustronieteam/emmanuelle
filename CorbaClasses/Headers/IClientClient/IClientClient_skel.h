@@ -74,19 +74,19 @@ public:
     // IDL:IClientClient/SendFile:1.0
     //
     virtual void SendFile(const ::DomainData::File& f,
-                          const ::DomainData::Address& receiverAddress)
+                          const ::DomainData::User& receiver)
         throw(::CORBA::SystemException) = 0;
 
     //
     // IDL:IClientClient/CreatePipe:1.0
     //
-    virtual void CreatePipe()
+    virtual void CreatePipe(const ::DomainData::User& receiver)
         throw(::CORBA::SystemException) = 0;
 
     //
     // IDL:IClientClient/GetFile:1.0
     //
-    virtual ::DomainData::File* GetFile(const ::DomainData::Address& senderAddress)
+    virtual ::DomainData::File* GetFile(const ::DomainData::User& sender)
         throw(::CORBA::SystemException) = 0;
 };
 
@@ -119,17 +119,17 @@ public:
     // IDL:IClientClient/SendFile:1.0
     //
     virtual void SendFile(const ::DomainData::File& f,
-                          const ::DomainData::Address& receiverAddress);
+                          const ::DomainData::User& receiver);
 
     //
     // IDL:IClientClient/CreatePipe:1.0
     //
-    virtual void CreatePipe();
+    virtual void CreatePipe(const ::DomainData::User& receiver);
 
     //
     // IDL:IClientClient/GetFile:1.0
     //
-    virtual ::DomainData::File* GetFile(const ::DomainData::Address& senderAddress);
+    virtual ::DomainData::File* GetFile(const ::DomainData::User& sender);
 };
 
 #endif

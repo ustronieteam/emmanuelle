@@ -15,7 +15,7 @@
 #ifndef ___IClientClient_h__
 #define ___IClientClient_h__
 
-#include <domaindata.h>
+#include <DomainData.h>
 
 #ifndef OB_INTEGER_VERSION
 #   error No ORBacus version defined! Is <OB/CORBA.h> included?
@@ -96,17 +96,17 @@ public:
     // IDL:IClientClient/SendFile:1.0
     //
     virtual void SendFile(const ::DomainData::File& f,
-                          const ::DomainData::Address& receiverAddress) = 0;
+                          const ::DomainData::User& receiver) = 0;
 
     //
     // IDL:IClientClient/CreatePipe:1.0
     //
-    virtual void CreatePipe() = 0;
+    virtual void CreatePipe(const ::DomainData::User& receiver) = 0;
 
     //
     // IDL:IClientClient/GetFile:1.0
     //
-    virtual ::DomainData::File* GetFile(const ::DomainData::Address& senderAddress) = 0;
+    virtual ::DomainData::File* GetFile(const ::DomainData::User& sender) = 0;
 };
 
 //
@@ -133,17 +133,17 @@ public:
     // IDL:IClientClient/SendFile:1.0
     //
     void SendFile(const ::DomainData::File& f,
-                  const ::DomainData::Address& receiverAddress);
+                  const ::DomainData::User& receiver);
 
     //
     // IDL:IClientClient/CreatePipe:1.0
     //
-    void CreatePipe();
+    void CreatePipe(const ::DomainData::User& receiver);
 
     //
     // IDL:IClientClient/GetFile:1.0
     //
-    ::DomainData::File* GetFile(const ::DomainData::Address& senderAddress);
+    ::DomainData::File* GetFile(const ::DomainData::User& sender);
 };
 
 //
@@ -178,17 +178,17 @@ public:
     // IDL:IClientClient/SendFile:1.0
     //
     virtual void SendFile(const ::DomainData::File& f,
-                          const ::DomainData::Address& receiverAddress) = 0;
+                          const ::DomainData::User& receiver) = 0;
 
     //
     // IDL:IClientClient/CreatePipe:1.0
     //
-    virtual void CreatePipe() = 0;
+    virtual void CreatePipe(const ::DomainData::User& receiver) = 0;
 
     //
     // IDL:IClientClient/GetFile:1.0
     //
-    virtual ::DomainData::File* GetFile(const ::DomainData::Address& senderAddress) = 0;
+    virtual ::DomainData::File* GetFile(const ::DomainData::User& sender) = 0;
 };
 
 //
@@ -212,17 +212,17 @@ public:
     // IDL:IClientClient/SendFile:1.0
     //
     virtual void SendFile(const ::DomainData::File& f,
-                          const ::DomainData::Address& receiverAddress);
+                          const ::DomainData::User& receiver);
 
     //
     // IDL:IClientClient/CreatePipe:1.0
     //
-    virtual void CreatePipe();
+    virtual void CreatePipe(const ::DomainData::User& receiver);
 
     //
     // IDL:IClientClient/GetFile:1.0
     //
-    virtual ::DomainData::File* GetFile(const ::DomainData::Address& senderAddress);
+    virtual ::DomainData::File* GetFile(const ::DomainData::User& sender);
 };
 
 //

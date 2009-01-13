@@ -15,7 +15,7 @@
 #ifndef ___IServerServer_h__
 #define ___IServerServer_h__
 
-#include <domaindata.h>
+#include <DomainData.h>
 
 #ifndef OB_INTEGER_VERSION
 #   error No ORBacus version defined! Is <OB/CORBA.h> included?
@@ -144,23 +144,22 @@ public:
     // IDL:IServerServer/PassMessage:1.0
     //
     virtual void PassMessage(const ::DomainData::Message& msg,
-                             const ::DomainData::Address& senderAddress,
-                             const ::DomainData::Address& receiverAddress) = 0;
+                             const ::DomainData::User& sender,
+                             const ::DomainData::User& receiver) = 0;
 
     //
     // IDL:IServerServer/PassCreatePipeRequest:1.0
     //
-    virtual void PassCreatePipeRequest(const ::DomainData::Address& pipeHolderAddress,
-                                       const ::DomainData::Address& senderAddress,
-                                       const ::DomainData::Address& receiverAddress) = 0;
+    virtual void PassCreatePipeRequest(const ::DomainData::User& pipeHolder,
+                                       const ::DomainData::User& sender,
+                                       const ::DomainData::User& receiver) = 0;
 
     //
     // IDL:IServerServer/ClientStatusChanged:1.0
     //
-    virtual void ClientStatusChanged(const ::DomainData::Address& clientAddress,
+    virtual void ClientStatusChanged(const ::DomainData::User& client,
                                      const ::DomainData::Enability& en,
-                                     const ::DomainData::User& usr,
-                                     const ::DomainData::Address& senderAddress) = 0;
+                                     const ::DomainData::Address& senderServerAddress) = 0;
 };
 
 //
@@ -207,23 +206,22 @@ public:
     // IDL:IServerServer/PassMessage:1.0
     //
     void PassMessage(const ::DomainData::Message& msg,
-                     const ::DomainData::Address& senderAddress,
-                     const ::DomainData::Address& receiverAddress);
+                     const ::DomainData::User& sender,
+                     const ::DomainData::User& receiver);
 
     //
     // IDL:IServerServer/PassCreatePipeRequest:1.0
     //
-    void PassCreatePipeRequest(const ::DomainData::Address& pipeHolderAddress,
-                               const ::DomainData::Address& senderAddress,
-                               const ::DomainData::Address& receiverAddress);
+    void PassCreatePipeRequest(const ::DomainData::User& pipeHolder,
+                               const ::DomainData::User& sender,
+                               const ::DomainData::User& receiver);
 
     //
     // IDL:IServerServer/ClientStatusChanged:1.0
     //
-    void ClientStatusChanged(const ::DomainData::Address& clientAddress,
+    void ClientStatusChanged(const ::DomainData::User& client,
                              const ::DomainData::Enability& en,
-                             const ::DomainData::User& usr,
-                             const ::DomainData::Address& senderAddress);
+                             const ::DomainData::Address& senderServerAddress);
 };
 
 //
@@ -278,23 +276,22 @@ public:
     // IDL:IServerServer/PassMessage:1.0
     //
     virtual void PassMessage(const ::DomainData::Message& msg,
-                             const ::DomainData::Address& senderAddress,
-                             const ::DomainData::Address& receiverAddress) = 0;
+                             const ::DomainData::User& sender,
+                             const ::DomainData::User& receiver) = 0;
 
     //
     // IDL:IServerServer/PassCreatePipeRequest:1.0
     //
-    virtual void PassCreatePipeRequest(const ::DomainData::Address& pipeHolderAddress,
-                                       const ::DomainData::Address& senderAddress,
-                                       const ::DomainData::Address& receiverAddress) = 0;
+    virtual void PassCreatePipeRequest(const ::DomainData::User& pipeHolder,
+                                       const ::DomainData::User& sender,
+                                       const ::DomainData::User& receiver) = 0;
 
     //
     // IDL:IServerServer/ClientStatusChanged:1.0
     //
-    virtual void ClientStatusChanged(const ::DomainData::Address& clientAddress,
+    virtual void ClientStatusChanged(const ::DomainData::User& client,
                                      const ::DomainData::Enability& en,
-                                     const ::DomainData::User& usr,
-                                     const ::DomainData::Address& senderAddress) = 0;
+                                     const ::DomainData::Address& senderServerAddress) = 0;
 };
 
 //
@@ -338,23 +335,22 @@ public:
     // IDL:IServerServer/PassMessage:1.0
     //
     virtual void PassMessage(const ::DomainData::Message& msg,
-                             const ::DomainData::Address& senderAddress,
-                             const ::DomainData::Address& receiverAddress);
+                             const ::DomainData::User& sender,
+                             const ::DomainData::User& receiver);
 
     //
     // IDL:IServerServer/PassCreatePipeRequest:1.0
     //
-    virtual void PassCreatePipeRequest(const ::DomainData::Address& pipeHolderAddress,
-                                       const ::DomainData::Address& senderAddress,
-                                       const ::DomainData::Address& receiverAddress);
+    virtual void PassCreatePipeRequest(const ::DomainData::User& pipeHolder,
+                                       const ::DomainData::User& sender,
+                                       const ::DomainData::User& receiver);
 
     //
     // IDL:IServerServer/ClientStatusChanged:1.0
     //
-    virtual void ClientStatusChanged(const ::DomainData::Address& clientAddress,
+    virtual void ClientStatusChanged(const ::DomainData::User& client,
                                      const ::DomainData::Enability& en,
-                                     const ::DomainData::User& usr,
-                                     const ::DomainData::Address& senderAddress);
+                                     const ::DomainData::Address& senderServerAddress);
 };
 
 //
