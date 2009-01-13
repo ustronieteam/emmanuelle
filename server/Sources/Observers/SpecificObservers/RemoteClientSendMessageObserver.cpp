@@ -91,8 +91,7 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 	LOG4CXX_INFO(logger, "Przetwarzanie logiki RemoteClientSendMessageObserver");
 
 	//    1) Znajdz odpowiedniego klienta (adresata)
-	struct DomainData::Address clientAddr = observerData.getClientAddress();
-	struct DomainData::User usr = observerData.getClientUserData();
+	struct DomainData::User usr = observerData.getDestinationUser();
 	int clientId = clientsDataBase->Find(usr);
 	if(clientId<0)
 	{
@@ -100,6 +99,7 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 		return -1;
 	}
 	ClientRecord clRec; //Rekord adresata
+	DomainData::Address clientAddr;
 	try
 	{
 		clRec = clientsDataBase->GetRecord(clientId);
@@ -138,6 +138,9 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 						LOG4CXX_DEBUG(logger, "Pozyskano zdalna instancje klienta");
 						clRec.SetClientRemoteInstance(remoteClientInterface);
 						clRec.SetBroker(orb);
+						LOG4CXX_DEBUG(logger, "Modyfikacja rekordu klienta (wstawienie zdalnej instancji i orb)");
+						clientsDataBase->ModifyRecord(clRec);
+						LOG4CXX_DEBUG(logger, "Zmodyfikowano rekord");
 						remoteClientInterface = remInstance;
 				}
 			}
@@ -146,18 +149,29 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 				LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas pozyskiwania zdalnej instancji klienta: "<<e._name() << ": " << e._to_string());
 				return -4;
 			}
+			catch(std::exception & e)
+			{
+				LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas modyfikacji rekordu: "<<e.what());
+				return -4;
+			}
 		}//Zdalna instancje klienta pobrano
 		try
 		{
-			struct DomainData::Address senderAddr = observerData.getSenderClientAddress();
+			struct DomainData::User senderData= observerData.getSenderClientData();
 			struct DomainData::Message msg = observerData.getClientMessage();
-			remoteClientInterface->ReceiveMessage(senderAddr, msg);
+			LOG4CXX_DEBUG(logger, "Wywolywanie receive message na kliencie. Sender name :" <<senderData.name.in());
+			remoteClientInterface->ReceiveMessage(senderData, msg);
 			LOG4CXX_INFO(logger, "Wiadomosc przekazana pomyslnie");
 		}
 		catch(std::exception &exc)
 		{
 			LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas przekazywania wiadomosci do klienta"<< ".Powod: "<< exc.what());
 			return -3;
+		}
+		catch(CORBA::SystemException &e)
+		{
+			LOG4CXX_ERROR(logger, "Blad wywolywania metody zdalnej.Wyjatek "<< " powod: "<< e._name() <<" " <<e._to_string());
+			return -4;
 		}
 	}
 	else
@@ -200,10 +214,10 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 		}//Zdalna instancja jest pozyskana
 		try
 		{
-			struct DomainData::Address senderAddr = observerData.getSenderClientAddress();
+			struct DomainData::User senderData = observerData.getSenderClientData();
 			struct DomainData::Message msg = observerData.getClientMessage();
-			struct DomainData::Address recAddr = observerData.getClientAddress();
-			remoteInstance->PassMessage(msg, senderAddr, recAddr);
+			struct DomainData::User recData = observerData.getDestinationUser();
+			remoteInstance->PassMessage(msg, senderData, recData);
 			LOG4CXX_INFO(logger, "Wiadomosc przekazana pomyslnie na inny server");
 		}
 		catch(std::exception &exc)

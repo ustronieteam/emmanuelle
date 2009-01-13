@@ -18,7 +18,7 @@ class RemoteObserverData
 
 		DomainData::Message _clientMessage;
 		DomainData::Enability _clientEnability;
-		DomainData::Address _pipeHolderAddress;
+		DomainData::User _pipeHolderData;
 
 		DomainData::User	_clientUserData;
 
@@ -45,8 +45,8 @@ class RemoteObserverData
 		DomainData::Enability & getClientEnability(){return _clientEnability;}
 		void setClientEnability(const DomainData::Enability & clientEnability){_clientEnability = clientEnability;}
 
-		DomainData::Address & getPipeHolderAddress(){return _pipeHolderAddress;}
-		void setPipeHolderAddress(const DomainData::Address & pipeHolderAddress){_pipeHolderAddress = pipeHolderAddress;}
+		DomainData::User & getPipeHolderData(){return _pipeHolderData;}
+		void setPipeHolderData(const DomainData::User & pipeHolderData){_pipeHolderData = pipeHolderData;}
 
 		DomainData::User & getClientUserData(){return _clientUserData;}
 		void setClientUserData( const DomainData::User & clientUserData){_clientUserData = clientUserData;}

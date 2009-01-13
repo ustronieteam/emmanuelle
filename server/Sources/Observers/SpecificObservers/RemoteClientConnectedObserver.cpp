@@ -91,7 +91,7 @@ int RemoteClientConnectedObserverLogicRunnable::operator()()
 	LOG4CXX_INFO(logger, "Przetwarzanie logiki RemoteClientConnectedObserver");
 
 	//    1) Znajdz klienta
-	struct DomainData::Address clientAddr = observerData.getClientAddress();
+	//struct DomainData::User clientDestData = observerData.getDestinationUser();
 	struct DomainData::User clientUserData = observerData.getClientUserData();
 	int clientId = 0;
 	ClientRecord clRec;
@@ -161,13 +161,16 @@ int RemoteClientConnectedObserverLogicRunnable::operator()()
 		try
 		{
 			struct DomainData::Enability enab = clRec.GetEnability();
-			struct DomainData::User usr = observerData.getClientUserData();
-			DomainData::Address senderAddress;
-			// TODO: dodac tego co wysyla
-			remoteServer->ClientStatusChanged(clientAddr, enab,usr, senderAddress);//Dodac dane z observer Data
+			DomainData::Address clientAddr = clRec.GetAddress();
+
+			remoteServer->ClientStatusChanged(clientUserData, clientAddr ,enab,usr,localServAddr );//Dodac dane z observer Data
 			LOG4CXX_INFO(logger, "Wiadomosc wyslana do serwera nr"<<serverCounter);
 		}
-		catch(std::exception & exc) //chyba rzuca jakis wyjatek??
+		catch(CORBA::SystemException & exc) 
+		{
+			LOG4CXX_ERROR(logger, "Blad wysylania do serwera: " << servRec.GetAddress().localization.in()<< ".Powod: "<< exc._name());
+		}
+		catch(std::exception & exc)
 		{
 			LOG4CXX_ERROR(logger, "Blad wysylania do serwera: " << servRec.GetAddress().localization.in()<< ".Powod: "<< exc.what());
 		}
