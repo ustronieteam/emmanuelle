@@ -8,6 +8,9 @@
 #include <string>
 #include <boost/thread/mutex.hpp>
 
+#include <log4cxx/logger.h>
+#include <log4cxx/level.h>
+
 ///
 /// Rekord
 /// @brief Podstawowa jednosta informacji w bazie danych.
