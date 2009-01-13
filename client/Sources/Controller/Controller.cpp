@@ -89,6 +89,7 @@ bool Controller::SendMessageToClient(const char * content, const char * dest)
 	msg.content = CORBA::string_dup(content);
 
 	int result = 0;
+	LOG4CXX_DEBUG(logger, "Wysylanie diadomosci do : " <<dest);
 	result = model->SendMessageToClient(addr, msg);
 	
 	if(result < 0)
@@ -277,4 +278,10 @@ void Controller::SetOwnNumber(long l)
 void Controller::SetMyAvailability(bool b)
 {
 	model->SetMyAvailability(b);
+}
+void Controller::testClient(std::string str)
+{
+	LOG4CXX_DEBUG(logger, "Test Client Kontroller begin");
+	model->TestClient(str);
+	LOG4CXX_DEBUG(logger, "Test Client Kontroller end");
 }
