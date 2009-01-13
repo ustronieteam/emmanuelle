@@ -1,4 +1,3 @@
-#include <OB/CORBA.h>
 #include <IClientServer_impl.h>
 
 //
@@ -30,7 +29,7 @@ IClientServer_impl::ReceiveMessage(const ::DomainData::Address& senderAddress,
                                    const ::DomainData::Message& msg)
     throw(::CORBA::SystemException)
 {
-	std::cout << "WYWOLANIE RECEIVEMESSAGE z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()) << std::endl;
+	std::cout << "WYWOLANIE RECEIVEMESSAGE" << std::endl;
 
 	RemoteObserverData observData;
 	observData.SetObserverType(MESSAGE);
