@@ -15,7 +15,7 @@
 #ifndef ___DomainData_h__
 #define ___DomainData_h__
 
-#include <OB/CORBA.h>
+#include "OB/CORBA.h"
 
 #ifndef OB_INTEGER_VERSION
 #   error No ORBacus version defined! Is <OB/CORBA.h> included?
@@ -129,6 +129,34 @@ struct Message
 extern OB::TypeCodeConst _tc_Message;
 
 //
+// IDL:DomainData/Content:1.0
+//
+class OBUnique_Content { };
+
+typedef OB::FixSeq< ::CORBA::Char, OBUnique_Content > Content;
+typedef OB::SeqVar< OB::FixSeq< ::CORBA::Char, OBUnique_Content > > Content_var;
+typedef OB::SeqOut< OB::FixSeq< ::CORBA::Char, OBUnique_Content > > Content_out;
+extern OB::TypeCodeConst _tc_Content;
+
+struct OBInfo_Content : public OB::ConstructedInfo
+{
+    OBInfo_Content() { }
+
+    virtual void free(void* p) const
+    {
+        delete (Content*)p;
+    }
+
+    virtual void* dup(const void* p) const
+    {
+        return new Content(*(const Content*)p);
+    }
+
+    virtual void marshal(const void*, OB::OutputStreamImpl*) const;
+    virtual void unmarshal(void*, OB::InputStreamImpl*) const;
+};
+
+//
 // IDL:DomainData/File:1.0
 //
 struct File;
@@ -137,13 +165,19 @@ typedef OB::VarOut< File > File_out;
 
 struct File
 {
+#ifdef OB_CLEAR_MEM
+    File();
+#else
     File() { }
+#endif
     File(const File&);
     File& operator=(const File&);
 
     typedef File_var _var_type;
 
-    OB::StrForStruct path;
+    OB::StrForStruct name;
+    ::CORBA::ULong size;
+    Content body;
 
     void _OB_marshal(OB::OutputStreamImpl*) const;
     static void _OB_unmarshal(File&, OB::InputStreamImpl*);
@@ -289,6 +323,31 @@ operator<<=(::CORBA::Any_var& any, const DomainData::Message& val)
 
 inline ::CORBA::Boolean
 operator>>=(const ::CORBA::Any_var& any, const DomainData::Message*& val)
+{
+    return any.in() >>= val;
+}
+
+//
+// IDL:DomainData/Content:1.0
+//
+void operator<<=(::CORBA::Any&, DomainData::Content*);
+void operator<<=(::CORBA::Any&, const DomainData::Content&);
+CORBA::Boolean operator>>=(const ::CORBA::Any&, const DomainData::Content*&);
+
+inline void
+operator<<=(::CORBA::Any_var& any, DomainData::Content* val)
+{
+    any.inout() <<= val;
+}
+
+inline void
+operator<<=(::CORBA::Any_var& any, const DomainData::Content& val)
+{
+    any.inout() <<= val;
+}
+
+inline ::CORBA::Boolean
+operator>>=(const ::CORBA::Any_var& any, const DomainData::Content*& val)
 {
     return any.in() >>= val;
 }

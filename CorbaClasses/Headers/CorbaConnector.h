@@ -114,7 +114,7 @@ class CorbaConnector
 				return false;
 			}
 			std::cout<<"1-"<<address<<"-\n";
-			/*client =*/ IClientServer::_narrow(oClient);
+			client = IClientServer::_narrow(oClient);
 			std::cout<<"2\n";
 		    
 			if (CORBA::is_nil(client))

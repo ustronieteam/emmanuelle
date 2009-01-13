@@ -109,6 +109,7 @@ public:
     // IDL:IServerClient/SendMessage:1.0
     //
     virtual void SendMessage(const ::DomainData::Address& receiverAddress,
+                             const ::DomainData::User& usr,
                              const ::DomainData::Message& msg)
         throw(::CORBA::SystemException) = 0;
 
@@ -171,6 +172,7 @@ public:
     // IDL:IServerClient/SendMessage:1.0
     //
     virtual void SendMessage(const ::DomainData::Address& receiverAddress,
+                             const ::DomainData::User& usr,
                              const ::DomainData::Message& msg);
 
     //

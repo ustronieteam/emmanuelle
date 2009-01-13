@@ -68,7 +68,8 @@ public:
     //
     virtual void ClientStatusChanged(const ::DomainData::Address& clientAddress,
                                      const ::DomainData::Enability& en,
-                                     const ::DomainData::User& usr)
+                                     const ::DomainData::User& usr,
+                                     const ::DomainData::Address& senderAddress)
         throw(::CORBA::SystemException);
 };
 
