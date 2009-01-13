@@ -1,30 +1,46 @@
 #ifndef STATUSOBSERVER_H
 #define STATUSOBSERVER_H
-//Begin section for file StatusObserver.h
-//TODO: Add definitions that you want preserved
-//End section for file StatusObserver.h
+
+#include <log4cxx/logger.h>
+#include <log4cxx/level.h>
+
+#include "IObserverView.h"
 
 #include "DataObserver.h"
 
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// StatusObserver
+/// @brief Obserwator czekajacy na zmiane statusu
+/// @author Wojciech Grzeskowiak
+/// @date 2009.01.11
+///
 class StatusObserver : public DataObserver
 {
+    private:
 
-    //Begin section for StatusObserver
-    //TODO: Add attributes that you want preserved
-    //End section for StatusObserver
+		///
+		/// Obiekt logowania.
+		///
+		log4cxx::LoggerPtr _logger;
 
-
+		IObserverView * _view;
 
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        StatusObserver();
+        ///
+		/// Konstruktor.
+		///
+        StatusObserver(IObserverView * view);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// Destruktor.
+		///
         virtual ~StatusObserver();
 
-};  //end class StatusObserver
+		///
+		/// Metoda referesh.
+		///
+        virtual int Refresh(DataObserverData data);
+};
 
 #endif

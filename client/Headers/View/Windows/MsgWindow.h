@@ -10,10 +10,12 @@
 // Informacje
 #define MSG_INF_NO_MSG		"Brak wiadomosci."
 #define MSG_INF_SND_MSG		"Wysylanie wiadomosci..."
+#define MSG_INF_SND_FIL		"Wysylanie pliku..."
 #define MSG_INF_SHOW_L		"^^ Pokazywane sa ostatnie wiadomosci."
 #define MSG_INF_SHOW_A		"^^ Pokazywane sa wszystkie wiadomosci."
 // Bledy
 #define MSG_ER_SND_MSG		"!@# Nie mozna bylo wyslac wiadomosci!"
+#define MSG_ER_SND_FIL		"!@# Nie znaleziono pliku!"
 
 
 ///

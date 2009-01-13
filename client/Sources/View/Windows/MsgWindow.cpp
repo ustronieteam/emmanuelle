@@ -85,7 +85,7 @@ void MsgWindow::Command(std::string & cmd)
 		std::cin.getline(this->_singleMsg, MSG_MAX_MSG_LEN-1);
 
 		// Komunikat o wysylaniu wiadomosci.
-		std::cout << MSG_INF_SND_MSG;
+		std::cout << PROMPT << MSG_INF_SND_MSG;
 
 		LOG4CXX_DEBUG(this->_logger, "Wysylanie wiadomosci... Adresat: " << _contactName.c_str() << " Tresc: " << _singleMsg);
 
@@ -107,6 +107,40 @@ void MsgWindow::Command(std::string & cmd)
 		// Jesli nie mozna bylo wyslac wiadomosci.
 		else
 			this->SetMsg(MSG_ER_SND_MSG);
+	}
+	// Przeslanie pliku.
+	else if ( !cmd.compare("sfile") )
+	{
+		// Pobranie nazwy pliku do wyslania.
+		std::cin >> cmd;
+
+		std::cout << PROMPT << MSG_INF_SND_FIL;
+
+		LOG4CXX_DEBUG(this->_logger, "Zadanie wyslania pliku: Adresat:" << _contactName.c_str() << " Plik: " << cmd.c_str() );
+
+		std::ofstream file;
+		file.open(cmd.c_str(), std::ios::out);
+
+		// Udalo sie otworzyc plik.
+		if ( !file.is_open() )
+		{
+			LOG4CXX_DEBUG(this->_logger, "Plik istnieje. Wysylanie..." );
+
+			// Wywolanie metody na kontrolerze...
+			//bool result = this->GetController()->SendFile(	
+
+			LOG4CXX_DEBUG(this->_logger, "Zakonczenie wysylania. Rezultat: " )
+
+			// Zamkniecie.
+			file.close();
+		}
+		// Nie udalo sie otworzyc pliku.
+		else
+		{
+			LOG4CXX_DEBUG(this->_logger, "Nie znaleziono pliku: " << cmd.c_str() );
+
+			this->SetMsg(MSG_ER_SND_FIL);
+		}
 	}
 	// Wyswietlenie wszystkich.
 	else if ( !cmd.compare("all") )

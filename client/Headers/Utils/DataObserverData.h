@@ -5,19 +5,25 @@
 
 class DataObserverData
 {
+	private:
 
-	ContactRecord cr;
+		ContactRecord cr;
 
     public:
 
-
         DataObserverData();
-
-		void setContactRecord(const ContactRecord & c){cr = c;}
-		const ContactRecord & getContactRecord(){return cr;}
 
         virtual ~DataObserverData();
 
-};  //end class DataObserverData
+		void setContactRecord(const ContactRecord & c)
+		{
+			cr = c;
+		}
+
+		const ContactRecord & getContactRecord()
+		{
+			return cr;
+		}
+};
 
 #endif
