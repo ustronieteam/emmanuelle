@@ -189,7 +189,9 @@ IServerClient_impl::SendMessage(const ::DomainData::Address& receiverAddress,
 	RemoteObserverData observData;
 	observData.set_eventType(CLIENT_SEND_MESSAGE);
 	observData.setClientMessage(msg);
-	observData.setClientUserData(usr);
+	DomainData::User u;
+	u.name = receiverAddress.name;
+	observData.setClientUserData(u);
 	LOG4CXX_DEBUG(logger, "usr["<< usr.name.in() <<"], receiverAddress[" << receiverAddress.localization.in() << "], msg[" << msg.content.in() << "]");
 	
 	observData.setClientAddress(receiverAddress);
