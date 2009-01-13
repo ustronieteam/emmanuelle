@@ -193,9 +193,14 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 			it != allClientRecord.end();
 			it++)
 		{
-			//Przekarz dane o kliencie
-			//newServerInstance->ClientStatusChanged(it->GetAddress(),it->GetEnability());
-			LOG4CXX_DEBUG(logger, "Przekazano dane o kliencie: " <<it->GetAddress().localization.in());
+			int sId = it->GetClientServerId();
+			if(sid>0)
+			{
+				ServerRecord serRec = serverDataBase->GetRecord(sId);
+				//Przekarz dane o kliencie
+				newServerInstance->ClientStatusChanged(it->GetUser(), it->GetAddress(), it->GetEnability(), serRec.GetAddress());
+				LOG4CXX_DEBUG(logger, "Przekazano dane o kliencie: " <<it->GetAddress().localization.in());
+			}
 		}
 
 	}
