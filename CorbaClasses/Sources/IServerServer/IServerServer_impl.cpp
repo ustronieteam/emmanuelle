@@ -47,6 +47,7 @@ IServerServer_impl::Join(const ::DomainData::Address& serverAddress)
 	DomainData::Address addr;
 	addr.localization = CORBA::string_dup( Server::GetRemotedAddress(SRVPORT.c_str()) );
 
+	LOG4CXX_DEBUG(logger, "Wywolanie AddServer na samym sobie");
 	this->AddServer(addr);
 
 	// stworzenie obiektu z danymi dla obserwatora
@@ -54,6 +55,7 @@ IServerServer_impl::Join(const ::DomainData::Address& serverAddress)
 	observData.set_eventType(SERVER_CONNECTED);
 	observData.setServerAddress(addr);
 
+	LOG4CXX_DEBUG(logger, "Uruchomienie obserwatorow...");
 	// wywolanie notify() na obserwatorach (jesli dany obserwator w kolekcji obserwatorow
 	// bedzie zobowiazany do zareagowania na zdarzenie to to zrobi)
 	this->Notify(observData);
@@ -68,6 +70,7 @@ IServerServer_impl::Join(const ::DomainData::Address& serverAddress)
 	for(unsigned int i = 0; i < serversList.size(); ++i)
 		(*_r)[i] = serversList[i].GetAddress();
 
+	LOG4CXX_DEBUG(logger, "zakonczenie wywolania JOIN!");
 	return _r;
 }
 
@@ -99,9 +102,11 @@ void
 IServerServer_impl::AddServer(const ::DomainData::Address& serverAddress)
     throw(::CORBA::SystemException)
 {
-		int serverId;
+	LOG4CXX_DEBUG(logger, "Wywolanie AddServer z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()));
+	int serverId;
 	ServerRecord record;
 
+	LOG4CXX_DEBUG(logger, "Wyszukanie serwera[name: " << serverAddress.localization.in() << "]");
 	serverId = ServerDataBase::GetInstance()->Find(serverAddress);
 
 	if(serverId < 0)

@@ -107,8 +107,6 @@ void Model::activateListning()
 		// </dla klientow>
 
 		manager->activate();
-
-		isActive = true;
 		LOG4CXX_DEBUG(logger, "Wlaczono nasluchiwanie ... ");
 		orb->run();
 	}
@@ -277,7 +275,11 @@ int Model::Disconnect()
 		client->setServerAddress(serverAddress);//Ustawiam, ale nie jest to konieczne
 
 		if(!isActive)
+		{
+			isActive = true;
+			LOG4CXX_DEBUG(logger, "ISACTIVE!!!!!!");
 			boost::thread watekSluchacza(&activateListeningThreadFun);
+		}
 
 		LOG4CXX_DEBUG(logger, "Uruchomiono watek nasluchu");
 		Sleep(5000);
