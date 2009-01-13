@@ -13,8 +13,8 @@ class RemoteObserverData
     private:
         EventType eventType;
 		DomainData::Address _serverAddress;
-		DomainData::Address _clientAddress;
-		DomainData::Address _senderClientAddress;
+		DomainData::User _clientData;
+		DomainData::User _senderClientData;
 
 		DomainData::Message _clientMessage;
 		DomainData::Enability _clientEnability;
@@ -33,14 +33,14 @@ class RemoteObserverData
 		DomainData::Address & getServerAddress(){return _serverAddress;}
 		void setServerAddress(const DomainData::Address & serverAddress){_serverAddress = serverAddress;}
 
-		DomainData::Address & getClientAddress(){return _clientAddress;}
-		void setClientAddress(const DomainData::Address & clientAddress){_clientAddress = clientAddress;}
+		DomainData::User & getDestinationUser(){return _clientData;}
+		void setDestination(const DomainData::User & clientDt){_clientData = clientDt;}
 
 		DomainData::Message & getClientMessage(){return _clientMessage;}
 		void setClientMessage(const DomainData::Message & clientMessage){_clientMessage = clientMessage;}
 
-		DomainData::Address & getSenderClientAddress(){return _senderClientAddress;}
-		void setSenderClientAddress(const DomainData::Address & senderClientAddress){_senderClientAddress = senderClientAddress;}
+		DomainData::User & getSenderClientData(){return _senderClientData;}
+		void setSenderClientData(const DomainData::User & senderClientD){_senderClientData = senderClientD;}
 
 		DomainData::Enability & getClientEnability(){return _clientEnability;}
 		void setClientEnability(const DomainData::Enability & clientEnability){_clientEnability = clientEnability;}
