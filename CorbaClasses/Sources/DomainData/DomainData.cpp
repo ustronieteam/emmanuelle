@@ -28,45 +28,119 @@
 namespace DomainData
 {
 
+::OB::TypeCodeConst _tc_User(
+"01302e330f0000005400000001fb59001800000049444c3a446f6d61696e446174612f5573657"
+"23a312e300005000000557365720044656602000000050000006e616d6500fb59001200000000"
+"000000070000006e756d626572000003000000"
+);
+
 ::OB::TypeCodeConst _tc_Address(
-"0139322e0f0000006400000001fb59001b00000049444c3a446f6d61696e446174612f4164647"
-"26573733a312e30006908000000416464726573730002000000050000006e616d650079000012"
-"000000000000000d0000006c6f63616c697a6174696f6e000001001200000000000000"
+"01302e330f0000006400000001fb59001b00000049444c3a446f6d61696e446174612f4164647"
+"26573733a312e30000008000000416464726573730002000000050000006e616d650000000012"
+"000000000000000d0000006c6f63616c697a6174696f6e000001051200000000000000"
 );
 
 ::OB::TypeCodeConst _tc_Message(
-"0139322e0f0000004800000001fb59001b00000049444c3a446f6d61696e446174612f4d65737"
-"36167653a312e300069080000004d657373616765000100000008000000636f6e74656e740012"
+"01302e330f0000004800000001fb59001b00000049444c3a446f6d61696e446174612f4d65737"
+"36167653a312e300000080000004d657373616765000100000008000000636f6e74656e740012"
 "00000000000000"
 );
 
 ::OB::TypeCodeConst _tc_File(
-"0139322e0f0000004400000001fb59001800000049444c3a446f6d61696e446174612f46696c6"
+"01302e330f0000004400000001fb59001800000049444c3a446f6d61696e446174612f46696c6"
 "53a312e30000500000046696c6500657373010000000500000070617468006f6e741200000000"
 "000000"
 );
 
 ::OB::TypeCodeConst _tc_Mode(
-"0139322e110000004700000001fb59001800000049444c3a446f6d61696e446174612f4d6f646"
+"01302e33110000004700000001fb59001800000049444c3a446f6d61696e446174612f4d6f646"
 "53a312e3000050000004d6f646500657373020000000700000070617373697600740700000061"
 "637469766500"
 );
 
 ::OB::TypeCodeConst _tc_Enability(
-"0139322e0f000000a700000001fb59001d00000049444c3a446f6d61696e446174612f456e616"
+"01302e330f000000a700000001fb59001d00000049444c3a446f6d61696e446174612f456e616"
 "2696c6974793a312e30006f64650a000000456e6162696c697479007373020000000700000073"
 "7461747573000008000000060000006d6f64655f006f6e1100000047000000010000001800000"
 "049444c3a446f6d61696e446174612f4d6f64653a312e3000050000004d6f646500fb59000200"
 "00000700000070617373697600000700000061637469766500"
 );
 
-::OB::TypeCodeConst _tc_User(
-"0139322e0f0000005400000001fb59001800000049444c3a446f6d61696e446174612f5573657"
-"23a312e300005000000557365720000000002000000050000006e616d65000000001200000000"
-"000000070000006e756d626572000003000000"
-);
-
 } // End of namespace DomainData
+
+//
+// IDL:DomainData/User:1.0
+//
+#ifdef OB_CLEAR_MEM
+DomainData::User::User()
+{
+    memset(&number, 0, sizeof(number));
+}
+#endif
+
+DomainData::User::User(const User& _ob_a)
+    : name(_ob_a.name),
+      number(_ob_a.number)
+{
+}
+
+DomainData::User&
+DomainData::User::operator=(const User& _ob_a)
+{
+    if(this != &_ob_a)
+    {
+        name = _ob_a.name;
+        number = _ob_a.number;
+    }
+    return *this;
+}
+
+void
+DomainData::User::_OB_marshal(OB::OutputStreamImpl* _ob_out) const
+{
+    _ob_out -> write_string(name);
+    _ob_out -> write_long(number);
+}
+
+void
+DomainData::User::_OB_unmarshal(User& _ob_v, OB::InputStreamImpl* _ob_in)
+{
+    _ob_v.name = _ob_in -> read_string();
+    _ob_v.number = _ob_in -> read_long();
+}
+
+void
+operator<<=(::CORBA::Any& any, DomainData::User* v)
+{
+    static const OB::Info< DomainData::User > info;
+    any.replace(DomainData::_tc_User, v, true, &info);
+}
+
+void
+operator<<=(::CORBA::Any& any, const DomainData::User& v)
+{
+    any <<= new DomainData::User(v);
+}
+
+::CORBA::Boolean
+operator>>=(const ::CORBA::Any& any, const DomainData::User*& v)
+{
+    if(any.check_type(DomainData::_tc_User))
+    {
+        if(!any.info())
+        {
+            OB::InputStream_var _ob_in = any.create_input_stream();
+            DomainData::User* val = new DomainData::User;
+            DomainData::User::_OB_unmarshal(*val, _ob_in);
+            (::CORBA::Any&)any <<= val;
+        }
+
+        v = (DomainData::User*)any.value();
+        return true;
+    }
+    else
+        return false;
+}
 
 //
 // IDL:DomainData/Address:1.0
@@ -326,80 +400,6 @@ operator>>=(const ::CORBA::Any& any, const DomainData::Enability*& v)
         }
 
         v = (DomainData::Enability*)any.value();
-        return true;
-    }
-    else
-        return false;
-}
-
-//
-// IDL:DomainData/User:1.0
-//
-#ifdef OB_CLEAR_MEM
-DomainData::User::User()
-{
-    memset(&number, 0, sizeof(number));
-}
-#endif
-
-DomainData::User::User(const User& _ob_a)
-    : name(_ob_a.name),
-      number(_ob_a.number)
-{
-}
-
-DomainData::User&
-DomainData::User::operator=(const User& _ob_a)
-{
-    if(this != &_ob_a)
-    {
-        name = _ob_a.name;
-        number = _ob_a.number;
-    }
-    return *this;
-}
-
-void
-DomainData::User::_OB_marshal(OB::OutputStreamImpl* _ob_out) const
-{
-    _ob_out -> write_string(name);
-    _ob_out -> write_long(number);
-}
-
-void
-DomainData::User::_OB_unmarshal(User& _ob_v, OB::InputStreamImpl* _ob_in)
-{
-    _ob_v.name = _ob_in -> read_string();
-    _ob_v.number = _ob_in -> read_long();
-}
-
-void
-operator<<=(::CORBA::Any& any, DomainData::User* v)
-{
-    static const OB::Info< DomainData::User > info;
-    any.replace(DomainData::_tc_User, v, true, &info);
-}
-
-void
-operator<<=(::CORBA::Any& any, const DomainData::User& v)
-{
-    any <<= new DomainData::User(v);
-}
-
-::CORBA::Boolean
-operator>>=(const ::CORBA::Any& any, const DomainData::User*& v)
-{
-    if(any.check_type(DomainData::_tc_User))
-    {
-        if(!any.info())
-        {
-            OB::InputStream_var _ob_in = any.create_input_stream();
-            DomainData::User* val = new DomainData::User;
-            DomainData::User::_OB_unmarshal(*val, _ob_in);
-            (::CORBA::Any&)any <<= val;
-        }
-
-        v = (DomainData::User*)any.value();
         return true;
     }
     else
