@@ -4,7 +4,6 @@
 #include <IClientServer_skel.h>
 #include "IRemoteObserverObject.h"
 
-
 #include <log4cxx/logger.h>
 #include <log4cxx/level.h>
 
