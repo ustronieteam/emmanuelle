@@ -4,7 +4,9 @@
 /// Konstruktor bezparametrowy.
 ClientsDataBase::ClientsDataBase() 
 {
-
+	// Inicjalizacja loggera.
+	_logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("ClientsDataBase"));
+	_logger->setLevel(log4cxx::Level::getAll());
 }
 
 ///
@@ -53,12 +55,17 @@ const ClientRecord & ClientsDataBase::GetRecord(int recordId)
 {
 	boost::mutex::scoped_lock sl(_mutex);
 
+	LOG4CXX_DEBUG(_logger, "Pobieranie rekordu o id: " << recordId);
+
 	if ( this->_records.count(recordId) != 0 )
 	{
+		LOG4CXX_DEBUG(_logger, "Znaleziono rekord. User.name: " << _records[recordId].GetUser().name.in() );
 		return _records[recordId];
 	}
 	else
 	{
+		LOG4CXX_ERROR(_logger, "Nie znaleziono rekordu.");
+
 		std::exception ex("Brak rekordu o podanym ID!");
 		throw ex;
 	}
@@ -70,6 +77,9 @@ const ClientRecord & ClientsDataBase::GetRecord(int recordId)
 std::vector<ClientRecord> ClientsDataBase::GetAllRecords() 
 {
 	boost::mutex::scoped_lock sl(_mutex);
+
+	LOG4CXX_DEBUG(_logger, "Pobieranie wszystkich rekordow.");
+
 	std::vector<ClientRecord> v;
 	
 	if ( _records.size() != 0 )
@@ -87,6 +97,8 @@ int ClientsDataBase::InsertRecord(const ClientRecord & record)
 {
 	boost::mutex::scoped_lock sl(_mutex);
 
+	LOG4CXX_DEBUG(_logger, "Wstawianie rekordu. User.name: " << record.GetUser().name.in() );
+
 	if ( this->_records.count(record.GetRecordId()) == 0 )
 	{
 		// Triger
@@ -102,6 +114,8 @@ int ClientsDataBase::InsertRecord(const ClientRecord & record)
 	}
 	else
 	{
+		LOG4CXX_ERROR(_logger, "Rekord o podanym id juz istnieje");
+
 		std::exception ex("Record o podanym ID jest juz w bazie danych!");
 		throw ex;
 	}
@@ -115,13 +129,20 @@ int ClientsDataBase::DeleteRecord(int recordId)
 {
 	boost::mutex::scoped_lock sl(_mutex);
 
+	LOG4CXX_DEBUG(_logger, "Usuwanie rekordu o id: " << recordId );
+
 	if ( this->_records.count(recordId) != 0 )
 	{
 		this->_records.erase(recordId);
+
+		LOG4CXX_DEBUG(_logger, "Rekord usunieto." );
+
 		return 1;
 	}
 	else
 	{
+		LOG4CXX_ERROR(_logger, "Nie znaleziono rekordu!" );
+
 		std::exception ex("Brak rekordu o podanym ID!");
 		throw ex;
 	}
@@ -135,13 +156,20 @@ int ClientsDataBase::ModifyRecord(const ClientRecord & record)
 {
 	boost::mutex::scoped_lock sl(_mutex);
 
+	LOG4CXX_DEBUG(_logger, "Modyfikacja rekordu. (new)User.name: " << record.GetUser().name.in() );
+
 	if ( this->_records.count(record.GetRecordId()) != 0 )
 	{
 		_records[record.GetRecordId()] = record;
+
+		LOG4CXX_DEBUG(_logger, "Rekord zmodyfikowano.");
+
 		return 1;
 	}
 	else
 	{
+		LOG4CXX_ERROR(_logger, "Nie zmodyfikowano rekordu!");
+
 		std::exception ex("Brak rekordu o podanym ID!");
 		throw ex;
 	}
@@ -189,11 +217,17 @@ int ClientsDataBase::Find(const struct DomainData::Address & address)
 {
 	boost::mutex::scoped_lock sl(_mutex);
 
+	LOG4CXX_DEBUG(_logger, "Szukanie po strukturze Address. Address.name: " << address.name.in() << " Address.localization: " << address.localization.in() );
+
 	if ( this->_records.size() != 0 )
 		for(std::map<int, ClientRecord>::iterator i = this->_records.begin(); i != this->_records.end(); i++)
 			if ( strcmp((*i).second.GetAddress().name.in(), address.name.in()) == 0 )
+			{
+				LOG4CXX_DEBUG(_logger, "Znaleziono rekord!");
 				return (*i).second.GetRecordId();
+			}
 
+	LOG4CXX_DEBUG(_logger, "Nie znaleziono rekordu!");
 	return -1;
 }
 
@@ -205,11 +239,17 @@ int ClientsDataBase::Find(const struct DomainData::User & user)
 {
 	boost::mutex::scoped_lock sl(_mutex);
 
+	LOG4CXX_DEBUG(_logger, "Szukanie po strukturze User. User.name: " << user.name.in() );
+
 	if ( this->_records.size() != 0 )
 		for(std::map<int, ClientRecord>::iterator i = this->_records.begin(); i != this->_records.end(); i++)
 			if ( strcmp((*i).second.GetUser().name.in(), user.name.in()) == 0 )
+			{
+				LOG4CXX_DEBUG(_logger, "Znaleziono rekord!");
 				return (*i).second.GetRecordId();
+			}
 
+	LOG4CXX_DEBUG(_logger, "Nie znaleziono rekordu!");
 	return -1;
 }
 
@@ -220,11 +260,17 @@ int ClientsDataBase::FindActiveClient()
 {
 	boost::mutex::scoped_lock sl(_mutex);
 
+	LOG4CXX_DEBUG(_logger, "Szukanie aktywnych klientow.");
+
 	if ( _records.size() != 0 )
 		for(std::map<int, ClientRecord>::iterator i = this->_records.begin(); i != this->_records.end(); i++)
 			if ( (*i).second.GetEnability().mode_ == DomainData::active )
+			{
+				LOG4CXX_DEBUG(_logger, "Znaleziono rekord!");
 				return (*i).second.GetRecordId();
+			}
 
+	LOG4CXX_DEBUG(_logger, "Nie znaleziono rekordu!");	
 	return -1;
 }
 
@@ -235,11 +281,17 @@ int ClientsDataBase::FindActiveClientOnServer(int serverId)
 {
 	boost::mutex::scoped_lock sl(_mutex);
 
+	LOG4CXX_DEBUG(_logger, "Szukanie aktywnych klientow na serwerze o id: " << serverId);
+
 	if ( _records.size() != 0 )
 		for(std::map<int, ClientRecord>::iterator i = this->_records.begin(); i != this->_records.end(); i++)
 			if ( (*i).second.GetEnability().mode_ == DomainData::active && (*i).second.GetClientServerId() == serverId )
+			{
+				LOG4CXX_DEBUG(_logger, "Znaleziono rekord!");
 				return (*i).second.GetRecordId();
+			}
 
+	LOG4CXX_DEBUG(_logger, "Nie znaleziono rekordu!");	
 	return -1;
 }
 
