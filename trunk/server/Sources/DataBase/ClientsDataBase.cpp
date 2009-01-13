@@ -213,23 +213,23 @@ void ClientsDataBase::Clear()
 /// Znajdz rekord klienta.
 /// @param[in] address Adres do wyszukania rekordu.
 /// @return ID wyszukanego rekordu. -1 gdy nie znajdzie.
-int ClientsDataBase::Find(const struct DomainData::Address & address)
-{
-	boost::mutex::scoped_lock sl(_mutex);
-
-	LOG4CXX_DEBUG(_logger, "Szukanie po strukturze Address. Address.name: " << address.name.in() << " Address.localization: " << address.localization.in() );
-
-	if ( this->_records.size() != 0 )
-		for(std::map<int, ClientRecord>::iterator i = this->_records.begin(); i != this->_records.end(); i++)
-			if ( strcmp((*i).second.GetAddress().name.in(), address.name.in()) == 0 )
-			{
-				LOG4CXX_DEBUG(_logger, "Znaleziono rekord!");
-				return (*i).second.GetRecordId();
-			}
-
-	LOG4CXX_DEBUG(_logger, "Nie znaleziono rekordu!");
-	return -1;
-}
+//int ClientsDataBase::Find(const struct DomainData::Address & address)
+//{
+//	boost::mutex::scoped_lock sl(_mutex);
+//
+//	LOG4CXX_DEBUG(_logger, "Szukanie po strukturze Address. Address.name: " << address.name.in() << " Address.localization: " << address.localization.in() );
+//
+//	if ( this->_records.size() != 0 )
+//		for(std::map<int, ClientRecord>::iterator i = this->_records.begin(); i != this->_records.end(); i++)
+//			if ( strcmp((*i).second.GetAddress().name.in(), address.name.in()) == 0 )
+//			{
+//				LOG4CXX_DEBUG(_logger, "Znaleziono rekord!");
+//				return (*i).second.GetRecordId();
+//			}
+//
+//	LOG4CXX_DEBUG(_logger, "Nie znaleziono rekordu!");
+//	return -1;
+//}
 
 ///
 /// Znajdz rekord klienta po uzytkowniku
