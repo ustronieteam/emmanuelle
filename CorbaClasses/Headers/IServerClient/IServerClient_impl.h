@@ -1,16 +1,8 @@
 #ifndef ___IServerClient_impl_h__
 #define ___IServerClient_impl_h__
 
-#include <OB/CORBA.h>
 #include <IServerClient_skel.h>
 #include "IRemoteObjects.h"
-#include "RemoteObserverData.h"
-#include "EventType.h"
-#include "ServerRecord.h"
-#include "ClientRecord.h"
-
-#include <log4cxx/logger.h>
-#include <log4cxx/level.h>
 
 //
 // IDL:IServerClient:1.0
@@ -23,9 +15,6 @@ class IServerClient_impl : virtual public POA_IServerClient,
     void operator=(const IServerClient_impl&);
 
     PortableServer::POA_var poa_;
-
-	// logger
-	log4cxx::LoggerPtr logger;
 
 public:
 

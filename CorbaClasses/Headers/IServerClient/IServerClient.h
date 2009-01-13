@@ -15,7 +15,7 @@
 #ifndef ___IServerClient_h__
 #define ___IServerClient_h__
 
-#include <DomainData.h>
+#include <domaindata.h>
 
 #ifndef OB_INTEGER_VERSION
 #   error No ORBacus version defined! Is <OB/CORBA.h> included?
