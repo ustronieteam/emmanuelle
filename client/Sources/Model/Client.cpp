@@ -65,6 +65,7 @@ bool Client::getRemoteServerInstance()
 	{
 		if(! CORBA::is_nil(orb))
 		{
+			//orb->shutdown(false);
 			orb->destroy();
 		}
 		
