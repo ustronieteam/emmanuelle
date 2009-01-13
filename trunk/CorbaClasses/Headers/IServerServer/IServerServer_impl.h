@@ -3,7 +3,6 @@
 
 #include <IServerServer_skel.h>
 #include "IRemoteObjects.h"
-
 //
 // IDL:IServerServer:1.0
 //
@@ -15,6 +14,9 @@ class IServerServer_impl : virtual public POA_IServerServer,
     void operator=(const IServerServer_impl&);
 
     PortableServer::POA_var poa_;
+
+	// logger
+	log4cxx::LoggerPtr logger;
 
 public:
 
@@ -67,6 +69,7 @@ public:
     // IDL:IServerServer/ClientStatusChanged:1.0
     //
     virtual void ClientStatusChanged(const ::DomainData::User& client,
+                                     const ::DomainData::Address& clientAddress,
                                      const ::DomainData::Enability& en,
                                      const ::DomainData::Address& senderServerAddress)
         throw(::CORBA::SystemException);
