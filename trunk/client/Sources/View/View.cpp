@@ -247,6 +247,7 @@ void View::Run()
 					LOG4CXX_DEBUG(this->_logger, "Rejestracja obserwatorow!");
 
 					_controller->AddRemoteObserver(new MessageObserver(this), MESSAGE);
+					_controller->AddRemoteObserver(new FileObserver(this), FFILE);
 					_controller->AddDataObserver(new StatusObserver(this));
 				}
 			}
@@ -401,7 +402,7 @@ std::list<Window *> View::GetAllWindows()
 /// @param[in] senderAddress Adres nadawcy.
 /// @param[in] message Wiadomosc.
 ///
-void View::Obsrv_ReciveMessage(const DomainData::Address & senderAddress, const DomainData::Message & message)
+void View::Obsrv_ReciveMessage(const DomainData::User & senderAddress, const DomainData::Message & message)
 {
 	MYMESSAGE						msg;
 	std::list<Window *>				tmpWindows;
@@ -410,7 +411,7 @@ void View::Obsrv_ReciveMessage(const DomainData::Address & senderAddress, const 
 	MsgWindow						* msgWin;
 	boost::mutex					* ptrMx;
 
-	LOG4CXX_DEBUG(this->_logger, "Widok otrzymal wiadomosc. Adresat.Name: " << senderAddress.name.in() << " Adresat.Localization: " << senderAddress.localization.in() << " Message.Content: " << message.content.in() ); 
+	LOG4CXX_DEBUG(this->_logger, "Widok otrzymal wiadomosc. Adresat.Name: " << senderAddress.name.in() << " Message.Content: " << message.content.in() ); 
 
 	if( senderAddress.name.in() == NULL )
 	{
@@ -535,4 +536,21 @@ void View::Obsrv_StatusChanged(const ContactRecord & contact)
 void View::Obsrv_File()
 {
 	LOG4CXX_DEBUG(this->_logger, "Widok otrzymal plik.");
+
+	std::string shortMsg(INFO_GET_FILE1);
+	shortMsg.append("nadawca");
+	shortMsg.append(INFO_GET_FILE2);
+	shortMsg.append("nazwa_pliku");
+
+	LOG4CXX_DEBUG(this->_logger, "Ustawienie powiadomienia: " << shortMsg.c_str() );
+
+	// Ustawienie wiadomosci.
+	(*GetActiveWindow())->SetMsg(shortMsg);
+
+	MYMESSAGE msg;
+
+	msg.time	= boost::posix_time::second_clock::local_time();
+	msg.sender	= INFO_GET_FILE_MSND;
+	msg.content = INFO_GET_FILE_MSG;
+	msg.content.append("nazwa_pliku");
 }

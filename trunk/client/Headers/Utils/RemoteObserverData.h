@@ -4,55 +4,95 @@
 #include "DomainData.h"
 #include "ObserverType.h"
 
-//Wszystkie dane jakie mog¹ p³yn¹æ z objektu obserwowanego. Te dane bêd¹ wykorzystywane przez widok w celu prezentacji.
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// RemoteObserverData
+/// @brief Dane dla obserwatorow typu RemoteObserver.
+/// @author Wojciech Grzeskowiak
+/// @date 2009.01.13
+///
 class RemoteObserverData
 {
-	
 	private:
 
-		ObserverType eventType;
+		///
+		/// Rodzaj zdarzenia.
+		///
+		ObserverType _eventType;
 
-		DomainData::Message message;
+		///
+		/// Wyslana wiadomosc.
+		///
+		DomainData::Message _message;
 
-		DomainData::Address senderAddress;
+		///
+		/// Nadawca.
+		///
+		DomainData::User _user;
+
+		///
+		/// Nazwa pliku.
+		///
+		std::string _fileName;
 
     public:
 
+		///
+		/// Konstruktor.
+		///
         RemoteObserverData();
 
+		///
+		/// Destruktor.
+		///
         virtual ~RemoteObserverData();
 
-		const ObserverType & GetObserverType() const
-		{
-			return eventType;
-		}
+		///
+		/// Pobiera typ zdarzenia.
+		/// @return Typ zdarzenia.
+		///
+		const ObserverType & GetObserverType() const;
 
-		void SetObserverType(const ObserverType & type)
-		{
-			eventType = type;
-		}
+		///
+		/// Ustawia typ zdarzenia.
+		/// @param[in] type Typ zdarzenia.
+		///
+		void SetObserverType(const ObserverType & type);
 
-		const DomainData::Message & GetSenderMessage() const
-		{
-			return message;
-		}
+		///
+		/// Pobiera wiadomosc.
+		/// @return Wiadomosc.
+		///
+		const DomainData::Message & GetSenderMessage() const;
 
-		void SetSenderMessage(const DomainData::Message & msg)
-		{
-			message = msg;
-		}
+		///
+		/// Ustawia wiadomosc.
+		/// @param[in] msg Wiadomosc
+		///
+		void SetSenderMessage(const DomainData::Message & msg);
 
-		const DomainData::Address & GetSenderAddress() const
-		{
-			return senderAddress;
-		}
+		///
+		/// Pobiera nadawce.
+		/// @return Nadawca
+		///
+		const DomainData::User & GetUser() const;
 
-		void SetSenderAddress(const DomainData::Address & addr)
-		{
-			senderAddress = addr;
-		}
+		///
+		/// Ustawia nadawce.
+		/// @parm[in] user Nadawca
+		///
+		void SetUser(const DomainData::User & user);
+		
+		///
+		/// Pobiera nazwe pliku.
+		/// @return Nazwa pliku.
+		///
+		const std::string & GetFileName() const;
 
-};  //end class RemoteObserverData
+		///
+		/// Ustawia nazwe pliku.
+		/// @parm[in] file Nazwa pliku.
+		///
+		void SetFileName(const std::string & file);
+}; 
 
 #endif

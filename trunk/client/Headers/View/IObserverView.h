@@ -12,7 +12,7 @@ class IObserverView
 		/// @param[in] senderAddress Adres nadawcy.
 		/// @param[in] message Wiadomosc.
 		///
-		virtual void Obsrv_ReciveMessage(const DomainData::Address & senderAddress, const DomainData::Message & message) = 0;
+		virtual void Obsrv_ReciveMessage(const DomainData::User & senderAddress, const DomainData::Message & message) = 0;
 
 		///
 		/// Zmiana statusu osoby na liscie kontatkow.
