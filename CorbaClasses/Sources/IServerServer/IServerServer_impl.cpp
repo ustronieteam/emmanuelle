@@ -70,6 +70,11 @@ IServerServer_impl::Join(const ::DomainData::Address& serverAddress)
 	for(unsigned int i = 0; i < serversList.size(); ++i)
 		(*_r)[i] = serversList[i].GetAddress();
 
+	DomainData::Address connectorAddress;
+	connectorAddress.localization = CORBA::string_dup(Server::GetRemotedAddress(SRVPORT.c_str()));
+
+	(*_r)[_r->length()] = connectorAddress;
+
 	LOG4CXX_DEBUG(logger, "zakonczenie wywolania JOIN!");
 	return _r;
 }

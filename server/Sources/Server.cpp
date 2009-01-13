@@ -192,12 +192,17 @@ bool Server::init(string address, string port)
 		AddressesList * l = parentServer->Join(addr);
 
 		ServerDataBase::GetInstance()->Clear();
-		for(unsigned int i = 0; i < l->length(); ++i)
+		for(unsigned int i = 0; i < l->length()-1; ++i)
 		{
 			ServerRecord rcd;
 			rcd.SetAddress((*l)[i]);
 
 			ServerDataBase::GetInstance()->InsertRecord(rcd);
+		}
+
+		if(!strcmp(GetMyIP().localization.in(), "null"))
+		{
+			SetMyIP((*l)[l->length()-1]);
 		}
 
 		cout << "WYPISANIE BAZY Z INITA: " << endl;
