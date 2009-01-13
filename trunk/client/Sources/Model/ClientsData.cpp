@@ -105,15 +105,18 @@ int ClientsData::AddContact(DomainData::User usr)
 ///@return				Rekord poszukiwanego klienta
 const ContactRecord & ClientsData::FindByName(std::string name)
 {
+	lock_mutex();
 	if(_records.count(name) == 0)
 	{
 		ContactNotFoundException e;
+		unlock_mutex();
 		throw e;
 	}
 	else
 	{
 		/*const ContactRecord cr = _records[name];
 		return cr;*/
+		unlock_mutex();
 		return _records[name];
 	}
 
@@ -124,6 +127,7 @@ const ContactRecord & ClientsData::FindByName(std::string name)
 ///@brief czyta nazwe klienta z pliku konfiguracyjnego
 void ClientsData::readClientName()
 {
+	lock_mutex();
 	std::string clName="";
 	long clNumber = 0;
 	po::options_description configOption( "Opcje pliku konfiguracyjnego" );
@@ -149,8 +153,9 @@ void ClientsData::readClientName()
 	catch(std::exception &exc)
 	{
 		file.close();
+		unlock_mutex();
 	}
-	
+	unlock_mutex();
 }
 ///
 ///@author Marian Szczykulski
@@ -167,7 +172,9 @@ const ContactRecord & ClientsData::GetOwnRecord() const
 ///@brief setter nazwy lokalnego klienta
 void ClientsData::SetOwnName(const char * c)
 {
+	lock_mutex();
 	ownRecord.userDesc.name = CORBA::string_dup(c);
+	unlock_mutex();
 }
 ///
 ///@author Marian Szczykulski
@@ -175,7 +182,9 @@ void ClientsData::SetOwnName(const char * c)
 ///@brief setter numeru lokalnego klienta
 void ClientsData::SetOwnNumber(long l)
 {
+	lock_mutex();
 	ownRecord.userDesc.number = l;
+	unlock_mutex();
 }
 ///
 ///@author Marian Szczykulski
@@ -183,10 +192,27 @@ void ClientsData::SetOwnNumber(long l)
 ///@brief setter dostepnosci lokalnego klienta
 void ClientsData::SetMyAvailability(bool b)
 {
+	lock_mutex();
 	ownRecord.isAvailable = b;
+	unlock_mutex();
 }
 
 bool ClientsData::ModifyRecord(const ContactRecord & cr)
 {
+	lock_mutex();
+
+	if ( this->_records.count(cr.userDesc.name.in())!=0)
+	{
+		_records[cr.userDesc.name.in()] = cr;
+		unlock_mutex();
+		return true;
+	}
+	else
+	{
+
+		ContactNotFoundException e;
+		unlock_mutex();
+		throw e;
+	}
 	return true;
 }

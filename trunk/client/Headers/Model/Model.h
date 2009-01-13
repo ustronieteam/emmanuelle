@@ -158,7 +158,7 @@ class Model : public IModel
 		virtual int RegisterObserver(IRemoteObserver * observ, ObserverType type);
 		virtual int UnregisterObserver();
 
-         int AddStatusObserver(DataObserver & observer) ;
+         int AddStatusObserver(DataObserver * observer) ;
 
          int SendPackage(FilePackage package);
 

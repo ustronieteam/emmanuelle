@@ -16,16 +16,22 @@ int StatusCheckerFunctor::operator()()
 			addr.name	= it->userDesc.name;
 			addr.localization = CORBA::string_dup("NIEPOTRZEBNY_JEST_ADDRESS");
 
+			LOG4CXX_DEBUG(logger, "Wywolanie metody na kliencie check status");
 			bool stat = _client->CheckStatus(addr);
+			LOG4CXX_DEBUG(logger, "Wywolano metode na kliencie check status");
 			ContactRecord cr = *it;
 			cr.isAvailable = stat;
+			LOG4CXX_DEBUG(logger, "Sprawdzanie czy status sie zmienil");
 			if(stat != it->isAvailable)
 			{
 				LOG4CXX_DEBUG(logger, "Wykryto zmieniony status klienta");
-				this->clientsData->ModifyRecord(cr);			
+				this->clientsData->ModifyRecord(cr);
+				LOG4CXX_DEBUG(logger, "Zmieniono record");
 				DataObserverData obsrData;
 				obsrData.setContactRecord(cr);
+				LOG4CXX_DEBUG(logger, "Uruchamianie obserwatora");
 				clientsData->Notify(obsrData);
+				LOG4CXX_DEBUG(logger, "Uruchomiono obserwatorow");
 			}
 		}
 		Sleep(sleepTime);

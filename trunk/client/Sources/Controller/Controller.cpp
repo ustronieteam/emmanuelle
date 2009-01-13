@@ -38,6 +38,9 @@ void Controller::SetModel(IModel * iModel)
 ///@author Marian szczykulski
 ///@date 2009-01-14
 ///@brief Rejestruje odpowiedniego obserwatora zdalnej instancji
+///@param[in]	observer	Wskaznik na odpowiedniego obserwatora
+///@param[in]	observerType	Typ obserwatora
+///@return status wykonania operacji
 int Controller::AddRemoteObserver(IRemoteObserver * observer, ObserverType observerType) 
 {
 	return model->RegisterObserver(observer, observerType);
@@ -104,14 +107,19 @@ bool Controller::SendMessageToClient(const char * content, const char * dest)
 	}
     return 0;
 }
-
-
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-int Controller::AddDataObserver(DataObserver & dataObserver) 
+///
+///@author Marian Szczykulski
+///@date 2008-01-13
+///@brief dodaje obserwatora statusu (danych w ogolnosci)
+///@param[in]	dataObserver	Obserwator danych
+///@return		status wykonania operacji
+int Controller::AddDataObserver(DataObserver * dataObserver) 
 {
-    //TODO Auto-generated method stub
-    return 0;
+	int result = 0;
+	LOG4CXX_DEBUG(logger, "Dodawanie Obserwatora statusu(kontroler)");
+	result = model->AddStatusObserver(dataObserver);
+	LOG4CXX_DEBUG(logger, "Obserwator statusu(kontroler) dodany");
+    return result;
 }
 ///
 ///@author Marian Szczykulski
@@ -279,6 +287,10 @@ void Controller::SetMyAvailability(bool b)
 {
 	model->SetMyAvailability(b);
 }
+///
+///@author Marian Szczykulski
+///@date 2008-01-13
+///@brief Testuje polaczenie Klient-Server (dwustronne)
 void Controller::testClient(std::string str)
 {
 	LOG4CXX_DEBUG(logger, "Test Client Kontroller begin");
