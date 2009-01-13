@@ -192,7 +192,7 @@ IServerClient_impl::SendMessage(const ::DomainData::Address& receiverAddress,
 	DomainData::User u;
 	u.name = receiverAddress.name;
 	observData.setClientUserData(u);
-	LOG4CXX_DEBUG(logger, "usr["<< usr.name.in() <<"], receiverAddress[" << receiverAddress.localization.in() << "], msg[" << msg.content.in() << "]");
+	LOG4CXX_DEBUG(logger, "usr["<< usr.name.in() <<"], receiverAddress[local: " << receiverAddress.localization.in() << "; name: " << receiverAddress.name.in()<< "] , msg[" << msg.content.in() << "]");
 	
 	observData.setClientAddress(receiverAddress);
 
