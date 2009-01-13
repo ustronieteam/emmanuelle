@@ -30,6 +30,8 @@ IClientServer_impl::ReceiveMessage(const ::DomainData::Address& senderAddress,
                                    const ::DomainData::Message& msg)
     throw(::CORBA::SystemException)
 {
+	std::cout << "WYWOLANIE RECEIVEMESSAGE z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()) << std::endl;
+
 	RemoteObserverData observData;
 	observData.SetObserverType(MESSAGE);
 	observData.SetSenderMessage(msg);

@@ -124,6 +124,8 @@ IServerClient_impl::SendMessage(const ::DomainData::Address& receiverAddress,
                                 const ::DomainData::Message& msg)
     throw(::CORBA::SystemException)
 {
+	std::cout << "WYWOLANIE SENDMESSAGE z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()) << std::endl;
+
 	RemoteObserverData observData;
 	observData.set_eventType(CLIENT_SEND_MESSAGE);
 	observData.setClientMessage(msg);
