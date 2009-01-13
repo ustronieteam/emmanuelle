@@ -164,7 +164,7 @@ class Model : public IModel
 
          int DeleteContact(const DomainData::User & usr) ;
 
-         virtual int SendMessage(DomainData::Address recAddr, DomainData::Message msg);
+         virtual int SendMessageToClient(DomainData::Address recAddr, DomainData::Message msg);
 
          int AddContact(const DomainData::User &usr) ;
 

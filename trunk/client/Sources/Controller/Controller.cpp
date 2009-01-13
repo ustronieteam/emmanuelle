@@ -89,7 +89,7 @@ bool Controller::SendMessageToClient(const char * content, const char * dest)
 	msg.content = CORBA::string_dup(content);
 
 	int result = 0;
-	result = model->SendMessage(addr, msg);
+	result = model->SendMessageToClient(addr, msg);
 	
 	if(result < 0)
 	{
