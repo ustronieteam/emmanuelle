@@ -23,6 +23,11 @@ IServerServer_impl::_default_POA()
     return PortableServer::POA::_duplicate(poa_);
 }
 
+
+::AddressesList* 
+IServerServer_impl::Join(const ::DomainData::Address& serverAddress)
+										throw(::CORBA::SystemException)
+{
 	LOG4CXX_DEBUG(logger, "WYWOLANIE JOIN z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()));
 	std::cout << "WYWOLANIE JOIN z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()) << std::endl;
 
@@ -164,7 +169,7 @@ IServerServer_impl::RemoveServer(const ::DomainData::Address& serverAddress)
 // IDL:IServerServer/PassMessage:1.0
 //
 void
-IServerServer::PassMessage(const ::DomainData::Message& msg,
+IServerServer_impl::PassMessage(const ::DomainData::Message& msg,
                              const ::DomainData::User& sender,
                              const ::DomainData::User& receiver)
     throw(::CORBA::SystemException)
@@ -175,7 +180,7 @@ IServerServer::PassMessage(const ::DomainData::Message& msg,
 	observData.set_eventType(SERVER_PASS_MESSAGE);
 
 	observData.setDestination(receiver);
-	observData.getSenderClientData(sender);
+	observData.setSenderClientData(sender);
 	observData.setClientMessage(msg);
 
 	this->Notify(observData);
@@ -185,9 +190,9 @@ IServerServer::PassMessage(const ::DomainData::Message& msg,
 // IDL:IServerServer/PassCreatePipeRequest:1.0
 //
 void
-IServerServer_impl::PassCreatePipeRequest(const ::DomainData::Address& pipeHolderAddress,
-                                          const ::DomainData::Address& senderAddress,
-                                          const ::DomainData::Address& receiverAddress)
+IServerServer_impl::PassCreatePipeRequest(const ::DomainData::User& pipeHolder,
+										  const ::DomainData::User& sender,
+										  const ::DomainData::User& receiver)
     throw(::CORBA::SystemException)
 {
     // TODO: Implementation

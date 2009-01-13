@@ -2,9 +2,10 @@
 #define ___IServerClient_impl_h__
 
 #include <IServerClient_skel.h>
-
 #include "IRemoteObjects.h"
 
+#include <log4cxx/logger.h>
+#include <log4cxx/level.h>
 //
 // IDL:IServerClient:1.0
 //

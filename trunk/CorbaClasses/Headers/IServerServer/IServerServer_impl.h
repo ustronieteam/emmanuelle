@@ -3,6 +3,10 @@
 
 #include <IServerServer_skel.h>
 #include "IRemoteObjects.h"
+
+#include <log4cxx/logger.h>
+#include <log4cxx/level.h>
+
 //
 // IDL:IServerServer:1.0
 //

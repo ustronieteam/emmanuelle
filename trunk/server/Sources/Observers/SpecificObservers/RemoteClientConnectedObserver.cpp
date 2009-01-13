@@ -163,7 +163,7 @@ int RemoteClientConnectedObserverLogicRunnable::operator()()
 			struct DomainData::Enability enab = clRec.GetEnability();
 			DomainData::Address clientAddr = clRec.GetAddress();
 
-			remoteServer->ClientStatusChanged(clientUserData, clientAddr ,enab,usr,localServAddr );//Dodac dane z observer Data
+			remoteServer->ClientStatusChanged(clientUserData, clientAddr, enab, localServAddr);
 			LOG4CXX_INFO(logger, "Wiadomosc wyslana do serwera nr"<<serverCounter);
 		}
 		catch(CORBA::SystemException & exc) 
