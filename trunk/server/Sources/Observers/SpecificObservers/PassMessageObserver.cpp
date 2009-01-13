@@ -6,7 +6,7 @@ PassMessageObserver::PassMessageObserver()
 }
 PassMessageObserver::PassMessageObserver(boost::shared_ptr<ClientsDataBase> & clientsDB)
 {
-	this->clientsDataBase = clientsDataBase;
+	this->clientsDataBase = clientsDB;
 }
 PassMessageObserver::PassMessageObserver(PassMessageObserver & arg) 
 {
