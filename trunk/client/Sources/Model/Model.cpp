@@ -249,7 +249,11 @@ int Model::Disconnect()
 			LOG4CXX_DEBUG(logger, "Konczenie nasluchu...");
 			try
 			{
-				orb->shutdown();
+				orb->shutdown(false);
+				LOG4CXX_DEBUG(logger, "zakonczono nasluch ... zwalnianie pamieci namiastek ...");
+				delete clientImpl;
+				delete serverImpl;
+				LOG4CXX_DEBUG(logger, "... zwolniono pamiec!");
 			}
 			catch(CORBA::SystemException & e)
 			{
