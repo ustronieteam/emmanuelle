@@ -93,7 +93,7 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 
 	//    1) Zaktualizuj wpis o kliencie(roz³¹cz)
 	//Znajdz klienta w bazie klientow
-	struct DomainData::Address clientAddr = observerData.getClientAddress();
+	//struct DomainData::Address clientData = observerData.getClientAddress();
 	struct DomainData::User	usr	= observerData.getClientUserData();
 
 	int clientId = clientsDataBase->Find(usr); 
@@ -154,6 +154,9 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 					LOG4CXX_DEBUG(logger, "Pozyskano zdalna instancje serwera");
 					servRec.SetServerRemoteInstance(remInstance);
 					servRec.SetBroker(orb);
+					LOG4CXX_DEBUG(logger, "Modyfikacja rekordu serwera");
+					serverDataBase->ModifyRecord(servRec);
+					LOG4CXX_DEBUG(logger, "Zmodyfikowano rekord serwera");
 					remoteServer = remInstance;
 				}
 			}
@@ -163,14 +166,19 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 				LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas pozyskiwania zdalnej instancji: "<<e._name());
 				continue;
 			}
+			catch(std::exception &e)
+			{
+				LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas modyfikacji rekordu serwera: "<<e.what());
+				continue;
+			}
 		}
 		try
 		{
 			struct DomainData::Enability enab = clRec.GetEnability();
-			struct DomainData::User usr = observerData.getClientUserData();	
-			DomainData::Address senderAddress;
-			// TODO: dodac nadawce 
-			remoteServer->ClientStatusChanged(clientAddr, enab, usr, senderAddress);
+			usr = observerData.getClientUserData();	
+			DomainData::Address clientAddr = clRec.GetAddress();
+			remoteServer->ClientStatusChanged(usr, clientAddr, enab, usr, Server::GetMyIP());
+
 			LOG4CXX_INFO(logger, "Wiadomosc wyslana do serwera "<<it->GetAddress().localization.in());
 		}
 		catch(std::exception & exc) //chyba rzuca jakis wyjatek??

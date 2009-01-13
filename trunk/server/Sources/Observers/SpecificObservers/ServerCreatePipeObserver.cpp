@@ -76,7 +76,7 @@ int ServerCreatePipeObserverLogicRunnable::operator()()
 
 	//    1)Klientowi który ma tworzyæ pipe przeka¿ odpowiedni¹ wiadomoœæ.
 	//Klient ten musi byæ z nami pod³¹czony, je¿eli nie to b³ad integralnoœci danych w bazie.
-	struct DomainData::Address clientAddr = observerData.getClientAddress();
+	struct DomainData::User clientData = observerData.getClientUserData();
 	int clientId = clientsDataBase->Find(clientAddr/*Dane z observerData*/);
 	if(clientId<=0)
 	{
@@ -95,10 +95,10 @@ int ServerCreatePipeObserverLogicRunnable::operator()()
 	}
 	try
 	{
-		struct DomainData::Address pipeHolder = observerData.getPipeHolderAddress();
-		struct DomainData::Address senderAddr = observerData.getSenderClientAddress();
+		struct DomainData::User pipeHolder = observerData.getPipeHolderData();
+		struct DomainData::User senderData = observerData.getSenderClientData();
 		IClientServer_var remoteInstance = clientSpecRec.GetClientRemoteInstance();
-		remoteInstance->CreatePipeRequest(pipeHolder, senderAddr);
+		remoteInstance->CreatePipeRequest(pipeHolder, senderData);
 	}
 	catch(std::exception &exc)
 	{

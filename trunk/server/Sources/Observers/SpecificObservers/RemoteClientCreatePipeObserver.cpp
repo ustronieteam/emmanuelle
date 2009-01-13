@@ -93,8 +93,8 @@ int RemoteClientCreatePipeObserverLogicRunnable::operator()()
 	//    1) Znajdz w bazie o klientach, takiego który nie blokuje po³¹czeñ przychodz¹cych i jest pod³¹czony
 	//    z aktualnym serwerem i przekaz mu odpowiedni komunikat o tworzeniu pipe'u
 	int localServId;// = serverDataBase->getLocalServerId();
-	struct DomainData::Address clientAddr = observerData.getClientAddress();
-	int clientId = clientsDataBase->Find(clientAddr); //Byc moze trzeba wywolac inna funkcjie
+	struct DomainData::User clientData = observerData.getClientUserData();
+	int clientId = clientsDataBase->Find(clientData); //Byc moze trzeba wywolac inna funkcjie
 	if(clientId>0)
 	{
 		ClientRecord clSpecRec;
@@ -107,13 +107,13 @@ int RemoteClientCreatePipeObserverLogicRunnable::operator()()
 			LOG4CXX_ERROR(logger, "Nie udalo sie pobrac rekordu z klienta z bazy"<< ".Powod: "<< exc.what());
 			return -1;
 		}
-		struct DomainData::Address pipeHolderAddr = clSpecRec.GetAddress();
+		struct DomainData::User pipeHolderData= clSpecRec.GetUser();
 		IClientServer_var remoteInstance = clSpecRec.GetClientRemoteInstance();
 
 		try
 		{
-			struct DomainData::Address senderAddr = observerData.getSenderClientAddress();
-			remoteInstance->CreatePipeRequest(pipeHolderAddr, senderAddr);
+			struct DomainData::User senderData = observerData.getSenderClientData();
+			remoteInstance->CreatePipeRequest(pipeHolderData, senderData);
 			LOG4CXX_INFO(logger, "Przekazano komunikat o utworzeniu pipe-u");
 		}
 		catch(std::exception &exc)
