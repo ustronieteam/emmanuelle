@@ -1,8 +1,11 @@
 #ifndef MESSAGEOBSERVER_H
 #define MESSAGEOBSERVER_H
 
-#include "View.h"
-#include "RemoteObserverData.h"
+#include <log4cxx/logger.h>
+#include <log4cxx/level.h>
+
+#include "IObserverView.h"
+
 #include "IRemoteObserver.h"
 
 ///
@@ -20,12 +23,14 @@ class MessageObserver : public IRemoteObserver
 		///
 		log4cxx::LoggerPtr _logger;
 
+		IObserverView * _view;
+
     public:
 
 		///
 		/// Konstruktor.
 		///
-        MessageObserver();
+        MessageObserver(IObserverView * view);
 
 		///
 		/// Destruktor.

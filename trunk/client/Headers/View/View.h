@@ -5,16 +5,14 @@
 #include <string>
 #include <list>
 
-#include "Controller.h"
-#include "ViewData.h"
-#include "Window.h"
+#include "MessageObserver.h"
+#include "StatusObserver.h"
+
 #include "ConfigWindow.h"
 #include "WelcomeWindow.h"
 #include "HelpWindow.h"
 #include "ContactWindow.h"
 #include "MsgWindow.h"
-
-#include "MessageObserver.h"
 
 // Polecenia.
 #define CHANGE_WINDOW		"`"
@@ -49,7 +47,7 @@ using namespace std;
 /// @author Wojciech Grzeskowiak
 /// @date 2009.01.10
 ///
-class View
+class View : public IObserverView
 {
 		// Przyjaznie.
 
@@ -186,7 +184,13 @@ class View
 		/// @param[in] senderAddress Adres nadawcy.
 		/// @param[in] message Wiadomosc.
 		///
-		void Obsrv_ReciveMessage(const DomainData::Address & senderAddress, const DomainData::Message & message);
+		virtual void Obsrv_ReciveMessage(const DomainData::Address & senderAddress, const DomainData::Message & message);
+
+		///
+		/// Zmiana statusu osoby na liscie kontatkow.
+		/// @param[in] contact Kontakt ktory sie zmienil.
+		///
+		virtual void Obsrv_StatusChanged(const ContactRecord & contact);
 };
 
 #endif

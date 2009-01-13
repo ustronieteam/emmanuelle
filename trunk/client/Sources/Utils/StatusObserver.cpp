@@ -1,17 +1,35 @@
 #include "StatusObserver.h"
-//Begin section for file StatusObserver.cpp
-//TODO: Add definitions that you want preserved
-//End section for file StatusObserver.cpp
 
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-StatusObserver::StatusObserver() 
+///
+/// Konstruktor.
+///
+StatusObserver::StatusObserver(IObserverView * view) 
 {
-    //TODO Auto-generated method stub
+	// Inicjalizacja loggera.
+	_logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("StatusObserver"));
+	_logger->setLevel(log4cxx::Level::getAll());
+
+	_view = view;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Destruktor.
+///
 StatusObserver::~StatusObserver() 
 {
-    //TODO Auto-generated method stub
+
+}
+
+///
+/// Metoda referesh.
+///
+int StatusObserver::Refresh(DataObserverData data)
+{
+	LOG4CXX_DEBUG(_logger, "Uruchomiono obserwatora statusu. Wywolanie obiektu widoku." );
+
+	_view->Obsrv_StatusChanged(data.getContactRecord());
+
+	LOG4CXX_DEBUG(_logger, "Zakonczono obserwatora statusu." );
+
+	return 1;
 }

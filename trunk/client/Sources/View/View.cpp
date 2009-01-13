@@ -246,7 +246,9 @@ void View::Run()
 					// Rejestracja obserwatorow.
 					LOG4CXX_DEBUG(this->_logger, "Rejestracja obserwatorow!");
 
-					_controller->AddRemoteObserver(new MessageObserver(), MESSAGE);
+					_controller->AddRemoteObserver(new MessageObserver(this), MESSAGE);
+
+					_controller->AddDataObserver(new StatusObserver(this));
 				}
 			}
 		}
@@ -478,4 +480,13 @@ void View::Obsrv_ReciveMessage(const DomainData::Address & senderAddress, const 
 		// Ustawienie wiadomosci.
 		(*GetActiveWindow())->SetMsg(shortMsg);
 	}
+}
+
+///
+/// Zmiana statusu osoby na liscie kontatkow.
+/// @param[in] contact Kontakt ktory sie zmienil.
+///
+void View::Obsrv_StatusChanged(const ContactRecord & contact)
+{
+	LOG4CXX_DEBUG(this->_logger, "Widok otrzymal zmiane statusu. Contact.User.Name: " << contact.userDesc.name.in() << " Contact.Status: " << contact.isAvailable );
 }
