@@ -33,14 +33,14 @@ IServerClient_impl::Connect(const ::DomainData::Address& server,
 {
 	std::cout << "WYWOLANIE CONNECT z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()) << std::endl;
 
-    ::DomainData::Address* _r = new ::DomainData::Address;
-	_r->localization = CORBA::string_dup(Server::GetMyIP().localization.in());
-
 	// zapisanie adresu wlasnego serwera
     if(strcmp(Server::GetMyIP().localization.in(),"null")==0)
 	{
 		Server::SetMyIP(server);
 	}
+
+	::DomainData::Address* _r = new ::DomainData::Address;
+	_r->localization = CORBA::string_dup(Server::GetMyIP().localization.in());
 
 	//pobranie instancji bazy danych
 	ServerDataBase * serverDB = ServerDataBase::GetInstance();
