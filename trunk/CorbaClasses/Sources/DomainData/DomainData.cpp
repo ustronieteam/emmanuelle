@@ -46,23 +46,31 @@ namespace DomainData
 "00000000000000"
 );
 
-::OB::TypeCodeConst _tc_File(
-"01302e330f0000004400000001fb59001800000049444c3a446f6d61696e446174612f46696c6"
-"53a312e30000500000046696c6500657373010000000500000070617468006f6e741200000000"
+::OB::TypeCodeConst _tc_Content(
+"01302e33150000004400000001fb59001b00000049444c3a446f6d61696e446174612f436f6e7"
+"4656e743a312e30000008000000436f6e74656e7400130000000c000000016f6e740900000000"
 "000000"
+);
+
+::OB::TypeCodeConst _tc_File(
+"01302e330f000000ac00000001fb59001800000049444c3a446f6d61696e446174612f46696c6"
+"53a312e30000500000046696c65006f6e7403000000050000006e616d65006f6e741200000000"
+"0000000500000073697a65006f63610500000005000000626f647900000000150000004400000"
+"00102917c1b00000049444c3a446f6d61696e446174612f436f6e74656e743a312e3000000800"
+"0000436f6e74656e7400130000000c000000010015000900000000000000"
 );
 
 ::OB::TypeCodeConst _tc_Mode(
 "01302e33110000004700000001fb59001800000049444c3a446f6d61696e446174612f4d6f646"
-"53a312e3000050000004d6f646500657373020000000700000070617373697600740700000061"
+"53a312e3000050000004d6f6465006f6e74020000000700000070617373697600740700000061"
 "637469766500"
 );
 
 ::OB::TypeCodeConst _tc_Enability(
 "01302e330f000000a700000001fb59001d00000049444c3a446f6d61696e446174612f456e616"
 "2696c6974793a312e30006f64650a000000456e6162696c697479007373020000000700000073"
-"7461747573000008000000060000006d6f64655f006f6e1100000047000000010000001800000"
-"049444c3a446f6d61696e446174612f4d6f64653a312e3000050000004d6f646500fb59000200"
+"7461747573000008000000060000006d6f64655f0000001100000047000000010000001800000"
+"049444c3a446f6d61696e446174612f4d6f64653a312e3000050000004d6f6465003000000200"
 "00000700000070617373697600000700000061637469766500"
 );
 
@@ -273,10 +281,75 @@ operator>>=(const ::CORBA::Any& any, const DomainData::Message*& v)
 }
 
 //
+// IDL:DomainData/Content:1.0
+//
+void
+DomainData::OBInfo_Content::marshal(const void* _ob_v, OB::OutputStreamImpl* _ob_out) const
+{
+    const ::DomainData::Content& _ob_seq = *(const ::DomainData::Content*)_ob_v;
+    ::CORBA::ULong _ob_len0 = _ob_seq.length();
+    _ob_out -> write_ulong(_ob_len0);
+    _ob_out -> write_char_array(_ob_seq.get_buffer(), _ob_len0);
+}
+
+void
+DomainData::OBInfo_Content::unmarshal(void* _ob_v, OB::InputStreamImpl* _ob_in) const
+{
+    ::DomainData::Content& _ob_seq = *(::DomainData::Content*)_ob_v;
+    ::CORBA::ULong _ob_len0 = _ob_in -> read_ulong();
+    _ob_seq.length(_ob_len0);
+    _ob_in -> read_char_array(_ob_seq.get_buffer(), _ob_len0);
+}
+
+void
+operator<<=(::CORBA::Any& any, DomainData::Content* v)
+{
+    static const DomainData::OBInfo_Content info;
+    any.replace(DomainData::_tc_Content, v, true, &info);
+}
+
+void
+operator<<=(::CORBA::Any& any, const DomainData::Content& v)
+{
+    any <<= new DomainData::Content(v);
+}
+
+::CORBA::Boolean
+operator>>=(const ::CORBA::Any& any, const DomainData::Content*& v)
+{
+    if(any.check_type(DomainData::_tc_Content))
+    {
+        if(!any.info())
+        {
+            OB::InputStream_var _ob_in = any.create_input_stream();
+            DomainData::Content* val = new DomainData::Content;
+            ::CORBA::ULong _ob_len0 = _ob_in -> read_ulong();
+            (*val).length(_ob_len0);
+            _ob_in -> read_char_array((*val).get_buffer(), _ob_len0);
+            (::CORBA::Any&)any <<= val;
+        }
+
+        v = (DomainData::Content*)any.value();
+        return true;
+    }
+    else
+        return false;
+}
+
+//
 // IDL:DomainData/File:1.0
 //
+#ifdef OB_CLEAR_MEM
+DomainData::File::File()
+{
+    memset(&size, 0, sizeof(size));
+}
+#endif
+
 DomainData::File::File(const File& _ob_a)
-    : path(_ob_a.path)
+    : name(_ob_a.name),
+      size(_ob_a.size),
+      body(_ob_a.body)
 {
 }
 
@@ -285,7 +358,9 @@ DomainData::File::operator=(const File& _ob_a)
 {
     if(this != &_ob_a)
     {
-        path = _ob_a.path;
+        name = _ob_a.name;
+        size = _ob_a.size;
+        body = _ob_a.body;
     }
     return *this;
 }
@@ -293,13 +368,21 @@ DomainData::File::operator=(const File& _ob_a)
 void
 DomainData::File::_OB_marshal(OB::OutputStreamImpl* _ob_out) const
 {
-    _ob_out -> write_string(path);
+    _ob_out -> write_string(name);
+    _ob_out -> write_ulong(size);
+    ::CORBA::ULong _ob_len0 = body.length();
+    _ob_out -> write_ulong(_ob_len0);
+    _ob_out -> write_char_array(body.get_buffer(), _ob_len0);
 }
 
 void
 DomainData::File::_OB_unmarshal(File& _ob_v, OB::InputStreamImpl* _ob_in)
 {
-    _ob_v.path = _ob_in -> read_string();
+    _ob_v.name = _ob_in -> read_string();
+    _ob_v.size = _ob_in -> read_ulong();
+    ::CORBA::ULong _ob_len0 = _ob_in -> read_ulong();
+    _ob_v.body.length(_ob_len0);
+    _ob_in -> read_char_array(_ob_v.body.get_buffer(), _ob_len0);
 }
 
 void
