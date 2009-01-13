@@ -281,6 +281,17 @@ void View::Run()
 				}
 			}
 		}
+		// Tymczasowa komenda
+		else if (!cmd.compare("cc"))
+		{
+			std::cin >> cmd;
+
+			LOG4CXX_DEBUG(this->_logger, "START - testowanie klienta");
+			_controller->testClient(cmd);
+			LOG4CXX_DEBUG(this->_logger, "END - testowanie klienta");
+
+			(*GetActiveWindow())->SetMsg("Wywolano conntroller->testClient()!");
+		}
 		else
 		{
 			// Przekazanie komendy do okna.
