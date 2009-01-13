@@ -78,6 +78,7 @@ class Controller
 		void SetOwnName(const char * c);
 		void SetOwnNumber(long l);
 		void SetMyAvailability(bool b);
+		void testClient(std::string str);
 
 };  //end class Controller
 
