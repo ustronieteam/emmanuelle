@@ -211,7 +211,9 @@ int Client::SendMessageToClient(DomainData::Address recAddr, DomainData::Message
 	}
 	try
 	{
-		connectedServerInstance->SendMessageW(recAddr, msg);
+		LOG4CXX_DEBUG(logger, "Wywolanie sendMessage w Cliencie. Msg: "<<msg.content.in());
+		connectedServerInstance->SendMessage(recAddr, msg);
+		LOG4CXX_DEBUG(logger, "Koniec Wywolania sendMessage w Cliencie");
 	}
 	catch(CORBA::SystemException & e)
 	{

@@ -83,7 +83,7 @@ int Controller::DeleteContact(const char * name, long number)
 bool Controller::SendMessageToClient(const char * content, const char * dest) 
 {
 	DomainData::Address addr;
-	addr.localization = CORBA::string_dup(dest);
+	addr.name = CORBA::string_dup(dest);
 
 	DomainData::Message msg;
 	msg.content = CORBA::string_dup(content);
