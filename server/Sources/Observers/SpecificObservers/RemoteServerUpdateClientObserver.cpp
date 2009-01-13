@@ -89,8 +89,8 @@ int RemoteServerUpdateClientObserverLogicRunnable::operator()()
 	LOG4CXX_INFO(logger, "Przetwarzanie logiki RemoteServerUpdateClientObserver");
 
 	//    1)Znajdz klienta
-	struct DomainData::Address servAddr = observerData.getServerAddress();
-	int clientId = clientsDataBase->Find(servAddr/*dane z observerData*/);
+	struct DomainData::User clientData = observerData.getClientUserData();
+	int clientId = clientsDataBase->Find(clientData);
 	if(clientId <=0)
 	{//Klienta nie ma w bazie => podlaczyl sie nowy klient
 		ClientRecord newClientRecord = ClientRecord(/*Dane z observerData*/);

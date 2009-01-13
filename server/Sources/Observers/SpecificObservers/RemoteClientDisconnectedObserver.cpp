@@ -177,7 +177,7 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 			struct DomainData::Enability enab = clRec.GetEnability();
 			usr = observerData.getClientUserData();	
 			DomainData::Address clientAddr = clRec.GetAddress();
-			remoteServer->ClientStatusChanged(usr, clientAddr, enab, usr, Server::GetMyIP());
+			remoteServer->ClientStatusChanged(usr, clientAddr, enab, Server::GetMyIP());
 
 			LOG4CXX_INFO(logger, "Wiadomosc wyslana do serwera "<<it->GetAddress().localization.in());
 		}

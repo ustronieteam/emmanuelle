@@ -77,7 +77,7 @@ int ServerCreatePipeObserverLogicRunnable::operator()()
 	//    1)Klientowi który ma tworzyæ pipe przeka¿ odpowiedni¹ wiadomoœæ.
 	//Klient ten musi byæ z nami pod³¹czony, je¿eli nie to b³ad integralnoœci danych w bazie.
 	struct DomainData::User clientData = observerData.getClientUserData();
-	int clientId = clientsDataBase->Find(clientAddr/*Dane z observerData*/);
+	int clientId = clientsDataBase->Find(clientData);
 	if(clientId<=0)
 	{
 		LOG4CXX_ERROR(logger, "Blad podczas odnaidywania id klienta w bazie");

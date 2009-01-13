@@ -59,7 +59,9 @@ IServerClient_impl::Connect(const ::DomainData::Address& server,
 	en.mode_ = m;
 	
 	// wywolanie na samym sobie
-	Server::GetInstance("")->GetServerImpl()->ClientStatusChanged(usr, Server::GetRemotedAddress(SRVPORT.c_str()), en, Server::GetMyIP());
+	DomainData::Address address;
+	address.localization = CORBA::string_dup(Server::GetRemotedAddress(SRVPORT.c_str()));
+	Server::GetInstance("")->GetServerImpl()->ClientStatusChanged(usr, address, en, Server::GetMyIP());
 
 	RemoteObserverData observData;
 	observData.set_eventType(CLIENT_CONNECTED);
@@ -103,7 +105,7 @@ IServerClient_impl::Disconnect(const ::DomainData::User& usr)
 	DomainData::Address addr;
 	addr.localization = CORBA::string_dup( Server::GetRemotedAddress(SRVPORT.c_str()) );
 
-	Server::GetInstance("")->GetServerImpl()->ClientStatusChanged(usr, Server::GetRemotedAddress(SRVPORT.c_str()), en, Server::GetMyIP());
+	Server::GetInstance("")->GetServerImpl()->ClientStatusChanged(usr, addr, en, Server::GetMyIP());
 
 	RemoteObserverData observData;
 	observData.set_eventType(CLIENT_DISCONNECTED);
@@ -132,7 +134,6 @@ IServerClient_impl::SendMessage(const ::DomainData::User& ssender,
                                 const ::DomainData::User& receiver,
                                 const ::DomainData::Message& msg)
     throw(::CORBA::SystemException)
-{
 {
 	std::cout << "WYWOLANIE SENDMESSAGE z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()) << std::endl;
 
