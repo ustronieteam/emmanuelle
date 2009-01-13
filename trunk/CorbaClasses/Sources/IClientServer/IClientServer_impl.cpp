@@ -1,3 +1,4 @@
+#include <OB/CORBA.h>
 #include <IClientServer_impl.h>
 
 //
@@ -6,9 +7,6 @@
 IClientServer_impl::IClientServer_impl(PortableServer::POA_ptr poa)
     : poa_(PortableServer::POA::_duplicate(poa))
 {
-	//logger
-	logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("IClientServer_impl"));
-	logger->setLevel(log4cxx::Level::getAll());
 }
 
 IClientServer_impl::~IClientServer_impl()
@@ -29,14 +27,7 @@ IClientServer_impl::ReceiveMessage(const ::DomainData::Address& senderAddress,
                                    const ::DomainData::Message& msg)
     throw(::CORBA::SystemException)
 {
-	LOG4CXX_DEBUG(logger, "WYWOLANIE RECEIVEMESSAGE");
-
-	RemoteObserverData observData;
-	observData.SetObserverType(MESSAGE);
-	observData.SetSenderMessage(msg);
-	observData.SetSenderAddress(senderAddress);
-
-	this->Notify(observData);
+    // TODO: Implementation
 }
 
 //

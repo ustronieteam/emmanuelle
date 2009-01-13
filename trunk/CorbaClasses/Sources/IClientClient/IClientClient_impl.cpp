@@ -1,5 +1,5 @@
+#include <OB/CORBA.h>
 #include <IClientClient_impl.h>
-
 
 //
 // IDL:IClientClient:1.0
@@ -7,9 +7,6 @@
 IClientClient_impl::IClientClient_impl(PortableServer::POA_ptr poa)
     : poa_(PortableServer::POA::_duplicate(poa))
 {
-	//logger
-	logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("IClientClient_impl"));
-	logger->setLevel(log4cxx::Level::getAll());
 }
 
 IClientClient_impl::~IClientClient_impl()
