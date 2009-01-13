@@ -27,10 +27,9 @@ void Model::activateListning()
 	logger->setLevel(log4cxx::Level::getAll());
 
 	// uruchomienie brokera, stworzenie obiektow zdalnych, udostepnienie ich i wlaczenie nasluchiwania
-	CORBA::ORB_var orb;
-
+	
 	try
-	{
+	{	
 		LOG4CXX_DEBUG(logger, "CLNTPORT: " << CLNTPORT.c_str());
 		char* orb_options[] = { "-OAport", const_cast<char *>(CLNTPORT.c_str()) };
 		int optc = sizeof(orb_options)/sizeof(char *);
@@ -234,13 +233,32 @@ int Model::Disconnect()
 {
 	if(client != boost::shared_ptr<Client>())
 	{
+		LOG4CXX_DEBUG(logger, "Disconnect w Modelu...");
 		DomainData::User ownUsrDt;
 		ownUsrDt.name = CORBA::string_dup(GetOwnName().c_str());
 		ownUsrDt.number = GetOwnNumber();
-		return client->Disconnect(ownUsrDt);
+		int result = client->Disconnect(ownUsrDt);
+		LOG4CXX_DEBUG(logger, "Disconnect w Modelu. Result: "<<result);
+		if(result >= 0)
+		{
+			LOG4CXX_DEBUG(logger, "Konczenie nasluchu...");
+			try
+			{
+				orb->shutdown();
+			}
+			catch(CORBA::SystemException & e)
+			{
+				LOG4CXX_ERROR(logger, "Wyjatek podczas konczenia nasluchu");
+				return -1;
+			}
+		}
+
 	}
 	else
+	{
+		LOG4CXX_ERROR(logger, "Nie ma zainicjalizowanego objektu klienta w modelu");
 		return -1;
+	}
 }
 ///
 ///@author Marian Szczykulski
@@ -254,6 +272,7 @@ int Model::Disconnect()
 		client->setServerAddress(serverAddress);//Ustawiam, ale nie jest to konieczne
 
 		boost::thread watekSluchacza(&activateListeningThreadFun);
+
 		LOG4CXX_DEBUG(logger, "Uruchomiono watek nasluchu");
 		Sleep(5000);
 		LOG4CXX_DEBUG(logger, "Connecting...");
