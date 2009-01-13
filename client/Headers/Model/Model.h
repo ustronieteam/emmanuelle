@@ -35,6 +35,8 @@ class Model : public IModel
 
     private:
 		
+		CORBA::ORB_var orb;
+
 		boost::shared_ptr<Client> client;
 
 		boost::shared_ptr<ClientsData> clientsData;
