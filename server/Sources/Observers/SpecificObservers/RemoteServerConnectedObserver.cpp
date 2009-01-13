@@ -194,7 +194,7 @@ int RemoteServerConnectedObserverLogicRunnable::operator()()
 			it++)
 		{
 			int sId = it->GetClientServerId();
-			if(sid>0)
+			if(sId>0)
 			{
 				ServerRecord serRec = serverDataBase->GetRecord(sId);
 				//Przekarz dane o kliencie
