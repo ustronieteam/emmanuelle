@@ -92,7 +92,8 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 
 	//    1) Znajdz odpowiedniego klienta (adresata)
 	struct DomainData::Address clientAddr = observerData.getClientAddress();
-	int clientId = clientsDataBase->Find(clientAddr);
+	struct DomainData::User usr = observerData.getClientUserData();
+	int clientId = clientsDataBase->Find(usr);
 	if(clientId<0)
 	{
 		LOG4CXX_ERROR(logger, "Blad w odnajdowaniu klienta- nie ma go w bazie");
@@ -102,6 +103,7 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 	try
 	{
 		clRec = clientsDataBase->GetRecord(clientId);
+		clientAddr = clRec.GetAddress();
 	}
 	catch(std::exception &exc)
 	{
@@ -115,13 +117,13 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 	struct DomainData::Address localServAddr = Server::GetMyIP();
 	int localServerId = serverDataBase->Find(localServAddr);
 
-	
+	LOG4CXX_DEBUG(logger, "LocalId: "<<localServerId<<"ServerId: "<<servId << "Local Addr: "<<localServAddr.localization.in() );
 	if(servId == localServerId)
 	{//    2) Jezeli jest do nas pod³¹czony przekaz mu wiadomoœæ
 		IClientServer_var remoteClientInterface= clRec.GetClientRemoteInstance();
 		if(CORBA::is_nil(remoteClientInterface))
 		{
-			LOG4CXX_DEBUG(logger, "Pozyskiwanie zdalnej instancji klienta");
+			LOG4CXX_DEBUG(logger, "Pozyskiwanie zdalnej instancji klienta: "<<clientAddr.localization.in() );
 			CORBA::ORB_var orb;
 			try
 			{
