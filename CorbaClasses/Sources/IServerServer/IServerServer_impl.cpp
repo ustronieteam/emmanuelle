@@ -106,6 +106,7 @@ IServerServer_impl::AddServer(const ::DomainData::Address& serverAddress)
 
 	if(serverId < 0)
 	{
+		LOG4CXX_DEBUG(logger,"Nie znaleziono recordu w bazie ... wstawianie rekordu...");
 		record.SetAddress(serverAddress);
 	
 		try
@@ -114,28 +115,6 @@ IServerServer_impl::AddServer(const ::DomainData::Address& serverAddress)
 		}
 		catch(std::exception &)
 		{}
-	}
-	else
-	{
-		record = ServerDataBase::GetInstance()->GetRecord(serverId);
-
-		CORBA::ORB_var orb = record.GetBroker();
-
-		if(!CORBA::is_nil(orb))
-		{
-			orb->destroy();
-		}
-		record.SetBroker(orb);
-
-		IServerServer_var serv = record.GetServerRemoteInstance();
-
-		if(!CORBA::is_nil(serv))
-		{
-			CORBA::release(serv);
-		}
-		record.SetServerRemoteInstance(serv);
-
-		ServerDataBase::GetInstance()->ModifyRecord(record);
 	}
 
 	std::cout << "WYPISANIE BAZY Z ADDSERVER" << std::endl;

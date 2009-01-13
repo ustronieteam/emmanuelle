@@ -136,14 +136,19 @@ int Model::RegisterObserver(IRemoteObserver * observ, ObserverType type)
 {
 	if(type == MESSAGE)
 	{
+		LOG4CXX_DEBUG(logger, "rejestrowanie obseratora MESSAGE" );
 		this->serverImpl->RegisterObserv(observ);
 	}
 	else if(type == FFILE)
 	{
+		LOG4CXX_DEBUG(logger, "rejestrowanie obseratora FILE" );
 		this->clientImpl->RegisterObserv(observ);
 	}
 	else
+	{
+		LOG4CXX_DEBUG(logger, "zly typ obserwatora." );
 		return 1;
+	}
 
 	return 0;
 }
@@ -197,11 +202,11 @@ int Model::DeleteContact(const DomainData::User & usr)
 ///@param[in] msg		wiadomosc
 ///@return				status (-2 zdalna instancja serwera nie zainicjowana,
 ///								-1 blad podczas wywolywania zdalnej metody serwera)
- int Model::SendMessageToClient(DomainData::Address recAddr, DomainData::Message msg) 
+ int Model::SendMessageToClient(DomainData::User sender, DomainData::User receiver, DomainData::Message msg)
  {
 	 int result = 0;
 	 LOG4CXX_DEBUG(logger, "Wywolanie send message w modelu");
-	 result = client->SendMessageToClient(recAddr, msg);
+	 result = client->SendMessageToClient(sender,receiver,msg);
 	 LOG4CXX_DEBUG(logger, "Koniec Wywolania send message w modelu. Result: "<<result);
 	 return result;
  }

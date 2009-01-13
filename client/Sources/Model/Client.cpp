@@ -202,7 +202,7 @@ int Client::Disconnect(DomainData::User & usr)
 ///@param[in] msg		wiadomosc
 ///@return				status (-2 zdalna instancja serwera nie zainicjowana,
 ///								-1 blad podczas wywolywania zdalnej metody serwera)
-int Client::SendMessageToClient(DomainData::Address recAddr, DomainData::Message msg) 
+int Client::SendMessageToClient(DomainData::User sender, DomainData::User receiver, DomainData::Message msg) 
 {
 	if(CORBA::is_nil(connectedServerInstance))
 	{//nie jestesmy podlaczeni do zdalnej instancji serwera
@@ -214,7 +214,7 @@ int Client::SendMessageToClient(DomainData::Address recAddr, DomainData::Message
 		LOG4CXX_DEBUG(logger, "Wywolanie sendMessage w Cliencie. Msg: "<<msg.content.in());
 		
 		// TODO: trzeba poprawic - zmienila sie deklaracja
-		connectedServerInstance->SendMessage(recAddr, usr, msg);
+		connectedServerInstance->SendMessage(sender, receiver, msg);
 		LOG4CXX_DEBUG(logger, "Koniec Wywolania sendMessage w Cliencie");
 	}
 	catch(CORBA::SystemException & e)

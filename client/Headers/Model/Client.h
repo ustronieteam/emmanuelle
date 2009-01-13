@@ -73,7 +73,7 @@ class Client : public CorbaConnector
         int ConnectToServer();
 		int Disconnect(DomainData::User & usr);
 
-        int SendMessageToClient(DomainData::Address recAddr, DomainData::Message msg);
+		int SendMessageToClient(DomainData::User sender, DomainData::User receiver, DomainData::Message msg);
         int AddMessageObserver(IRemoteObserver & messageObserver);
 
 		bool CheckStatus(DomainData::Address addr);
