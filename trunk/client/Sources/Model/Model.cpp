@@ -249,7 +249,12 @@ int Model::Disconnect()
 	 {
 		client->setServerAddress(serverAddress);//Ustawiam, ale nie jest to konieczne
 
+		boost::thread watekSluchacza(&activateListeningThreadFun);
+		LOG4CXX_DEBUG(logger, "Uruchomiono watek nasluchu");
+		Sleep(5000);
+		LOG4CXX_DEBUG(logger, "Connecting...");
 		result = client->ConnectToServer();
+		LOG4CXX_DEBUG(logger, "Connected");
 		//mogla zajsc jakas zmiana wiec dla spojnosci danych nalezy uaktualnic
 		this->serverAddress = client->getServerAddress(); 
 		
@@ -261,9 +266,9 @@ int Model::Disconnect()
 	 }
 	 if(result==1)
 	 {
-		 boost::thread watekSluchacza(&activateListeningThreadFun);
-		 LOG4CXX_DEBUG(logger, "Uruchomiono watek nasluchu");
-		 Sleep(5000);
+		 //boost::thread watekSluchacza(&activateListeningThreadFun);
+		 //LOG4CXX_DEBUG(logger, "Uruchomiono watek nasluchu");
+		 //Sleep(5000);
 		 return true;
 	 }
 	 else
