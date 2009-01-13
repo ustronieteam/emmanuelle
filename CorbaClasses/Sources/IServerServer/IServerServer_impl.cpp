@@ -65,15 +65,15 @@ IServerServer_impl::Join(const ::DomainData::Address& serverAddress)
 
 	// utworzenie listy typu AddressList i przepisanie danych uzyskanych z bazy
 	AddressesList * _r =  new  AddressesList();
-	_r->length(serversList.size());
-	
-	for(unsigned int i = 0; i < serversList.size(); ++i)
+	_r->length(serversList.size()+1);
+	unsigned int i = 0;
+	for( i = 0; i < serversList.size(); ++i)
 		(*_r)[i] = serversList[i].GetAddress();
 
 	DomainData::Address connectorAddress;
 	connectorAddress.localization = CORBA::string_dup(Server::GetRemotedAddress(SRVPORT.c_str()));
 
-	(*_r)[_r->length()] = connectorAddress;
+	(*_r)[i] = connectorAddress;
 
 	LOG4CXX_DEBUG(logger, "zakonczenie wywolania JOIN!");
 	return _r;
