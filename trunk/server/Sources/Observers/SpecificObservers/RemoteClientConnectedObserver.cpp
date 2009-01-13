@@ -162,7 +162,9 @@ int RemoteClientConnectedObserverLogicRunnable::operator()()
 		{
 			struct DomainData::Enability enab = clRec.GetEnability();
 			struct DomainData::User usr = observerData.getClientUserData();
-			remoteServer->ClientStatusChanged(clientAddr, enab,usr);//Dodac dane z observer Data
+			DomainData::Address senderAddress;
+			// TODO: dodac tego co wysyla
+			remoteServer->ClientStatusChanged(clientAddr, enab,usr, senderAddress);//Dodac dane z observer Data
 			LOG4CXX_INFO(logger, "Wiadomosc wyslana do serwera nr"<<serverCounter);
 		}
 		catch(std::exception & exc) //chyba rzuca jakis wyjatek??

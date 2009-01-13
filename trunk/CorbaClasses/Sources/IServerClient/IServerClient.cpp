@@ -278,7 +278,8 @@ OBProxy_IServerClient::Register(const ::DomainData::User& _ob_a0)
 //
 void
 OBProxy_IServerClient::SendMessage(const ::DomainData::Address& _ob_a0,
-                                   const ::DomainData::Message& _ob_a1)
+                                   const ::DomainData::User& _ob_a1,
+                                   const ::DomainData::Message& _ob_a2)
 {
     ::CORBA::ULong _ob_retry = 0, _ob_hop = 0;
     while(true)
@@ -288,7 +289,7 @@ OBProxy_IServerClient::SendMessage(const ::DomainData::Address& _ob_a0,
             OB::StubImplBase_var _ob_stubImplBase = _OB_getStubImpl();
             OBStubImpl_IServerClient_ptr _ob_stubImpl = 
                 dynamic_cast< OBStubImpl_IServerClient_ptr>(_ob_stubImplBase.in());
-            _ob_stubImpl -> SendMessage(_ob_a0, _ob_a1);
+            _ob_stubImpl -> SendMessage(_ob_a0, _ob_a1, _ob_a2);
             return;
         }
         catch(const OB::ExceptionBase& _ob_ex)
@@ -505,7 +506,8 @@ OBMarshalStubImpl_IServerClient::Register(const ::DomainData::User& _ob_a0)
 //
 void
 OBMarshalStubImpl_IServerClient::SendMessage(const ::DomainData::Address& _ob_a0,
-                                             const ::DomainData::Message& _ob_a1)
+                                             const ::DomainData::User& _ob_a1,
+                                             const ::DomainData::Message& _ob_a2)
 {
     while(true)
     {
@@ -517,6 +519,7 @@ OBMarshalStubImpl_IServerClient::SendMessage(const ::DomainData::Address& _ob_a0
             {
                 _ob_a0._OB_marshal(_ob_out);
                 _ob_a1._OB_marshal(_ob_out);
+                _ob_a2._OB_marshal(_ob_out);
             }
             catch(const ::CORBA::SystemException& _ob_ex)
             {

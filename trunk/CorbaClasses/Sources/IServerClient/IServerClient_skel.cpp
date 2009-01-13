@@ -86,12 +86,14 @@ void
 POA_IServerClient::_OB_op_SendMessage(OB::Upcall_ptr _ob_up)
 {
     ::DomainData::Address _ob_a0;
-    ::DomainData::Message _ob_a1;
+    ::DomainData::User _ob_a1;
+    ::DomainData::Message _ob_a2;
     OB::InputStreamImpl* _ob_in = _OB_preUnmarshal(_ob_up);
     ::DomainData::Address::_OB_unmarshal(_ob_a0, _ob_in);
-    ::DomainData::Message::_OB_unmarshal(_ob_a1, _ob_in);
+    ::DomainData::User::_OB_unmarshal(_ob_a1, _ob_in);
+    ::DomainData::Message::_OB_unmarshal(_ob_a2, _ob_in);
     _OB_postUnmarshal(_ob_up);
-    SendMessage(_ob_a0, _ob_a1);
+    SendMessage(_ob_a0, _ob_a1, _ob_a2);
     _OB_postinvoke(_ob_up);
     _OB_preMarshal(_ob_up);
     _OB_postMarshal(_ob_up);
@@ -266,10 +268,11 @@ OBDirectStubImpl_IServerClient::Register(const ::DomainData::User& _ob_a0)
 //
 void
 OBDirectStubImpl_IServerClient::SendMessage(const ::DomainData::Address& _ob_a0,
-                                            const ::DomainData::Message& _ob_a1)
+                                            const ::DomainData::User& _ob_a1,
+                                            const ::DomainData::Message& _ob_a2)
 {
     OB::InvocationHandler _ob_handler(this, "SendMessage");
-    dynamic_cast<POA_IServerClient*>(_ob_servant_) -> SendMessage(_ob_a0, _ob_a1);
+    dynamic_cast<POA_IServerClient*>(_ob_servant_) -> SendMessage(_ob_a0, _ob_a1, _ob_a2);
 }
 
 //

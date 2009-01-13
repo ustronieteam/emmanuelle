@@ -113,6 +113,7 @@ public:
     // IDL:IServerClient/SendMessage:1.0
     //
     virtual void SendMessage(const ::DomainData::Address& receiverAddress,
+                             const ::DomainData::User& usr,
                              const ::DomainData::Message& msg) = 0;
 
     //
@@ -167,6 +168,7 @@ public:
     // IDL:IServerClient/SendMessage:1.0
     //
     void SendMessage(const ::DomainData::Address& receiverAddress,
+                     const ::DomainData::User& usr,
                      const ::DomainData::Message& msg);
 
     //
@@ -229,6 +231,7 @@ public:
     // IDL:IServerClient/SendMessage:1.0
     //
     virtual void SendMessage(const ::DomainData::Address& receiverAddress,
+                             const ::DomainData::User& usr,
                              const ::DomainData::Message& msg) = 0;
 
     //
@@ -280,6 +283,7 @@ public:
     // IDL:IServerClient/SendMessage:1.0
     //
     virtual void SendMessage(const ::DomainData::Address& receiverAddress,
+                             const ::DomainData::User& usr,
                              const ::DomainData::Message& msg);
 
     //

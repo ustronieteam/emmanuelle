@@ -38,7 +38,7 @@ IServerClient_impl::Connect(const ::DomainData::Address& server,
 	Server::connectToClientServer(Server::GetRemotedAddress(SRVPORT.c_str()),o, cs);
 	std::cout << "... WYWOLANO CONNECTTOCLIENTSERVER !!!" << std::endl;
     
-	// TODO: Implementation
+    // TODO: Implementation
     ::DomainData::Address* _r = new ::DomainData::Address;
     return _r;
 }
@@ -70,6 +70,7 @@ IServerClient_impl::Register(const ::DomainData::User& usr)
 //
 void
 IServerClient_impl::SendMessage(const ::DomainData::Address& receiverAddress,
+                                const ::DomainData::User& usr,
                                 const ::DomainData::Message& msg)
     throw(::CORBA::SystemException)
 {

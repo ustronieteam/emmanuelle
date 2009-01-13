@@ -159,7 +159,8 @@ public:
     //
     virtual void ClientStatusChanged(const ::DomainData::Address& clientAddress,
                                      const ::DomainData::Enability& en,
-                                     const ::DomainData::User& usr) = 0;
+                                     const ::DomainData::User& usr,
+                                     const ::DomainData::Address& senderAddress) = 0;
 };
 
 //
@@ -221,7 +222,8 @@ public:
     //
     void ClientStatusChanged(const ::DomainData::Address& clientAddress,
                              const ::DomainData::Enability& en,
-                             const ::DomainData::User& usr);
+                             const ::DomainData::User& usr,
+                             const ::DomainData::Address& senderAddress);
 };
 
 //
@@ -291,7 +293,8 @@ public:
     //
     virtual void ClientStatusChanged(const ::DomainData::Address& clientAddress,
                                      const ::DomainData::Enability& en,
-                                     const ::DomainData::User& usr) = 0;
+                                     const ::DomainData::User& usr,
+                                     const ::DomainData::Address& senderAddress) = 0;
 };
 
 //
@@ -350,7 +353,8 @@ public:
     //
     virtual void ClientStatusChanged(const ::DomainData::Address& clientAddress,
                                      const ::DomainData::Enability& en,
-                                     const ::DomainData::User& usr);
+                                     const ::DomainData::User& usr,
+                                     const ::DomainData::Address& senderAddress);
 };
 
 //
