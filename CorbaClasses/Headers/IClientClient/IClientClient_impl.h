@@ -16,6 +16,9 @@ class IClientClient_impl : virtual public POA_IClientClient,
 
     PortableServer::POA_var poa_;
 
+	//logger
+	log4cxx::LoggerPtr logger;
+
 public:
 
     IClientClient_impl(PortableServer::POA_ptr);
