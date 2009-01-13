@@ -202,7 +202,7 @@ int Client::Disconnect(DomainData::User & usr)
 ///@param[in] msg		wiadomosc
 ///@return				status (-2 zdalna instancja serwera nie zainicjowana,
 ///								-1 blad podczas wywolywania zdalnej metody serwera)
-int Client::SendMessage(DomainData::Address recAddr, DomainData::Message msg) 
+int Client::SendMessageToClient(DomainData::Address recAddr, DomainData::Message msg) 
 {
 	if(CORBA::is_nil(connectedServerInstance))
 	{//nie jestesmy podlaczeni do zdalnej instancji serwera

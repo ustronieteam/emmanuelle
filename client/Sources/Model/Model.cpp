@@ -192,7 +192,9 @@ int Model::DeleteContact(const DomainData::User & usr)
  int Model::SendMessageToClient(DomainData::Address recAddr, DomainData::Message msg) 
  {
 	 int result = 0;
-	 result = client->SendMessage(recAddr, msg);
+	 LOG4CXX_DEBUG(logger, "Wywolanie send message w modelu");
+	 result = client->SendMessageToClient(recAddr, msg);
+	 LOG4CXX_DEBUG(logger, "Koniec Wywolania send message w modelu. Result: "<<result);
 	 return result;
  }
 ///
