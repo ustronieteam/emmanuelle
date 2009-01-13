@@ -15,7 +15,7 @@
 #ifndef ___IServerServer_skel_h__
 #define ___IServerServer_skel_h__
 
-#include <IServerServer.h>\
+#include <IServerServer.h>
 
 #ifndef OB_INTEGER_VERSION
 #   error No ORBacus version defined! Is <OB/CORBA.h> included?
@@ -134,6 +134,7 @@ public:
     // IDL:IServerServer/ClientStatusChanged:1.0
     //
     virtual void ClientStatusChanged(const ::DomainData::User& client,
+                                     const ::DomainData::Address& clientAddress,
                                      const ::DomainData::Enability& en,
                                      const ::DomainData::Address& senderServerAddress)
         throw(::CORBA::SystemException) = 0;
@@ -202,6 +203,7 @@ public:
     // IDL:IServerServer/ClientStatusChanged:1.0
     //
     virtual void ClientStatusChanged(const ::DomainData::User& client,
+                                     const ::DomainData::Address& clientAddress,
                                      const ::DomainData::Enability& en,
                                      const ::DomainData::Address& senderServerAddress);
 };

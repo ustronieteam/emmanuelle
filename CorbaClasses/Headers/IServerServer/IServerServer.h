@@ -158,6 +158,7 @@ public:
     // IDL:IServerServer/ClientStatusChanged:1.0
     //
     virtual void ClientStatusChanged(const ::DomainData::User& client,
+                                     const ::DomainData::Address& clientAddress,
                                      const ::DomainData::Enability& en,
                                      const ::DomainData::Address& senderServerAddress) = 0;
 };
@@ -220,6 +221,7 @@ public:
     // IDL:IServerServer/ClientStatusChanged:1.0
     //
     void ClientStatusChanged(const ::DomainData::User& client,
+                             const ::DomainData::Address& clientAddress,
                              const ::DomainData::Enability& en,
                              const ::DomainData::Address& senderServerAddress);
 };
@@ -290,6 +292,7 @@ public:
     // IDL:IServerServer/ClientStatusChanged:1.0
     //
     virtual void ClientStatusChanged(const ::DomainData::User& client,
+                                     const ::DomainData::Address& clientAddress,
                                      const ::DomainData::Enability& en,
                                      const ::DomainData::Address& senderServerAddress) = 0;
 };
@@ -349,6 +352,7 @@ public:
     // IDL:IServerServer/ClientStatusChanged:1.0
     //
     virtual void ClientStatusChanged(const ::DomainData::User& client,
+                                     const ::DomainData::Address& clientAddress,
                                      const ::DomainData::Enability& en,
                                      const ::DomainData::Address& senderServerAddress);
 };
