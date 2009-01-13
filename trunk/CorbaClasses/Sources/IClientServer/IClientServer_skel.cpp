@@ -31,10 +31,10 @@
 void
 POA_IClientServer::_OB_op_ReceiveMessage(OB::Upcall_ptr _ob_up)
 {
-    ::DomainData::Address _ob_a0;
+    ::DomainData::User _ob_a0;
     ::DomainData::Message _ob_a1;
     OB::InputStreamImpl* _ob_in = _OB_preUnmarshal(_ob_up);
-    ::DomainData::Address::_OB_unmarshal(_ob_a0, _ob_in);
+    ::DomainData::User::_OB_unmarshal(_ob_a0, _ob_in);
     ::DomainData::Message::_OB_unmarshal(_ob_a1, _ob_in);
     _OB_postUnmarshal(_ob_up);
     ReceiveMessage(_ob_a0, _ob_a1);
@@ -65,11 +65,11 @@ POA_IClientServer::_OB_op_ChangeServer(OB::Upcall_ptr _ob_up)
 void
 POA_IClientServer::_OB_op_CreatePipeRequest(OB::Upcall_ptr _ob_up)
 {
-    ::DomainData::Address _ob_a0;
-    ::DomainData::Address _ob_a1;
+    ::DomainData::User _ob_a0;
+    ::DomainData::User _ob_a1;
     OB::InputStreamImpl* _ob_in = _OB_preUnmarshal(_ob_up);
-    ::DomainData::Address::_OB_unmarshal(_ob_a0, _ob_in);
-    ::DomainData::Address::_OB_unmarshal(_ob_a1, _ob_in);
+    ::DomainData::User::_OB_unmarshal(_ob_a0, _ob_in);
+    ::DomainData::User::_OB_unmarshal(_ob_a1, _ob_in);
     _OB_postUnmarshal(_ob_up);
     ::CORBA::Boolean _ob_r = CreatePipeRequest(_ob_a0, _ob_a1);
     _OB_postinvoke(_ob_up);
@@ -165,7 +165,7 @@ OBDirectStubImpl_IClientServer::OBDirectStubImpl_IClientServer(
 // IDL:IClientServer/ReceiveMessage:1.0
 //
 void
-OBDirectStubImpl_IClientServer::ReceiveMessage(const ::DomainData::Address& _ob_a0,
+OBDirectStubImpl_IClientServer::ReceiveMessage(const ::DomainData::User& _ob_a0,
                                                const ::DomainData::Message& _ob_a1)
 {
     OB::InvocationHandler _ob_handler(this, "ReceiveMessage");
@@ -186,8 +186,8 @@ OBDirectStubImpl_IClientServer::ChangeServer(const ::DomainData::Address& _ob_a0
 // IDL:IClientServer/CreatePipeRequest:1.0
 //
 ::CORBA::Boolean
-OBDirectStubImpl_IClientServer::CreatePipeRequest(const ::DomainData::Address& _ob_a0,
-                                                  const ::DomainData::Address& _ob_a1)
+OBDirectStubImpl_IClientServer::CreatePipeRequest(const ::DomainData::User& _ob_a0,
+                                                  const ::DomainData::User& _ob_a1)
 {
     OB::InvocationHandler _ob_handler(this, "CreatePipeRequest");
     return dynamic_cast<POA_IClientServer*>(_ob_servant_) -> CreatePipeRequest(_ob_a0, _ob_a1);

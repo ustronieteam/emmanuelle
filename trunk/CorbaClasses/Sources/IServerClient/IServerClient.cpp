@@ -277,7 +277,7 @@ OBProxy_IServerClient::Register(const ::DomainData::User& _ob_a0)
 // IDL:IServerClient/SendMessage:1.0
 //
 void
-OBProxy_IServerClient::SendMessage(const ::DomainData::Address& _ob_a0,
+OBProxy_IServerClient::SendMessage(const ::DomainData::User& _ob_a0,
                                    const ::DomainData::User& _ob_a1,
                                    const ::DomainData::Message& _ob_a2)
 {
@@ -303,7 +303,7 @@ OBProxy_IServerClient::SendMessage(const ::DomainData::Address& _ob_a0,
 // IDL:IServerClient/CheckClientStatus:1.0
 //
 ::DomainData::Enability
-OBProxy_IServerClient::CheckClientStatus(const ::DomainData::Address& _ob_a0)
+OBProxy_IServerClient::CheckClientStatus(const ::DomainData::User& _ob_a0)
 {
     ::CORBA::ULong _ob_retry = 0, _ob_hop = 0;
     while(true)
@@ -325,8 +325,8 @@ OBProxy_IServerClient::CheckClientStatus(const ::DomainData::Address& _ob_a0)
 //
 // IDL:IServerClient/GetPipeHolder:1.0
 //
-::DomainData::Address*
-OBProxy_IServerClient::GetPipeHolder(const ::DomainData::Address& _ob_a0)
+::DomainData::User*
+OBProxy_IServerClient::GetPipeHolder(const ::DomainData::User& _ob_a0)
 {
     ::CORBA::ULong _ob_retry = 0, _ob_hop = 0;
     while(true)
@@ -337,6 +337,29 @@ OBProxy_IServerClient::GetPipeHolder(const ::DomainData::Address& _ob_a0)
             OBStubImpl_IServerClient_ptr _ob_stubImpl = 
                 dynamic_cast< OBStubImpl_IServerClient_ptr>(_ob_stubImplBase.in());
             return _ob_stubImpl -> GetPipeHolder(_ob_a0);
+        }
+        catch(const OB::ExceptionBase& _ob_ex)
+        {
+            _OB_handleException(_ob_ex, _ob_retry, _ob_hop);
+        }
+    }
+}
+
+//
+// IDL:IServerClient/GetUserAddressByName:1.0
+//
+::DomainData::Address*
+OBProxy_IServerClient::GetUserAddressByName(const ::DomainData::User& _ob_a0)
+{
+    ::CORBA::ULong _ob_retry = 0, _ob_hop = 0;
+    while(true)
+    {
+        try
+        {
+            OB::StubImplBase_var _ob_stubImplBase = _OB_getStubImpl();
+            OBStubImpl_IServerClient_ptr _ob_stubImpl = 
+                dynamic_cast< OBStubImpl_IServerClient_ptr>(_ob_stubImplBase.in());
+            return _ob_stubImpl -> GetUserAddressByName(_ob_a0);
         }
         catch(const OB::ExceptionBase& _ob_ex)
         {
@@ -505,7 +528,7 @@ OBMarshalStubImpl_IServerClient::Register(const ::DomainData::User& _ob_a0)
 // IDL:IServerClient/SendMessage:1.0
 //
 void
-OBMarshalStubImpl_IServerClient::SendMessage(const ::DomainData::Address& _ob_a0,
+OBMarshalStubImpl_IServerClient::SendMessage(const ::DomainData::User& _ob_a0,
                                              const ::DomainData::User& _ob_a1,
                                              const ::DomainData::Message& _ob_a2)
 {
@@ -542,7 +565,7 @@ OBMarshalStubImpl_IServerClient::SendMessage(const ::DomainData::Address& _ob_a0
 // IDL:IServerClient/CheckClientStatus:1.0
 //
 ::DomainData::Enability
-OBMarshalStubImpl_IServerClient::CheckClientStatus(const ::DomainData::Address& _ob_a0)
+OBMarshalStubImpl_IServerClient::CheckClientStatus(const ::DomainData::User& _ob_a0)
 {
     while(true)
     {
@@ -591,12 +614,63 @@ OBMarshalStubImpl_IServerClient::CheckClientStatus(const ::DomainData::Address& 
 //
 // IDL:IServerClient/GetPipeHolder:1.0
 //
-::DomainData::Address*
-OBMarshalStubImpl_IServerClient::GetPipeHolder(const ::DomainData::Address& _ob_a0)
+::DomainData::User*
+OBMarshalStubImpl_IServerClient::GetPipeHolder(const ::DomainData::User& _ob_a0)
 {
     while(true)
     {
         OB::Downcall_var _ob_down = _OB_createDowncall("GetPipeHolder", true);
+        try
+        {
+            OB::OutputStreamImpl* _ob_out = _OB_preMarshal(_ob_down);
+            try
+            {
+                _ob_a0._OB_marshal(_ob_out);
+            }
+            catch(const ::CORBA::SystemException& _ob_ex)
+            {
+                _OB_marshalEx(_ob_down, _ob_ex);
+            }
+            _OB_postMarshal(_ob_down);
+            _OB_request(_ob_down);
+            bool _ob_uex;
+            OB::InputStreamImpl* _ob_in = _OB_preUnmarshal(_ob_down, _ob_uex);
+            if(_ob_uex)
+            {
+                _OB_postUnmarshal(_ob_down);
+            }
+            else
+            {
+                ::DomainData::User_var _ob_r;
+                try
+                {
+                    _ob_r = new ::DomainData::User;
+                    ::DomainData::User::_OB_unmarshal(_ob_r.inout(), _ob_in);
+                }
+                catch(const ::CORBA::SystemException& _ob_ex)
+                {
+                    _OB_unmarshalEx(_ob_down, _ob_ex);
+                }
+                _OB_postUnmarshal(_ob_down);
+                return _ob_r._retn();
+            }
+        }
+        catch(const OB::FailureException& _ob_ex)
+        {
+            _OB_handleFailureException(_ob_down, _ob_ex);
+        }
+    }
+}
+
+//
+// IDL:IServerClient/GetUserAddressByName:1.0
+//
+::DomainData::Address*
+OBMarshalStubImpl_IServerClient::GetUserAddressByName(const ::DomainData::User& _ob_a0)
+{
+    while(true)
+    {
+        OB::Downcall_var _ob_down = _OB_createDowncall("GetUserAddressByName", true);
         try
         {
             OB::OutputStreamImpl* _ob_out = _OB_preMarshal(_ob_down);

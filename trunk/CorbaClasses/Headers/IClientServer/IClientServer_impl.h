@@ -16,9 +16,6 @@ class IClientServer_impl : virtual public POA_IClientServer,
 
     PortableServer::POA_var poa_;
 
-	//logger
-	log4cxx::LoggerPtr logger;
-
 public:
 
     IClientServer_impl(PortableServer::POA_ptr);
@@ -29,7 +26,7 @@ public:
     //
     // IDL:IClientServer/ReceiveMessage:1.0
     //
-    virtual void ReceiveMessage(const ::DomainData::Address& senderAddress,
+    virtual void ReceiveMessage(const ::DomainData::User& sender,
                                 const ::DomainData::Message& msg)
         throw(::CORBA::SystemException);
 
@@ -42,8 +39,8 @@ public:
     //
     // IDL:IClientServer/CreatePipeRequest:1.0
     //
-    virtual ::CORBA::Boolean CreatePipeRequest(const ::DomainData::Address& pipeHolderAddress,
-                                               const ::DomainData::Address& senderAddress)
+    virtual ::CORBA::Boolean CreatePipeRequest(const ::DomainData::User& sender,
+                                               const ::DomainData::User& pipeHolder)
         throw(::CORBA::SystemException);
 };
 

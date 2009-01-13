@@ -205,7 +205,7 @@ OBProxy_IClientServer::_OB_ids() const
 // IDL:IClientServer/ReceiveMessage:1.0
 //
 void
-OBProxy_IClientServer::ReceiveMessage(const ::DomainData::Address& _ob_a0,
+OBProxy_IClientServer::ReceiveMessage(const ::DomainData::User& _ob_a0,
                                       const ::DomainData::Message& _ob_a1)
 {
     ::CORBA::ULong _ob_retry = 0, _ob_hop = 0;
@@ -254,8 +254,8 @@ OBProxy_IClientServer::ChangeServer(const ::DomainData::Address& _ob_a0)
 // IDL:IClientServer/CreatePipeRequest:1.0
 //
 ::CORBA::Boolean
-OBProxy_IClientServer::CreatePipeRequest(const ::DomainData::Address& _ob_a0,
-                                         const ::DomainData::Address& _ob_a1)
+OBProxy_IClientServer::CreatePipeRequest(const ::DomainData::User& _ob_a0,
+                                         const ::DomainData::User& _ob_a1)
 {
     ::CORBA::ULong _ob_retry = 0, _ob_hop = 0;
     while(true)
@@ -295,7 +295,7 @@ OBRelease(OBStubImpl_IClientServer_ptr p)
 // IDL:IClientServer/ReceiveMessage:1.0
 //
 void
-OBMarshalStubImpl_IClientServer::ReceiveMessage(const ::DomainData::Address& _ob_a0,
+OBMarshalStubImpl_IClientServer::ReceiveMessage(const ::DomainData::User& _ob_a0,
                                                 const ::DomainData::Message& _ob_a1)
 {
     while(true)
@@ -363,8 +363,8 @@ OBMarshalStubImpl_IClientServer::ChangeServer(const ::DomainData::Address& _ob_a
 // IDL:IClientServer/CreatePipeRequest:1.0
 //
 ::CORBA::Boolean
-OBMarshalStubImpl_IClientServer::CreatePipeRequest(const ::DomainData::Address& _ob_a0,
-                                                   const ::DomainData::Address& _ob_a1)
+OBMarshalStubImpl_IClientServer::CreatePipeRequest(const ::DomainData::User& _ob_a0,
+                                                   const ::DomainData::User& _ob_a1)
 {
     while(true)
     {

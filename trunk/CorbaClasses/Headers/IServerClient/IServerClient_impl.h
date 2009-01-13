@@ -2,6 +2,7 @@
 #define ___IServerClient_impl_h__
 
 #include <IServerClient_skel.h>
+
 #include "IRemoteObjects.h"
 
 //
@@ -15,9 +16,6 @@ class IServerClient_impl : virtual public POA_IServerClient,
     void operator=(const IServerClient_impl&);
 
     PortableServer::POA_var poa_;
-
-	//logger
-	log4cxx::LoggerPtr logger;
 
 public:
 
@@ -49,21 +47,27 @@ public:
     //
     // IDL:IServerClient/SendMessage:1.0
     //
-    virtual void SendMessage(const ::DomainData::Address& receiverAddress,
-                             const ::DomainData::User& usr,
+    virtual void SendMessage(const ::DomainData::User& ssender,
+                             const ::DomainData::User& receiver,
                              const ::DomainData::Message& msg)
         throw(::CORBA::SystemException);
 
     //
     // IDL:IServerClient/CheckClientStatus:1.0
     //
-    virtual ::DomainData::Enability CheckClientStatus(const ::DomainData::Address& clientAddress)
+    virtual ::DomainData::Enability CheckClientStatus(const ::DomainData::User& usr)
         throw(::CORBA::SystemException);
 
     //
     // IDL:IServerClient/GetPipeHolder:1.0
     //
-    virtual ::DomainData::Address* GetPipeHolder(const ::DomainData::Address& receiverAddress)
+    virtual ::DomainData::User* GetPipeHolder(const ::DomainData::User& receiver)
+        throw(::CORBA::SystemException);
+
+    //
+    // IDL:IServerClient/GetUserAddressByName:1.0
+    //
+    virtual ::DomainData::Address* GetUserAddressByName(const ::DomainData::User& usr)
         throw(::CORBA::SystemException);
 };
 

@@ -101,12 +101,12 @@ void
 POA_IServerServer::_OB_op_PassMessage(OB::Upcall_ptr _ob_up)
 {
     ::DomainData::Message _ob_a0;
-    ::DomainData::Address _ob_a1;
-    ::DomainData::Address _ob_a2;
+    ::DomainData::User _ob_a1;
+    ::DomainData::User _ob_a2;
     OB::InputStreamImpl* _ob_in = _OB_preUnmarshal(_ob_up);
     ::DomainData::Message::_OB_unmarshal(_ob_a0, _ob_in);
-    ::DomainData::Address::_OB_unmarshal(_ob_a1, _ob_in);
-    ::DomainData::Address::_OB_unmarshal(_ob_a2, _ob_in);
+    ::DomainData::User::_OB_unmarshal(_ob_a1, _ob_in);
+    ::DomainData::User::_OB_unmarshal(_ob_a2, _ob_in);
     _OB_postUnmarshal(_ob_up);
     PassMessage(_ob_a0, _ob_a1, _ob_a2);
     _OB_postinvoke(_ob_up);
@@ -120,13 +120,13 @@ POA_IServerServer::_OB_op_PassMessage(OB::Upcall_ptr _ob_up)
 void
 POA_IServerServer::_OB_op_PassCreatePipeRequest(OB::Upcall_ptr _ob_up)
 {
-    ::DomainData::Address _ob_a0;
-    ::DomainData::Address _ob_a1;
-    ::DomainData::Address _ob_a2;
+    ::DomainData::User _ob_a0;
+    ::DomainData::User _ob_a1;
+    ::DomainData::User _ob_a2;
     OB::InputStreamImpl* _ob_in = _OB_preUnmarshal(_ob_up);
-    ::DomainData::Address::_OB_unmarshal(_ob_a0, _ob_in);
-    ::DomainData::Address::_OB_unmarshal(_ob_a1, _ob_in);
-    ::DomainData::Address::_OB_unmarshal(_ob_a2, _ob_in);
+    ::DomainData::User::_OB_unmarshal(_ob_a0, _ob_in);
+    ::DomainData::User::_OB_unmarshal(_ob_a1, _ob_in);
+    ::DomainData::User::_OB_unmarshal(_ob_a2, _ob_in);
     _OB_postUnmarshal(_ob_up);
     PassCreatePipeRequest(_ob_a0, _ob_a1, _ob_a2);
     _OB_postinvoke(_ob_up);
@@ -140,17 +140,15 @@ POA_IServerServer::_OB_op_PassCreatePipeRequest(OB::Upcall_ptr _ob_up)
 void
 POA_IServerServer::_OB_op_ClientStatusChanged(OB::Upcall_ptr _ob_up)
 {
-    ::DomainData::Address _ob_a0;
+    ::DomainData::User _ob_a0;
     ::DomainData::Enability _ob_a1;
-    ::DomainData::User _ob_a2;
-    ::DomainData::Address _ob_a3;
+    ::DomainData::Address _ob_a2;
     OB::InputStreamImpl* _ob_in = _OB_preUnmarshal(_ob_up);
-    ::DomainData::Address::_OB_unmarshal(_ob_a0, _ob_in);
+    ::DomainData::User::_OB_unmarshal(_ob_a0, _ob_in);
     ::DomainData::Enability::_OB_unmarshal(_ob_a1, _ob_in);
-    ::DomainData::User::_OB_unmarshal(_ob_a2, _ob_in);
-    ::DomainData::Address::_OB_unmarshal(_ob_a3, _ob_in);
+    ::DomainData::Address::_OB_unmarshal(_ob_a2, _ob_in);
     _OB_postUnmarshal(_ob_up);
-    ClientStatusChanged(_ob_a0, _ob_a1, _ob_a2, _ob_a3);
+    ClientStatusChanged(_ob_a0, _ob_a1, _ob_a2);
     _OB_postinvoke(_ob_up);
     _OB_preMarshal(_ob_up);
     _OB_postMarshal(_ob_up);
@@ -304,8 +302,8 @@ OBDirectStubImpl_IServerServer::RemoveServer(const ::DomainData::Address& _ob_a0
 //
 void
 OBDirectStubImpl_IServerServer::PassMessage(const ::DomainData::Message& _ob_a0,
-                                            const ::DomainData::Address& _ob_a1,
-                                            const ::DomainData::Address& _ob_a2)
+                                            const ::DomainData::User& _ob_a1,
+                                            const ::DomainData::User& _ob_a2)
 {
     OB::InvocationHandler _ob_handler(this, "PassMessage");
     dynamic_cast<POA_IServerServer*>(_ob_servant_) -> PassMessage(_ob_a0, _ob_a1, _ob_a2);
@@ -315,9 +313,9 @@ OBDirectStubImpl_IServerServer::PassMessage(const ::DomainData::Message& _ob_a0,
 // IDL:IServerServer/PassCreatePipeRequest:1.0
 //
 void
-OBDirectStubImpl_IServerServer::PassCreatePipeRequest(const ::DomainData::Address& _ob_a0,
-                                                      const ::DomainData::Address& _ob_a1,
-                                                      const ::DomainData::Address& _ob_a2)
+OBDirectStubImpl_IServerServer::PassCreatePipeRequest(const ::DomainData::User& _ob_a0,
+                                                      const ::DomainData::User& _ob_a1,
+                                                      const ::DomainData::User& _ob_a2)
 {
     OB::InvocationHandler _ob_handler(this, "PassCreatePipeRequest");
     dynamic_cast<POA_IServerServer*>(_ob_servant_) -> PassCreatePipeRequest(_ob_a0, _ob_a1, _ob_a2);
@@ -327,11 +325,10 @@ OBDirectStubImpl_IServerServer::PassCreatePipeRequest(const ::DomainData::Addres
 // IDL:IServerServer/ClientStatusChanged:1.0
 //
 void
-OBDirectStubImpl_IServerServer::ClientStatusChanged(const ::DomainData::Address& _ob_a0,
+OBDirectStubImpl_IServerServer::ClientStatusChanged(const ::DomainData::User& _ob_a0,
                                                     const ::DomainData::Enability& _ob_a1,
-                                                    const ::DomainData::User& _ob_a2,
-                                                    const ::DomainData::Address& _ob_a3)
+                                                    const ::DomainData::Address& _ob_a2)
 {
     OB::InvocationHandler _ob_handler(this, "ClientStatusChanged");
-    dynamic_cast<POA_IServerServer*>(_ob_servant_) -> ClientStatusChanged(_ob_a0, _ob_a1, _ob_a2, _ob_a3);
+    dynamic_cast<POA_IServerServer*>(_ob_servant_) -> ClientStatusChanged(_ob_a0, _ob_a1, _ob_a2);
 }

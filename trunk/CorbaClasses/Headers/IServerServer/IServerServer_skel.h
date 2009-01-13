@@ -15,7 +15,7 @@
 #ifndef ___IServerServer_skel_h__
 #define ___IServerServer_skel_h__
 
-#include <IServerServer.h>
+#include <IServerServer.h>\
 
 #ifndef OB_INTEGER_VERSION
 #   error No ORBacus version defined! Is <OB/CORBA.h> included?
@@ -118,25 +118,24 @@ public:
     // IDL:IServerServer/PassMessage:1.0
     //
     virtual void PassMessage(const ::DomainData::Message& msg,
-                             const ::DomainData::Address& senderAddress,
-                             const ::DomainData::Address& receiverAddress)
+                             const ::DomainData::User& sender,
+                             const ::DomainData::User& receiver)
         throw(::CORBA::SystemException) = 0;
 
     //
     // IDL:IServerServer/PassCreatePipeRequest:1.0
     //
-    virtual void PassCreatePipeRequest(const ::DomainData::Address& pipeHolderAddress,
-                                       const ::DomainData::Address& senderAddress,
-                                       const ::DomainData::Address& receiverAddress)
+    virtual void PassCreatePipeRequest(const ::DomainData::User& pipeHolder,
+                                       const ::DomainData::User& sender,
+                                       const ::DomainData::User& receiver)
         throw(::CORBA::SystemException) = 0;
 
     //
     // IDL:IServerServer/ClientStatusChanged:1.0
     //
-    virtual void ClientStatusChanged(const ::DomainData::Address& clientAddress,
+    virtual void ClientStatusChanged(const ::DomainData::User& client,
                                      const ::DomainData::Enability& en,
-                                     const ::DomainData::User& usr,
-                                     const ::DomainData::Address& senderAddress)
+                                     const ::DomainData::Address& senderServerAddress)
         throw(::CORBA::SystemException) = 0;
 };
 
@@ -189,23 +188,22 @@ public:
     // IDL:IServerServer/PassMessage:1.0
     //
     virtual void PassMessage(const ::DomainData::Message& msg,
-                             const ::DomainData::Address& senderAddress,
-                             const ::DomainData::Address& receiverAddress);
+                             const ::DomainData::User& sender,
+                             const ::DomainData::User& receiver);
 
     //
     // IDL:IServerServer/PassCreatePipeRequest:1.0
     //
-    virtual void PassCreatePipeRequest(const ::DomainData::Address& pipeHolderAddress,
-                                       const ::DomainData::Address& senderAddress,
-                                       const ::DomainData::Address& receiverAddress);
+    virtual void PassCreatePipeRequest(const ::DomainData::User& pipeHolder,
+                                       const ::DomainData::User& sender,
+                                       const ::DomainData::User& receiver);
 
     //
     // IDL:IServerServer/ClientStatusChanged:1.0
     //
-    virtual void ClientStatusChanged(const ::DomainData::Address& clientAddress,
+    virtual void ClientStatusChanged(const ::DomainData::User& client,
                                      const ::DomainData::Enability& en,
-                                     const ::DomainData::User& usr,
-                                     const ::DomainData::Address& senderAddress);
+                                     const ::DomainData::Address& senderServerAddress);
 };
 
 #endif

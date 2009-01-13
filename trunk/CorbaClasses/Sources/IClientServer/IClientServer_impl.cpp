@@ -7,9 +7,6 @@
 IClientServer_impl::IClientServer_impl(PortableServer::POA_ptr poa)
     : poa_(PortableServer::POA::_duplicate(poa))
 {
-	//logger
-	logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("IClientServer_impl"));
-	logger->setLevel(log4cxx::Level::getAll());
 }
 
 IClientServer_impl::~IClientServer_impl()
@@ -26,18 +23,11 @@ IClientServer_impl::_default_POA()
 // IDL:IClientServer/ReceiveMessage:1.0
 //
 void
-IClientServer_impl::ReceiveMessage(const ::DomainData::Address& senderAddress,
+IClientServer_impl::ReceiveMessage(const ::DomainData::User& sender,
                                    const ::DomainData::Message& msg)
     throw(::CORBA::SystemException)
 {
-	LOG4CXX_DEBUG(logger, "WYWOLANIE RECEIVEMESSAGE");
-
-	RemoteObserverData observData;
-	observData.SetObserverType(MESSAGE);
-	observData.SetSenderMessage(msg);
-	observData.SetSenderAddress(senderAddress);
-
-	this->Notify(observData);
+    // TODO: Implementation
 }
 
 //
@@ -54,8 +44,8 @@ IClientServer_impl::ChangeServer(const ::DomainData::Address& serverAddress)
 // IDL:IClientServer/CreatePipeRequest:1.0
 //
 ::CORBA::Boolean
-IClientServer_impl::CreatePipeRequest(const ::DomainData::Address& pipeHolderAddress,
-                                      const ::DomainData::Address& senderAddress)
+IClientServer_impl::CreatePipeRequest(const ::DomainData::User& sender,
+                                      const ::DomainData::User& pipeHolder)
     throw(::CORBA::SystemException)
 {
     // TODO: Implementation

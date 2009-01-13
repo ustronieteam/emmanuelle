@@ -15,7 +15,7 @@
 #ifndef ___IClientServer_h__
 #define ___IClientServer_h__
 
-#include <domaindata.h>
+#include <DomainData.h>
 
 #ifndef OB_INTEGER_VERSION
 #   error No ORBacus version defined! Is <OB/CORBA.h> included?
@@ -95,7 +95,7 @@ public:
     //
     // IDL:IClientServer/ReceiveMessage:1.0
     //
-    virtual void ReceiveMessage(const ::DomainData::Address& senderAddress,
+    virtual void ReceiveMessage(const ::DomainData::User& sender,
                                 const ::DomainData::Message& msg) = 0;
 
     //
@@ -106,8 +106,8 @@ public:
     //
     // IDL:IClientServer/CreatePipeRequest:1.0
     //
-    virtual ::CORBA::Boolean CreatePipeRequest(const ::DomainData::Address& pipeHolderAddress,
-                                               const ::DomainData::Address& senderAddress) = 0;
+    virtual ::CORBA::Boolean CreatePipeRequest(const ::DomainData::User& sender,
+                                               const ::DomainData::User& pipeHolder) = 0;
 };
 
 //
@@ -133,7 +133,7 @@ public:
     //
     // IDL:IClientServer/ReceiveMessage:1.0
     //
-    void ReceiveMessage(const ::DomainData::Address& senderAddress,
+    void ReceiveMessage(const ::DomainData::User& sender,
                         const ::DomainData::Message& msg);
 
     //
@@ -144,8 +144,8 @@ public:
     //
     // IDL:IClientServer/CreatePipeRequest:1.0
     //
-    ::CORBA::Boolean CreatePipeRequest(const ::DomainData::Address& pipeHolderAddress,
-                                       const ::DomainData::Address& senderAddress);
+    ::CORBA::Boolean CreatePipeRequest(const ::DomainData::User& sender,
+                                       const ::DomainData::User& pipeHolder);
 };
 
 //
@@ -179,7 +179,7 @@ public:
     //
     // IDL:IClientServer/ReceiveMessage:1.0
     //
-    virtual void ReceiveMessage(const ::DomainData::Address& senderAddress,
+    virtual void ReceiveMessage(const ::DomainData::User& sender,
                                 const ::DomainData::Message& msg) = 0;
 
     //
@@ -190,8 +190,8 @@ public:
     //
     // IDL:IClientServer/CreatePipeRequest:1.0
     //
-    virtual ::CORBA::Boolean CreatePipeRequest(const ::DomainData::Address& pipeHolderAddress,
-                                               const ::DomainData::Address& senderAddress) = 0;
+    virtual ::CORBA::Boolean CreatePipeRequest(const ::DomainData::User& sender,
+                                               const ::DomainData::User& pipeHolder) = 0;
 };
 
 //
@@ -214,7 +214,7 @@ public:
     //
     // IDL:IClientServer/ReceiveMessage:1.0
     //
-    virtual void ReceiveMessage(const ::DomainData::Address& senderAddress,
+    virtual void ReceiveMessage(const ::DomainData::User& sender,
                                 const ::DomainData::Message& msg);
 
     //
@@ -225,8 +225,8 @@ public:
     //
     // IDL:IClientServer/CreatePipeRequest:1.0
     //
-    virtual ::CORBA::Boolean CreatePipeRequest(const ::DomainData::Address& pipeHolderAddress,
-                                               const ::DomainData::Address& senderAddress);
+    virtual ::CORBA::Boolean CreatePipeRequest(const ::DomainData::User& sender,
+                                               const ::DomainData::User& pipeHolder);
 };
 
 //
