@@ -64,6 +64,7 @@ class Model : public IModel
 		///
 		Model()
 		{
+			isActive = false;
 			//logger
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("Model"));
 			logger->setLevel(log4cxx::Level::getAll());

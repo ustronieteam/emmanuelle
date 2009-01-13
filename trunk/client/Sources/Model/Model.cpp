@@ -107,7 +107,8 @@ void Model::activateListning()
 		// </dla klientow>
 
 		manager->activate();
-		
+
+		isActive = true;
 		LOG4CXX_DEBUG(logger, "Wlaczono nasluchiwanie ... ");
 		orb->run();
 	}
@@ -249,11 +250,6 @@ int Model::Disconnect()
 			LOG4CXX_DEBUG(logger, "Konczenie nasluchu...");
 			try
 			{
-				orb->shutdown(false);
-				LOG4CXX_DEBUG(logger, "zakonczono nasluch ... zwalnianie pamieci namiastek ...");
-				delete clientImpl;
-				delete serverImpl;
-				LOG4CXX_DEBUG(logger, "... zwolniono pamiec!");
 			}
 			catch(CORBA::SystemException & e)
 			{
@@ -280,7 +276,8 @@ int Model::Disconnect()
 	 {
 		client->setServerAddress(serverAddress);//Ustawiam, ale nie jest to konieczne
 
-		boost::thread watekSluchacza(&activateListeningThreadFun);
+		if(!isActive)
+			boost::thread watekSluchacza(&activateListeningThreadFun);
 
 		LOG4CXX_DEBUG(logger, "Uruchomiono watek nasluchu");
 		Sleep(5000);
