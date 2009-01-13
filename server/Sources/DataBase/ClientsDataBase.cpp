@@ -94,7 +94,7 @@ int ClientsDataBase::InsertRecord(const ClientRecord & record)
 		ClientRecord rec(record);
 		DomainData::Address adr = rec.GetAddress();
 		DomainData::User usr = rec.GetUser();
-		adr.name = usr.name;
+		adr.name = CORBA::string_dup(usr.name.in());
 		rec.SetAddress(adr);
 
 		this->_records[record.GetRecordId()] = rec;
