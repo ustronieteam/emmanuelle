@@ -3,27 +3,44 @@
 
 #include "ContactRecord.h"
 
+///
+/// DataObserverData
+/// @brief Dane dla obserwatorow typu Data Observer.
+/// @author Wojciech Grzeskowiak
+/// @date 2009.01.13
+///
 class DataObserverData
 {
 	private:
 
-		ContactRecord cr;
+		///
+		/// Informacje o kontakcie.
+		///
+		ContactRecord _cr;
 
     public:
 
+		///
+		/// Konstruktor.
+		///
         DataObserverData();
 
+		///
+		/// Destruktor.
+		///
         virtual ~DataObserverData();
 
-		void setContactRecord(const ContactRecord & c)
-		{
-			cr = c;
-		}
+		///
+		/// Ustawienie informacji o kliencie.
+		/// @param[in] c Informacje o kliencie.
+		///
+		void setContactRecord(const ContactRecord & c);
 
-		const ContactRecord & getContactRecord()
-		{
-			return cr;
-		}
+		///
+		/// Pobiera informacji o kliencie.
+		/// @return Informacje o kliencie.
+		///
+		const ContactRecord & getContactRecord();
 };
 
 #endif

@@ -7,6 +7,7 @@
 
 #include "MessageObserver.h"
 #include "StatusObserver.h"
+#include "FileObserver.h"
 
 #include "ConfigWindow.h"
 #include "WelcomeWindow.h"
@@ -40,6 +41,10 @@
 #define INFO_GET_NEW_MSG	"^^ Otrzymales nowa rozmowe od "
 #define INFO_GET_NEW_STAT1	"^^ Twoj znajomy "
 #define INFO_GET_NEW_STAT2	"zmienil status na "
+#define INFO_GET_FILE1		"^^ Twoj znajomy "
+#define INFO_GET_FILE2		" przyslal ci plik "
+#define INFO_GET_FILE_MSG	" Przyslano Ci plik: "
+#define INFO_GET_FILE_MSND	"[emmanuelle]"
 
 using namespace std;
 
@@ -186,7 +191,7 @@ class View : public IObserverView
 		/// @param[in] senderAddress Adres nadawcy.
 		/// @param[in] message Wiadomosc.
 		///
-		virtual void Obsrv_ReciveMessage(const DomainData::Address & senderAddress, const DomainData::Message & message);
+		virtual void Obsrv_ReciveMessage(const DomainData::User & senderAddress, const DomainData::Message & message);
 
 		///
 		/// Zmiana statusu osoby na liscie kontatkow.

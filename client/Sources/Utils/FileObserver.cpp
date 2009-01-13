@@ -1,22 +1,38 @@
 #include "FileObserver.h"
-//Begin section for file FileObserver.cpp
-//TODO: Add definitions that you want preserved
-//End section for file FileObserver.cpp
 
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-FileObserver::FileObserver() 
+///
+/// Konstruktor.
+///
+FileObserver::FileObserver(IObserverView * view) 
 {
-    //TODO Auto-generated method stub
+    // Inicjalizacja loggera.
+	_logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("FileObserver"));
+	_logger->setLevel(log4cxx::Level::getAll());
+
+	_view = view;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Destruktor.
+///
 FileObserver::~FileObserver() 
 {
-    //TODO Auto-generated method stub
+
 }
 
+///
+/// Metoda wywolujaca.
+///
 int FileObserver::Refresh(RemoteObserverData objectData)
 {
+	LOG4CXX_DEBUG(_logger, "Uruchomiono obserwatora plikow. Typ: " << objectData.GetObserverType() );
+
+	if ( objectData.GetObserverType() != FFILE )
+		return -1;
+
+	LOG4CXX_DEBUG(_logger, "Prawidlowy typ zdarzenia. Wywolanie obiektu widoku.");
+
+	_view->Obsrv_File();
+
 	return 0;
 }

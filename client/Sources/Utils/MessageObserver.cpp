@@ -32,7 +32,7 @@ int MessageObserver::Refresh(RemoteObserverData objectData)
 
 	LOG4CXX_DEBUG(_logger, "Prawidlowy typ zdarzenia. Wywolanie obiektu widoku.");
 
-	_view->Obsrv_ReciveMessage(objectData.GetSenderAddress(), objectData.GetSenderMessage());
+	_view->Obsrv_ReciveMessage(objectData.GetUser(), objectData.GetSenderMessage());
 
 	return 0;
 }

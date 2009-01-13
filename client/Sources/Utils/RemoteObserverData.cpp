@@ -1,17 +1,89 @@
 #include "RemoteObserverData.h"
-//Begin section for file RemoteObserverData.cpp
-//TODO: Add definitions that you want preserved
-//End section for file RemoteObserverData.cpp
 
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Konstruktor.
+///
 RemoteObserverData::RemoteObserverData() 
 {
-    //TODO Auto-generated method stub
+    
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// Destruktor.
+///
 RemoteObserverData::~RemoteObserverData() 
 {
-    //TODO Auto-generated method stub
+
+}
+
+///
+/// Pobiera typ zdarzenia.
+/// @return Typ zdarzenia.
+///
+const ObserverType & RemoteObserverData::GetObserverType() const
+{
+	return _eventType;
+}
+
+///
+/// Ustawia typ zdarzenia.
+/// @param[in] type Typ zdarzenia.
+///
+void RemoteObserverData::SetObserverType(const ObserverType & type)
+{
+	_eventType = type;
+}
+
+///
+/// Pobiera wiadomosc.
+/// @return Wiadomosc.
+///
+const DomainData::Message & RemoteObserverData::GetSenderMessage() const
+{
+	return _message;
+}
+
+///
+/// Ustawia wiadomosc.
+/// @param[in] msg Wiadomosc
+///
+void RemoteObserverData::SetSenderMessage(const DomainData::Message & msg)
+{
+	_message = msg;
+}
+
+///
+/// Pobiera nadawce.
+/// @return Nadawca
+///
+const DomainData::User & RemoteObserverData::GetUser() const
+{
+	return _user;
+}
+
+///
+/// Ustawia nadawce.
+/// @parm[in] user Nadawca
+///
+void RemoteObserverData::SetUser(const DomainData::User & user)
+{
+	_user = user;
+}
+
+///
+/// Pobiera nazwe pliku.
+/// @return Nazwa pliku.
+///
+const std::string & RemoteObserverData::GetFileName() const
+{
+	return _fileName;
+}
+
+///
+/// Ustawia nazwe pliku.
+/// @parm[in] file Nazwa pliku.
+///
+void RemoteObserverData::SetFileName(const std::string & file)
+{
+	_fileName = file;
 }

@@ -1,32 +1,49 @@
 #ifndef FILEOBSERVER_H
 #define FILEOBSERVER_H
-//Begin section for file FileObserver.h
-//TODO: Add definitions that you want preserved
-//End section for file FileObserver.h
+
+#include <log4cxx/logger.h>
+#include <log4cxx/level.h>
+
+#include "IObserverView.h"
 
 #include "IRemoteObserver.h"
 
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// FileObserver
+/// @brief Obserwator czekajacy na plik.
+/// @author Wojciech Grzeskowiak
+/// @date 2009.01.11
+///
 class FileObserver : public IRemoteObserver
 {
+	private:
 
-    //Begin section for FileObserver
-    //TODO: Add attributes that you want preserved
-    //End section for FileObserver
+		///
+		/// Obiekt logowania.
+		///
+		log4cxx::LoggerPtr _logger;
 
-
+		///
+		/// Interfejs modelu do wywolan.
+		///
+		IObserverView * _view;
 
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        FileObserver();
+        ///
+		/// Konstruktor.
+		///
+        FileObserver(IObserverView * view);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+		///
+		/// Destruktor.
+		///
         virtual ~FileObserver();
 
+		///
+		/// Metoda wywolujaca.
+		///
 		int Refresh(RemoteObserverData objectData);
-
-};  //end class FileObserver
+};
 
 #endif
