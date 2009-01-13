@@ -38,7 +38,7 @@ class IModel
 
 		virtual int DeleteContact(const DomainData::User & usr) = 0;
 
-        virtual int SendMessage(DomainData::Address recAddr, DomainData::Message msg)= 0;
+        virtual int SendMessageToClient(DomainData::Address recAddr, DomainData::Message msg)= 0;
 
         virtual int AddContact(const DomainData::User &usr) = 0;
 
