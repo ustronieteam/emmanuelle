@@ -256,6 +256,7 @@ int Model::Disconnect()
 	 {
 		 boost::thread watekSluchacza(&activateListeningThreadFun);
 		 LOG4CXX_DEBUG(logger, "Uruchomiono watek nasluchu");
+		 Sleep(5000);
 		 return true;
 	 }
 	 else
