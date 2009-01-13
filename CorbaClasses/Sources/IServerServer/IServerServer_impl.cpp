@@ -220,36 +220,48 @@ IServerServer_impl::ClientStatusChanged(const ::DomainData::Address& clientAddre
 	int servId;
 	if((servId = ServerDataBase::GetInstance()->Find(addr)) < 0)
 	{
-		LOG4CXX_ERROR(logger, "Nie znaleziono serwera do ktorego jest podlaczony klient");
+		LOG4CXX_ERROR(logger, "Nie znaleziono serwera do ktorego jest podlaczony klient. Adres servera: " << addr.localization.in());
 		return;
 	}
-	else
-	{
-		LOG4CXX_DEBUG(logger, "Zanaleziono serwer - wstawianie ... ");
-		record.SetClientServerId(servId);
-	}
+
+	LOG4CXX_DEBUG(logger, "Znaleziono serwera do ktorego jest podlaczony klient");
 
 	if((recordId = clientsDB->Find(usr)) < 0)
 	{
-		// nie znaleziono w bazie takiego rekordu
+		LOG4CXX_DEBUG(logger, "Nie znaleziono klienta w bazie danych.");
+
 		record.SetAddress(clientAddress);
 		record.SetEnability(en);
 		record.SetUser(usr);
+		record.SetClientServerId(servId);
 
 		try
 		{
 			clientsDB->InsertRecord(record);
 		}
 		catch(std::exception &)
-		{}
+		{
+
+		}
 	}
 	else
 	{
+		LOG4CXX_DEBUG(logger, "Znaleziono klienta w bazie danych.");
+
 		record = clientsDB->GetRecord(recordId);
+
+		record.SetAddress(clientAddress);
 		record.SetEnability(en);
+		record.SetClientServerId(servId);
 
+		try
+		{
+			clientsDB->ModifyRecord(record);
+		}
+		catch(std::exception &)
+		{
 
-		clientsDB->ModifyRecord(record);
+		}
 	}
 
 	std::cout << "WYPISANIE BAZY Z CLIENTSTATUSCHANGED" << std::endl;
