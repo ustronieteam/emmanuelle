@@ -12,8 +12,8 @@ RemoteClientSendMessageObserver::RemoteClientSendMessageObserver()
 }
 RemoteClientSendMessageObserver::RemoteClientSendMessageObserver(boost::shared_ptr<ServerDataBase> & servDB, boost::shared_ptr<ClientsDataBase> & clientsDB)
 {
-	this->clientsDataBase = clientsDataBase;
-    this->serverDataBase  = serverDataBase;
+	this->clientsDataBase = clientsDB;
+    this->serverDataBase  = servDB;
 }
 //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 RemoteClientSendMessageObserver::RemoteClientSendMessageObserver(RemoteClientSendMessageObserver & arg) 
