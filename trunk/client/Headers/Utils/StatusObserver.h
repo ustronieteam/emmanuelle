@@ -23,6 +23,9 @@ class StatusObserver : public DataObserver
 		///
 		log4cxx::LoggerPtr _logger;
 
+		///
+		/// Interfejs modelu do wywolan.
+		///
 		IObserverView * _view;
 
     public:

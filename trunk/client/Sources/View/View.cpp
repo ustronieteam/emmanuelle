@@ -224,7 +224,7 @@ void View::Run()
 			{
 				// Mamy wszystkie parametry do podlaczenia.
 
-				std::cout << PROMPT << INFO_CONN_STILL;
+				std::cout << PROMPT << INFO_CONN_STILL << _controller->GetServerAddress();
 
 				LOG4CXX_DEBUG(this->_logger, "Podlaczanie do serwera...");
 
@@ -247,7 +247,6 @@ void View::Run()
 					LOG4CXX_DEBUG(this->_logger, "Rejestracja obserwatorow!");
 
 					_controller->AddRemoteObserver(new MessageObserver(this), MESSAGE);
-
 					_controller->AddDataObserver(new StatusObserver(this));
 				}
 			}
@@ -411,7 +410,19 @@ void View::Obsrv_ReciveMessage(const DomainData::Address & senderAddress, const 
 	MsgWindow						* msgWin;
 	boost::mutex					* ptrMx;
 
-	LOG4CXX_DEBUG(this->_logger, "Widok otrzymal wiadomosc. Adresat.Name: " << senderAddress.name.in() << " Message.Content: " << message.content.in());
+	LOG4CXX_DEBUG(this->_logger, "Widok otrzymal wiadomosc. Adresat.Name: " << senderAddress.name.in() << " Adresat.Localization: " << senderAddress.localization.in() << " Message.Content: " << message.content.in() ); 
+
+	if( senderAddress.name.in() == NULL )
+	{
+		LOG4CXX_ERROR(this->_logger, "NULL'owy adresat !" );
+		return;
+	}
+
+	if( message.content.in() == NULL ) 
+	{
+		LOG4CXX_ERROR(this->_logger, "NULL'owa wiadomosc !" );
+		return;
+	}
 
 	// Szukanie czy taka rozmowa sie odbywa.
 	this->_mxCreateTalks.lock();
@@ -427,12 +438,16 @@ void View::Obsrv_ReciveMessage(const DomainData::Address & senderAddress, const 
 		// Nie znaleziono takiego okna.
 		if ( tmp == tmpWindows.end() )
 		{
+			LOG4CXX_DEBUG(this->_logger, "Nie znaleziono okna rozmowy." );
+		
 			// Stworzenie okna.
 			msgWin = new MsgWindow(_controller, senderAddress.name.in());
 
 			// Jesli nie istniala rozmowa.
 			if ( _talks.find(senderAddress.name.in()) == _talks.end() )
 			{
+				LOG4CXX_DEBUG(this->_logger, "Nie znaleziono rozmowy. Stworzenie... " );
+
 				_talks[senderAddress.name.in()]	= new std::list<MYMESSAGE>();
 				_mxsTalks[senderAddress.name.in()] = new boost::mutex();
 			}
@@ -440,11 +455,15 @@ void View::Obsrv_ReciveMessage(const DomainData::Address & senderAddress, const 
 			msgWin->SetTalk( ptrTalk = _talks[senderAddress.name.in()] );
 			msgWin->SetMutexTalk( ptrMx = _mxsTalks[senderAddress.name.in()] );
 
+			LOG4CXX_DEBUG(this->_logger, "Dodanie okna rozmowy." );
+
 			AddWindow(msgWin);
 		}
 		// Znaleziono takie okno.
 		else
 		{
+			LOG4CXX_DEBUG(this->_logger, "Znaleziono okno rozmowy." );
+
 			// Musi istniec rozmowa.
 			msgWin	= (MsgWindow *)(*tmp);
 			ptrTalk = _talks[senderAddress.name.in()];
@@ -458,6 +477,8 @@ void View::Obsrv_ReciveMessage(const DomainData::Address & senderAddress, const 
 	msg.sender	= senderAddress.name.in();
 
 	// Dodanie wiadomosci do rozmowy.
+	LOG4CXX_DEBUG(this->_logger, "Dodanie wiadomosci do rozmowy." );
+
 	ptrMx->lock();
 		ptrTalk->push_front(msg);
 	ptrMx->unlock();
@@ -468,6 +489,8 @@ void View::Obsrv_ReciveMessage(const DomainData::Address & senderAddress, const 
 	// Otwarte jest okno rozmowy z gosciem ktory przyslal wiadomosc.
 	if ( (*GetActiveWindow()) == msgWin )
 	{
+		LOG4CXX_DEBUG(this->_logger, "Aktualnie otwarte okno rozmowy. Odswiezamy." );
+
 		// Odswiezamy okno.
 		(*GetActiveWindow())->Render(std::cout);
 	}
@@ -477,9 +500,13 @@ void View::Obsrv_ReciveMessage(const DomainData::Address & senderAddress, const 
 		std::string shortMsg(INFO_GET_NEW_MSG);
 		shortMsg.append(msg.sender);
 
+		LOG4CXX_DEBUG(this->_logger, "Nie aktywne okno rozmowy. Ustawiamy powiadomienie." );
+
 		// Ustawienie wiadomosci.
 		(*GetActiveWindow())->SetMsg(shortMsg);
 	}
+
+	LOG4CXX_DEBUG(this->_logger, "Widok skonczyl przetwarzac wiadomosc." );
 }
 
 ///
@@ -489,4 +516,23 @@ void View::Obsrv_ReciveMessage(const DomainData::Address & senderAddress, const 
 void View::Obsrv_StatusChanged(const ContactRecord & contact)
 {
 	LOG4CXX_DEBUG(this->_logger, "Widok otrzymal zmiane statusu. Contact.User.Name: " << contact.userDesc.name.in() << " Contact.Status: " << contact.isAvailable );
+
+	std::string shortMsg(INFO_GET_NEW_STAT1);
+	shortMsg.append(contact.userDesc.name.in());
+	shortMsg.append(INFO_GET_NEW_STAT2);
+	shortMsg.append(contact.isAvailable ? "dostepny" : "niedostepny");
+
+	LOG4CXX_DEBUG(this->_logger, "Ustawienie powiadomienia: " << shortMsg.c_str() );
+
+	// Ustawienie wiadomosci.
+	(*GetActiveWindow())->SetMsg(shortMsg);
+}
+
+///
+/// Odebranie pliku.
+/// @param[in]
+///
+void View::Obsrv_File()
+{
+	LOG4CXX_DEBUG(this->_logger, "Widok otrzymal plik.");
 }

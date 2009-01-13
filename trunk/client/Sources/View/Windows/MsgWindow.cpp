@@ -74,9 +74,10 @@ void MsgWindow::Render(std::ostream & out)
 ///
 void MsgWindow::Command(std::string & cmd)
 {
-	int result;
 	std::string mcmd;
 	MYMESSAGE msg;
+
+	msg.time = boost::posix_time::second_clock::local_time();
 
 	// Wyslanie wiadomosci.
 	if ( !cmd.compare("snd") )
@@ -97,7 +98,6 @@ void MsgWindow::Command(std::string & cmd)
 		if ( result )
 		{
 			msg.content = std::string(this->_singleMsg);
-			msg.time	= boost::posix_time::second_clock::local_time();
 			msg.sender	= this->GetController()->GetOwnName();
 			
 			_mxTalk->lock();
@@ -116,20 +116,34 @@ void MsgWindow::Command(std::string & cmd)
 
 		std::cout << PROMPT << MSG_INF_SND_FIL;
 
-		LOG4CXX_DEBUG(this->_logger, "Zadanie wyslania pliku: Adresat:" << _contactName.c_str() << " Plik: " << cmd.c_str() );
+		LOG4CXX_DEBUG(this->_logger, "Zadanie wyslania pliku: Adresat: " << _contactName.c_str() << " Plik: " << cmd.c_str() );
 
-		std::ofstream file;
-		file.open(cmd.c_str(), std::ios::out);
+		std::ifstream file;
+		file.open(cmd.c_str(), std::ios::in);
 
 		// Udalo sie otworzyc plik.
-		if ( !file.is_open() )
+		if ( file.is_open() )
 		{
 			LOG4CXX_DEBUG(this->_logger, "Plik istnieje. Wysylanie..." );
 
 			// Wywolanie metody na kontrolerze...
-			//bool result = this->GetController()->SendFile(	
+			bool result = true; // this->GetController()->SendFile(	
 
-			LOG4CXX_DEBUG(this->_logger, "Zakonczenie wysylania. Rezultat: " )
+			LOG4CXX_DEBUG(this->_logger, "Zakonczenie wysylania. Rezultat: " << result );
+
+			msg.content = MSG_INF_FILE_SND1;
+			msg.content.append(cmd.c_str());
+
+			if ( result )
+				msg.content.append(MSG_INF_FILE_SND2);			
+			else
+				msg.content.append(MSG_ER_FILE_SND2);	
+
+			msg.sender = MSG_INF_FILE_SNDR;
+
+			_mxTalk->lock();
+				_talk->push_front(msg);
+			_mxTalk->unlock();
 
 			// Zamkniecie.
 			file.close();
