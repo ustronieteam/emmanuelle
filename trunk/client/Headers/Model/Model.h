@@ -56,6 +56,8 @@ class Model : public IModel
 		///
 		DomainData::Address serverAddress;
 
+		bool isActive;
+
 		// logger
 		log4cxx::LoggerPtr logger;
 
