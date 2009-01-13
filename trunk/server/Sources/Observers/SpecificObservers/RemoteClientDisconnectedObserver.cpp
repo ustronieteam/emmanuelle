@@ -116,7 +116,7 @@ int RemoteClientDisconnectedObserverLogicRunnable::operator()()
 	int localId = serverDataBase->Find(localServAddr); //wlasne id w bazie
 	if(localId<=0)
 	{
-		LOG4CXX_ERROR(logger,"Brak danych o lokalnym serwerze w bazie");
+		LOG4CXX_ERROR(logger,"Brak danych o lokalnym serwerze w bazie: "<<localServAddr.localization.in());
 		return -2;
 	}
 	//    2)Powiadom wszystkie serwery o zmianie
