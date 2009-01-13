@@ -19,6 +19,11 @@ class ServerDataBase
 	private:
 
 		///
+		/// Obiekt logowania.
+		///
+		log4cxx::LoggerPtr _logger;
+
+		///
 		/// Mutex, gdy¿ kolekcja uzywana w róznych w¹tkach.
 		boost::mutex _mutex;
 
