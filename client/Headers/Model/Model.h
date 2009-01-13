@@ -186,6 +186,8 @@ class Model : public IModel
 		virtual void SetMyAvailability(bool b);
 		virtual bool runStatusChecker();
 
+		virtual void TestClient(std::string addrClient);
+
 };  //end class Model
 
 #endif

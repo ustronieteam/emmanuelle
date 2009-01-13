@@ -96,6 +96,7 @@ class CorbaConnector
 		///
 		static bool connectToClientServer(std::string address, CORBA::ORB_out orb, IClientServer_out client)
 		{
+			std::cout << "Wywolanie funkcji connectToClientServer: address [" << address << "], port [" << CLNTPORT << "]" << std::endl;
 			char* orb_options[] = { const_cast<char *>(address.c_str()) , const_cast<char *>(CLNTPORT.c_str()) };
 			int optc = sizeof(orb_options)/sizeof(char *);
 

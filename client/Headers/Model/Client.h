@@ -93,6 +93,15 @@ class Client : public CorbaConnector
 		void setPortNumber(const int & p){port = p;}
 		const int & getPortNumber()const {return port;}
 
+		void TestCLNT(std::string address)
+		{
+			CORBA::ORB_var orb;
+			IClientClient_ptr client;
+			LOG4CXX_DEBUG(logger, "Uruchomiono test na kliencie ...");
+			connectToClientClient(address, orb, client); 
+			LOG4CXX_DEBUG(logger, "...koniec testu na kliencie.");
+		}
+
 
 
 };  //end class Client

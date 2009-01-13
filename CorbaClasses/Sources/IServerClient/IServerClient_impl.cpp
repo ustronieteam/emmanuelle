@@ -172,8 +172,8 @@ IServerClient_impl::SendMessage(const ::DomainData::Address& receiverAddress,
 	observData.setClientMessage(msg);
 	DomainData::User usr;
 	usr.name = CORBA::string_dup(receiverAddress.name.in());
-	observData.setClientAddress(receiverAddress);
 	observData.setClientUserData(usr);
+	observData.setClientAddress(receiverAddress);
 
 	this->Notify(observData);
 }
@@ -184,7 +184,7 @@ IServerClient_impl::SendMessage(const ::DomainData::Address& receiverAddress,
 ::DomainData::Enability
 IServerClient_impl::CheckClientStatus(const ::DomainData::Address& clientAddress)
     throw(::CORBA::SystemException)
-{
+{ 
     // TODO: Implementation
     ::DomainData::Enability _r;
     return _r;

@@ -8,6 +8,7 @@ void activateListeningThreadFun()
 	{
 		LOG4CXX_DEBUG(logger, "Uruchamianie nasluchu...");
 		Model::GetInstance()->activateListning();
+		LOG4CXX_DEBUG(logger, "... zakonczenie nasluchu.");
 	}
 	catch(CORBA::SystemException & e)
 	{
@@ -22,11 +23,15 @@ void activateListeningThreadFun()
 }
 void Model::activateListning()
 {
+	log4cxx::LoggerPtr logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("ACTIVATE LISTENING"));
+	logger->setLevel(log4cxx::Level::getAll());
+
 	// uruchomienie brokera, stworzenie obiektow zdalnych, udostepnienie ich i wlaczenie nasluchiwania
 	CORBA::ORB_var orb;
 
 	try
 	{
+		LOG4CXX_DEBUG(logger, "CLNTPORT: " << CLNTPORT.c_str());
 		char* orb_options[] = { "-OAport", const_cast<char *>(CLNTPORT.c_str()) };
 		int optc = sizeof(orb_options)/sizeof(char *);
 
@@ -370,4 +375,11 @@ bool Model::runStatusChecker()
 
 	LOG4CXX_DEBUG(logger, "Rozpoczeto nasluchiwac status w nowym watku");
 	return true;
+}
+
+ void Model::TestClient(std::string addr)
+{
+	LOG4CXX_DEBUG(logger, "Uruchomiono test clienta ...");
+	client->TestCLNT(addr);
+	LOG4CXX_DEBUG(logger, "... test klineta zakonczony.");
 }
