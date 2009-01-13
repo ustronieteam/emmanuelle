@@ -7,46 +7,34 @@
 #include "DataObserverData.h"
 #include "DataObserver.h"
 
+#include <iostream>
+#include <vector>
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+#include <log4cxx/logger.h>
+#include <log4cxx/level.h>
+///
+///@author Marian Szczykulski
+///@date 2009-01-13
+///@brief Objekt obserwowany(Status)
 class ClientDataObject
 {
 
-    //Begin section for ClientDataObject
-    //TODO: Add attributes that you want preserved
-    //End section for ClientDataObject
 
     private:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        DataObserver * dataObserver;
-
-
-
+		std::vector< DataObserver *> dataObserver;
+		
+		// logger
+		log4cxx::LoggerPtr logger;
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         ClientDataObject();
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual ~ClientDataObject();
 
-        //get dataObserver
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-		virtual DataObserver * get_dataObserver() {return dataObserver;};
 
-        //set dataObserver
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-		virtual void set_dataObserver(DataObserver * dataObserver){this->dataObserver = dataObserver;}
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         virtual int Notify(DataObserverData data);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual int Unregister(DataObserver & dataObserver);
-
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual int Register(DataObserver & dataObserver);
+        virtual int Unregister(DataObserver & dat);
+        virtual int Register(DataObserver * dat);
 
 };  //end class ClientDataObject
 

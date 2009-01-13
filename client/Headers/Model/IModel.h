@@ -32,7 +32,7 @@ class IModel
 		virtual int RegisterObserver(IRemoteObserver * observ, ObserverType type) = 0 ;
 		virtual int UnregisterObserver() = 0;
 
-        virtual int AddStatusObserver(DataObserver & observer) = 0;
+        virtual int AddStatusObserver(DataObserver * observer) = 0;
 
         virtual int SendPackage(FilePackage package) = 0;
 

@@ -127,7 +127,8 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 			CORBA::ORB_var orb;
 			try
 			{
-				if(Server::connectToClientServer(clientAddr.localization.in(),orb, remoteClientInterface)==false)
+				IClientServer_var remInstance;
+				if(Server::connectToClientServer(clientAddr.localization.in(),orb, remInstance)==false)
 				{
 						LOG4CXX_ERROR(logger, "Nie mozna pozyskac zdalnej instancji klienta");
 						return -3; //Nie mozna wywolac zdalnej metody
@@ -137,6 +138,7 @@ int RemoteClientSendMessageObserverLogicRunnable::operator()()
 						LOG4CXX_DEBUG(logger, "Pozyskano zdalna instancje klienta");
 						clRec.SetClientRemoteInstance(remoteClientInterface);
 						clRec.SetBroker(orb);
+						remoteClientInterface = remInstance;
 				}
 			}
 			catch(CORBA::SystemException & e)

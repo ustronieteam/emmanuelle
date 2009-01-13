@@ -1,31 +1,39 @@
 #include "ClientDataObject.h"
-//Begin section for file ClientDataObject.cpp
-//TODO: Add definitions that you want preserved
-//End section for file ClientDataObject.cpp
 
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 ClientDataObject::ClientDataObject() 
 {
-    //TODO Auto-generated method stub
+    logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("ClientDataObject"));
+	logger->setLevel(log4cxx::Level::getAll());
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 ClientDataObject::~ClientDataObject() 
 {
-    //TODO Auto-generated method stub
+
 }
 
 int ClientDataObject::Notify(DataObserverData data)
 {
+	LOG4CXX_DEBUG(logger, "ClientObjectDataObserver dla usera: " <<data.getContactRecord().userDesc.name.in());
+
+	for(std::vector<DataObserver *>::iterator it = dataObserver.begin();
+		it != dataObserver.end();	//Dopuki nie doszlismy do konca zbioru
+		++it)
+	{
+		(*it)->Refresh(data);
+	}
+	return 0;
+
+}
+int ClientDataObject::Unregister(DataObserver & dat)
+{
+	LOG4CXX_DEBUG(logger, "Wyrejestrowywanie Obserwatorow statusu");
 	return 0;
 }
-int ClientDataObject::Unregister(DataObserver & dataObserver)
+int ClientDataObject::Register(DataObserver * dat)
 {
-	return 0;
-}
-int ClientDataObject::Register(DataObserver & dataObserver)
-{
+	LOG4CXX_DEBUG(logger, "Rejestrowanie Obserwatorow statusu");
+	dataObserver.push_back(dat);
 	return 0;
 }
 

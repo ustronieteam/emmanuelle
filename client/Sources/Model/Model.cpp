@@ -157,9 +157,13 @@ int Model::UnregisterObserver()
 	return 0;
 }
 
-int Model::AddStatusObserver(DataObserver & observer) 
+int Model::AddStatusObserver(DataObserver * observer) 
 {
- return 0;
+	int result = 0;
+	LOG4CXX_DEBUG(logger, "Rejestracja obserwatora statusu w modelu");
+	result= clientsData->Register(observer);
+	LOG4CXX_DEBUG(logger, "Obserwator statusu zarejestrowany w modelu");
+	return result;
 }
 
 int Model::SendPackage(FilePackage package)
