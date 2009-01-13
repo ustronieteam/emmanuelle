@@ -23,6 +23,9 @@ class MessageObserver : public IRemoteObserver
 		///
 		log4cxx::LoggerPtr _logger;
 
+		///
+		/// Interfejs modelu do wywolan.
+		///
 		IObserverView * _view;
 
     public:

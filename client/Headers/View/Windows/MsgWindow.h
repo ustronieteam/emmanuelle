@@ -13,9 +13,13 @@
 #define MSG_INF_SND_FIL		"Wysylanie pliku..."
 #define MSG_INF_SHOW_L		"^^ Pokazywane sa ostatnie wiadomosci."
 #define MSG_INF_SHOW_A		"^^ Pokazywane sa wszystkie wiadomosci."
+#define MSG_INF_FILE_SND1	" Plik '"
+#define MSG_INF_FILE_SND2	"' zostal pomyslnie wyslany."
+#define MSG_INF_FILE_SNDR	"[emmanuelle]"
 // Bledy
 #define MSG_ER_SND_MSG		"!@# Nie mozna bylo wyslac wiadomosci!"
 #define MSG_ER_SND_FIL		"!@# Nie znaleziono pliku!"
+#define MSG_ER_FILE_SND2	" nie mogl byc wyslany."
 
 
 ///
@@ -94,8 +98,6 @@ class MsgWindow : public Window
 		/// @param[in] mxTalk Wskaznik na mutex do rozmowy.
 		///
 		void SetMutexTalk(boost::mutex * mxTalk);
-
-
 };
 
 #endif /* _MSGWINDOW_H_ */

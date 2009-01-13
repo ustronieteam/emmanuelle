@@ -19,6 +19,12 @@ class IObserverView
 		/// @param[in] contact Kontakt ktory sie zmienil.
 		///
 		virtual void Obsrv_StatusChanged(const ContactRecord & contact) = 0;
+
+		///
+		/// Odebranie pliku.
+		/// @param[in]
+		///
+		virtual void Obsrv_File() = 0;
 };
 
 #endif /* _IOBSERVERVIEW_H_ */

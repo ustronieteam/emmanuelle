@@ -33,11 +33,13 @@
 #define ER_DCONN_NO_CONN	"!@# Nie jestes podlaczony do serwera!"
 #define ER_DCONN_CANT		"!@# Nie mozna bylo rozlaczyc z serwerem!"
 // Informacje.
-#define INFO_CONN_CONN_OK	"^^ Pomyslnie podlacono do serwera."
-#define INFO_CONN_STILL		"Trwa laczenie..."
+#define INFO_CONN_CONN_OK	"^^ Pomyslnie podlaczono do serwera."
+#define INFO_CONN_STILL		"Trwa laczenie do serwera "
 #define INFO_DCONN_DCONN_OK "^^ Rozlaczono z serwerem."
 #define INFO_DCONN_STILL	"Trwa rozlaczanie..."
 #define INFO_GET_NEW_MSG	"^^ Otrzymales nowa rozmowe od "
+#define INFO_GET_NEW_STAT1	"^^ Twoj znajomy "
+#define INFO_GET_NEW_STAT2	"zmienil status na "
 
 using namespace std;
 
@@ -177,7 +179,7 @@ class View : public IObserverView
 		/// @return Lista okien.
 		std::list<Window *> GetAllWindows();
 
-		/// Metody wywolywane przez obserwatorów
+		/// Metody wywolywane przez obserwatorów. IObserverView interface.
 
 		///
 		/// Odebranie wiadomosci
@@ -191,6 +193,12 @@ class View : public IObserverView
 		/// @param[in] contact Kontakt ktory sie zmienil.
 		///
 		virtual void Obsrv_StatusChanged(const ContactRecord & contact);
+
+		///
+		/// Odebranie pliku.
+		/// @param[in]
+		///
+		virtual void Obsrv_File();
 };
 
 #endif

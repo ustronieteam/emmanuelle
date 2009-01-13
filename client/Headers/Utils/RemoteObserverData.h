@@ -17,7 +17,6 @@ class RemoteObserverData
 
 		DomainData::Address senderAddress;
 
-
     public:
 
         RemoteObserverData();
