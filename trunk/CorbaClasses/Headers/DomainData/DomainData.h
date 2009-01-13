@@ -15,7 +15,7 @@
 #ifndef ___DomainData_h__
 #define ___DomainData_h__
 
-#include "OB/CORBA.h"
+#include <OB/CORBA.h>
 
 #ifndef OB_INTEGER_VERSION
 #   error No ORBacus version defined! Is <OB/CORBA.h> included?
@@ -52,6 +52,34 @@ namespace OBStubImpl_DomainData
 //
 namespace DomainData
 {
+
+//
+// IDL:DomainData/User:1.0
+//
+struct User;
+typedef OB::VarVar< User > User_var;
+typedef OB::VarOut< User > User_out;
+
+struct User
+{
+#ifdef OB_CLEAR_MEM
+    User();
+#else
+    User() { }
+#endif
+    User(const User&);
+    User& operator=(const User&);
+
+    typedef User_var _var_type;
+
+    OB::StrForStruct name;
+    ::CORBA::Long number;
+
+    void _OB_marshal(OB::OutputStreamImpl*) const;
+    static void _OB_unmarshal(User&, OB::InputStreamImpl*);
+};
+
+extern OB::TypeCodeConst _tc_User;
 
 //
 // IDL:DomainData/Address:1.0
@@ -156,34 +184,6 @@ struct Enability
 
 extern OB::TypeCodeConst _tc_Enability;
 
-//
-// IDL:DomainData/User:1.0
-//
-struct User;
-typedef OB::VarVar< User > User_var;
-typedef OB::VarOut< User > User_out;
-
-struct User
-{
-#ifdef OB_CLEAR_MEM
-    User();
-#else
-    User() { }
-#endif
-    User(const User&);
-    User& operator=(const User&);
-
-    typedef User_var _var_type;
-
-    OB::StrForStruct name;
-    ::CORBA::Long number;
-
-    void _OB_marshal(OB::OutputStreamImpl*) const;
-    static void _OB_unmarshal(User&, OB::InputStreamImpl*);
-};
-
-extern OB::TypeCodeConst _tc_User;
-
 } // End of namespace DomainData
 
 //
@@ -217,6 +217,31 @@ namespace OBV_DomainData
 {
 
 } // End of namespace OBV_DomainData
+
+//
+// IDL:DomainData/User:1.0
+//
+void operator<<=(::CORBA::Any&, DomainData::User*);
+void operator<<=(::CORBA::Any&, const DomainData::User&);
+CORBA::Boolean operator>>=(const ::CORBA::Any&, const DomainData::User*&);
+
+inline void
+operator<<=(::CORBA::Any_var& any, DomainData::User* val)
+{
+    any.inout() <<= val;
+}
+
+inline void
+operator<<=(::CORBA::Any_var& any, const DomainData::User& val)
+{
+    any.inout() <<= val;
+}
+
+inline ::CORBA::Boolean
+operator>>=(const ::CORBA::Any_var& any, const DomainData::User*& val)
+{
+    return any.in() >>= val;
+}
 
 //
 // IDL:DomainData/Address:1.0
@@ -332,31 +357,6 @@ operator<<=(::CORBA::Any_var& any, const DomainData::Enability& val)
 
 inline ::CORBA::Boolean
 operator>>=(const ::CORBA::Any_var& any, const DomainData::Enability*& val)
-{
-    return any.in() >>= val;
-}
-
-//
-// IDL:DomainData/User:1.0
-//
-void operator<<=(::CORBA::Any&, DomainData::User*);
-void operator<<=(::CORBA::Any&, const DomainData::User&);
-CORBA::Boolean operator>>=(const ::CORBA::Any&, const DomainData::User*&);
-
-inline void
-operator<<=(::CORBA::Any_var& any, DomainData::User* val)
-{
-    any.inout() <<= val;
-}
-
-inline void
-operator<<=(::CORBA::Any_var& any, const DomainData::User& val)
-{
-    any.inout() <<= val;
-}
-
-inline ::CORBA::Boolean
-operator>>=(const ::CORBA::Any_var& any, const DomainData::User*& val)
 {
     return any.in() >>= val;
 }
