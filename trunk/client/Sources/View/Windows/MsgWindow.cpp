@@ -124,10 +124,13 @@ void MsgWindow::Command(std::string & cmd)
 		// Udalo sie otworzyc plik.
 		if ( file.is_open() )
 		{
+			// Zamkniecie.
+			file.close();
+
 			LOG4CXX_DEBUG(this->_logger, "Plik istnieje. Wysylanie..." );
 
 			// Wywolanie metody na kontrolerze...
-			bool result = true; // this->GetController()->SendFile(	
+			bool result = this->GetController()->SendFile(_contactName.c_str(), cmd.c_str());	
 
 			LOG4CXX_DEBUG(this->_logger, "Zakonczenie wysylania. Rezultat: " << result );
 
@@ -144,9 +147,6 @@ void MsgWindow::Command(std::string & cmd)
 			_mxTalk->lock();
 				_talk->push_front(msg);
 			_mxTalk->unlock();
-
-			// Zamkniecie.
-			file.close();
 		}
 		// Nie udalo sie otworzyc pliku.
 		else

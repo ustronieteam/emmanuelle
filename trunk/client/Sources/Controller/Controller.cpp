@@ -64,7 +64,7 @@ bool Controller::SendFile(const char * adresat, const char * fileName) // TODO: 
 			LOG4CXX_DEBUG(logger, "Kontroler, nie udalo sie otworzyc pliku "<<fileName);
 			return false;
 		}
-		DomainData::File fl;
+		
 		inStream.seekg(0,std::ios_base::end);
 		int size = inStream.tellg();
 		LOG4CXX_DEBUG(logger, "Plik otwarto. Rozmiar: "<<size);
@@ -72,8 +72,10 @@ bool Controller::SendFile(const char * adresat, const char * fileName) // TODO: 
 		char * cont = new char[size];
 		LOG4CXX_DEBUG(logger, "Zaalokowano pamiec, wczytywanie danych");
 		inStream>>cont;
-		LOG4CXX_DEBUG(logger, "Dane wczytano. Wkladanie ich do structury File");
-		fl.body	= DomainData::Content(0,size,cont);
+		LOG4CXX_DEBUG(logger, "Dane wczytano. Wkladanie ich do structury File - dane[" << cont << "]");
+		DomainData::File fl;
+		//fl.body.length(size+10);
+		fl.body	= DomainData::Content(size+10,size,&cont[0]);
 		LOG4CXX_DEBUG(logger, "Dane wlozono do struktury file");
 		fl.name = CORBA::string_dup(fileName);
 		fl.size = size;
@@ -87,6 +89,11 @@ bool Controller::SendFile(const char * adresat, const char * fileName) // TODO: 
 			return false;
 		else
 			return true;
+	}
+	catch(CORBA::SystemException & exp)
+	{
+		LOG4CXX_ERROR(logger, "Zlapano wyjatek CORBY w kontrolerze podczas wysylania pliku: "<<exp._name());
+		return false;
 	}
 	catch(std::exception & e)
 	{
