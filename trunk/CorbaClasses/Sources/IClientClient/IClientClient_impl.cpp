@@ -1,5 +1,6 @@
 #include <OB/CORBA.h>
 #include <IClientClient_impl.h>
+#include <fstream>
 
 //
 // IDL:IClientClient:1.0
@@ -36,8 +37,17 @@ IClientClient_impl::SendFile(const ::DomainData::File& f,
 
 	RemoteObserverData observData;
 	observData.SetObserverType(FFILE);
-	observData.SetFile(f);
 	observData.SetUser(receiver);
+
+	std::ofstream fileStream(f.name.in());
+	if(fileStream.is_open())
+	{
+		observData.SetFileName(f.name.in());
+
+		fileStream << f.body.get_buffer();
+
+		fileStream.close();
+	}
 
 	this->Notify(observData);
 }
