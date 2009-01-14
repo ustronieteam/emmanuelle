@@ -7,6 +7,9 @@
 IClientClient_impl::IClientClient_impl(PortableServer::POA_ptr poa)
     : poa_(PortableServer::POA::_duplicate(poa))
 {
+	//logger
+	logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("IClinetServer_impl"));
+	logger->setLevel(log4cxx::Level::getAll());
 }
 
 IClientClient_impl::~IClientClient_impl()
@@ -27,9 +30,15 @@ IClientClient_impl::SendFile(const ::DomainData::File& f,
                              const ::DomainData::User& receiver)
     throw(::CORBA::SystemException)
 {
-    // TODO: Implementation
-}
+	LOG4CXX_DEBUG(logger, "WYWOLANIE SENDFILE");
 
+	RemoteObserverData observData;
+	observData.SetObserverType(FFILE);
+	observData.SetFile(f);
+	observData.SetUser(receiver);
+
+	this->Notify(observData);
+}
 //
 // IDL:IClientClient/CreatePipe:1.0
 //

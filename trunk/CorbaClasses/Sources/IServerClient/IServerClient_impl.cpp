@@ -178,7 +178,18 @@ IServerClient_impl::GetPipeHolder(const ::DomainData::User& receiver)
 IServerClient_impl::GetUserAddressByName(const ::DomainData::User& usr)
     throw(::CORBA::SystemException)
 {
-    // TODO: Implementation
-    ::DomainData::Address* _r = new ::DomainData::Address;
-    return _r;
+	int clientId = ClientsDataBase::GetInstance()->Find(usr);
+
+	DomainData::Address* _r = new ::DomainData::Address;
+	
+	if(clientId < 0)
+	{
+		_r->localization = CORBA::string_dup("");
+	}
+	else
+	{
+		*_r = ClientsDataBase::GetInstance()->GetRecord(clientId).GetAddress();
+	}
+
+	return _r;
 }
