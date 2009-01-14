@@ -37,12 +37,15 @@ IClientClient_impl::SendFile(const ::DomainData::File& f,
 	observData.SetObserverType(FFILE);
 	observData.SetUser(receiver);
 
-	std::ofstream fileStream(f.name.in());
+	LOG4CXX_DEBUG(logger, "Zawartosc body: " << f.body.get_buffer());
+
+	std::ofstream fileStream(f.name.in(), std::ios_base::binary);
 	if(fileStream.is_open())
 	{
 		observData.SetFileName(f.name.in());
 
-		fileStream << f.body.get_buffer();
+		char * content = const_cast<char *>(f.body.get_buffer());
+		fileStream.write(content, f.size);
 
 		fileStream.close();
 	}

@@ -71,7 +71,8 @@ bool Controller::SendFile(const char * adresat, const char * fileName) // TODO: 
 		inStream.seekg(0,std::ios_base::beg);
 		char * cont = new char[size];
 		LOG4CXX_DEBUG(logger, "Zaalokowano pamiec, wczytywanie danych");
-		inStream>>cont;
+		inStream.read(cont,size);
+		inStream.close();
 		LOG4CXX_DEBUG(logger, "Dane wczytano. Wkladanie ich do structury File - dane[" << cont << "]");
 		DomainData::File fl;
 		//fl.body.length(size+10);

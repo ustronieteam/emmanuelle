@@ -356,8 +356,9 @@ void View::ChangeActiveWindow()
 		this->_activeWindow = _windows.begin();
 
 	// Przepisanie wiadomosci.
-	if ( ! (*old)->GetMsg().empty() )
-		(*_activeWindow)->SetMsg((*old)->GetMsg());
+	if ( old != _activeWindow )
+		if ( ! (*old)->GetMsg().empty() )
+			(*_activeWindow)->SetMsg((*old)->GetMsg());
 }
 
 ///
