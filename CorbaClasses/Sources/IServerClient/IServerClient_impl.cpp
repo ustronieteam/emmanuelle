@@ -178,6 +178,10 @@ IServerClient_impl::GetPipeHolder(const ::DomainData::User& receiver)
 IServerClient_impl::GetUserAddressByName(const ::DomainData::User& usr)
     throw(::CORBA::SystemException)
 {
+	std::cout << "WYWOLANIE GETUSERADDRESSBYNAME z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()) << std::endl;
+
+	LOG4CXX_DEBUG(logger, "WYWOLANIE GETUSERADDRESSBYNAME z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()));
+	
 	int clientId = ClientsDataBase::GetInstance()->Find(usr);
 
 	DomainData::Address* _r = new ::DomainData::Address;
