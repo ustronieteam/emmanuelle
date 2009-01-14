@@ -143,6 +143,7 @@ IServerClient_impl::SendMessage(const ::DomainData::User& ssender,
 	observData.setClientMessage(msg);
 	observData.setDestination(receiver);
 	observData.setSenderClientData(ssender);
+	observData.set_eventType(CLIENT_SEND_MESSAGE);
 
 	this->Notify(observData);
 }
