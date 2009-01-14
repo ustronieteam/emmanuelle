@@ -30,9 +30,9 @@ class RemoteObserverData
 		DomainData::User _user;
 
 		///
-		/// Nazwa pliku.
+		/// Plik.
 		///
-		std::string _fileName;
+		DomainData::File _file;
 
     public:
 
@@ -83,16 +83,16 @@ class RemoteObserverData
 		void SetUser(const DomainData::User & user);
 		
 		///
-		/// Pobiera nazwe pliku.
-		/// @return Nazwa pliku.
+		/// Pobiera plik.
+		/// @return Plik.
 		///
-		const std::string & GetFileName() const;
+		const DomainData::File & GetFile() const;
 
 		///
-		/// Ustawia nazwe pliku.
-		/// @parm[in] file Nazwa pliku.
+		/// Ustawia plik.
+		/// @parm[in] file Plik.
 		///
-		void SetFileName(const std::string & file);
+		void SetFile(const DomainData::File & file);
 }; 
 
 #endif

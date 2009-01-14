@@ -71,19 +71,19 @@ void RemoteObserverData::SetUser(const DomainData::User & user)
 }
 
 ///
-/// Pobiera nazwe pliku.
-/// @return Nazwa pliku.
+/// Pobiera plik.
+/// @return Plik
 ///
-const std::string & RemoteObserverData::GetFileName() const
+const DomainData::File & RemoteObserverData::GetFile() const
 {
-	return _fileName;
+	return _file;
 }
 
 ///
-/// Ustawia nazwe pliku.
-/// @parm[in] file Nazwa pliku.
+/// Ustawia plik.
+/// @parm[in] file Plik
 ///
-void RemoteObserverData::SetFileName(const std::string & file)
+void RemoteObserverData::SetFile(const DomainData::File & file)
 {
-	_fileName = file;
+	_file = file;
 }
