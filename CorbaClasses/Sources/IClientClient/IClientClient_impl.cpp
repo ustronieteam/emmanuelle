@@ -31,8 +31,6 @@ IClientClient_impl::SendFile(const ::DomainData::File& f,
                              const ::DomainData::User& receiver)
     throw(::CORBA::SystemException)
 {
-	std::cout << "WYWOLANIE SENDFILE" << std::endl;
-
 	LOG4CXX_DEBUG(logger, "WYWOLANIE SENDFILE");
 
 	RemoteObserverData observData;

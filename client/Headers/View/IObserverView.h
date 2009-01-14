@@ -24,7 +24,7 @@ class IObserverView
 		/// Odebranie pliku.
 		/// @param[in]
 		///
-		virtual void Obsrv_File() = 0;
+		virtual void Obsrv_File(const char * userName, const char * fileName) = 0;
 };
 
 #endif /* _IOBSERVERVIEW_H_ */
