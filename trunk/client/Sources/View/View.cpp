@@ -491,6 +491,9 @@ void View::Obsrv_ReciveMessage(const DomainData::User & senderAddress, const Dom
 	if ( (*GetActiveWindow()) == msgWin )
 	{
 		LOG4CXX_DEBUG(this->_logger, "Aktualnie otwarte okno rozmowy. Odswiezamy." );
+		
+		// Czyszczenie ekranu.
+		system("CLS");
 
 		// Odswiezamy okno.
 		(*GetActiveWindow())->Render(std::cout);
