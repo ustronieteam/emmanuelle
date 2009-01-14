@@ -85,14 +85,87 @@ bool Client::getRemoteServerInstance()
 	}
 	return false;
 }
-
+///
+///@author Marian Szczykulski
+///@date 2009-01-11
+///@brief  Pobiera zdaln¹ instancje klient(jezeli juz jakas jest to ja usuwa)
+IClientClient_var Client::getRemoteClientInstance(CORBA::ORB_var & orbClient, DomainData::Address clAddr)
+{
+	IClientClient_var clientInstance;
+	LOG4CXX_DEBUG(logger, "Pozyskiwanie zdalnej instancji klienta");
+	try
+	{
+		if(connectToClientClient(clAddr.localization.in(), orbClient, clientInstance)==false)
+		{
+			LOG4CXX_ERROR(logger, "Nie mozna pozyskac zdalnej instancji klienta");
+			std::exception e ("ConnectToClientClient zwrocila false");
+			throw e;
+		}
+		else
+		{
+			LOG4CXX_DEBUG(logger, "Pozyskano zdalna instancje klienta");
+			return clientInstance;
+		}
+	}
+	catch(CORBA::SystemException & e)
+	{
+		LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas pozyskiwania zdalnej instancji: "<<e._name());
+		std::exception exp("Wyjatek podczas wywolywania metody zdalnej");
+		throw exp;
+	}
+	catch(std::exception  &exp)
+	{
+		LOG4CXX_ERROR(logger, "Zlapano wyjatek: " << exp.what());
+		throw exp;
+	}
+	return clientInstance;
+}
 int Client::AddFileObserver(IRemoteObserver & fileObserver) 
 {
     return 0;
 }
-
-int Client::SendPackage() 
+///
+///@author Marian Szczykulski
+///@brief Wysylanie Pliku do innego klienta(bezposrednio)
+///@param[in]	usr		adresat
+///@param[in]	pck		paczka do wyslania
+///@return		status
+int Client::SendPackage(DomainData::User usr, DomainData::File & file) 
 {
+	LOG4CXX_DEBUG(logger, "Wysylanie paczki: Client");
+	try
+	{
+		//Sprobuj wyslac plik bezposrednio do klienta
+		//TODO Mozna sprawdzic mode(checkStatus)
+		DomainData::Address * clAddr = connectedServerInstance->GetUserAddressByName(usr);
+		if((*clAddr).localization.in() ==0 || strcmp((*clAddr).localization.in(), "")==0)
+		{
+			LOG4CXX_DEBUG(logger, "Nie udalo sie wyslac pliku. Nie pozyskano adresu klienta(NULL lub pusty lancuch) o podanej nazwie: " <<usr.name.in());
+			return -1;
+		}
+		CORBA::ORB_var orbClient;
+		LOG4CXX_DEBUG(logger, "pozyskiwanie zdalnej instancji klienta");
+		IClientClient_var otherClientInstance = getRemoteClientInstance(orbClient, *clAddr);
+		LOG4CXX_DEBUG(logger, "Pozyskano zdalna instancje klienta. Wysylanie pliku...");
+		
+		LOG4CXX_DEBUG(logger, "Wysylanie...");
+		otherClientInstance->SendFile(file,usr);
+		LOG4CXX_DEBUG(logger, "Wyslano");
+	}
+	catch(CORBA::SystemException & e)
+	{
+		LOG4CXX_ERROR(logger, "Nie mozna wyslac pliku. CORBA::SystemException "<<e._name());
+		return -1;
+		//Klient ma zablokowane odbieranie poloczenia
+		//Wykonaj CreatePipe na serwerze
+	}
+	catch(std::exception & e)
+	{
+		LOG4CXX_ERROR(logger, "Nie mozna wyslac pliku. CORBA::SystemException "<<e.what());
+		return -2;
+		//Klient ma zablokowane odbieranie poloczenia
+		//Wykonaj CreatePipe na serwerze
+	}
     return 0;
 }
 ///

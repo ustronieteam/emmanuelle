@@ -7,7 +7,7 @@
 #include <boost/shared_ptr.hpp>
 #include "IModel.h"
 #include "Model.h"
-
+#include <fstream>
 
 
 class IModel;
@@ -43,7 +43,7 @@ class Controller
         void SetModel(IModel * iModel);
 
         int AddRemoteObserver(IRemoteObserver * observer, ObserverType observerType);
-        bool SendFile(int adresat, const char * fileName); // TODO: zmienic typ adresata
+        bool SendFile(const char *adresat, const char * fileName); // TODO: zmienic typ adresata
 		int AddDataObserver(DataObserver * dataObserver);
 
 

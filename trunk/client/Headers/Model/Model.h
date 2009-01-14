@@ -165,7 +165,7 @@ class Model : public IModel
 
          int AddStatusObserver(DataObserver * observer) ;
 
-         int SendPackage(FilePackage package);
+		 int SendPackage(DomainData::User & usr,DomainData::File & f);
 
          int DeleteContact(const DomainData::User & usr) ;
 

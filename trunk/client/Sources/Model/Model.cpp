@@ -169,9 +169,13 @@ int Model::AddStatusObserver(DataObserver * observer)
 	return result;
 }
 
-int Model::SendPackage(FilePackage package)
+int Model::SendPackage(DomainData::User & usr, DomainData::File & f)
 {
- return 0;
+	int result = 0;
+	LOG4CXX_DEBUG(logger,"Model->WysylaniePliku...");
+	result = client->SendPackage(usr, f);
+	LOG4CXX_DEBUG(logger,"Model->Wyslano plik. Result = "<<result);
+	return result;
 }
 
 ///
