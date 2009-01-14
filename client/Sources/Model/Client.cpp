@@ -130,7 +130,7 @@ int Client::AddFileObserver(IRemoteObserver & fileObserver)
 ///@param[in]	usr		adresat
 ///@param[in]	pck		paczka do wyslania
 ///@return		status
-int Client::SendPackage(DomainData::User usr, DomainData::File & file) 
+int Client::SendPackage(DomainData::User usr, DomainData::User sender, DomainData::File & file) 
 {
 	LOG4CXX_DEBUG(logger, "Wysylanie paczki: Client");
 	try
@@ -147,9 +147,9 @@ int Client::SendPackage(DomainData::User usr, DomainData::File & file)
 		LOG4CXX_DEBUG(logger, "pozyskiwanie zdalnej instancji klienta");
 		IClientClient_var otherClientInstance = getRemoteClientInstance(orbClient, *clAddr);
 		LOG4CXX_DEBUG(logger, "Pozyskano zdalna instancje klienta. Wysylanie pliku...");
-		
+
 		LOG4CXX_DEBUG(logger, "Wysylanie...");
-		otherClientInstance->SendFile(file,usr);
+		otherClientInstance->SendFile(file,sender);
 		LOG4CXX_DEBUG(logger, "Wyslano");
 	}
 	catch(CORBA::SystemException & e)

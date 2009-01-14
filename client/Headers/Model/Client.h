@@ -71,7 +71,7 @@ class Client : public CorbaConnector
 		Client(DomainData::Address servAddr);
         virtual ~Client();
         int AddFileObserver(IRemoteObserver & fileObserver);
-        int SendPackage(DomainData::User usr, DomainData::File & file);
+        int SendPackage(DomainData::User usr, DomainData::User sender, DomainData::File & file);
 
         int ConnectToServer();
 		int Disconnect(DomainData::User & usr);
