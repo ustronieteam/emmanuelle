@@ -74,8 +74,12 @@ void RemoteClientSendMessageObserver::set_serverDataBase(boost::shared_ptr<Serve
 ///@return ??
 int RemoteClientSendMessageObserver::Refresh(RemoteObserverData observerData)
 {
+	log4cxx::LoggerPtr logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("RemoteClientSendMessageObserverLogicRunnable"));
+	logger->setLevel(log4cxx::Level::getAll());
+	LOG4CXX_INFO(logger, "Uruchomiony Obserwator");
 	if(observerData.get_eventType()!=CLIENT_SEND_MESSAGE)
 		return 0;
+	LOG4CXX_INFO(logger, "Wysylanie wiadomosci");
 	//Utworz logike watku
 	RemoteClientSendMessageObserverLogicRunnable threadLogic(serverDataBase, clientsDataBase, observerData);
 	//Utworz i uruchom watki
