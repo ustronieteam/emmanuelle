@@ -34,7 +34,7 @@ class IModel
 
         virtual int AddStatusObserver(DataObserver * observer) = 0;
 
-        virtual int SendPackage(FilePackage package) = 0;
+        virtual int SendPackage(DomainData::User & usr,DomainData::File & f) = 0;
 
 		virtual int DeleteContact(const DomainData::User & usr) = 0;
 

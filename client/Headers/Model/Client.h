@@ -3,6 +3,7 @@
 
 #include "IRemoteObserver.h"
 #include "IServerClient.h"
+#include "IClientClient.h"
 //Do Tworzenia logow
 #include <log4cxx/logger.h>
 #include <log4cxx/level.h>
@@ -12,6 +13,7 @@
 #include <fstream>
 #include "ClientsData.h"
 #include "ContactRecord.h"
+#include "FilePackage.h"
 
 #include "CorbaConnector.h"
 
@@ -58,6 +60,7 @@ class Client : public CorbaConnector
 		void readServerAddress();
 		//Pobiera zdalna instancje
 		bool getRemoteServerInstance();
+		IClientClient_var getRemoteClientInstance(CORBA::ORB_var & orbClient, DomainData::Address clAddr);
 		//Laczy sie z serverem(pobiera instancje)
 		//bool connectToServerClient(std::string address, CORBA::ORB_out orb, IServerClient_out server);
     public:
@@ -68,7 +71,7 @@ class Client : public CorbaConnector
 		Client(DomainData::Address servAddr);
         virtual ~Client();
         int AddFileObserver(IRemoteObserver & fileObserver);
-        int SendPackage();
+        int SendPackage(DomainData::User usr, DomainData::File & file);
 
         int ConnectToServer();
 		int Disconnect(DomainData::User & usr);

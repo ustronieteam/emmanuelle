@@ -46,11 +46,54 @@ int Controller::AddRemoteObserver(IRemoteObserver * observer, ObserverType obser
 	return model->RegisterObserver(observer, observerType);
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-bool Controller::SendFile(int adresat, const char * fileName) // TODO: zmienic typ adresata 
+///
+///@author Marian Szczykulski
+///@date 2009-01-14
+///@brief Wysylanie pliku
+///@param[in]	adresat	Adresat do ktorego wysylany jest plik
+///@param[in]	filename	nazwa pliku
+///@return	status wysylania
+bool Controller::SendFile(const char * adresat, const char * fileName) // TODO: zmienic typ adresata 
 {
-    //TODO Auto-generated method stub
-    return 0;
+	LOG4CXX_DEBUG(logger, "Kontroler, wysylanie pliku rozpoczete. Adresat: "<<adresat);
+	try
+	{
+		std::ifstream inStream(fileName);
+		if(!inStream.is_open())
+		{
+			LOG4CXX_DEBUG(logger, "Kontroler, nie udalo sie otworzyc pliku "<<fileName);
+			return false;
+		}
+		DomainData::File fl;
+		inStream.seekg(0,std::ios_base::end);
+		int size = inStream.tellg();
+		LOG4CXX_DEBUG(logger, "Plik otwarto. Rozmiar: "<<size);
+		inStream.seekg(0,std::ios_base::beg);
+		char * cont = new char[size];
+		LOG4CXX_DEBUG(logger, "Zaalokowano pamiec, wczytywanie danych");
+		inStream>>cont;
+		LOG4CXX_DEBUG(logger, "Dane wczytano. Wkladanie ich do structury File");
+		fl.body	= DomainData::Content(0,size,cont);
+		LOG4CXX_DEBUG(logger, "Dane wlozono do struktury file");
+		fl.name = CORBA::string_dup(fileName);
+		fl.size = size;
+		DomainData::User usr;
+		usr.name = CORBA::string_dup(adresat);
+		LOG4CXX_DEBUG(logger, "Wysylanie do modelu");
+		int result = 0;
+		result = model->SendPackage(usr, fl);
+		LOG4CXX_DEBUG(logger, "Odp z modelu");
+		if(result<0)
+			return false;
+		else
+			return true;
+	}
+	catch(std::exception & e)
+	{
+		LOG4CXX_ERROR(logger, "Zlapano wyjatek w kontrolerze podczas wysylania pliku: "<<e.what());
+		return false;
+	}
+	
 }
 
 ///
