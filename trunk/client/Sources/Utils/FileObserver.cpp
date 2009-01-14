@@ -32,7 +32,7 @@ int FileObserver::Refresh(RemoteObserverData objectData)
 
 	LOG4CXX_DEBUG(_logger, "Prawidlowy typ zdarzenia. Wywolanie obiektu widoku.");
 
-	_view->Obsrv_File();
+	_view->Obsrv_File(objectData.GetUser().name.in(), objectData.GetFileName().c_str());
 
 	return 0;
 }

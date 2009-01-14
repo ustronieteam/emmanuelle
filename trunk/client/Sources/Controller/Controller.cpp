@@ -58,7 +58,7 @@ bool Controller::SendFile(const char * adresat, const char * fileName) // TODO: 
 	LOG4CXX_DEBUG(logger, "Kontroler, wysylanie pliku rozpoczete. Adresat: "<<adresat);
 	try
 	{
-		std::ifstream inStream(fileName);
+		std::ifstream inStream(fileName, std::ios_base::binary);
 		if(!inStream.is_open())
 		{
 			LOG4CXX_DEBUG(logger, "Kontroler, nie udalo sie otworzyc pliku "<<fileName);
@@ -75,7 +75,7 @@ bool Controller::SendFile(const char * adresat, const char * fileName) // TODO: 
 		LOG4CXX_DEBUG(logger, "Dane wczytano. Wkladanie ich do structury File - dane[" << cont << "]");
 		DomainData::File fl;
 		//fl.body.length(size+10);
-		fl.body	= DomainData::Content(size+10,size,&cont[0]);
+		fl.body	= DomainData::Content(size,size,&cont[0]);
 		LOG4CXX_DEBUG(logger, "Dane wlozono do struktury file");
 		fl.name = CORBA::string_dup(fileName);
 		fl.size = size;

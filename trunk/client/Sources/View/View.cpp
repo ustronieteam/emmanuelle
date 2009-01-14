@@ -536,24 +536,17 @@ void View::Obsrv_StatusChanged(const ContactRecord & contact)
 /// Odebranie pliku.
 /// @param[in]
 ///
-void View::Obsrv_File()
+void View::Obsrv_File(const char * userName, const char * fileName)
 {
 	LOG4CXX_DEBUG(this->_logger, "Widok otrzymal plik.");
 
 	std::string shortMsg(INFO_GET_FILE1);
-	shortMsg.append("nadawca");
+	shortMsg.append(userName);
 	shortMsg.append(INFO_GET_FILE2);
-	shortMsg.append("nazwa_pliku");
+	shortMsg.append(fileName);
 
 	LOG4CXX_DEBUG(this->_logger, "Ustawienie powiadomienia: " << shortMsg.c_str() );
 
 	// Ustawienie wiadomosci.
 	(*GetActiveWindow())->SetMsg(shortMsg);
-
-	MYMESSAGE msg;
-
-	msg.time	= boost::posix_time::second_clock::local_time();
-	msg.sender	= INFO_GET_FILE_MSND;
-	msg.content = INFO_GET_FILE_MSG;
-	msg.content.append("nazwa_pliku");
 }

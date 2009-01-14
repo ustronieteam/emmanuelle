@@ -203,7 +203,7 @@ class View : public IObserverView
 		/// Odebranie pliku.
 		/// @param[in]
 		///
-		virtual void Obsrv_File();
+		virtual void Obsrv_File(const char * userName, const char * fileName);
 };
 
 #endif
