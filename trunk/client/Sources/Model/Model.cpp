@@ -173,7 +173,7 @@ int Model::SendPackage(DomainData::User & usr, DomainData::File & f)
 {
 	int result = 0;
 	LOG4CXX_DEBUG(logger,"Model->WysylaniePliku...");
-	result = client->SendPackage(usr, f);
+	result = client->SendPackage(usr, clientsData->GetOwnRecord().userDesc, f);
 	LOG4CXX_DEBUG(logger,"Model->Wyslano plik. Result = "<<result);
 	return result;
 }
