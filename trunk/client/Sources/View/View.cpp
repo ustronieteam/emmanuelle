@@ -1,8 +1,5 @@
 #include "View.h"
 
-///
-/// Zwraca instancje. Singleton.
-///
 View * View::GetInstance()
 {
 	static View * _instance = new View();
@@ -10,10 +7,6 @@ View * View::GetInstance()
 	return _instance;
 }
 
-///
-/// Konstruktor.
-/// Prywatny bo Singleton.
-///
 View::View() 
 {
 	// Inicjalizacja loggera.
@@ -26,9 +19,6 @@ View::View()
 	_information.connected		= false;
 }
 
-///
-/// Destruktor.
-///
 View::~View() 
 {
 	// Usuniecie okien.
@@ -44,9 +34,6 @@ View::~View()
 		delete (*i).second;
 }
 
-///
-/// Uruchamia widok.
-///
 void View::Run()
 {
 	// Komenda.
@@ -63,7 +50,7 @@ void View::Run()
 	while(true)
 	{
 		// Czyszczenie ekranu.
-		system("CLS");
+		system(CLSCMD);
 
 		// Czyszczenie ostatniej komendy.
 		cmd.clear();
@@ -302,28 +289,16 @@ void View::Run()
 	}
 }
 
-///
-/// Zwraca kontroler.
-/// @return Kontroler.
-///
 Controller * View::GetController() 
 {
     return this->_controller;
 }
 
-///
-/// Ustawia kontroler.
-/// @param[in] controller Kontroler.
-///
 void View::SetController(Controller * controller) 
 {
 	this->_controller = controller;
 }
 
-///
-/// Ustawia aktywne okno.
-/// @param[in] window Iterator na okno ktore ma byc aktywne.
-///
 void View::SetActiveWindow(std::list<Window *>::iterator window)
 {
 	boost::mutex::scoped_lock sl(_mxActiveWindow);
@@ -331,10 +306,6 @@ void View::SetActiveWindow(std::list<Window *>::iterator window)
 	this->_activeWindow = window;
 }
 
-///
-/// Pobiera aktywne okno.
-/// @return Iterator na aktywne okno.
-///
 std::list<Window *>::iterator View::GetActiveWindow()
 {
 	boost::mutex::scoped_lock sl(_mxActiveWindow);
@@ -342,9 +313,6 @@ std::list<Window *>::iterator View::GetActiveWindow()
 	return this->_activeWindow;
 }
 
-///
-/// Zmien aktywne okno na nastepne.
-///
 void View::ChangeActiveWindow()
 {
 	boost::mutex::scoped_lock sl(_mxActiveWindow);
@@ -361,10 +329,6 @@ void View::ChangeActiveWindow()
 			(*_activeWindow)->SetMsg((*old)->GetMsg());
 }
 
-///
-/// Dodaje okno.
-/// @param[in] window Okno ktore nalezy dodac.
-///
 std::list<Window *>::iterator View::AddWindow(Window * window)
 {
 	boost::mutex::scoped_lock sl(_mxWindows);
@@ -374,10 +338,6 @@ std::list<Window *>::iterator View::AddWindow(Window * window)
 	return this->_windows.begin();
 }
 
-///
-/// Usuwa okno.
-/// @param[in] window Iterator na okno jakie naleyz usunac.
-///
 bool View::DelWindow(std::list<Window *>::iterator window)
 {
 	boost::mutex::scoped_lock sl(_mxWindows);
@@ -387,9 +347,6 @@ bool View::DelWindow(std::list<Window *>::iterator window)
 	return true;
 }
 
-///
-/// Pobiera liste okien
-/// @return Lista okien.
 std::list<Window *> View::GetAllWindows()
 {
 	boost::mutex::scoped_lock sl(_mxWindows);
@@ -398,11 +355,6 @@ std::list<Window *> View::GetAllWindows()
 	return this->_windows;
 }
 
-///
-/// Odebranie wiadomosci
-/// @param[in] senderAddress Adres nadawcy.
-/// @param[in] message Wiadomosc.
-///
 void View::Obsrv_ReciveMessage(const DomainData::User & senderAddress, const DomainData::Message & message)
 {
 	MYMESSAGE						msg;
@@ -494,7 +446,7 @@ void View::Obsrv_ReciveMessage(const DomainData::User & senderAddress, const Dom
 		LOG4CXX_DEBUG(this->_logger, "Aktualnie otwarte okno rozmowy. Odswiezamy." );
 		
 		// Czyszczenie ekranu.
-		system("CLS");
+		system(CLSCMD);
 
 		// Odswiezamy okno.
 		(*GetActiveWindow())->Render(std::cout);
@@ -514,10 +466,6 @@ void View::Obsrv_ReciveMessage(const DomainData::User & senderAddress, const Dom
 	LOG4CXX_DEBUG(this->_logger, "Widok skonczyl przetwarzac wiadomosc." );
 }
 
-///
-/// Zmiana statusu osoby na liscie kontatkow.
-/// @param[in] contact Kontakt ktory sie zmienil.
-///
 void View::Obsrv_StatusChanged(const ContactRecord & contact)
 {
 	LOG4CXX_DEBUG(this->_logger, "Widok otrzymal zmiane statusu. Contact.User.Name: " << contact.userDesc.name.in() << " Contact.Status: " << contact.isAvailable );
@@ -533,10 +481,6 @@ void View::Obsrv_StatusChanged(const ContactRecord & contact)
 	(*GetActiveWindow())->SetMsg(shortMsg);
 }
 
-///
-/// Odebranie pliku.
-/// @param[in]
-///
 void View::Obsrv_File(const char * userName, const char * fileName)
 {
 	LOG4CXX_DEBUG(this->_logger, "Widok otrzymal plik.");

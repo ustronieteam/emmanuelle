@@ -1,18 +1,10 @@
 #include "WelcomeWindow.h"
 
-///
-/// Konstruktor.
-/// @param[in] controller Kontroler.
-///
 WelcomeWindow::WelcomeWindow(Controller * controller) : Window(controller, WIN_WELCOME)
 {
 
 }
 
-///
-/// Renderowanie okienka powitalnego.
-/// @param[in] o Strumien do ktorego renderujemy obraz.
-///
 void WelcomeWindow::Render(std::ostream & out)
 {
 	out << HEADLINE
@@ -42,10 +34,6 @@ void WelcomeWindow::Render(std::ostream & out)
 		out << PROMPT;
 }
 
-///
-/// Komenda przekazana do okna.
-/// @param[in] cmd Komenda.
-///
 void WelcomeWindow::Command(std::string & cmd)
 {
 	this->SetMsg(ER_NO_COMMAND);

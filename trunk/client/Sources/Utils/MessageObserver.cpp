@@ -1,8 +1,5 @@
 #include "MessageObserver.h"
 
-///
-/// Konstruktor.
-///
 MessageObserver::MessageObserver(IObserverView * view) 
 {
 	// Inicjalizacja loggera.
@@ -12,17 +9,11 @@ MessageObserver::MessageObserver(IObserverView * view)
 	_view = view;
 }
 
-///
-/// Destruktor.
-///
 MessageObserver::~MessageObserver() 
 {
 
 }
 
-///
-/// Metoda wywolujaca.
-///
 int MessageObserver::Refresh(RemoteObserverData objectData)
 {
 	LOG4CXX_DEBUG(_logger, "Uruchomiono obserwatora wiadomosci. Typ: " << objectData.GetObserverType() );

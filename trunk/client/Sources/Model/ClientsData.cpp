@@ -150,7 +150,7 @@ void ClientsData::readClientName()
 		ownRecord.userDesc.number = clNumber;
 		ownRecord.isAvailable = true;
 	}
-	catch(std::exception &exc)
+	catch(std::exception &)
 	{
 		file.close();
 		unlock_mutex();

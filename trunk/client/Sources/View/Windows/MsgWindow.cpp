@@ -1,9 +1,5 @@
 #include "MsgWindow.h"
 
-///
-/// Konstruktor.
-/// @param[in] controller Kontroler.
-///
 MsgWindow::MsgWindow(Controller * controller, const std::string & name) 
 	: Window(controller, WIN_MSG)
 {
@@ -25,10 +21,6 @@ MsgWindow::MsgWindow(Controller * controller, const std::string & name)
 	this->SetName(wname);
 }
 
-///
-/// Renderowanie okienka.
-/// @param[in] o Strumien do ktorego renderujemy obraz.
-///
 void MsgWindow::Render(std::ostream & out)
 {
 	boost::mutex::scoped_lock sl(_mxRender);
@@ -68,10 +60,6 @@ void MsgWindow::Render(std::ostream & out)
 	out << PROMPT;
 }
 
-///
-/// Komenda przekazana do okna.
-/// @param[in] cmd Komenda.
-///
 void MsgWindow::Command(std::string & cmd)
 {
 	std::string mcmd;
@@ -178,19 +166,11 @@ void MsgWindow::Command(std::string & cmd)
 		this->SetMsg(ER_NO_COMMAND);
 }
 
-///
-/// Ustawia rozmowe.
-/// @param[in] talk Wskaznik na rozmowe.
-///
 void MsgWindow::SetTalk(std::list<MYMESSAGE> * talk)
 {
 	this->_talk = talk;
 }
 
-///
-/// Ustawia mutex na rozmowe.
-/// @param[in] mxTalk Wskaznik na mutex do rozmowy.
-///
 void MsgWindow::SetMutexTalk(boost::mutex * mxTalk)
 {
 	this->_mxTalk = mxTalk;

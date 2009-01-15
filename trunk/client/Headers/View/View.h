@@ -56,12 +56,6 @@ using namespace std;
 ///
 class View : public IObserverView
 {
-		// Przyjaznie.
-
-		// Okno kontaktów musi miec odstep do listy kontaktow.
-		//friend class ContactWindow;
-		//friend class ConfigWindow;
-
 	public:
 
 		///
@@ -148,6 +142,7 @@ class View : public IObserverView
         ///
 		/// Ustawia kontroler.
 		/// @param[in] controller Kontroler.
+		///
         void SetController(Controller * controller);
 
 		///
@@ -182,6 +177,7 @@ class View : public IObserverView
 		///
 		/// Pobiera liste okien
 		/// @return Lista okien.
+		///
 		std::list<Window *> GetAllWindows();
 
 		/// Metody wywolywane przez obserwatorów. IObserverView interface.

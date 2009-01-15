@@ -229,10 +229,6 @@
 					>
 				</File>
 				<File
-					RelativePath=".\Sources\Utils\FilePackage.cpp"
-					>
-				</File>
-				<File
 					RelativePath=".\Sources\Utils\IRemoteObserver.cpp"
 					>
 				</File>
@@ -524,10 +520,6 @@
 				</File>
 				<File
 					RelativePath=".\Headers\Utils\FileObserver.h"
-					>
-				</File>
-				<File
-					RelativePath=".\Headers\Utils\FilePackage.h"
 					>
 				</File>
 				<File

@@ -1,8 +1,5 @@
 #include "StatusObserver.h"
 
-///
-/// Konstruktor.
-///
 StatusObserver::StatusObserver(IObserverView * view) 
 {
 	// Inicjalizacja loggera.
@@ -12,17 +9,11 @@ StatusObserver::StatusObserver(IObserverView * view)
 	_view = view;
 }
 
-///
-/// Destruktor.
-///
 StatusObserver::~StatusObserver() 
 {
 
 }
 
-///
-/// Metoda referesh.
-///
 int StatusObserver::Refresh(DataObserverData data)
 {
 	LOG4CXX_DEBUG(_logger, "Uruchomiono obserwatora statusu. Wywolanie obiektu widoku." );

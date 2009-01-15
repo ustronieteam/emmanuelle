@@ -8,11 +8,17 @@
 ///
 typedef struct _contact
 {
-	// Nazwa kontaktu.
+	///
+	/// Nazwa kontaktu.
+	///
 	std::string name;
-	// Numer kontaktu.
+	///
+	/// Numer kontaktu.
+	///
 	int number;
-	// Dostepnosc kontaktu.
+	///
+	/// Dostepnosc kontaktu.
+	///
 	bool status;
 }
 CONTACT;
