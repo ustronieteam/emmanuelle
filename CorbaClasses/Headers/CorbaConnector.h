@@ -13,12 +13,21 @@
 #include <iostream>
 
 static const std::string SRVPORT = "7080";
-static const std::string CLNTPORT = "9999";
+static const std::string CLNTPORT = "7081";
 
+///
+/// @author	Mateusz Ko³odziejczyk
+/// @date	09.01.2009
+///
+/// @brief	Klasa sytyczna posiadajaca metody korzystajace z CORBY i wykorzystywane przy polaczaniu
+///
 class CorbaConnector
 {
 	public:
 
+		///
+		/// @param [in]	port	numer portu, na ktorym jest polaczenie
+		/// @return				adres polaczonego klienta
 		///
 		/// statyczna metoda sluzaca do pobrania adresu serwera juz podlaczonego
 		/// do danego serwera

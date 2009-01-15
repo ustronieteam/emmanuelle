@@ -1,20 +1,23 @@
 #ifndef IMODEL_H
 #define IMODEL_H
 
-
 #include "DataObserver.h"
 #include "FilePackage.h"
 #include "IRemoteObserver.h"
 #include "DomainData.h"
 #include "ContactRecord.h"
 #include <vector>
+
 class IModel
 {
 
     public:
-        IModel();
+		
+		IModel() 
+		{}
 
-        virtual ~IModel();
+        virtual ~IModel()
+		{}
 
 		virtual std::string GetOwnName() = 0;
 		virtual const long & GetOwnNumber() = 0;

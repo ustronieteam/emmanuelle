@@ -4,9 +4,15 @@
 #include <IClientClient_skel.h>
 #include "IRemoteObserverObject.h"
 
-//
-// IDL:IClientClient:1.0
-//
+///
+/// @author	Mateusz Ko³odziejczyk
+/// @date	06.01.2009
+///
+/// @brief	Klasa wygenerowana z pliku IDL IClientClient.idl
+///
+/// Ciala metod zaimplementowane przez programiste
+///
+
 class IClientClient_impl : virtual public POA_IClientClient,
                            virtual public PortableServer::RefCountServantBase,
 						   virtual public IRemoteObserverObject
@@ -26,22 +32,30 @@ public:
 
     virtual PortableServer::POA_ptr _default_POA();
 
-    //
-    // IDL:IClientClient/SendFile:1.0
-    //
+    ///
+	/// @param [in] f			plik
+	/// @param [in] receiver	odbiorca
+	/// 
+	/// Wysy³anie pliku.
+	///
     virtual void SendFile(const ::DomainData::File& f,
                           const ::DomainData::User& receiver)
         throw(::CORBA::SystemException);
 
-    //
-    // IDL:IClientClient/CreatePipe:1.0
-    //
+    ///
+	/// @param [in] receiver	odbiorca
+	///
+	/// Utworzenie rurki
+	///
     virtual void CreatePipe(const ::DomainData::User& receiver)
         throw(::CORBA::SystemException);
 
-    //
-    // IDL:IClientClient/GetFile:1.0
-    //
+	///
+	/// @param [in] sender		klient od którego oczekujemy pliku w rurce.
+	/// @return					plik
+	/// 
+	/// Pobranie pliku z rurki
+	///
     virtual ::DomainData::File* GetFile(const ::DomainData::User& sender)
         throw(::CORBA::SystemException);
 };

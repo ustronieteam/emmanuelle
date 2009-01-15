@@ -35,10 +35,19 @@ class Model : public IModel
 
     private:
 		
+		///
+		/// obiekt brokera
+		///
 		CORBA::ORB_var orb;
 
+		///
+		/// wskaznik do obiektu klienta
+		///
 		boost::shared_ptr<Client> client;
 
+		///
+		/// wskaznik do bazy klienta 
+		///
 		boost::shared_ptr<ClientsData> clientsData;
 
 		///
@@ -56,6 +65,9 @@ class Model : public IModel
 		///
 		DomainData::Address serverAddress;
 
+		///
+		/// aktywnosc klienta
+		///
 		bool isActive;
 
 		// logger
@@ -67,9 +79,11 @@ class Model : public IModel
 		Model()
 		{
 			isActive = false;
+			
 			//logger
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("Model"));
 			logger->setLevel(log4cxx::Level::getAll());
+
 			client = boost::shared_ptr<Client>(new Client(serverAddress) );
 			clientsData = boost::shared_ptr<ClientsData>(new ClientsData(true));
 		}
@@ -77,11 +91,13 @@ class Model : public IModel
 
 
     public:
+
 		///
 		/// Stworzenie brokera po stronie klienta, zarejestrownie obiektow zdalnych i uruchomienie
 		/// nasluchiwania na porcie CLNTPORT; musi zostac wywolana dopiero po polaczeniu z serwerem
 		///
 		virtual void activateListning();
+		
 		///
 		/// @return	obiekt modelu, ktory jest obiektem typu singleton
 		///
@@ -99,18 +115,6 @@ class Model : public IModel
 		/// destruktor
 		///
         virtual ~Model()
-		{}
-
-        Client * GetClient()
-		{}
-
-        void SetClient(Client * clnt)
-		{}
-
-        ClientsData *  GetClientsData()
-		{}
-
-		void SetClientsData(ClientsData * clientsData)
 		{}
 
 		///
@@ -156,41 +160,136 @@ class Model : public IModel
 			client->setServerAddress(a);
 		}
 
-
+		///
+		/// setter portu
+		///
 		virtual void SetPortNumber(const int & p);
+		
+		///
+		/// getter portu
+		///
 		virtual int GetPortNumber() const;
 
+		///
+		/// @param [in] observ		wsk na obserwatora
+		/// @param [in]	type		typ obserwatora
+		///
+		/// rejestruje obserwatora w programie
+		///
 		virtual int RegisterObserver(IRemoteObserver * observ, ObserverType type);
+		
+		///
+		/// wyrejstrowuje obserwatora
+		///
 		virtual int UnregisterObserver();
 
-         int AddStatusObserver(DataObserver * observer) ;
+		///
+		///
+		///
+        int AddStatusObserver(DataObserver * observer) ;
 
-		 int SendPackage(DomainData::User & usr,DomainData::File & f);
+		///
+		///
+		///
+		int SendPackage(DomainData::User & usr,DomainData::File & f);
 
-         int DeleteContact(const DomainData::User & usr) ;
+		///
+		/// @param [in]	usr		usuwany kontakt
+		/// @return				0 udalo sie usunac lub rzuca wyjatek ContactNotFoundException jak sie nie udalo
+		///
+		/// Usuwa kontakt z bazy
+		///
+        int DeleteContact(const DomainData::User & usr) ;
 
-         virtual int SendMessageToClient(DomainData::User sender, DomainData::User receiver, DomainData::Message msg);
+		///
+		/// @param [in] sender		nadawca wiadomosci
+		/// @param [in] receiver	adresat wiadomosci
+		/// @param [in] msg			wiadomosc
+		/// @return					status (-2 zdalna instancja serwera nie zainicjowana,
+		///							-1 blad podczas wywolywania zdalnej metody serwera)
+		///
+		/// Wysylanie wiadomosci do klienta
+		///
+        virtual int SendMessageToClient(DomainData::User sender, DomainData::User receiver, DomainData::Message msg);
 
-         int AddContact(const DomainData::User &usr) ;
+		///
+		/// @param [in]	usr		Dane o dodawanym uzytkowniku
+		/// @return				0 lub rzuca wyjatek jezeli nie udalo sie dodac
+		///
+		/// Dodaje kontakt do bazy kontaktow
+		///
+        int AddContact(const DomainData::User &usr) ;
 
-         int Disconnect() ;
+		///
+		/// Rozlaczanie sie z serwera
+		///
+        int Disconnect() ;
 
-         bool ConnectToServer() ;
+		/// 
+		/// Pod³¹czanie do servera
+		///
+        bool ConnectToServer() ;
 
-         int AddFileObserver(IRemoteObserver & observer) ;
+		///
+		///
+		///
+        int AddFileObserver(IRemoteObserver & observer) ;
 
-         int AddMessageObserver(IRemoteObserver & observer) ;
+		///
+		///
+		///
+        int AddMessageObserver(IRemoteObserver & observer) ;
 
-		 virtual std::vector<ContactRecord> GetContactsList(); 
+		///
+		/// @return		vector kontaktow
+		///
+		/// Pobiera liste kontaktow z bazy
+		///
+		virtual std::vector<ContactRecord> GetContactsList(); 
+
+		///
+		/// @return		wlasny rekord z danymi
+		/// 
+		/// Zwraca wlasny rekord z danymi
+		///
 		virtual std::string GetOwnName();
+
+		///
+		/// @return		wlasny rekord z danymi
+		///
+		/// Zwraca wlasny rekord z danymi
+		///
 		virtual const long & GetOwnNumber();
+
+		///
+		/// @return		wlasny rekord z danymi
+		///
+		/// Zwraca wlasny rekord z danymi
+		///
 		virtual bool GetMyAvailability();
 
+		///
+		/// setter nazwy lokalnego klienta
+		/// 
 		virtual void SetOwnName(const char * c);
+
+		///
+		/// setter numeru lokalnego klienta
+		///
 		virtual void SetOwnNumber(long l);
+		
+		///
+		/// setter dostepnosci lokalnego klienta
+		///
 		virtual void SetMyAvailability(bool b);
+		
+		///
+		/// uruchamia w odzielnym watku cheker-a ktory sprawdza 
+		/// co okreslony czas status wszystkich uzytkownikuw na liscie kontaktow
+		///
 		virtual bool runStatusChecker();
 
+		// test
 		virtual void TestClient(std::string addrClient);
 
 };  //end class Model

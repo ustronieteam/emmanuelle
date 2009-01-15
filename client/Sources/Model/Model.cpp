@@ -178,12 +178,6 @@ int Model::SendPackage(DomainData::User & usr, DomainData::File & f)
 	return result;
 }
 
-///
-///@author Marian Szczykulski
-///@date	2009-01-12
-///@brief	Usuwa kontakt z bazy
-///@param[in]	usr	Dane o usuwanym kontakcie
-///@return		0 udalo sie usunac lub rzuca wyjatek ContactNotFoundException jak sie nie udalo
 int Model::DeleteContact(const DomainData::User & usr) 
 {
 	try
@@ -197,14 +191,7 @@ int Model::DeleteContact(const DomainData::User & usr)
 	}
 	return 0;
 }
-///
-///@author Marian Szczykulski
-///@date 2009-01-12
-///@brief Wysylanie wiadomosci do klienta
-///@param[in] recAddr	adresat wiadomosci
-///@param[in] msg		wiadomosc
-///@return				status (-2 zdalna instancja serwera nie zainicjowana,
-///								-1 blad podczas wywolywania zdalnej metody serwera)
+
  int Model::SendMessageToClient(DomainData::User sender, DomainData::User receiver, DomainData::Message msg)
  {
 	 int result = 0;
@@ -213,12 +200,7 @@ int Model::DeleteContact(const DomainData::User & usr)
 	 LOG4CXX_DEBUG(logger, "Koniec Wywolania send message w modelu. Result: "<<result);
 	 return result;
  }
-///
-///@author Marian Szczykulski
-///@date 2009-01-12
-///@brief	Dodaje kontakt do bazy kontaktow
-///@param[in]	usr	Dane o dodawanym uzytkowniku
-///@return		0	lub rzuca wyjatek jezeli nie udalo sie dodac
+
  int Model::AddContact(const DomainData::User &usr) 
 {
 	try
@@ -233,10 +215,7 @@ int Model::DeleteContact(const DomainData::User & usr)
 	}
 	return 0;
 }
-///
-///@author Marian Szczykulski
-///@date 2009-01-12
-///@brief Rozlaczanie sie z serwera
+
 int Model::Disconnect() 
 {
 	if(client != boost::shared_ptr<Client>())
@@ -267,10 +246,7 @@ int Model::Disconnect()
 		return -1;
 	}
 }
-///
-///@author Marian Szczykulski
-///@date	2009-01-12
-///@brief	Pod³¹czanie do servera
+
  bool Model::ConnectToServer()
  {
 	 int result;
@@ -320,91 +296,55 @@ int Model::Disconnect()
 	 return 0;
  }
 
-///
-///@author Marian Szczykulski
-///@date 2009-01-12
-///@brief Pobiera liste kontaktow z bazy
-///@return	vector kontaktow
 std::vector<ContactRecord> Model::GetContactsList()
 {
 	return clientsData->GetContactsList();
 }
-///
-///@author Marian Szczykulski
-///@date 2009-01-12
-///@brief setter portu
+
 void Model::SetPortNumber(const int & p)
 {
 	client->setPortNumber(p);
 }
-///
-///@author Marian Szczykulski
-///@date 2009-01-12
-///@brief getter portu
+
 int Model::GetPortNumber() const
 {
 	return client->getPortNumber();
 }
-///
-///@author Marian Szczykulski
-///@date 2009-01-13
-///@brief	Zwraca wlasny rekord z danymi
-///@return	wlasny rekord z danymi
+
 std::string Model::GetOwnName()
 {
 	return clientsData->GetOwnRecord().userDesc.name.in();
 }
-///
-///@author Marian Szczykulski
-///@date 2009-01-13
-///@brief	Zwraca wlasny rekord z danymi
-///@return	wlasny rekord z danymi
+
 const long & Model::GetOwnNumber()
 {
 	ContactRecord c = clientsData->GetOwnRecord();
 	return c.userDesc.number;
 }
-///
-///@author Marian Szczykulski
-///@date 2009-01-13
-///@brief	Zwraca wlasny rekord z danymi
-///@return	wlasny rekord z danymi
+
 bool Model::GetMyAvailability()
 {
 	ContactRecord c = clientsData->GetOwnRecord();
 	return c.isAvailable;
 }
-///
-///@author Marian Szczykulski
-///@date 2009-01-13
-///@brief setter nazwy lokalnego klienta
+
 void Model::SetOwnName(const char * c)
 {
 	clientsData->SetOwnName(c);
 	client->setClientName(c);
 } 
-///
-///@author Marian Szczykulski
-///@date 2009-01-13
-///@brief setter numeru lokalnego klienta
+
 void Model::SetOwnNumber(long l)
 {
 	clientsData->SetOwnNumber(l);
 	
 }
-///
-///@author Marian Szczykulski
-///@date 2009-01-13
-///@brief setter dostepnosci lokalnego klienta
+
 void Model::SetMyAvailability(bool b)
 {
 	clientsData->SetMyAvailability(b);
 }
-///
-///@author Marian Szczykulski
-///@date 2009-01-13
-///@brief uruchamia w odzielnym watku cheker-a ktory sprawdza 
-///@brief co okreslony czas status wszystkich uzytkownikuw na liscie kontaktow
+
 bool Model::runStatusChecker()
 {
 	LOG4CXX_DEBUG(logger, "Rozpoczynanie nasluchiwania statusu, uruchomienie w nowym watku");
