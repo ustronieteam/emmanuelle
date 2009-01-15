@@ -232,19 +232,21 @@ int Model::Disconnect()
 			try
 			{
 			}
-			catch(CORBA::SystemException & e)
+			catch(CORBA::SystemException &)
 			{
 				LOG4CXX_ERROR(logger, "Wyjatek podczas konczenia nasluchu");
 				return -1;
 			}
 		}
-
+		
 	}
 	else
 	{
 		LOG4CXX_ERROR(logger, "Nie ma zainicjalizowanego objektu klienta w modelu");
 		return -1;
 	}
+
+	return 0;
 }
 
  bool Model::ConnectToServer()

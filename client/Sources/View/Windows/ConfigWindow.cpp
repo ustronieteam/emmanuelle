@@ -1,19 +1,11 @@
 #include "ConfigWindow.h"
 
-///
-/// Konstruktor.
-/// @param[in] controller Kontroler.
-///
 ConfigWindow::ConfigWindow(Controller * controller, INFO * information) 
 	: Window(controller, WIN_CONF)
 {
 	_information = information;
 }
 
-///
-/// Renderowanie okienka konfiguracji.
-/// @param[in] o Strumien do ktorego renderujemy obraz.
-///
 void ConfigWindow::Render(std::ostream & out)
 {
 	out	<< HEADLINE
@@ -25,12 +17,12 @@ void ConfigWindow::Render(std::ostream & out)
 	else
 		out << this->GetController()->GetServerAddress();
 
-	out << '\n' << SIDE << "Port [port]:\t\t\t";
+	/*out << '\n' << SIDE << "Port [port]:\t\t\t";
 
 	if ( this->GetController()->GetPortNumber() == 0 )
 		out << "NIE USTALONO";
 	else
-		out << this->GetController()->GetPortNumber();
+		out << this->GetController()->GetPortNumber();*/
 
 	out << '\n' << SIDE << "Nazwa uzytkownika [uname]:\t";
 
@@ -39,12 +31,12 @@ void ConfigWindow::Render(std::ostream & out)
 	else
 		out << this->GetController()->GetOwnName();
 
-	out << '\n' << SIDE << "Numer uzytkownika [unum]:\t";
+	/*out << '\n' << SIDE << "Numer uzytkownika [unum]:\t";
 
 	if ( this->GetController()->GetOwnNumber() == 0 )
 		out << "NIE USTALONO";
 	else
-		out << this->GetController()->GetOwnNumber();
+		out << this->GetController()->GetOwnNumber();*/
 
 	out << '\n' << SIDE << '\n' << SIDE << "^ Informacje:\n" << SIDE << '\n';
 
@@ -55,7 +47,7 @@ void ConfigWindow::Render(std::ostream & out)
 	else
 		out << this->_information->connectedDate << '\n';
 
-	out << SIDE << "Wyslanych wiadomosci:\t\t"	<< this->_information->outMsgCount << '\n';
+	//out << SIDE << "Wyslanych wiadomosci:\t\t"	<< this->_information->outMsgCount << '\n';
 	out << SIDE << "Odebranych wiadomosci:\t"	<< this->_information->inMsgCount << '\n';
 	out << SIDE << '\n';
 	out << LINE;
@@ -69,13 +61,8 @@ void ConfigWindow::Render(std::ostream & out)
 	out << PROMPT;
 }
 
-///
-/// Komenda przekazana do okna.
-/// @param[in] cmd Komenda.
-///
 void ConfigWindow::Command(std::string & cmd)
 {
-	int tmp;
 	std::string mcmd;
 
 	if ( !cmd.compare("set") )
@@ -89,26 +76,26 @@ void ConfigWindow::Command(std::string & cmd)
 			this->GetController()->SetServerAddress(mcmd.c_str());
 			this->SetMsg(INF_NEW_SRV);
 		}
-		// Port
-		else if ( !mcmd.compare("port") )
-		{
-			std::cin >> tmp;
-			
-			/* Sprawdzanie poprawnosci. */
-			if ( std::cin.fail() )
-			{
-				this->SetMsg(INF_ER_NEW_PORT);
-				std::cin.clear( std::cin.rdstate() & ~std::ios::failbit );
+		//// Port
+		//else if ( !mcmd.compare("port") )
+		//{
+		//	std::cin >> tmp;
+		//	
+		//	/* Sprawdzanie poprawnosci. */
+		//	if ( std::cin.fail() )
+		//	{
+		//		this->SetMsg(INF_ER_NEW_PORT);
+		//		std::cin.clear( std::cin.rdstate() & ~std::ios::failbit );
 
-				// Pobranie smieci.
-				std::cin >> mcmd;
-			}
-			else
-			{
-				this->GetController()->SetPortNumber(tmp);
-				this->SetMsg(INF_NEW_PORT);
-			}
-		}
+		//		// Pobranie smieci.
+		//		std::cin >> mcmd;
+		//	}
+		//	else
+		//	{
+		//		this->GetController()->SetPortNumber(tmp);
+		//		this->SetMsg(INF_NEW_PORT);
+		//	}
+		//}
 		// Nazwa uzytkownika.
 		else if ( !mcmd.compare("uname") )
 		{
@@ -119,26 +106,26 @@ void ConfigWindow::Command(std::string & cmd)
 
 			this->SetMsg(INF_NEW_UNAME);
 		}
-		// Numer uzytkownika.
-		else if ( !mcmd.compare("unum") )
-		{
-			std::cin >> tmp;
+		//// Numer uzytkownika.
+		//else if ( !mcmd.compare("unum") )
+		//{
+		//	std::cin >> tmp;
 
-			this->GetController()->SetOwnNumber(tmp);
-			//this->_configuration->userNumber = tmp;
+		//	this->GetController()->SetOwnNumber(tmp);
+		//	//this->_configuration->userNumber = tmp;
 
-			/* Sprawdzanie poprawnosci. */
-			if ( std::cin.fail() )
-			{
-				this->SetMsg(INF_ER_NEW_UNUM);
-				std::cin.clear( std::cin.rdstate() & ~std::ios::failbit );
+		//	/* Sprawdzanie poprawnosci. */
+		//	if ( std::cin.fail() )
+		//	{
+		//		this->SetMsg(INF_ER_NEW_UNUM);
+		//		std::cin.clear( std::cin.rdstate() & ~std::ios::failbit );
 
-				// Pobranie smieci.
-				std::cin >> mcmd;
-			}
-			else
-				this->SetMsg(INF_NEW_UNUM);
-		}
+		//		// Pobranie smieci.
+		//		std::cin >> mcmd;
+		//	}
+		//	else
+		//		this->SetMsg(INF_NEW_UNUM);
+		//}
 		else
 			this->SetMsg(ER_NO_PARAM);
 	}

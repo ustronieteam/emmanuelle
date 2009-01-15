@@ -1,7 +1,5 @@
 #include "ClientsDataBase.h"
 
-///
-/// Konstruktor bezparametrowy.
 ClientsDataBase::ClientsDataBase() 
 {
 	// Inicjalizacja loggera.
@@ -9,17 +7,11 @@ ClientsDataBase::ClientsDataBase()
 	_logger->setLevel(log4cxx::Level::getAll());
 }
 
-///
-/// Konstruktor kopiujacy.
-/// @param[in] arg Baza danych do skopiowania.
 ClientsDataBase::ClientsDataBase(const ClientsDataBase & arg) 
 {
 	this->_records = arg._records;
 }
 
-///
-/// Operator przypisania.
-/// param[in] arg Baza danych ktora chcemy przypisac.
 ClientsDataBase & ClientsDataBase::operator =(const ClientsDataBase & arg) 
 {
 	if ( this != &arg )
@@ -30,9 +22,6 @@ ClientsDataBase & ClientsDataBase::operator =(const ClientsDataBase & arg)
 	return *this;
 }
 
-///
-/// Zwraca baze danych (singleton)
-/// @return Baza danych
 ClientsDataBase * ClientsDataBase::GetInstance()
 {
 	static ClientsDataBase * _db = new ClientsDataBase();
@@ -40,17 +29,11 @@ ClientsDataBase * ClientsDataBase::GetInstance()
 	return _db;
 }
 
-///
-/// Destruktor.
 ClientsDataBase::~ClientsDataBase() 
 {
 
 }
 
-///
-/// Zwraca rekord po podaniu rekord id.
-/// @param[in] recordId Identyfikator rekordu.
-/// @return Rekord o podanym idetyfikatorze.
 const ClientRecord & ClientsDataBase::GetRecord(int recordId) 
 {
 	boost::mutex::scoped_lock sl(_mutex);
@@ -71,9 +54,6 @@ const ClientRecord & ClientsDataBase::GetRecord(int recordId)
 	}
 }
 
-///
-/// Zwraca wszystkie rekordy z bazy danych.
-/// @return Wektor ze wszystkimi rekordami.
 std::vector<ClientRecord> ClientsDataBase::GetAllRecords() 
 {
 	boost::mutex::scoped_lock sl(_mutex);
@@ -89,10 +69,6 @@ std::vector<ClientRecord> ClientsDataBase::GetAllRecords()
 	return v;
 }
 
-///
-/// Dodaje rekord do bazy danych.
-/// param[in] record Record do wstawienia.
-/// @return ???
 int ClientsDataBase::InsertRecord(const ClientRecord & record) 
 {
 	boost::mutex::scoped_lock sl(_mutex);
@@ -121,10 +97,6 @@ int ClientsDataBase::InsertRecord(const ClientRecord & record)
 	}
 }
 
-///
-/// Usuwa rekord o podanym id z bazy danych.
-/// param[in] recordId ID rekordu ktory ma byc usuniety.
-/// @return ???
 int ClientsDataBase::DeleteRecord(int recordId) 
 {
 	boost::mutex::scoped_lock sl(_mutex);
@@ -148,10 +120,6 @@ int ClientsDataBase::DeleteRecord(int recordId)
 	}
 }
 
-///
-/// Modyfikuje rekord w bazie danych.
-/// param[in] record Record ze zmodyfikowanymi danymi.
-/// @return ???
 int ClientsDataBase::ModifyRecord(const ClientRecord & record) 
 {
 	boost::mutex::scoped_lock sl(_mutex);
@@ -175,33 +143,21 @@ int ClientsDataBase::ModifyRecord(const ClientRecord & record)
 	}
 }
 
-
-///
-/// Zamyka baze danych.
-/// @return ???
 int ClientsDataBase::Close()
 {
 	return 1;
 }
 
-///
-/// Inicjalizuje baze danych.
-/// @return ???
 int ClientsDataBase::Initialize()
 {
 	return 1;
 }
 
-///
-/// Zwraca liczbe elementow.
-/// @return Liczba elementow w kolekcji.
 int ClientsDataBase::Size()
 {
 	return this->_records.size();
 }
 
-///
-/// Usuwa wszystkie rekordy z bazy.
 void ClientsDataBase::Clear()
 {
 	boost::mutex::scoped_lock sl(_mutex);
@@ -209,32 +165,6 @@ void ClientsDataBase::Clear()
 	this->_records.clear();
 }
 
-///
-/// Znajdz rekord klienta.
-/// @param[in] address Adres do wyszukania rekordu.
-/// @return ID wyszukanego rekordu. -1 gdy nie znajdzie.
-//int ClientsDataBase::Find(const struct DomainData::Address & address)
-//{
-//	boost::mutex::scoped_lock sl(_mutex);
-//
-//	LOG4CXX_DEBUG(_logger, "Szukanie po strukturze Address. Address.name: " << address.name.in() << " Address.localization: " << address.localization.in() );
-//
-//	if ( this->_records.size() != 0 )
-//		for(std::map<int, ClientRecord>::iterator i = this->_records.begin(); i != this->_records.end(); i++)
-//			if ( strcmp((*i).second.GetAddress().name.in(), address.name.in()) == 0 )
-//			{
-//				LOG4CXX_DEBUG(_logger, "Znaleziono rekord!");
-//				return (*i).second.GetRecordId();
-//			}
-//
-//	LOG4CXX_DEBUG(_logger, "Nie znaleziono rekordu!");
-//	return -1;
-//}
-
-///
-/// Znajdz rekord klienta po uzytkowniku
-/// @param[in] user Uzytkownik do wyszukania rekordu.
-/// @return ID wyszukanego rekordu. -1 gdy nie znajdzie.
 int ClientsDataBase::Find(const struct DomainData::User & user)
 {
 	boost::mutex::scoped_lock sl(_mutex);
@@ -253,9 +183,6 @@ int ClientsDataBase::Find(const struct DomainData::User & user)
 	return -1;
 }
 
-///
-/// Znajduje aktywnego klienta w bazie danych.
-/// @return Id rekordu aktywnego klienta. -1 gdy nie znajdzie.
 int ClientsDataBase::FindActiveClient()
 {
 	boost::mutex::scoped_lock sl(_mutex);
@@ -274,9 +201,6 @@ int ClientsDataBase::FindActiveClient()
 	return -1;
 }
 
-///
-/// Znajduje aktywnego klienta na danym serwerze.
-/// @return Id rekordu aktywnego klienta. -1 gdy nie znajdzie.
 int ClientsDataBase::FindActiveClientOnServer(int serverId)
 {
 	boost::mutex::scoped_lock sl(_mutex);
@@ -295,11 +219,6 @@ int ClientsDataBase::FindActiveClientOnServer(int serverId)
 	return -1;
 }
 
-///
-/// Przeciazony operator wypisu bazy danych do strumienia.
-/// @param[in] os Strumien wyjsciowy.
-/// @param[in] db Baza danych.
-/// @return Strumien wyjsciowy.
 std::ostream & operator<<(std::ostream & os, const ClientsDataBase & db)
 {
 	int k = 1;

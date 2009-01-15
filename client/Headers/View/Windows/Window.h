@@ -24,6 +24,12 @@
 #define ER_NO_COMMAND		"!@# Brak takiej komendy!"
 #define ER_NO_PARAM			"!@# Brak takiego parametru!"
 
+#ifndef WIN32
+#define CLSCMD "clear"
+#else
+#define CLSCMD "CLS"
+#endif
+
 ///
 /// Redefinicja klasy.
 ///

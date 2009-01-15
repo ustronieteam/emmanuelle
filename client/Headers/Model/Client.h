@@ -13,7 +13,6 @@
 #include <fstream>
 #include "ClientsData.h"
 #include "ContactRecord.h"
-#include "FilePackage.h"
 
 #include "CorbaConnector.h"
 

@@ -1,19 +1,11 @@
 #include "ContactWindow.h"
 
-///
-/// Konstruktor.
-/// @param[in] controller Kontroler.
-///
 ContactWindow::ContactWindow(Controller * controller) 
 	: Window(controller, WIN_CONTACT)
 {
 
 }
 
-///
-/// Renderowanie okienka.
-/// @param[in] o Strumien do ktorego renderujemy obraz.
-///
 void ContactWindow::Render(std::ostream & out)
 {
 	std::vector<ContactRecord> contacts = this->GetController()->GetContactsList();
@@ -41,7 +33,7 @@ void ContactWindow::Render(std::ostream & out)
 				out << WIN_CONTACT_CON_DI;
 
 			// Nazwa oraz numer.
-			out << ' ' << (*i).userDesc.name << " (" << (*i).userDesc.number << ")\n";
+			out << ' ' << (*i).userDesc.name.in() << '\n';  // << " (" << (*i).userDesc.number << ")\n";
 		}
 	}
 
@@ -56,10 +48,6 @@ void ContactWindow::Render(std::ostream & out)
 	out << PROMPT;
 }
 
-///
-/// Komenda przekazana do okna.
-/// @param[in] cmd Komenda.
-///
 void ContactWindow::Command(std::string & cmd)
 {
 	std::string mcmd;
@@ -68,10 +56,10 @@ void ContactWindow::Command(std::string & cmd)
 	if ( !cmd.compare("add") )
 	{
 		std::string uname;
-		int	unumber;
+		int	unumber = 0;
 
 		std::cin >> uname;
-		std::cin >> unumber;
+		//std::cin >> unumber;
 
 		/* Sprawdzanie poprawnosci. */
 		if ( std::cin.fail() )

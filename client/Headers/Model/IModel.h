@@ -2,7 +2,6 @@
 #define IMODEL_H
 
 #include "DataObserver.h"
-#include "FilePackage.h"
 #include "IRemoteObserver.h"
 #include "DomainData.h"
 #include "ContactRecord.h"

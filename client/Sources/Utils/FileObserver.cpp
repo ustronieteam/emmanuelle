@@ -1,8 +1,5 @@
 #include "FileObserver.h"
 
-///
-/// Konstruktor.
-///
 FileObserver::FileObserver(IObserverView * view) 
 {
     // Inicjalizacja loggera.
@@ -12,17 +9,11 @@ FileObserver::FileObserver(IObserverView * view)
 	_view = view;
 }
 
-///
-/// Destruktor.
-///
 FileObserver::~FileObserver() 
 {
 
 }
 
-///
-/// Metoda wywolujaca.
-///
 int FileObserver::Refresh(RemoteObserverData objectData)
 {
 	LOG4CXX_DEBUG(_logger, "Uruchomiono obserwatora plikow. Typ: " << objectData.GetObserverType() );

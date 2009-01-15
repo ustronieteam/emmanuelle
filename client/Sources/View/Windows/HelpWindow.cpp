@@ -1,18 +1,10 @@
 #include "HelpWindow.h"
 
-///
-/// Konstruktor.
-/// @param[in] controller Kontroler.
-///
 HelpWindow::HelpWindow(Controller * controller) : Window(controller, WIN_HELP)
 {
 
 }
 
-///
-/// Renderowanie okienka z pomoca
-/// @param[in] o Strumien do ktorego renderujemy obraz.
-///
 void HelpWindow::Render(std::ostream & out)
 {
 	out << HEADLINE
@@ -39,10 +31,6 @@ void HelpWindow::Render(std::ostream & out)
 		out << PROMPT;
 }
 
-///
-/// Komenda przekazana do okna.
-/// @param[in] cmd Komenda.
-///
 void HelpWindow::Command(std::string & cmd)
 {
 	this->SetMsg(ER_NO_COMMAND);

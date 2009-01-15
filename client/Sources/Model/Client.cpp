@@ -246,7 +246,7 @@ int Client::Disconnect(DomainData::User & usr)
 		// TODO: dodac do wywolania metody connect usera
 		connectedServerInstance->Disconnect(usr);
 	}
-	catch(CORBA::SystemException & e)
+	catch(CORBA::SystemException &)
 	{
 		LOG4CXX_DEBUG(logger, "Nie udalo sie rozlaczyc. Wyjatek podczas wywolywania metody zdalnej");
 		return -1;
@@ -276,7 +276,7 @@ int Client::SendMessageToClient(DomainData::User sender, DomainData::User receiv
 		connectedServerInstance->SendMessage(sender, receiver, msg);
 		LOG4CXX_DEBUG(logger, "Koniec Wywolania sendMessage w Cliencie");
 	}
-	catch(CORBA::SystemException & e)
+	catch(CORBA::SystemException &)
 	{
 		LOG4CXX_ERROR(logger, "wyjatek ze zdalnej instancji serwera podczas wysylania wiadomosci");
 		return -1;

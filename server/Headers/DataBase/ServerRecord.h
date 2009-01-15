@@ -15,36 +15,43 @@ class ServerRecord : public Record
 
 		///
 		/// Namiastka serwera.
+		///
 		IServerServer_var _serverRemoteInstance;
 
     public:
 
         ///
 		/// Konstruktor bezparametrowy.
+		///
         ServerRecord();
 
 		///
 		/// Konstruktor kopiujacy.
 		/// @param[in] arg Record do skopiowania.
+		///
         ServerRecord(const ServerRecord & arg);
 
         ///
 		/// Operator przypisania.
 		/// @param[in] arg Record ktory chcemy przypisac.
+		///
         ServerRecord & operator =(const ServerRecord & arg);
 
         ///
 		/// Destruktor.
+		///
         virtual ~ServerRecord();
 
 		///
 		/// Pobiera namiastke serwera.
 		/// @return Namiastka servera.
+		///
 		const IServerServer_var & GetServerRemoteInstance() const;
 
 		///
 		/// Ustawia namiastke servera.
 		/// @param[in] serverRemoteInstance Namiastka servera.
+		///
 		void SetServerRemoteInstance(const IServerServer_var & serverRemoteInstance);
 };
 

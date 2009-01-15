@@ -1,7 +1,5 @@
 #include "ServerDataBase.h"
 
-///
-/// Konstruktor bezparametrowy.
 ServerDataBase::ServerDataBase() 
 {
 	// Inicjalizacja loggera.
@@ -9,17 +7,11 @@ ServerDataBase::ServerDataBase()
 	_logger->setLevel(log4cxx::Level::getAll());
 }
 
-///
-/// Konstruktor kopiujacy.
-/// @param[in] arg Baza danych do skopiowania.
 ServerDataBase::ServerDataBase(const ServerDataBase & arg) 
 {
 	this->_records = arg._records;
 }
 
-///
-/// Operator przypisania.
-/// param[in] arg Baza danych ktora chcemy przypisac.
 ServerDataBase & ServerDataBase::operator =(const ServerDataBase & arg) 
 {
 	if ( this != &arg )
@@ -30,9 +22,6 @@ ServerDataBase & ServerDataBase::operator =(const ServerDataBase & arg)
 	return *this;
 }
 
-///
-/// Zwraca baze danych (singleton)
-/// @return Baza danych
 ServerDataBase * ServerDataBase::GetInstance()
 {
 	static ServerDataBase * _db = new ServerDataBase();
@@ -40,18 +29,11 @@ ServerDataBase * ServerDataBase::GetInstance()
 	return _db;
 }
 
-///
-/// Destruktor.
 ServerDataBase::~ServerDataBase() 
 {
 
 }
 
-
-///
-/// Zwraca rekord po podaniu rekord id.
-/// @param[in] recordId Identyfikator rekordu.
-/// @return Rekord o podanym idetyfikatorze.
 const ServerRecord & ServerDataBase::GetRecord(int recordId) 
 {
 	boost::mutex::scoped_lock sl(_mutex);
@@ -72,9 +54,6 @@ const ServerRecord & ServerDataBase::GetRecord(int recordId)
 	}
 }
 
-///
-/// Zwraca wszystkie rekordy z bazy danych.
-/// @return Wektor ze wszystkimi rekordami.
 std::vector<ServerRecord> ServerDataBase::GetAllRecords() 
 {
 	boost::mutex::scoped_lock sl(_mutex);
@@ -89,10 +68,6 @@ std::vector<ServerRecord> ServerDataBase::GetAllRecords()
 	return v;
 }
 
-///
-/// Dodaje rekord do bazy danych.
-/// param[in] record Record do wstawienia.
-/// @return ???
 int ServerDataBase::InsertRecord(const ServerRecord & record) 
 {
 	boost::mutex::scoped_lock sl(_mutex);
@@ -113,10 +88,6 @@ int ServerDataBase::InsertRecord(const ServerRecord & record)
 	}
 }
 
-///
-/// Usuwa rekord o podanym id z bazy danych.
-/// param[in] recordId ID rekordu ktory ma byc usuniety.
-/// @return ???
 int ServerDataBase::DeleteRecord(int recordId) 
 {
 	boost::mutex::scoped_lock sl(_mutex);
@@ -140,10 +111,6 @@ int ServerDataBase::DeleteRecord(int recordId)
 	}
 }
 
-///
-/// Modyfikuje rekord w bazie danych.
-/// param[in] record Record ze zmodyfikowanymi danymi.
-/// @return ???
 int ServerDataBase::ModifyRecord(const ServerRecord & record) 
 {
 	boost::mutex::scoped_lock sl(_mutex);
@@ -167,32 +134,21 @@ int ServerDataBase::ModifyRecord(const ServerRecord & record)
 	}
 }
 
-///
-/// Zamyka baze danych.
-/// @return ???
 int ServerDataBase::Close()
 {
 	return 1;
 }
 
-///
-/// Inicjalizuje baze danych.
-/// @return ???
 int ServerDataBase::Initialize()
 {
 	return 1;
 }
 
-///
-/// Zwraca liczbe elementow.
-/// @return Liczba elementow w kolekcji.
 int ServerDataBase::Size()
 {
 	return this->_records.size();
 }
 
-///
-/// Usuwa wszystkie rekordy z bazy.
 void ServerDataBase::Clear()
 {
 	boost::mutex::scoped_lock sl(_mutex);
@@ -200,10 +156,6 @@ void ServerDataBase::Clear()
 	this->_records.clear();
 }
 
-///
-/// Znajdz rekord servera.
-/// @param[in] address Adres do wyszukania rekordu.
-/// @return ID wyszukanego rekordu.
 int ServerDataBase::Find(const struct DomainData::Address & address)
 {
 	boost::mutex::scoped_lock sl(_mutex);
@@ -222,11 +174,6 @@ int ServerDataBase::Find(const struct DomainData::Address & address)
 	return -1;
 }
 
-///
-/// Przeciazony operator wypisu bazy danych do strumienia.
-/// @param[in] os Strumien wyjsciowy.
-/// @param[in] db Baza danych.
-/// @return Strumien wyjsciowy.
 std::ostream & operator<<(std::ostream & os, const ServerDataBase & db)
 {
 	int k = 1;
