@@ -13,8 +13,6 @@ int Aplication::Run()
 
 	this->model->SetServerAddress(address.c_str());
 
-	// TODO: tu cos trzeba dodac ... jakies wywolanie ktore nie zakonczy aplikacji ... nie wiem - chyba jakas metode na widoku
-
 	// Uruchomienie widoku.
 	// Tutaj sie cala aplikacja blokuje, wyjscie z tej funkcji nastepuje 
 	// wtedy kiedy uzytkownik chce zakonczyc prace.

@@ -1,8 +1,5 @@
 #ifndef IREMOTEOBJECTS_H
 #define IREMOTEOBJECTS_H
-//Begin section for file IRemoteObjects.h
-//TODO: Add definitions that you want preserved
-//End section for file IRemoteObjects.h
 
 #include "RemoteObserverData.h"
 #include "IRemoteObserver.h"
@@ -13,16 +10,18 @@
 #include <log4cxx/logger.h>
 #include <log4cxx/level.h>
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+///
+/// @author	Mateusz Ko³odziejczyk
+/// @date	09.01.2009
+///
+/// @brief	Klasa sytyczna posiadajaca metody korzystajace z CORBY i wykorzystywane przy polaczaniu
+///
 class IRemoteObjects
 {
 
-    //Begin section for IRemoteObjects
-    //TODO: Add attributes that you want preserved
-    //End section for IRemoteObjects
-
     private:
 
+		/// lista obserwatorow
 		std::vector<IRemoteObserver *> RemoteObserversList;
 
 		// logger
@@ -30,24 +29,40 @@ class IRemoteObjects
 
     public:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+		///
+		/// konstruktor
+		///
         IRemoteObjects()
 		{
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("IRemoteObjects"));
 			logger->setLevel(log4cxx::Level::getAll());
 		}
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual ~IRemoteObjects()
+        ///
+		/// destruktor
+		///
+		virtual ~IRemoteObjects()
 		{}
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+		///
+		/// @param [in]	observerData	dane dla obserwatora
+		///
+		/// wywoluje metode Refresh na kazdym obserwatorze z kolekji
+		///
         virtual int Notify(RemoteObserverData observerData);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
-        virtual int UnregisterObserv(IRemoteObserver * observer);
+        ///
+		/// @param [in] observer	obiekt obserwatora
+		///
+		/// wyrejestrowuje danego obserwatora
+		///
+		virtual int UnregisterObserv(IRemoteObserver * observer);
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+        ///
+		/// @param [in] observer	obiekt obserwatora
+		///
+		/// rejestruje obserwatora observer
+		///
         virtual int RegisterObserv(IRemoteObserver * observer);
 
 };  //end class IRemoteObjects

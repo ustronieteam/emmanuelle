@@ -15,7 +15,6 @@
 #include <log4cxx/level.h>
 
 
-
 const std::string NADDRESS = "server_address";
 
 ///

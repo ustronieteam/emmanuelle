@@ -49,7 +49,6 @@ class IRemoteObserverObject
 		///
         virtual ~IRemoteObserverObject()
 		{
-
 		}
 
 		///

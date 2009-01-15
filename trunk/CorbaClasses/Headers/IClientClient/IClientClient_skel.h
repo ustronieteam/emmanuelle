@@ -12,6 +12,13 @@
 
 // Version: 4.3.3
 
+///
+/// @author	Mateusz Ko³odziejczyk
+/// @date	06.01.2009
+///
+/// @brief	Klasa wygenerowana z pliku IDL IClientClient.idl
+///
+
 #ifndef ___IClientClient_skel_h__
 #define ___IClientClient_skel_h__
 

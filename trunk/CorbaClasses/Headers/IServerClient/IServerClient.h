@@ -12,6 +12,14 @@
 
 // Version: 4.3.3
 
+///
+/// @author	Mateusz Ko³odziejczyk
+/// @date	06.01.2009
+///
+/// @brief	Klasa wygenerowana z pliku IDL IServerClient.idl
+///
+
+
 #ifndef ___IServerClient_h__
 #define ___IServerClient_h__
 
