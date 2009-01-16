@@ -5,7 +5,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "server", "server\server.vcp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "client\client.vcproj", "{CCD0939F-12D8-4733-9DF4-8774984A438B}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unitTestServer", "unitTestServer\unitTestServer.vcproj", "{D29BECB5-A62C-409E-B94B-9D013569E0E0}"
+EndProject
 Global
+	GlobalSection(SubversionScc) = preSolution
+		Svn-Managed = True
+		Manager = AnkhSVN - Subversion Support for Visual Studio
+	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
 		Release|Win32 = Release|Win32
@@ -19,15 +25,15 @@ Global
 		{CCD0939F-12D8-4733-9DF4-8774984A438B}.Debug|Win32.Build.0 = Debug|Win32
 		{CCD0939F-12D8-4733-9DF4-8774984A438B}.Release|Win32.ActiveCfg = Release|Win32
 		{CCD0939F-12D8-4733-9DF4-8774984A438B}.Release|Win32.Build.0 = Release|Win32
+		{D29BECB5-A62C-409E-B94B-9D013569E0E0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D29BECB5-A62C-409E-B94B-9D013569E0E0}.Debug|Win32.Build.0 = Debug|Win32
+		{D29BECB5-A62C-409E-B94B-9D013569E0E0}.Release|Win32.ActiveCfg = Release|Win32
+		{D29BECB5-A62C-409E-B94B-9D013569E0E0}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		VisualSVNWorkingCopyRoot = .
-	EndGlobalSection
-	GlobalSection(SubversionScc) = preSolution
-		Svn-Managed = True
-		Manager = AnkhSVN - Subversion Support for Visual Studio
 	EndGlobalSection
 EndGlobal
