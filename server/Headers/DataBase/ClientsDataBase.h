@@ -3,6 +3,7 @@
 
 #include "ClientRecord.h"
 
+#include <iostream>
 #include <vector>
 #include <map>
 

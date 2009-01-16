@@ -31,33 +31,41 @@ class Client : public CorbaConnector
 		static const std::string configFileName;
 		///
 		///Namiastka serwera
+		///
 		IServerClient_var connectedServerInstance; //Namiastka serwera do którego jestesmy pod³¹czeni
 		CORBA::ORB_var orb;
 
 		///
 		///Adres zdalnego serwera do ktorego podlaczamy sie
+		///
 		DomainData::Address serverAddress;
 
 		///
 		///port
+		///
 		int port;
 		///
 		///tryb polaczenia (active/passive)
+		///
 		DomainData::Mode mode;
 		///
-		///nazwa klienta
+		///nazwa klienta/
+		///
 		std::string clientName;
 
 		///
 		///numer klienta
+		///
 		long clientNumber;
 
 		// logger
 		log4cxx::LoggerPtr logger;
 
-		//
 		void readServerAddress();
-		//Pobiera zdalna instancje
+		
+		///
+		///Pobiera zdalna instancje
+		///
 		bool getRemoteServerInstance();
 		IClientClient_var getRemoteClientInstance(CORBA::ORB_var & orbClient, DomainData::Address clAddr);
 		//Laczy sie z serverem(pobiera instancje)
@@ -82,16 +90,19 @@ class Client : public CorbaConnector
 
 		///
 		///gettery i settery dla nazwy serwera do ktorego sie podlaczamy
+		///
 		void setServerAddress(const DomainData::Address & a) {serverAddress = a;}//TODO dokonczyc
 		const DomainData::Address & getServerAddress() const{ return serverAddress;}
 
 		///
 		///gettery i settery dla nazwy lokalnego klienta
+		///
 		void setClientName(const std::string & n){clientName = n;}
 		const std::string & getClientName() const {return clientName;}
 
 		///
 		///gettery i settery dla portu
+		///
 		void setPortNumber(const int & p){port = p;}
 		const int & getPortNumber()const {return port;}
 
@@ -103,8 +114,6 @@ class Client : public CorbaConnector
 			connectToClientClient(address, orb, client); 
 			LOG4CXX_DEBUG(logger, "...koniec testu na kliencie.");
 		}
-
-
 
 };  //end class Client
 

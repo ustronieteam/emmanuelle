@@ -33,12 +33,13 @@ void PassMessageObserver::set_clientsDataBase(boost::shared_ptr<ClientsDataBase>
 {
 	this->clientsDataBase = clientsDataBase;
 }
+///
 ///@author Marian Szczykulski
 ///@date 30-12-2008
 ///@note Obserwator rzadania utworzenia pipe-u od klienta
 ///@brief Glowna funkcja obserwatora, odpowiedzialna za logike przetwarzania.
 ///@param[in] Dane obserwatora potrzebne do podejmowania decyzji podczas przetwarzania
-///@return ??
+///
 int PassMessageObserver::Refresh(RemoteObserverData observerData)
 {
 	if(observerData.get_eventType()!=SERVER_PASS_MESSAGE)
@@ -49,11 +50,13 @@ int PassMessageObserver::Refresh(RemoteObserverData observerData)
 	boost::thread threadPassMessage(threadLogic);
 	return 0;
 }
+///
 ///@author Marian Szczykulski
 ///@date 30-12-2008
 ///@note Logika watku
 ///@brief Zawiera logike przetwarzania ktora moze byc uruchomiona w odzielnym watku
 ///@brief Wiadomosc jest dostarczana do klienta
+///
 int PassMessageObserverLogicRunnable::operator()()
 {
 	LOG4CXX_INFO(logger, "Przetwarzanie logiki PassMessageObserver");

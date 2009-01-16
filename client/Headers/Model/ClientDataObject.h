@@ -1,8 +1,5 @@
 #ifndef CLIENTDATAOBJECT_H
 #define CLIENTDATAOBJECT_H
-//Begin section for file ClientDataObject.h
-//TODO: Add definitions that you want preserved
-//End section for file ClientDataObject.h
 
 #include "DataObserverData.h"
 #include "DataObserver.h"
@@ -12,10 +9,12 @@
 
 #include <log4cxx/logger.h>
 #include <log4cxx/level.h>
+
 ///
 ///@author Marian Szczykulski
 ///@date 2009-01-13
 ///@brief Objekt obserwowany(Status)
+///
 class ClientDataObject
 {
 

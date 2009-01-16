@@ -4,7 +4,7 @@
 //End section for file RemoteClientSendMessageObserver.cpp
 
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 RemoteClientSendMessageObserver::RemoteClientSendMessageObserver() 
 {
     this->clientsDataBase  = boost::shared_ptr<ClientsDataBase>();
@@ -15,18 +15,18 @@ RemoteClientSendMessageObserver::RemoteClientSendMessageObserver(boost::shared_p
 	this->clientsDataBase = clientsDB;
     this->serverDataBase  = servDB;
 }
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 RemoteClientSendMessageObserver::RemoteClientSendMessageObserver(RemoteClientSendMessageObserver & arg) 
 {
-    //TODO Auto-generated method stub
+    
     this->clientsDataBase = arg.clientsDataBase;
     this->serverDataBase = arg.serverDataBase;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 RemoteClientSendMessageObserver & RemoteClientSendMessageObserver::operator =(const RemoteClientSendMessageObserver & arg) 
 {
-    //TODO Auto-generated method stub
+    
     if (this != &arg)
     {
         this->clientsDataBase = arg.clientsDataBase;
@@ -35,33 +35,33 @@ RemoteClientSendMessageObserver & RemoteClientSendMessageObserver::operator =(co
 	return *this;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 RemoteClientSendMessageObserver::~RemoteClientSendMessageObserver() 
 {
-    //TODO Auto-generated method stub
+    
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 boost::shared_ptr<ClientsDataBase> & RemoteClientSendMessageObserver::get_clientsDataBase() 
 {
-    //TODO Auto-generated method stub
+    
     return clientsDataBase;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 void RemoteClientSendMessageObserver::set_clientsDataBase(boost::shared_ptr<ClientsDataBase> & clientsDataBase) 
 {
 	this->clientsDataBase = clientsDataBase;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 boost::shared_ptr<ServerDataBase> & RemoteClientSendMessageObserver::get_serverDataBase() 
 {
-    //TODO Auto-generated method stub
+    
     return serverDataBase;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 void RemoteClientSendMessageObserver::set_serverDataBase(boost::shared_ptr<ServerDataBase> & serverDataBase) 
 {
 	this->serverDataBase = serverDataBase;

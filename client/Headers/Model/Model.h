@@ -82,7 +82,7 @@ class Model : public IModel
 			
 			//logger
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("Model"));
-			logger->setLevel(log4cxx::Level::getAll());
+			logger->setLevel(LOGLEVEL);
 
 			client = boost::shared_ptr<Client>(new Client(serverAddress) );
 			clientsData = boost::shared_ptr<ClientsData>(new ClientsData(true));
@@ -259,7 +259,7 @@ class Model : public IModel
 		///
 		/// Zwraca wlasny rekord z danymi
 		///
-		virtual const long & GetOwnNumber();
+		virtual const long GetOwnNumber();
 
 		///
 		/// @return		wlasny rekord z danymi

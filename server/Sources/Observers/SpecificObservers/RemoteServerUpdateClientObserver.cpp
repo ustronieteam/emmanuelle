@@ -1,8 +1,4 @@
 #include "Observers/RemoteServerUpdateClientObserver.h"
-//Begin section for file RemoteServerUpdateClientObserver.cpp
-//TODO: Add definitions that you want preserved
-//End section for file RemoteServerUpdateClientObserver.cpp
-
 
 RemoteServerUpdateClientObserver::RemoteServerUpdateClientObserver() 
 {
@@ -11,22 +7,22 @@ RemoteServerUpdateClientObserver::RemoteServerUpdateClientObserver()
 }
 RemoteServerUpdateClientObserver::RemoteServerUpdateClientObserver(boost::shared_ptr<ServerDataBase> & servDB, boost::shared_ptr<ClientsDataBase> & clientsDB) 
 {
-    //TODO Auto-generated method stub
+    
 	this->clientsDataBase = clientsDB;
     this->serverDataBase = servDB;
 }
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 RemoteServerUpdateClientObserver::RemoteServerUpdateClientObserver(RemoteServerUpdateClientObserver & arg) 
 {
-    //TODO Auto-generated method stub
+    
     this->clientsDataBase = arg.clientsDataBase;
     this->serverDataBase = arg.serverDataBase;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 RemoteServerUpdateClientObserver & RemoteServerUpdateClientObserver::operator =(const RemoteServerUpdateClientObserver & arg) 
 {
-    //TODO Auto-generated method stub
+    
     if (this != &arg)
     {
         this->clientsDataBase = arg.clientsDataBase;
@@ -35,40 +31,41 @@ RemoteServerUpdateClientObserver & RemoteServerUpdateClientObserver::operator =(
 	return *this;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 RemoteServerUpdateClientObserver::~RemoteServerUpdateClientObserver() 
 {
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 boost::shared_ptr<ClientsDataBase> & RemoteServerUpdateClientObserver::get_clientsDataBase() 
 {
     return clientsDataBase;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 void RemoteServerUpdateClientObserver::set_clientsDataBase(boost::shared_ptr<ClientsDataBase> & clientsDataBase) 
 {
 	this->clientsDataBase = clientsDataBase;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 boost::shared_ptr<ServerDataBase> & RemoteServerUpdateClientObserver::get_serverDataBase() 
 {
     return serverDataBase;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 void RemoteServerUpdateClientObserver::set_serverDataBase(boost::shared_ptr<ServerDataBase> & serverDataBase) 
 {
 	this->serverDataBase = serverDataBase;
 }
-//@author Marian Szczykulski
-//@date 29-12-2008
-//@note Obserwator aktualizacji danych klienta
-//@brief Glowna funkcja obserwatora, odpowiedzialna za logike przetwarzania.
-//@param[in] Dane obserwatora potrzebne do podejmowania decyzji podczas przetwarzania
-//@return ??
+///
+///@author Marian Szczykulski
+///@date 29-12-2008
+///@note Obserwator aktualizacji danych klienta
+///@brief Glowna funkcja obserwatora, odpowiedzialna za logike przetwarzania.
+///@param[in] Dane obserwatora potrzebne do podejmowania decyzji podczas przetwarzania
+///
 int RemoteServerUpdateClientObserver::Refresh(RemoteObserverData observerData)
 {
 	if(observerData.get_eventType()!=SERVER_UPDATE_CLIENT)
@@ -80,10 +77,13 @@ int RemoteServerUpdateClientObserver::Refresh(RemoteObserverData observerData)
 
 	return 0;
 }
-//@author Marian Szczykulski
-//@date 29-12-2008
-//@note Logika watku
-//@brief Zawiera logike przetwarzania ktora moze byc uruchomiona w odzielnym watku
+
+///
+///@author Marian Szczykulski
+///@date 29-12-2008
+///@note Logika watku
+///@brief Zawiera logike przetwarzania ktora moze byc uruchomiona w odzielnym watku
+///
 int RemoteServerUpdateClientObserverLogicRunnable::operator()()
 {
 	LOG4CXX_INFO(logger, "Przetwarzanie logiki RemoteServerUpdateClientObserver");

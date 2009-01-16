@@ -12,7 +12,10 @@
 
 #include <log4cxx/basicconfigurator.h>
 #include <log4cxx/propertyconfigurator.h>
-#include <log4cxx/file.h>
+
+#ifdef WIN32
+	#include <log4cxx/file.h>
+#endif
 
 using namespace std;
 
@@ -24,11 +27,15 @@ int main(int argc, char * argv[])
 		return 1;
 	}
 
+#ifdef WIN32
 	log4cxx::File confFile("clientLogger.properties");
 	log4cxx::PropertyConfigurator::configure(confFile);
+#else
+	log4cxx::PropertyConfigurator::configure("clientLogger.properties");
+#endif
 
 	log4cxx::LoggerPtr logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("MAIN"));
-	logger->setLevel(log4cxx::Level::getAll());
+	logger->setLevel(LOGLEVEL);
 
 	if(Aplication::GetInstance(argv[1])->Run())
 	{

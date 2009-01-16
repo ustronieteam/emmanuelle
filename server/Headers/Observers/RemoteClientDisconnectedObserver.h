@@ -24,9 +24,11 @@
 class ClientsDataBase;
 class ServerDataBase;
 
+///
 ///@author Marian Szczykulski
 ///@date 2009-01-09
 ///@brief Klasa obserwatora obslugujacego logike rozlaczania sie klienta
+///
 class RemoteClientDisconnectedObserver : public IRemoteObserver
 {
 
@@ -56,9 +58,11 @@ class RemoteClientDisconnectedObserver : public IRemoteObserver
 
 };  //end class RemoteClientDisconnectedObserver
 
+///
 ///@author Marian Szczykulski
 ///@brief Funktor odpowiedzialny za logike przetwarzania. 
 ///@brief Potrzebny do wywo³ania w odzielnym watku
+///
 class RemoteClientDisconnectedObserverLogicRunnable
 {
 	private: 
@@ -73,7 +77,7 @@ class RemoteClientDisconnectedObserverLogicRunnable
 			clientsDataBase = cDB;
 			observerData = oD;
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("RemoteClientDisconnectedObserverLogicRunnable"));
-			logger->setLevel(log4cxx::Level::getAll());
+			logger->setLevel(LOGLEVEL);
 		}
 		int operator()();
 

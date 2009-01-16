@@ -4,7 +4,7 @@
 ClientDataObject::ClientDataObject() 
 {
     logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("ClientDataObject"));
-	logger->setLevel(log4cxx::Level::getAll());
+	logger->setLevel(LOGLEVEL);
 }
 
 ClientDataObject::~ClientDataObject() 

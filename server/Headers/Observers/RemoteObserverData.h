@@ -5,9 +5,11 @@
 #include "EventType.h"
 #include "DomainData.h"
 
+///
 ///@author Marian Szczykulski
 ///@date 2009-01-09
 ///@brief Klasa danych obserwatora
+///
 class RemoteObserverData
 {
     private:

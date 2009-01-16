@@ -24,11 +24,13 @@
 class ClientsDataBase;
 class ServerDataBase;
 
+///
 ///@author Marian Szczykulski
 ///@date 2009-01-09
 ///@brief Klasa obserwatora obslugujacego logike podczas podlaczania sie nowego klienta
 ///    1) Znajdz klienta
 ///    2) Powiadom wszystkie serwery o zmianie
+///
 class RemoteClientConnectedObserver : public  IRemoteObserver
 {
 
@@ -56,9 +58,12 @@ class RemoteClientConnectedObserver : public  IRemoteObserver
 
 };  //end class RemoteClientConnectedObserver
 
+///
 ///@author Marian Szczykulski
 ///@brief Funktor odpowiedzialny za logike przetwarzania. 
+///
 ///@brief Potrzebny do wywo³ania w odzielnym watku
+///
 class RemoteClientConnectedObserverLogicRunnable
 {
 	private: 
@@ -73,7 +78,7 @@ class RemoteClientConnectedObserverLogicRunnable
 			clientsDataBase = cDB;
 			observerData = oD;
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("RemoteClientConnectedObserverLogicRunnable"));
-			logger->setLevel(log4cxx::Level::getAll());
+			logger->setLevel(LOGLEVEL);
 		}
 		int operator()();
 

@@ -34,10 +34,11 @@ class CorbaConnector
 		///
 		static char * GetRemotedAddress(const char * port)
 		{
-			char* orb_options[] = { "-OAport", const_cast<char *>(port) };
+			const char * opt = "-OAport";
+			const char* orb_options[] = { opt , port };
 			int optc = sizeof(orb_options)/sizeof(char *);
 
-			CORBA::ORB_var orb = CORBA::ORB_init(optc, orb_options);
+			CORBA::ORB_var orb = CORBA::ORB_init(optc, const_cast<char **>(orb_options));
 
 			CORBA::Object_var baseCurrent = orb->resolve_initial_references("OCICurrent");
 			OCI::Current_var current = OCI::Current::_narrow(baseCurrent);
@@ -46,7 +47,7 @@ class CorbaConnector
 			OCI::IIOP::TransportInfo_var iiopInfo = OCI::IIOP::TransportInfo::_narrow(info);
 
 			if(CORBA::is_nil(iiopInfo))
-				return "";
+				return NULL;
 
 			char * str = iiopInfo->remote_addr();
 

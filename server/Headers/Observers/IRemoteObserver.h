@@ -3,10 +3,11 @@
 
 #include "RemoteObserverData.h"
 
-
+///
 ///@author Marian Szczykulski
 ///@date 2009-01-09
 ///@brief Abstrakcyjna klasa obserwatora
+///
 class IRemoteObserver
 {
 

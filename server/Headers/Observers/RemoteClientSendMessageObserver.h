@@ -24,12 +24,14 @@
 class ClientsDataBase;
 class ServerDataBase;
 
+///
 ///@author Marian Szczykulski
 ///@date 2009-01-09
 ///@brief Klasa obserwatora obslugujacego logike wysylania wiadomoœci przez klienta
 ///    1) Znajdz odpowiedniego klienta (adresata)
 ///    2) Jezeli jest do nas pod³¹czony przekaz mu wiadomoœæ
 ///    3) Je¿eli nie jest to wykonaj PassMessage na serwerze do którego jest pod³¹czony
+///
 class RemoteClientSendMessageObserver : public  IRemoteObserver
 {
     private:
@@ -57,9 +59,11 @@ class RemoteClientSendMessageObserver : public  IRemoteObserver
 
 };  //end class RemoteClientSendMessageObserver
 
+///
 ///@author Marian Szczykulski
 ///@brief Funktor odpowiedzialny za logike przetwarzania. 
 ///@brief Potrzebny do wywo³ania w odzielnym watku
+///
 class RemoteClientSendMessageObserverLogicRunnable
 {
 	private: 
@@ -74,7 +78,7 @@ class RemoteClientSendMessageObserverLogicRunnable
 			clientsDataBase = cDB;
 			observerData = oD;
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("RemoteClientSendMessageObserverLogicRunnable"));
-			logger->setLevel(log4cxx::Level::getAll());
+			logger->setLevel(LOGLEVEL);
 		}
 		int operator()();
 

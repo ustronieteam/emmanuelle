@@ -23,10 +23,11 @@
 class ClientsDataBase;
 class ServerDataBase;
 
-
+///
 ///@author Marian Szczykulski
 ///@date 2009-01-09
 ///@brief Klasa obserwatora obslugujacego logike obslugi rzadania klienta o utworzenie pipe-u
+///
 class RemoteClientCreatePipeObserver : public  IRemoteObserver
 {
     private:
@@ -51,10 +52,11 @@ class RemoteClientCreatePipeObserver : public  IRemoteObserver
 
 };  //end class RemoteClientCreatePipeObserver
 
-
+///
 ///@author Marian Szczykulski
 ///@brief Funktor odpowiedzialny za logike przetwarzania. 
 ///@brief Potrzebny do wywo³ania w odzielnym watku
+///
 class RemoteClientCreatePipeObserverLogicRunnable
 {
 	private: 
@@ -69,7 +71,7 @@ class RemoteClientCreatePipeObserverLogicRunnable
 			clientsDataBase = cDB;
 			observerData = oD;
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("RemoteClientCreatePipeObserverLogicRunnable"));
-			logger->setLevel(log4cxx::Level::getAll());
+			logger->setLevel(LOGLEVEL);
 		}
 		int operator()();
 

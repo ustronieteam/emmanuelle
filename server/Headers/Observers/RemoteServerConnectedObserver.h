@@ -24,9 +24,11 @@
 
 class ServerDataBase;
 
+///
 ///@author Marian Szczykulski
 ///@date 2009-01-09
 ///@brief Klasa obserwatora obslugujacego logike podczas podlaczania sie nowego serwera
+///
 class RemoteServerConnectedObserver : public IRemoteObserver
 {
     private:
@@ -67,7 +69,7 @@ class RemoteServerConnectedObserverLogicRunnable
 			serverDataBase = sDB;
 			observerData = oD;
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("RemoteServerConnectedObserverLogicRunnable"));
-			logger->setLevel(log4cxx::Level::getAll());
+			logger->setLevel(LOGLEVEL);
 		}
 		int operator()();
 

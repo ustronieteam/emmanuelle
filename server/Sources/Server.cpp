@@ -26,7 +26,13 @@ bool Server::Run()
 	
 	boost::thread thrd(&activateRunnable);
 	LOG4CXX_DEBUG(logger, "Usypianie lokalnego watku ...");
+
+#ifndef WIN32
+	sleep(5);
+#else
 	Sleep(5000);
+#endif
+
 	LOG4CXX_DEBUG(logger, "... wybudzenie lokalnego watku!");
 
 	// jesli uruchomilismy serwer macierzysty to nie podlaczamy sie do zadnego 
@@ -59,10 +65,11 @@ void Server::ActivateListning()
 
 	try
 	{
-		char* orb_options[] = { "-OAport", const_cast<char *>(SRVPORT.c_str()) };
+		const char * opt = "-OAport";
+		const char* orb_options[] = { opt , SRVPORT.c_str() };
 		int optc = sizeof(orb_options)/sizeof(char *);
 
-		orb = CORBA::ORB_init(optc, orb_options);
+		orb = CORBA::ORB_init(optc, const_cast<char **>(orb_options));
 
 		PortableServer::POAManager_var manager;
 		PortableServer::POA_var poa;
@@ -71,13 +78,15 @@ void Server::ActivateListning()
 
 		if (CORBA::is_nil(poaObj))
 		{
-			throw std::exception("Bl퉐 podczas resolve'a RootPOA");
+			LOG4CXX_ERROR(logger,"Bl퉐 podczas resolve'a RootPOA");
+			throw std::exception();
 		}
 
 		PortableServer::POA_var rootPOA = PortableServer::POA::_narrow(poaObj);
 		if (CORBA::is_nil(rootPOA))
 		{
-			throw std::exception("rootPOA nie jest referencja POA");
+			LOG4CXX_ERROR(logger,"rootPOA nie jest referencja POA");
+			throw std::exception();
 		}
     
 		manager = rootPOA->the_POAManager();
@@ -92,20 +101,23 @@ void Server::ActivateListning()
 		
 		if (CORBA::is_nil(poa))
 		{
-			throw std::exception("nie mozna stworzyc obiektu POA dla 'servPOA'");;
+			LOG4CXX_ERROR(logger,"nie mozna stworzyc obiektu POA dla 'servPOA'");
+			throw std::exception();
 		}
 		LOG4CXX_DEBUG(logger, "obiekt POA dla 'servPOA' utworzony");
 
 		CORBA::Object_var bootObj = orb->resolve_initial_references("BootManager");
 		if (CORBA::is_nil(bootObj))
 		{
-			throw std::exception("Bl퉐 podczas resolve'a BootManager'a");
+			LOG4CXX_ERROR(logger,"Bl퉐 podczas resolve'a BootManager'a");
+			throw std::exception();
 		}
 
 		OB::BootManager_var bootManager = OB::BootManager::_narrow(bootObj);
 		if (CORBA::is_nil(bootManager))
 		{
-			throw std::exception("obiekt bootObj nie jest obiektem BootManager");
+			LOG4CXX_ERROR(logger,"obiekt bootObj nie jest obiektem BootManager");
+			throw std::exception();
 		}
 		LOG4CXX_DEBUG(logger, "utworzono boot manager'a");
 
