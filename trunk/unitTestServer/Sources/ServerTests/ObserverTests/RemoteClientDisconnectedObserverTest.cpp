@@ -1,12 +1,19 @@
 #include "RemoteClientDisconnectedObserverTest.h"
 #include "testData.h"
-extern ServerDataBase * sdb_gl;
-extern boost::shared_ptr<ServerDataBase> ptr_sdb_gl;
-
-extern ClientsDataBase * cdb_gl;
-extern boost::shared_ptr<ClientsDataBase> ptr_cdb_gl;
+//extern ServerDataBase * sdb_gl;
+//extern boost::shared_ptr<ServerDataBase> ptr_sdb_gl;
+//
+//extern ClientsDataBase * cdb_gl;
+//extern boost::shared_ptr<ClientsDataBase> ptr_cdb_gl;
 void test_case_clientDisconnected_1()
 {
+	boost::shared_ptr<ServerDataBase> ptr_sdb_gl=ServerDataBase::GetInstnace();
+
+	boost::shared_ptr<ClientsDataBase> ptr_cdb_gl=ClientsDataBase::GetInstnace();
+	
+	ServerDataBase * sdb_gl = ptr_sdb_gl.get();
+	ClientsDataBase * cdb_gl = ptr_cdb_gl.get();
+
 	BOOST_TEST_MESSAGE("********** TEST OGOLNY RemoteClientDisconnectedObserver...");
 	RemoteClientDisconnectedObserver rcdo;
 	BOOST_TEST_MESSAGE("* Konstruktor domyslny...");
@@ -44,6 +51,13 @@ void test_case_clientDisconnected_1()
 }
 void test_case_clientDisconnected_2()
 {
+	boost::shared_ptr<ServerDataBase> ptr_sdb_gl=ServerDataBase::GetInstnace();
+
+	boost::shared_ptr<ClientsDataBase> ptr_cdb_gl=ClientsDataBase::GetInstnace();
+	
+	ServerDataBase * sdb_gl = ptr_sdb_gl.get();
+	ClientsDataBase * cdb_gl = ptr_cdb_gl.get();
+
 	BOOST_TEST_MESSAGE("********** TEST LOGIKI RemoteClientDisconnectedObserver...");
 	boost::shared_ptr<ServerDataBase> ptr_sdb(ptr_sdb_gl);
 	boost::shared_ptr<ClientsDataBase> ptr_cdb(ptr_cdb_gl);

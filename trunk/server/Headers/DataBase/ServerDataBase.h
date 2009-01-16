@@ -58,6 +58,8 @@ class ServerDataBase
 		///
 		static ServerDataBase * GetInstance();
 
+		static boost::shared_ptr<ServerDataBase> GetInstnace();
+
         ///
 		/// Destruktor.
 		///

@@ -11,6 +11,8 @@
 #include <log4cxx/logger.h>
 #include <log4cxx/level.h>
 
+#include <boost/shared_ptr.hpp>
+
 ///
 /// Rekord
 /// @brief Podstawowa jednosta informacji w bazie danych.

@@ -29,6 +29,13 @@ ClientsDataBase * ClientsDataBase::GetInstance()
 	return _db;
 }
 
+boost::shared_ptr<ClientsDataBase> ClientsDataBase::GetInstnace()
+{
+	static boost::shared_ptr<ClientsDataBase> _database(new ClientsDataBase());
+
+	return _database;
+}
+
 ClientsDataBase::~ClientsDataBase() 
 {
 

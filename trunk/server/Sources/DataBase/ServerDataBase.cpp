@@ -29,6 +29,16 @@ ServerDataBase * ServerDataBase::GetInstance()
 	return _db;
 }
 
+boost::shared_ptr<ServerDataBase> ServerDataBase::GetInstnace()
+{
+	std::cout<<"!!!!!!!!!!!!!!!!!!!!\m\n";
+	//static ServerDataBase * sdb = new ServerDataBase();
+	std::cout<<"!!!!!!!!!!!!!!!!!!!!\m\n";
+	static boost::shared_ptr<ServerDataBase> _database (GetInstance());
+	std::cout<<"!!!!!!!!!!!!!!!!!!!!\m\n";
+	return _database;
+}
+
 ServerDataBase::~ServerDataBase() 
 {
 
