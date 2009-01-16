@@ -28,6 +28,8 @@ class ServerDataBase;
 //    1)Znajdz klienta
 //    2) Wprowaz zmiany w jego rekordzie
 //    3)Powiadom wszystkie serwery o zmianie
+
+///
 ///@author Marian Szczykulski
 ///@date 2009-01-09
 ///@brief Klasa obserwatora obslugujacego logike podczas modyfikacji danych klienta
@@ -35,19 +37,14 @@ class ServerDataBase;
 ///@brief	jest odpowiedzi¹ na zdalne metody: ClientStatusChanged - wysylane przez inne serwery
 ///@brief	ktore moze byc rozsylane gdy: podlaczyl sie nowy klient, podlaczyl sie klient juz istniejacy w bazie
 ///@brief	analogicznie dla rozlaczania
+///
 class RemoteServerUpdateClientObserver : public IRemoteObserver
 {
 
-    //Begin section for RemoteServerUpdateClientObserver
-    //TODO: Add attributes that you want preserved
-    //End section for RemoteServerUpdateClientObserver
-
     private:
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         boost::shared_ptr<ClientsDataBase> clientsDataBase;
 
-        //@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
         boost::shared_ptr<ServerDataBase> serverDataBase;
 
 
@@ -75,9 +72,11 @@ class RemoteServerUpdateClientObserver : public IRemoteObserver
 
 };  //end class RemoteServerUpdateClientObserver
 
-//@author Marian Szczykulski
-//@brief Funktor odpowiedzialny za logike przetwarzania. 
-//@brief Potrzebny do wywo³ania w odzielnym watku
+///
+///@author Marian Szczykulski
+///@brief Funktor odpowiedzialny za logike przetwarzania. 
+///@brief Potrzebny do wywo³ania w odzielnym watku
+///
 class RemoteServerUpdateClientObserverLogicRunnable
 {
 	private: 
@@ -92,7 +91,7 @@ class RemoteServerUpdateClientObserverLogicRunnable
 			clientsDataBase = cDB;
 			observerData = oD;
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("RemoteServerUpdateClientObserverLogicRunnable"));
-			logger->setLevel(log4cxx::Level::getAll());
+			logger->setLevel(LOGLEVEL);
 		}
 		int operator()();
 

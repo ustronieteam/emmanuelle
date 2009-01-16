@@ -1,8 +1,4 @@
 #include "Observers/RemoteServerDisconnectedObserver.h"
-//Begin section for file RemoteServerDisconnectedObserver.cpp
-//TODO: Add definitions that you want preserved
-//End section for file RemoteServerDisconnectedObserver.cpp
-
 
 RemoteServerDisconnectedObserver::RemoteServerDisconnectedObserver() 
 {
@@ -27,7 +23,6 @@ RemoteServerDisconnectedObserver & RemoteServerDisconnectedObserver::operator =(
 }
 RemoteServerDisconnectedObserver::~RemoteServerDisconnectedObserver() 
 {
-
 }
 
 boost::shared_ptr<ServerDataBase> & RemoteServerDisconnectedObserver::get_serverDataBase() 
@@ -39,12 +34,13 @@ void RemoteServerDisconnectedObserver::set_serverDataBase(boost::shared_ptr<Serv
 {
 	this->serverDataBase = serverDataBase;
 }
-//@author Marian Szczykulski
-//@date 29-12-2008
-//@note Obserwator rozlaczenia sie serwera
-//@brief Glowna funkcja obserwatora, odpowiedzialna za logike przetwarzania.
-//@param[in] Dane obserwatora potrzebne do podejmowania decyzji podczas przetwarzania
-//@return ??
+///
+///@author Marian Szczykulski
+///@date 29-12-2008
+///@note Obserwator rozlaczenia sie serwera
+///@brief Glowna funkcja obserwatora, odpowiedzialna za logike przetwarzania.
+///@param[in] Dane obserwatora potrzebne do podejmowania decyzji podczas przetwarzania
+///
 int RemoteServerDisconnectedObserver::Refresh(RemoteObserverData observerData)
 {
 	if(observerData.get_eventType()!=SERVER_DISCONNECTED)
@@ -56,10 +52,12 @@ int RemoteServerDisconnectedObserver::Refresh(RemoteObserverData observerData)
 	return 0;
 }
 
-//@author Marian Szczykulski
-//@date 29-12-2008
-//@note Logika watku
-//@brief Zawiera logike przetwarzania ktora moze byc uruchomiona w odzielnym watku
+///
+///@author Marian Szczykulski
+///@date 29-12-2008
+///@note Logika watku
+///@brief Zawiera logike przetwarzania ktora moze byc uruchomiona w odzielnym watku
+///
 int RemoteServerDisconnectedObserverLogicRunnable::operator()()
 {
 	LOG4CXX_INFO(logger, "Przetwarzanie logiki");

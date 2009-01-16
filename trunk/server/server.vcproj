@@ -42,7 +42,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="0"
 				AdditionalIncludeDirectories="&quot;$(SolutionDir)\CorbaClasses\Headers\IClientClient&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses&quot;;&quot;$(SolutionDir)\server\Headers\Observers&quot;;&quot;$(SolutionDir)\log4cxx\include&quot;;&quot;C:\Program Files\boost\boost_1_36_0&quot;;&quot;$(SolutionDir)\server\Headers&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\DomainData&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IServerServer&quot;;&quot;$(SolutionDir)\server\Headers\DataBase&quot;;&quot;$(SolutionDir)\server\HeadersObservers&quot;;&quot;$(SolutionDir)\CORBA\include&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IClientServer&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IServerClient&quot;"
-				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
+				PreprocessorDefinitions="WIN32;LOGLEVEL=log4cxx::Level::ALL_INT;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
@@ -61,7 +61,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="ob.lib jtc.lib advapi32.lib wsock32.lib log4cxx.lib"
+				AdditionalDependencies="ob.lib jtc.lib  log4cxx.lib"
 				LinkIncremental="2"
 				AdditionalLibraryDirectories="&quot;C:\Program Files\boost\boost_1_36_0\lib&quot;;&quot;$(SolutionDir)\log4cxx&quot;;&quot;$(SolutionDir)\CORBA\lib&quot;"
 				GenerateDebugInformation="false"
@@ -476,14 +476,6 @@
 			Filter="rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav"
 			UniqueIdentifier="{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}"
 			>
-			<File
-				RelativePath=".\config.txt"
-				>
-			</File>
-			<File
-				RelativePath=".\logger.properties"
-				>
-			</File>
 		</Filter>
 	</Files>
 	<Globals>

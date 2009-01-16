@@ -57,7 +57,7 @@ class Aplication
 		{
 			//logger
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("AplicationClass"));
-			logger->setLevel(log4cxx::Level::getAll());
+			logger->setLevel(LOGLEVEL);
 
 			LOG4CXX_DEBUG(logger, "Stworzenie i powiazanie obiektow klienta ... ");
 

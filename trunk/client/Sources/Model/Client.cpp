@@ -2,32 +2,38 @@
 
 const std::string Client::configFileName = config::configFileName;
 const int Client::defaultPortNumber = 6666;
+
 ///
 ///@author Marian Szczykulski
 ///@date 2009-01-11
 ///@brief Konstruktor klienta
+///
 Client::Client() 
 {
 	logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("Client"));
-	logger->setLevel(log4cxx::Level::getAll());		
+	logger->setLevel(LOGLEVEL);		
 	readServerAddress();
 	port = defaultPortNumber;
 }
+
 Client::Client(DomainData::Address servAddr)
 {
 	logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("Client"));
-	logger->setLevel(log4cxx::Level::getAll());		
+	logger->setLevel(LOGLEVEL);		
 	serverAddress = servAddr;
 	port = defaultPortNumber;
 }
+
 Client::~Client() 
 {
 
 }
+
 ///
 ///@author Marian Szczykulski
 ///@date 2009-01-11
 ///@brief czyta adres serwera z pliku konfiguracyjnego
+///
 void Client::readServerAddress()
 {
 	std::string servAddr="";
@@ -54,10 +60,12 @@ void Client::readServerAddress()
 	}
 	
 }
+
 ///
 ///@author Marian Szczykulski
 ///@date 2009-01-11
 ///@brief  Pobiera zdaln¹ instancje servera(jezeli juz jakas jest to ja usuwa)
+///
 bool Client::getRemoteServerInstance()
 {
 	LOG4CXX_DEBUG(logger, "Pozyskiwanie zdalnej instancji servera");
@@ -85,10 +93,12 @@ bool Client::getRemoteServerInstance()
 	}
 	return false;
 }
+
 ///
 ///@author Marian Szczykulski
 ///@date 2009-01-11
 ///@brief  Pobiera zdaln¹ instancje klient(jezeli juz jakas jest to ja usuwa)
+///
 IClientClient_var Client::getRemoteClientInstance(CORBA::ORB_var & orbClient, DomainData::Address clAddr)
 {
 	IClientClient_var clientInstance;
@@ -98,8 +108,7 @@ IClientClient_var Client::getRemoteClientInstance(CORBA::ORB_var & orbClient, Do
 		if(connectToClientClient(clAddr.localization.in(), orbClient, clientInstance)==false)
 		{
 			LOG4CXX_ERROR(logger, "Nie mozna pozyskac zdalnej instancji klienta");
-			std::exception e ("ConnectToClientClient zwrocila false");
-			throw e;
+			throw std::exception();
 		}
 		else
 		{
@@ -110,8 +119,8 @@ IClientClient_var Client::getRemoteClientInstance(CORBA::ORB_var & orbClient, Do
 	catch(CORBA::SystemException & e)
 	{
 		LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas pozyskiwania zdalnej instancji: "<<e._name());
-		std::exception exp("Wyjatek podczas wywolywania metody zdalnej");
-		throw exp;
+
+		throw std::exception();
 	}
 	catch(std::exception  &exp)
 	{
@@ -120,16 +129,19 @@ IClientClient_var Client::getRemoteClientInstance(CORBA::ORB_var & orbClient, Do
 	}
 	return clientInstance;
 }
+
 int Client::AddFileObserver(IRemoteObserver & fileObserver) 
 {
     return 0;
 }
+
 ///
 ///@author Marian Szczykulski
 ///@brief Wysylanie Pliku do innego klienta(bezposrednio)
 ///@param[in]	usr		adresat
 ///@param[in]	pck		paczka do wyslania
 ///@return		status
+///
 int Client::SendPackage(DomainData::User usr, DomainData::User sender, DomainData::File & file) 
 {
 	LOG4CXX_DEBUG(logger, "Wysylanie paczki: Client");
@@ -168,6 +180,7 @@ int Client::SendPackage(DomainData::User usr, DomainData::User sender, DomainDat
 	}
     return 0;
 }
+
 ///
 ///@author Marian Szczykulski
 ///@date	2009-01-10
@@ -176,6 +189,7 @@ int Client::SendPackage(DomainData::User usr, DomainData::User sender, DomainDat
 ///@return	1 jak udalo sie podlaczyc
 ///@return	0 jak nie udalo sie podlaczyc ale mo¿na sprobowac jeszcze raz
 ///			w przeciwnym wypadku rzucany jest wyjatek
+///
 int Client::ConnectToServer() 
 {
 	if(serverAddress.localization.in() != NULL && strcmp(serverAddress.localization.in(),"")!=0)
@@ -183,8 +197,8 @@ int Client::ConnectToServer()
 		if(!getRemoteServerInstance())
 		{
 			LOG4CXX_ERROR(logger, "Nie mozna podlaczyc sie do wybranego serwera");
-			std::exception ex("Nie mo¿na podlaczyc sie do serwera");
-			throw ex;
+			
+			throw std::exception();
 		}
 		DomainData::Address *servAddr = NULL;
 		DomainData::User user;
@@ -203,8 +217,8 @@ int Client::ConnectToServer()
 					serverAddress = *servAddr;
 					return 0; //Kontroler moze jeszcze raz sprobowac sie polaczyc
 				}
-				std::exception ex("Nie mo¿na podlaczyc sie do wybranego serwera");
-				throw ex;
+				LOG4CXX_ERROR(logger,"Nie mo¿na podlaczyc sie do wybranego serwera");
+				throw std::exception();
 			}
 			else
 			{
@@ -215,26 +229,26 @@ int Client::ConnectToServer()
 		catch(CORBA::SystemException &e)
 		{
 			LOG4CXX_ERROR(logger, "Zlapano wyjatek podczas podlaczania sie do serwera: " << e._name());
-			std::exception ex("Nie mo¿na podlaczyc sie do serwera");
-			throw ex;
+			LOG4CXX_ERROR(logger,"Nie mo¿na podlaczyc sie do serwera");
+			throw std::exception();
 		}
 
 	}
 	else
 	{//Rzuc wyjatek nie mozna podlaczys sie do serwera
-		std::exception ex("Nie mo¿na podlaczyc sie do serwera. Podany adres jest nie dostepny");
-		throw ex;
+		LOG4CXX_ERROR(logger,"Nie mo¿na podlaczyc sie do serwera. Podany adres jest nie dostepny");
+		throw std::exception();
 	}
 
-    std::exception ex("Nie mo¿na podlaczyc sie do serwera. Podany adres jest bledny(pusty)");
-	throw ex;
+    LOG4CXX_ERROR(logger,"Nie mo¿na podlaczyc sie do serwera. Podany adres jest bledny(pusty)");
+	throw std::exception();
 }
-
 
 ///
 ///@author Marian Szczykulski
 ///@date 2009-01-12
 ///@brief Metoda rozlaczajaca sie z serwerem
+///
 int Client::Disconnect(DomainData::User & usr) 
 {
 	if(CORBA::is_nil(connectedServerInstance))
@@ -253,6 +267,7 @@ int Client::Disconnect(DomainData::User & usr)
 	}
     return 0;
 }
+
 ///
 ///@author Marian Szczykulski
 ///@date 2009-01-12
@@ -261,6 +276,7 @@ int Client::Disconnect(DomainData::User & usr)
 ///@param[in] msg		wiadomosc
 ///@return				status (-2 zdalna instancja serwera nie zainicjowana,
 ///								-1 blad podczas wywolywania zdalnej metody serwera)
+///
 int Client::SendMessageToClient(DomainData::User sender, DomainData::User receiver, DomainData::Message msg) 
 {
 	if(CORBA::is_nil(connectedServerInstance))

@@ -19,11 +19,13 @@
 
 class ClientsDataBase;
 
+///
 ///@author Marian Szczykulski
 ///@date 2009-01-09
 ///@brief Klasa obserwatora obslugujacego logike podczas tworzenia pipe-e (komunikacja serwerow)
 ///@brief    1)Klientowi który ma tworzyæ pipe przeka¿ odpowiedni¹ wiadomoœæ.
 ///@brief      Klient ten musi byæ z nami pod³¹czony, je¿eli nie to b³ad integralnoœci danych w bazie.
+///
 class ServerCreatePipeObserver : public IRemoteObserver
 {
 
@@ -49,9 +51,11 @@ class ServerCreatePipeObserver : public IRemoteObserver
 
 };  //end class ServerCreatePipeObserver
 
+///
 ///@author Marian Szczykulski
 ///@brief Funktor odpowiedzialny za logike przetwarzania. 
 ///@brief Potrzebny do wywo³ania w odzielnym watku
+///
 class ServerCreatePipeObserverLogicRunnable
 {
 	private: 
@@ -64,7 +68,7 @@ class ServerCreatePipeObserverLogicRunnable
 			clientsDataBase = cDB;
 			observerData = oD;
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("ServerCreatePipeObserverLogicRunnable"));
-			logger->setLevel(log4cxx::Level::getAll());
+			logger->setLevel(LOGLEVEL);
 		}
 		int operator()();
 

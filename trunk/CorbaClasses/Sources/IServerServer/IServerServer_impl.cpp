@@ -10,7 +10,7 @@ IServerServer_impl::IServerServer_impl(PortableServer::POA_ptr poa)
 {
 	//logger
 	logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("IServerServer_impl"));
-	logger->setLevel(log4cxx::Level::getAll());
+	logger->setLevel(LOGLEVEL);
 }
 
 IServerServer_impl::~IServerServer_impl()
@@ -61,7 +61,7 @@ IServerServer_impl::Join(const ::DomainData::Address& serverAddress)
 	this->Notify(observData);
 
 	//pobranie wszystkich rekordow z bazy danych serwera
-	std::vector<ServerRecord> & serversList = serverDB->GetAllRecords();
+	std::vector<ServerRecord> serversList = serverDB->GetAllRecords();
 
 	// utworzenie listy typu AddressList i przepisanie danych uzyskanych z bazy
 	AddressesList * _r =  new  AddressesList();

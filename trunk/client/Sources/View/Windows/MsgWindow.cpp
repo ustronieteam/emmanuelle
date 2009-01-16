@@ -5,7 +5,7 @@ MsgWindow::MsgWindow(Controller * controller, const std::string & name)
 {
 	// Inicjalizacja loggera.
 	_logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("MsgWindow"));
-	_logger->setLevel(log4cxx::Level::getAll());
+	_logger->setLevel(LOGLEVEL);
 
 	_contactName = name;
 	_talk = NULL;

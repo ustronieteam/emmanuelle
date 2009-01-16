@@ -16,14 +16,13 @@
 #include <log4cxx/logger.h>
 #include <log4cxx/level.h>
 
-
-
-
 class ServerDataBase;
 
+///
 ///@author Marian Szczykulski
 ///@date 2009-01-09
 ///@brief Klasa obserwatora obslugujacego logike podczas rozlaczania sie serwera
+///
 class RemoteServerDisconnectedObserver : public IRemoteObserver
 {
     private:
@@ -47,10 +46,11 @@ class RemoteServerDisconnectedObserver : public IRemoteObserver
 
 };  //end class RemoteServerDisconnectedObserver
 
-
+///
 ///@author Marian Szczykulski
 ///@brief Funktor odpowiedzialny za logike przetwarzania. 
 ///@brief Potrzebny do wywo³ania w odzielnym watku
+///
 class RemoteServerDisconnectedObserverLogicRunnable
 {
 	private: 
@@ -63,7 +63,7 @@ class RemoteServerDisconnectedObserverLogicRunnable
 			serverDataBase = sDB;
 			observerData = oD;
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("RemoteServerDisconnectedObserverLogicRunnable"));
-			logger->setLevel(log4cxx::Level::getAll());
+			logger->setLevel(LOGLEVEL);
 		}
 		int operator()();
 

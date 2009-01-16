@@ -127,7 +127,7 @@ class Server : public CorbaConnector
 
 			//logger
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("ServerLogicRunnable"));
-			logger->setLevel(log4cxx::Level::getAll());
+			logger->setLevel(LOGLEVEL);
 		}
 
     public:

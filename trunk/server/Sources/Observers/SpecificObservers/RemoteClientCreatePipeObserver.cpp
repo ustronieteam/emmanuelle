@@ -1,10 +1,5 @@
 #include "Observers/RemoteClientCreatePipeObserver.h"
-//Begin section for file RemoteClientCreatePipeObserver.cpp
-//TODO: Add definitions that you want preserved
-//End section for file RemoteClientCreatePipeObserver.cpp
 
-
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
 RemoteClientCreatePipeObserver::RemoteClientCreatePipeObserver() 
 {
     this->clientsDataBase  = boost::shared_ptr<ClientsDataBase>();
@@ -15,18 +10,18 @@ RemoteClientCreatePipeObserver::RemoteClientCreatePipeObserver(boost::shared_ptr
 	this->clientsDataBase = clientsDataBase;
     this->serverDataBase  = serverDataBase;
 }
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 RemoteClientCreatePipeObserver::RemoteClientCreatePipeObserver(RemoteClientCreatePipeObserver & arg) 
 {
-    //TODO Auto-generated method stub
+    
     this->clientsDataBase = arg.clientsDataBase;
     this->serverDataBase = arg.serverDataBase;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 RemoteClientCreatePipeObserver & RemoteClientCreatePipeObserver::operator =(const RemoteClientCreatePipeObserver & arg) 
 {
-    //TODO Auto-generated method stub
+    
     if (this != &arg)
     {
         this->clientsDataBase = arg.clientsDataBase;
@@ -35,43 +30,45 @@ RemoteClientCreatePipeObserver & RemoteClientCreatePipeObserver::operator =(cons
 	return *this;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 RemoteClientCreatePipeObserver::~RemoteClientCreatePipeObserver() 
 {
-    //TODO Auto-generated method stub
+    
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 boost::shared_ptr<ClientsDataBase> & RemoteClientCreatePipeObserver::get_clientsDataBase() 
 {
-    //TODO Auto-generated method stub
+    
     return clientsDataBase;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 void RemoteClientCreatePipeObserver::set_clientsDataBase(boost::shared_ptr<ClientsDataBase> & clientsDataBase) 
 {
     this->clientsDataBase = clientsDataBase;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 boost::shared_ptr<ServerDataBase> & RemoteClientCreatePipeObserver::get_serverDataBase() 
 {
-    //TODO Auto-generated method stub
+    
     return serverDataBase;
 }
 
-//@generated "UML to C++ (com.ibm.xtools.transform.uml2.cpp.CPPTransformation)"
+
 void RemoteClientCreatePipeObserver::set_serverDataBase(boost::shared_ptr<ServerDataBase> & serverDataBase) 
 {
     this->serverDataBase = serverDataBase;
 }
-//@author Marian Szczykulski
-//@date 30-12-2008
-//@note Obserwator rzadania utworzenia pipe-u
-//@brief Glowna funkcja obserwatora, odpowiedzialna za logike przetwarzania.
-//@param[in] Dane obserwatora potrzebne do podejmowania decyzji podczas przetwarzania
-//@return ??
+
+///
+///@author Marian Szczykulski
+///@date 30-12-2008
+///@note Obserwator rzadania utworzenia pipe-u
+///@brief Glowna funkcja obserwatora, odpowiedzialna za logike przetwarzania.
+///@param[in] Dane obserwatora potrzebne do podejmowania decyzji podczas przetwarzania
+///
 int RemoteClientCreatePipeObserver::Refresh(RemoteObserverData observerData)
 {
 	if(observerData.get_eventType()!=CLIENT_CREATE_PIPE_REQUEST)
@@ -82,17 +79,19 @@ int RemoteClientCreatePipeObserver::Refresh(RemoteObserverData observerData)
 	boost::thread threadClCreatePipe(threadLogic);
 	return 0;
 }
-//@author Marian Szczykulski
-//@date 30-12-2008
-//@note Logika watku
-//@brief Zawiera logike przetwarzania ktora moze byc uruchomiona w odzielnym watku
+///
+///@author Marian Szczykulski
+///@date 30-12-2008
+///@note Logika watku
+///@brief Zawiera logike przetwarzania ktora moze byc uruchomiona w odzielnym watku
+///
 int RemoteClientCreatePipeObserverLogicRunnable::operator()()
 {
 	LOG4CXX_INFO(logger, "Przetwarzanie logiki RemoteClientCreatePipeObserver");
 
 	//    1) Znajdz w bazie o klientach, takiego który nie blokuje po³¹czeñ przychodz¹cych i jest pod³¹czony
 	//    z aktualnym serwerem i przekaz mu odpowiedni komunikat o tworzeniu pipe'u
-	int localServId;// = serverDataBase->getLocalServerId();
+	int localServId = 0;// = serverDataBase->getLocalServerId();
 	// TODO: cos zrobic
 	struct DomainData::User clientData = observerData.getClientUserData();
 	int clientId = clientsDataBase->FindActiveClientOnServer(localServId);

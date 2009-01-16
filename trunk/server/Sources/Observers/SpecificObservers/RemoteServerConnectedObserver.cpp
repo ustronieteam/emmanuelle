@@ -40,25 +40,29 @@ boost::shared_ptr<ServerDataBase> & RemoteServerConnectedObserver::get_serverDat
 {
     return serverDataBase;
 }
+
+///
 ///@author Marian Szczykulski
 ///@date 27-12-2008
 ///@note Ustawieni bazy serwerow
 ///@brief Funkcja ustawjajaca baze serwera
 ///@param[in] sprytny wskaznik na baze danych serwera
+///
 void RemoteServerConnectedObserver::set_serverDataBase(boost::shared_ptr<ServerDataBase> & serverDataBase)
 {
 	this->serverDataBase = serverDataBase;
 }
+///
 ///@author Marian Szczykulski
 ///@date 27-12-2008
 ///@note Obserwator podlaczenia sie nowego serwera
 ///@brief Glowna funkcja obserwatora, odpowiedzialna za logike przetwarzania.
 ///@param[in] Dane obserwatora potrzebne do podejmowania decyzji podczas przetwarzania
-///@return ??
+///
 int RemoteServerConnectedObserver::Refresh(RemoteObserverData observerData)
 {
 	log4cxx::LoggerPtr logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("RemoteServerConnectedObserver"));
-	logger->setLevel(log4cxx::Level::getAll());
+	logger->setLevel(LOGLEVEL);
 
 	LOG4CXX_DEBUG(logger, "Refresh obserwatora : start. ServerAddres" <<observerData.getServerAddress().localization.in());
 	if(observerData.get_eventType()!=SERVER_CONNECTED)
@@ -70,10 +74,12 @@ int RemoteServerConnectedObserver::Refresh(RemoteObserverData observerData)
 	LOG4CXX_DEBUG(logger, "Refresh obserwatora : end");
 	return 0;
 }
+///
 ///@author Marian Szczykulski
 ///@date 27-12-2008
 ///@note Logika watku
 ///@brief Zawiera logike przetwarzania ktora moze byc uruchomiona w odzielnym watku
+///
 int RemoteServerConnectedObserverLogicRunnable::operator()()
 {
 	LOG4CXX_INFO(logger, "Przetwarzanie logiki");

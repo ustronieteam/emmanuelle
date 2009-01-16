@@ -1,58 +1,32 @@
 #include "Controller.h"
 
 
-///
-///@author Marian Szczykulski
-///@date 2009-01-12
-///@brief prywatny konstruktor domyslny
 Controller::Controller() 
 {
 	//Do tworzenia logow
     logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("Kontroler"));
-	logger->setLevel(log4cxx::Level::getAll());
+	logger->setLevel(LOGLEVEL);
 }
 
 Controller::~Controller() 
 {
 }
 
-///
-///@author Marian Szczykulski
-///@date 2009-01-12
-///@brief getter modelu
 IModel * Controller::GetModel() 
 {
     return model.get();
 }
 
-///
-///@author Marian Szczykulski
-///@date 2009-01-12
-///@brief setter modelu
 void Controller::SetModel(IModel * iModel) 
 {
 	model = boost::shared_ptr<IModel>(iModel);
 }
 
-///
-///@author Marian szczykulski
-///@date 2009-01-14
-///@brief Rejestruje odpowiedniego obserwatora zdalnej instancji
-///@param[in]	observer	Wskaznik na odpowiedniego obserwatora
-///@param[in]	observerType	Typ obserwatora
-///@return status wykonania operacji
 int Controller::AddRemoteObserver(IRemoteObserver * observer, ObserverType observerType) 
 {
 	return model->RegisterObserver(observer, observerType);
 }
 
-///
-///@author Marian Szczykulski
-///@date 2009-01-14
-///@brief Wysylanie pliku
-///@param[in]	adresat	Adresat do ktorego wysylany jest plik
-///@param[in]	filename	nazwa pliku
-///@return	status wysylania
 bool Controller::SendFile(const char * adresat, const char * fileName) // TODO: zmienic typ adresata 
 {
 	LOG4CXX_DEBUG(logger, "Kontroler, wysylanie pliku rozpoczete. Adresat: "<<adresat);
@@ -104,12 +78,6 @@ bool Controller::SendFile(const char * adresat, const char * fileName) // TODO: 
 	
 }
 
-///
-///@author Marian Szczykulski
-///@date 2009-01-12
-///@brief	Usuwa kontakt z bazy kontaktow
-///@return	0  udalo sie usunac kontakt
-///			-1 nie udalo sie usunac
 int Controller::DeleteContact(const char * name, long number) 
 {
 	try
@@ -126,14 +94,7 @@ int Controller::DeleteContact(const char * name, long number)
 	}
     return 0;
 }
-///
-///@author Marian Szczykulski
-///@date 2009-01-12
-///@brief Metoda wykonuje logike potrzebna do wyslania wiadomosci do innego klienta
-///@param[in] content	tresc wiadomosci do wyslania
-///@param[in] dest		nazwa klienta do ktorego wysylana jest wiadomosc
-///@return				true  - wiadomosc wyslana pomyslnie
-///						false - w przeciwnym przypadku
+
 bool Controller::SendMessageToClient(const char * content, const char * dest) 
 {
 	DomainData::User receiver;
@@ -161,12 +122,7 @@ bool Controller::SendMessageToClient(const char * content, const char * dest)
 	}
     return 0;
 }
-///
-///@author Marian Szczykulski
-///@date 2008-01-13
-///@brief dodaje obserwatora statusu (danych w ogolnosci)
-///@param[in]	dataObserver	Obserwator danych
-///@return		status wykonania operacji
+
 int Controller::AddDataObserver(DataObserver * dataObserver) 
 {
 	int result = 0;
@@ -175,13 +131,7 @@ int Controller::AddDataObserver(DataObserver * dataObserver)
 	LOG4CXX_DEBUG(logger, "Obserwator statusu(kontroler) dodany");
     return result;
 }
-///
-///@author Marian Szczykulski
-///@date 2009-01-12
-///@brief Dodanie kontaktu do bazy
-///@param[in]	name	nazwa klienta(ktorego chcemy miec w liscie kontaktow)
-///@param[in]	number	numer klienta(ktorego chcemy miec w liscie kontaktow)
-///@return		?
+
 int Controller::AddContact(const char * name, long number) 
 {
 	try
@@ -199,13 +149,6 @@ int Controller::AddContact(const char * name, long number)
     return 0;
 }
 
-///
-///@author Marian Szczykulski
-///@date 2009-01-12
-///@brief Rozlaczanie sie klienta od serwera
-///@return -2 nie zainicjowana zdalna instancja (nie podlaczylismy sie)
-///@return -1 serwer nie jest dostepny (wystapil wyjatek przy wywolywaniu zdalnej metody)
-///@return	0 udalo sie rozlaczyc
 int Controller::Disconnect() 
 {
 	int result = 0;
@@ -213,10 +156,6 @@ int Controller::Disconnect()
 	return result;
 }
 
-///
-///@author Marian Szczykulski
-///@date 2009-01-12
-///@brief  skupia logike, wykonywana podczas ³¹czenia siê do serwera.
 bool Controller::ConnectToServer() 
 {
 	model->SetOwnName(model->GetOwnName().c_str());
@@ -239,62 +178,31 @@ bool Controller::ConnectToServer()
     return true;
 }
 
-
-
-
-///
-///@author Marian Szczykulski
-///@date 2009-01-12
-///@brief Pobiera liste kontaktow z Modelu
-///@return	vector kontaktow
 std::vector<ContactRecord> Controller::GetContactsList() // TODO: zmienic typ zwracany
 {
 	return model->GetContactsList();
 }
 
-///
-///@author Marian Szczykulski
-///@date 2009-01-12
-///@brief setter adresu serwera do ktorego mamy sie podlaczyc
-///@param[in]	serv	adres serwera do ktorego mamy sie podlaczyc
 void Controller::SetServerAddress(const char * serv)
 {
 	model->SetServerAddress(serv);
 }
-///
-///@author Marian Szczykulski
-///@date 2009-01-12
-///@brief getter adresu serwera do ktorego mamy sie podlaczyc
-///@return	adres serwera do ktorego mamy sie podlaczyc
+
 const char * Controller::GetServerAddress() const
 {
 	return model->GetServerAddress().localization.in();
 }
-///
-///@author Marian Szczykulski
-///@date 2009-01-12
-///@brief setter portu przez ktory mamy sie laczyc
-///@param[in]	p	port przez ktory mamy sie laczyc
+
 void Controller::SetPortNumber(int p)
 {
 	model->SetPortNumber(p);
 }
-///
-///@author Marian Szczykulski
-///@date 2009-01-12
-///@brief getter portu przez ktory mamy sie laczyc
-///@return	port przez ktory mamy sie laczyc
+
 int Controller::GetPortNumber() const
 {
 	return model->GetPortNumber();
 }
 
-
-///
-///@author Marian Szczykulski
-///@date 2009-01-13
-///@brief	Zwraca wlasny rekord z danymi
-///@return	wlasny rekord z danymi
 std::string Controller::GetOwnName()
 {
 	return model->GetOwnName();
@@ -304,47 +212,31 @@ std::string Controller::GetOwnName()
 ///@date 2009-01-13
 ///@brief	Zwraca wlasny rekord z danymi
 ///@return	wlasny rekord z danymi
-const long & Controller::GetOwnNumber()
+const long Controller::GetOwnNumber()
 {
 	return model->GetOwnNumber();
 }
-///
-///@author Marian Szczykulski
-///@date 2009-01-13
-///@brief	Zwraca wlasny rekord z danymi
-///@return	wlasny rekord z danymi
+
 bool Controller::GetMyAvailability()
 {
 	return model->GetMyAvailability();
 }
-///
-///@author Marian Szczykulski
-///@date 2009-01-13
-///@brief setter nazwy lokalnego klienta
+
 void Controller::SetOwnName(const char * c)
 {
 	model->SetOwnName(c);
 } 
-///
-///@author Marian Szczykulski
-///@date 2009-01-13
-///@brief setter numeru lokalnego klienta
+
 void Controller::SetOwnNumber(long l)
 {
 	model->SetOwnNumber(l);
 }
-///
-///@author Marian Szczykulski
-///@date 2009-01-13
-///@brief setter dostepnosci lokalnego klienta
+
 void Controller::SetMyAvailability(bool b)
 {
 	model->SetMyAvailability(b);
 }
-///
-///@author Marian Szczykulski
-///@date 2008-01-13
-///@brief Testuje polaczenie Klient-Server (dwustronne)
+
 void Controller::testClient(std::string str)
 {
 	LOG4CXX_DEBUG(logger, "Test Client Kontroller begin");

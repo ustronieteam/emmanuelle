@@ -4,7 +4,7 @@ MessageObserver::MessageObserver(IObserverView * view)
 {
 	// Inicjalizacja loggera.
 	_logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("MessageObserver"));
-	_logger->setLevel(log4cxx::Level::getAll());
+	_logger->setLevel(LOGLEVEL);
 
 	_view = view;
 }

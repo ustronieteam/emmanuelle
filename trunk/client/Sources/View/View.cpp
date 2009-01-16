@@ -11,7 +11,7 @@ View::View()
 {
 	// Inicjalizacja loggera.
 	_logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("View"));
-	_logger->setLevel(log4cxx::Level::getAll());
+	_logger->setLevel(LOGLEVEL);
 
 	// Zerowanie niektorych skladowych.
 	_information.inMsgCount		= 0;
@@ -46,11 +46,12 @@ void View::Run()
 	// Stworzenie powitalnego okna i ustawienie go jako aktywnego.
 	SetActiveWindow(AddWindow(new WelcomeWindow(_controller)));
 
+	int p = 0;
 	// Petla pobierania instrukcji od uzytkownika.
 	while(true)
 	{
 		// Czyszczenie ekranu.
-		system(CLSCMD);
+		p = system(CLSCMD);
 
 		// Czyszczenie ostatniej komendy.
 		cmd.clear();
@@ -205,8 +206,6 @@ void View::Run()
 				(*GetActiveWindow())->SetMsg(ER_CONN_NO_SERVE);
 			else if ( this->GetController()->GetOwnName().empty() )
 				(*GetActiveWindow())->SetMsg(ER_CONN_NO_UNAME);
-			else if ( this->GetController()->GetOwnNumber() == 0 )
-				(*GetActiveWindow())->SetMsg(ER_CONN_NO_UNUMB);
 			else
 			{
 				// Mamy wszystkie parametry do podlaczenia.
@@ -445,8 +444,9 @@ void View::Obsrv_ReciveMessage(const DomainData::User & senderAddress, const Dom
 	{
 		LOG4CXX_DEBUG(this->_logger, "Aktualnie otwarte okno rozmowy. Odswiezamy." );
 		
+		int p = 0;
 		// Czyszczenie ekranu.
-		system(CLSCMD);
+		p = system(CLSCMD);
 
 		// Odswiezamy okno.
 		(*GetActiveWindow())->Render(std::cout);

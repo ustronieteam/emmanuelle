@@ -4,7 +4,7 @@ ClientsDataBase::ClientsDataBase()
 {
 	// Inicjalizacja loggera.
 	_logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("ClientsDataBase"));
-	_logger->setLevel(log4cxx::Level::getAll());
+	_logger->setLevel(LOGLEVEL);
 }
 
 ClientsDataBase::ClientsDataBase(const ClientsDataBase & arg) 
@@ -49,8 +49,7 @@ const ClientRecord & ClientsDataBase::GetRecord(int recordId)
 	{
 		LOG4CXX_ERROR(_logger, "Nie znaleziono rekordu.");
 
-		std::exception ex("Brak rekordu o podanym ID!");
-		throw ex;
+		throw std::exception();//"Brak rekordu o podanym ID!");
 	}
 }
 
@@ -92,8 +91,8 @@ int ClientsDataBase::InsertRecord(const ClientRecord & record)
 	{
 		LOG4CXX_ERROR(_logger, "Rekord o podanym id juz istnieje");
 
-		std::exception ex("Record o podanym ID jest juz w bazie danych!");
-		throw ex;
+		//"Record o podanym ID jest juz w bazie danych!");
+		throw std::exception();
 	}
 }
 
@@ -115,8 +114,8 @@ int ClientsDataBase::DeleteRecord(int recordId)
 	{
 		LOG4CXX_ERROR(_logger, "Nie znaleziono rekordu!" );
 
-		std::exception ex("Brak rekordu o podanym ID!");
-		throw ex;
+		//"Brak rekordu o podanym ID!");
+		throw std::exception();
 	}
 }
 
@@ -138,8 +137,8 @@ int ClientsDataBase::ModifyRecord(const ClientRecord & record)
 	{
 		LOG4CXX_ERROR(_logger, "Nie zmodyfikowano rekordu!");
 
-		std::exception ex("Brak rekordu o podanym ID!");
-		throw ex;
+		//"Brak rekordu o podanym ID!");
+		throw std::exception();
 	}
 }
 

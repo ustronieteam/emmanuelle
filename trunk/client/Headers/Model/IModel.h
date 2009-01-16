@@ -19,7 +19,7 @@ class IModel
 		{}
 
 		virtual std::string GetOwnName() = 0;
-		virtual const long & GetOwnNumber() = 0;
+		virtual const long GetOwnNumber() = 0;
 		virtual bool GetMyAvailability() = 0;
 		
 		virtual void SetOwnName(const char * c) = 0;

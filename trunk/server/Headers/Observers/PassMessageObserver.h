@@ -19,11 +19,13 @@
 
 class ClientsDataBase;
 
+///
 ///@author Marian Szczykulski
 ///@date 2009-01-09
 ///@brief Klasa obserwatora obslugujacego logike podczas przesylania wiadomosci pomiedzy serwerami
 ///@brief    1)Znajdz klienta docelowego(adresata) - musi byc do nas pod³¹czony (Je¿eli nie to b³¹d.)
 ///@brief    2)Przekaz mu wiadomoœæ
+///
 class PassMessageObserver : public IRemoteObserver
 {
 
@@ -48,9 +50,11 @@ class PassMessageObserver : public IRemoteObserver
 
 };  //end class PassMessageObserver
 
+///
 ///@author Marian Szczykulski
 ///@brief Funktor odpowiedzialny za logike przetwarzania. 
 ///@brief Potrzebny do wywo³ania w odzielnym watku
+///
 class PassMessageObserverLogicRunnable
 {
 	private: 
@@ -63,7 +67,7 @@ class PassMessageObserverLogicRunnable
 			clientsDataBase = cDB;
 			observerData = oD;
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("PassMessageObserverLogicRunnable"));
-			logger->setLevel(log4cxx::Level::getAll());
+			logger->setLevel(LOGLEVEL);
 		}
 		int operator()();
 

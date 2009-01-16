@@ -10,7 +10,7 @@ IServerClient_impl::IServerClient_impl(PortableServer::POA_ptr poa)
 {
 	//logger
 	logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("IServerClient_impl"));
-	logger->setLevel(log4cxx::Level::getAll());
+	logger->setLevel(LOGLEVEL);
 
 }
 

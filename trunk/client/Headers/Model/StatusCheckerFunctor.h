@@ -14,7 +14,6 @@
 class StatusCheckerFunctor
 {
 	private:
-		static const int sleepTime = 10000;
 		log4cxx::LoggerPtr logger;
 		boost::shared_ptr<ClientsData> clientsData;
 		boost::shared_ptr<Client> _client;
@@ -24,7 +23,7 @@ class StatusCheckerFunctor
 			clientsData = clData;
 			_client = client;
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("StatusCheckerFunctor"));
-			logger->setLevel(log4cxx::Level::getAll());
+			logger->setLevel(LOGLEVEL);
 		}
 
 		int operator()();

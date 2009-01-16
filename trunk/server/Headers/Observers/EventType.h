@@ -1,15 +1,14 @@
 #ifndef EVENTTYPE_H
 #define EVENTTYPE_H
 
-
-
-
+///
 ///@author Marian Szczykulski
 ///@date 2009-01-09
 ///@brief Typ wyliczeniowy (rodzaj zdarzenia)
 ///@brief    Konwencja:
 ///@brief    Pierwszy wyraz mówi czy zdarzenie pochodzi od klienta, który komunikuje sie z serwerem
 ///@brief    czy od innego serwera.
+///
 enum EventType
 {
         SERVER_CONNECTED = 0,

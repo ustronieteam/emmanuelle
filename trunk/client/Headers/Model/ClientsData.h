@@ -2,7 +2,7 @@
 #define CLIENTSDATA_H
 
 #include "ClientDataObject.h"
-#include "Domaindata.h"
+#include "DomainData.h"
 #include <iostream>
 #include <string>
 #include <map>
@@ -15,37 +15,47 @@
 #include "IModel.h"
 #include "ContactRecord.h"
 namespace po = boost::program_options;
+
 ///
 ///@author	Marian Szczykulski
 ///@date	2009-01-12
 ///@brief	Klasa zawierajaca liste kontaktow klienta
+///
 class ClientsData : public ClientDataObject
 {
 	private:
 		///
 		///nazwa pliku konfiguracyjnego
+		//
 		static const std::string configFileName;
 		///
 		/// Mutex, gdy¿ kolekcja moze byc uzywana w odzielnych watkach
+		///
 		boost::mutex _mutex;
 
+		///
 		///Wlasny Record Klienta
+		///
 		ContactRecord ownRecord;
 		///
 		/// Kolekcja trzymajaca kontakty klienta
+		///
 		std::map<std::string, ContactRecord> _records;
 
 
 		///
 		/// Flaga okreslajaca czy kolekcja ma byc wielowatkowa
+		///
 		bool isConcurrent;
 
 		///
 		///Czytanie z pliku conf odpowiednich danych
+		///
 		void readClientName();
 
 		///
 		///Metody synchronizacji watkow
+		///
 		void lock_mutex();
 		void unlock_mutex();
     public:

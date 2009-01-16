@@ -34,7 +34,13 @@ int StatusCheckerFunctor::operator()()
 				LOG4CXX_DEBUG(logger, "Uruchomiono obserwatorow");
 			}
 		}
-		Sleep(sleepTime);
+
+#ifndef WIN32
+		sleep(10);
+#else
+		Sleep(10000);
+#endif
+
 	}
 			
 	
