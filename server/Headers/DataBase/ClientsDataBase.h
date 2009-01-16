@@ -59,6 +59,8 @@ class ClientsDataBase
 		///
 		static ClientsDataBase * GetInstance();
 
+		static boost::shared_ptr<ClientsDataBase> GetInstnace();
+
         ///
 		/// Destruktor.
 		///

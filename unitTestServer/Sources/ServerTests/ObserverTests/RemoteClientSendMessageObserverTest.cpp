@@ -1,12 +1,19 @@
 #include "RemoteClientSendMessageObserverTest.h"
 #include "testData.h"
-extern ServerDataBase * sdb_gl;
-extern boost::shared_ptr<ServerDataBase> ptr_sdb_gl;
-
-extern ClientsDataBase * cdb_gl;
-extern boost::shared_ptr<ClientsDataBase> ptr_cdb_gl;
+//extern ServerDataBase * sdb_gl;
+//extern boost::shared_ptr<ServerDataBase> ptr_sdb_gl;
+//
+//extern ClientsDataBase * cdb_gl;
+//extern boost::shared_ptr<ClientsDataBase> ptr_cdb_gl;
 void test_case_sendMessage_1()
 {
+	boost::shared_ptr<ServerDataBase> ptr_sdb_gl=ServerDataBase::GetInstnace();
+
+	boost::shared_ptr<ClientsDataBase> ptr_cdb_gl=ClientsDataBase::GetInstnace();
+	
+	ServerDataBase * sdb_gl = ptr_sdb_gl.get();
+	ClientsDataBase * cdb_gl = ptr_cdb_gl.get();
+
 	BOOST_TEST_MESSAGE("* TEST OGOLNY RemoteClientSendMessageObserver...");
 	RemoteClientSendMessageObserver rcsmo;
 	BOOST_TEST_MESSAGE("* Konstruktor domyslny...");
@@ -45,6 +52,12 @@ void test_case_sendMessage_1()
 }
 void test_case_sendMessage_2()
 {
+	boost::shared_ptr<ServerDataBase> ptr_sdb_gl=ServerDataBase::GetInstnace();
+
+	boost::shared_ptr<ClientsDataBase> ptr_cdb_gl=ClientsDataBase::GetInstnace();
+	
+	ServerDataBase * sdb_gl = ptr_sdb_gl.get();
+	ClientsDataBase * cdb_gl = ptr_cdb_gl.get();
 	BOOST_TEST_MESSAGE("*********** TEST LOGIKI RemoteClientSendMessageObserver...");
 	BOOST_TEST_MESSAGE("* Test na pustej bazie");
 	boost::shared_ptr<ClientsDataBase> ptr_cdb(ptr_cdb_gl);

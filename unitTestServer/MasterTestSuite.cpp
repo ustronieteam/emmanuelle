@@ -1,14 +1,10 @@
 
 #include "RemoteServerConnectedObserverTest.h"
-#include "RemoteServerDisconnectedObserverTest.h"
-#include "RemoteServerUpdateClientObserverTest.h"
 
 #include "PassMessageObserverTest.h"
 #include "RemoteClientConnectedObserverTest.h"
-#include "RemoteClientCreatePipeObserverTest.h"
 #include "RemoteClientDisconnectedObserverTest.h"
 #include "RemoteClientSendMessageObserverTest.h"
-#include "ServerCreatePipeObserverTest.h"
 
 #include <log4cxx/logger.h>
 #include <log4cxx/level.h>
@@ -18,9 +14,8 @@
 
 boost::unit_test::test_suite* init_unit_test_suite( int argc, char* argv[])
 {
-	
 	//Konfiguracja loggera
-	log4cxx::File confFile("logger.properties");
+	log4cxx::File confFile("serverLogger.properties");
 	log4cxx::PropertyConfigurator::configure(confFile);
 
 	boost::unit_test::test_suite* ts1 = BOOST_TEST_SUITE( "RemoteServerConnectedObserver" );

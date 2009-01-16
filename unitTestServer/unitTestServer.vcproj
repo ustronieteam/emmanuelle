@@ -40,12 +40,13 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="&quot;$(SolutionDir)\unitTestServer\Headers\ServerTests&quot;;&quot;$(SolutionDir)\unitTestServer\Headers\ServerTests\ObserverTests&quot;;&quot;$(SolutionDir)\server\Headers\DataBase&quot;;&quot;$(SolutionDir)\CORBA\include&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IServerClient&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\DomainData&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers&quot;;&quot;$(SolutionDir)\server\Headers&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IClientServer&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IClientClient&quot;;&quot;$(SolutionDir)\log4cxx\include&quot;;&quot;C:\Program Files\boost\boost_1_36_0&quot;;&quot;$(SolutionDir)\server\Headers\Observers&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IServerServer&quot;"
+				AdditionalIncludeDirectories="&quot;$(SolutionDir)\unitTestServer&quot;;&quot;$(SolutionDir)\unitTestServer\Headers\ServerTests&quot;;&quot;$(SolutionDir)\unitTestServer\Headers\ServerTests\ObserverTests&quot;;&quot;$(SolutionDir)\server\Headers\DataBase&quot;;&quot;$(SolutionDir)\CORBA\include&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IServerClient&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\DomainData&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers&quot;;&quot;$(SolutionDir)\server\Headers&quot;;&quot;$(SolutionDir)\unitTestServer\Headers\ServerTests\DataBaseTests&quot;;&quot;$(SolutionDir)\server\Headers\CorbaClasses&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IClientServer&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IClientClient&quot;;&quot;$(SolutionDir)\log4cxx\include&quot;;&quot;C:\Program Files\boost\boost_1_36_0&quot;;&quot;$(SolutionDir)\server\Headers\Observers&quot;;&quot;$(SolutionDir)\CorbaClasses\Headers\IServerServer&quot;"
+				PreprocessorDefinitions="WIN32;LOGLEVEL=log4cxx::Level::ALL_INT;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
 				RuntimeLibrary="3"
 				WarningLevel="3"
-				DebugInformationFormat="0"
+				DebugInformationFormat="4"
 			/>
 			<Tool
 				Name="VCManagedResourceCompilerTool"

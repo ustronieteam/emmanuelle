@@ -1,12 +1,19 @@
 #include "PassMessageObserverTest.h"
 #include "testData.h"
-extern ServerDataBase * sdb_gl;
-extern boost::shared_ptr<ServerDataBase> ptr_sdb_gl;
+//extern ServerDataBase * sdb_gl;
+//extern boost::shared_ptr<ServerDataBase> ptr_sdb_gl;
 
-extern ClientsDataBase * cdb_gl;
-extern boost::shared_ptr<ClientsDataBase> ptr_cdb_gl;
+//extern ClientsDataBase * cdb_gl;
+//extern boost::shared_ptr<ClientsDataBase> ptr_cdb_gl;
 void test_case_passMessage_1()
 {
+	boost::shared_ptr<ServerDataBase> ptr_sdb_gl=ServerDataBase::GetInstnace();
+
+	boost::shared_ptr<ClientsDataBase> ptr_cdb_gl=ClientsDataBase::GetInstnace();
+	
+	ServerDataBase * sdb_gl = ptr_sdb_gl.get();
+	ClientsDataBase * cdb_gl = ptr_cdb_gl.get();
+
 	BOOST_TEST_MESSAGE("* TEST OGOLNY RemoteServerConnectedObserver...");
 	PassMessageObserver pmo;
 	BOOST_TEST_MESSAGE("* Konstruktor domyslny...");
@@ -33,6 +40,12 @@ void test_case_passMessage_1()
 }
 void test_case_passMessage_2()
 {
+	boost::shared_ptr<ServerDataBase> ptr_sdb_gl=ServerDataBase::GetInstnace();
+
+	boost::shared_ptr<ClientsDataBase> ptr_cdb_gl=ClientsDataBase::GetInstnace();
+	
+	ServerDataBase * sdb_gl = ptr_sdb_gl.get();
+	ClientsDataBase * cdb_gl = ptr_cdb_gl.get();
 	BOOST_TEST_MESSAGE("*********** TEST LOGIKI RemotePassMessageObserver...");
 	BOOST_TEST_MESSAGE("* Test na pustej bazie");
 	boost::shared_ptr<ClientsDataBase> ptr_cdb(ptr_cdb_gl);
@@ -40,7 +53,7 @@ void test_case_passMessage_2()
 	boost::shared_ptr<ServerDataBase> ptr_sdb(ptr_sdb_gl);
 	ptr_sdb->Clear();
 	RemoteObserverData observerData;
-	PassMessageMessageObserverLogicRunnable rccolr(ptr_sdb,ptr_cdb,observerData);
+	PassMessageObserverLogicRunnable rccolr(ptr_cdb,observerData);
 	BOOST_CHECK_EQUAL(rccolr(), -1);
 	//----
 	BOOST_TEST_MESSAGE("* Baza klientow jest nie pusta");
