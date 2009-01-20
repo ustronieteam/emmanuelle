@@ -1,5 +1,4 @@
 #include "RemoteServerConnectedObserverTest.h"
-#include "testData.h"
 
 //extern ServerDataBase * sdb_gl;
 //extern boost::shared_ptr<ServerDataBase> ptr_sdb_gl;
@@ -11,14 +10,10 @@
 void test_case_1()
 {	BOOST_TEST_MESSAGE("*************** TEST OGOLNY RemoteServerConnectedObserver...");
 	boost::shared_ptr<ServerDataBase> ptr_sdb_gl(ServerDataBase::GetInstnace());
-	BOOST_TEST_MESSAGE("*************** TEST OGOLNY RemoteServerConnectedObserver...");
 	boost::shared_ptr<ClientsDataBase> ptr_cdb_gl=ClientsDataBase::GetInstnace();
-	BOOST_TEST_MESSAGE("*************** TEST OGOLNY RemoteServerConnectedObserver...");
 	ServerDataBase * sdb_gl = ptr_sdb_gl.get();
-		BOOST_TEST_MESSAGE("*************** TEST OGOLNY RemoteServerConnectedObserver...");
 	ClientsDataBase * cdb_gl = ptr_cdb_gl.get();
 
-	BOOST_TEST_MESSAGE("*************** TEST OGOLNY RemoteServerConnectedObserver...");
 	RemoteServerConnectedObserver rsco;
 	BOOST_TEST_MESSAGE("* Konstruktor domyslny...");
 	BOOST_WARN((const int)rsco.get_serverDataBase().get()==NULL);
@@ -42,7 +37,6 @@ void test_case_1()
 	rsco3=rsco;
 	BOOST_WARN(rsco3.get_serverDataBase().get()==sdb_gl);
 	BOOST_TEST_MESSAGE("*************** Koniec Testu Ogolnego RemoteServerConnectedObserver");
-
 }
 //Przypadki testowe dla RemoteServerConnectedObserver
 //Testowanie logiki
@@ -61,7 +55,7 @@ void test_case_2()
 	RemoteServerConnectedObserverLogicRunnable rsco(ptr_sdb,observerData);
 	BOOST_TEST_MESSAGE("* Test na pustej bazie");
 	BOOST_CHECK_EQUAL(rsco(), -1);
-	BOOST_CHECK_MESSAGE( rsco()==-2, "Zly kod bledu") ;
+	//BOOST_CHECK_MESSAGE( rsco()==-2, "Zly kod bledu") ;
 	//-----------------
 	BOOST_TEST_MESSAGE("* Baza zawiera adres nowego serwera(nie ma swojego)");
 	ServerRecord sr;

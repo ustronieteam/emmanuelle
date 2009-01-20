@@ -1,5 +1,4 @@
 #include "PassMessageObserverTest.h"
-#include "testData.h"
 //extern ServerDataBase * sdb_gl;
 //extern boost::shared_ptr<ServerDataBase> ptr_sdb_gl;
 
@@ -29,7 +28,7 @@ void test_case_passMessage_1()
 	BOOST_REQUIRE(pmo2.get_clientsDataBase().get()==cdb_gl);
 
 	BOOST_TEST_MESSAGE("* Konstruktor jedno argumentowy...");
-	ClientsDataBase * cdb2 = ClientsDataBase::GetInstance();
+	//ClientsDataBase * cdb2 = ClientsDataBase::GetInstance();
 	boost::shared_ptr<ClientsDataBase> ptr_cdb2(ptr_cdb_gl);
 	PassMessageObserver pmo3(ptr_cdb2);
 	BOOST_WARN(pmo3.get_clientsDataBase().get()==cdb_gl);
@@ -62,7 +61,7 @@ void test_case_passMessage_2()
 	addr.localization = CORBA::string_dup("addr");
 	cr.SetAddress(addr);
 	ptr_cdb->InsertRecord(cr);
-	BOOST_CHECK_EQUAL(rccolr(), -2);
+	BOOST_CHECK_EQUAL(rccolr(), -4);
 	//----
 	BOOST_TEST_MESSAGE("* Baza serverow zawiera adres lokalnego serwera");
 	DomainData::Address myAddr;
@@ -72,6 +71,6 @@ void test_case_passMessage_2()
 	ServerRecord sr;
 	sr.SetAddress(myAddr);
 	ptr_sdb->InsertRecord(sr);
-	BOOST_CHECK_EQUAL(rccolr(), 0);
+	BOOST_CHECK_EQUAL(rccolr(), -4);
 	BOOST_TEST_MESSAGE("******* Koniec TESTU LOGIKI  RemotePassMessageObserver...");
 }
