@@ -518,10 +518,6 @@
 				<Filter
 					Name="ServerTests"
 					>
-					<File
-						RelativePath=".\testData.h"
-						>
-					</File>
 					<Filter
 						Name="ObserverTests"
 						>

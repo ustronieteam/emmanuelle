@@ -1,5 +1,4 @@
 #include "RemoteClientConnectedObserverTest.h"
-#include "testData.h"
 //extern ServerDataBase * sdb_gl;
 //extern boost::shared_ptr<ServerDataBase> ptr_sdb_gl;
 //
@@ -25,7 +24,7 @@ void test_case_remoteClientConnected_1()
 	BOOST_TEST_MESSAGE("* Ustawienie bazy danych serwerow...");
 	BOOST_CHECK_EQUAL(rcco.get_serverDataBase().get(), sdb_gl);
 
-	ClientsDataBase * cdb = ClientsDataBase::GetInstance();
+	//ClientsDataBase * cdb = ClientsDataBase::GetInstance();
 	boost::shared_ptr<ClientsDataBase> ptr_cdb(ptr_cdb_gl);
 	rcco.set_clientsDataBase(ptr_cdb);
 	BOOST_TEST_MESSAGE("* Ustawienie bazy danych klientow...");
@@ -37,9 +36,9 @@ void test_case_remoteClientConnected_1()
 	BOOST_REQUIRE(rcco2.get_clientsDataBase().get()==cdb_gl);
 
 	BOOST_TEST_MESSAGE("* Konstruktor jedno argumentowy...");
-	ServerDataBase * sdb2 = ServerDataBase::GetInstance();
+	//ServerDataBase * sdb2 = ServerDataBase::GetInstance();
 	boost::shared_ptr<ServerDataBase> ptr_sdb2(ptr_sdb_gl);
-	ClientsDataBase * cdb2 = ClientsDataBase::GetInstance();
+	//ClientsDataBase * cdb2 = ClientsDataBase::GetInstance();
 	boost::shared_ptr<ClientsDataBase> ptr_cdb2(ptr_cdb_gl);
 	RemoteClientConnectedObserver rcco3(ptr_sdb2,ptr_cdb2);
 	BOOST_WARN(rcco3.get_serverDataBase().get()==sdb_gl);
@@ -54,11 +53,11 @@ void test_case_remoteClientConnected_1()
 }
 void test_case_remoteClientConnected_2()
 {
-boost::shared_ptr<ServerDataBase> ptr_sdb_gl=ServerDataBase::GetInstnace();
-
+	boost::shared_ptr<ServerDataBase> ptr_sdb_gl=ServerDataBase::GetInstnace();
 	boost::shared_ptr<ClientsDataBase> ptr_cdb_gl=ClientsDataBase::GetInstnace();
-ServerDataBase * sdb_gl = ptr_sdb_gl.get();
+	ServerDataBase * sdb_gl = ptr_sdb_gl.get();
 	ClientsDataBase * cdb_gl = ptr_cdb_gl.get();
+
 		BOOST_TEST_MESSAGE("******* TEST LOGIKI RemoteClientConnectedObserver...");
 		BOOST_TEST_MESSAGE("* Test na pustej bazie");
 		boost::shared_ptr<ClientsDataBase> ptr_cdb(ptr_cdb_gl);
