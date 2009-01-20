@@ -149,6 +149,11 @@ int Client::SendPackage(DomainData::User usr, DomainData::User sender, DomainDat
 	{
 		//Sprobuj wyslac plik bezposrednio do klienta
 		//TODO Mozna sprawdzic mode(checkStatus)
+		if(CORBA::is_nil(connectedServerInstance))
+		{
+			LOG4CXX_DEBUG(logger, "Nie udalo sie wyslac pliku. Zdalna instancja niezainicjowana");
+			return -1;
+		}
 		DomainData::Address * clAddr = connectedServerInstance->GetUserAddressByName(usr);
 		if((*clAddr).localization.in() ==0 || strcmp((*clAddr).localization.in(), "")==0)
 		{
