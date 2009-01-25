@@ -7,6 +7,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "client", "client\client.vcp
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unitTestServer", "unitTestServer\unitTestServer.vcproj", "{D29BECB5-A62C-409E-B94B-9D013569E0E0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unitTestClient", "unitTestClient\unitTestClient.vcproj", "{B5D36D7D-A9F7-4A24-B445-654B4BB6D2F5}"
+EndProject
 Global
 	GlobalSection(SubversionScc) = preSolution
 		Svn-Managed = True
@@ -29,6 +31,10 @@ Global
 		{D29BECB5-A62C-409E-B94B-9D013569E0E0}.Debug|Win32.Build.0 = Debug|Win32
 		{D29BECB5-A62C-409E-B94B-9D013569E0E0}.Release|Win32.ActiveCfg = Release|Win32
 		{D29BECB5-A62C-409E-B94B-9D013569E0E0}.Release|Win32.Build.0 = Release|Win32
+		{B5D36D7D-A9F7-4A24-B445-654B4BB6D2F5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{B5D36D7D-A9F7-4A24-B445-654B4BB6D2F5}.Debug|Win32.Build.0 = Debug|Win32
+		{B5D36D7D-A9F7-4A24-B445-654B4BB6D2F5}.Release|Win32.ActiveCfg = Release|Win32
+		{B5D36D7D-A9F7-4A24-B445-654B4BB6D2F5}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
