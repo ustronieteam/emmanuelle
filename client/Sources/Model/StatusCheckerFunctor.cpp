@@ -12,12 +12,12 @@ int StatusCheckerFunctor::operator()()
 				it != contactList.end();
 				it++)
 		{
-			DomainData::Address addr;
-			addr.name	= it->userDesc.name;
-			addr.localization = CORBA::string_dup("NIEPOTRZEBNY_JEST_ADDRESS");
+			DomainData::User usr;
+			usr.name	= it->userDesc.name;
+			//addr.localization = CORBA::string_dup("NIEPOTRZEBNY_JEST_ADDRESS");
 
 			LOG4CXX_DEBUG(logger, "Wywolanie metody na kliencie check status");
-			bool stat = _client->CheckStatus(addr);
+			bool stat = _client->CheckStatus(usr);
 			LOG4CXX_DEBUG(logger, "Wywolano metode na kliencie check status");
 			ContactRecord cr = *it;
 			cr.isAvailable = stat;
