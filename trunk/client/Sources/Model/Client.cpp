@@ -308,7 +308,16 @@ int Client::AddMessageObserver(IRemoteObserver & messageObserver)
 {
     return 0;
 }
-bool Client::CheckStatus(DomainData::Address addr)
+bool Client::CheckStatus(DomainData::User usr)
 {
-	return true;
+	try
+	{
+		DomainData::Enability en = connectedServerInstance->CheckClientStatus(usr);
+		return en.status;
+	}
+	catch(CORBA::SystemException & e)
+	{
+		LOG4CXX_ERROR(logger, "Blad komunikacji podczas sprawdzania statusu "<< e._to_string());
+		return false; //Nie dostepny (bo nie jsetesmy podlaczeni do serwera)
+	}
 }

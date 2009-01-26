@@ -86,7 +86,7 @@ class Client : public CorbaConnector
 		int SendMessageToClient(DomainData::User sender, DomainData::User receiver, DomainData::Message msg);
         int AddMessageObserver(IRemoteObserver & messageObserver);
 
-		bool CheckStatus(DomainData::Address addr);
+		bool CheckStatus(DomainData::User usr);
 
 		///
 		///gettery i settery dla nazwy serwera do ktorego sie podlaczamy
