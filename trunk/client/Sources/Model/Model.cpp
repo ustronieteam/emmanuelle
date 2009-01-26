@@ -294,6 +294,10 @@ int Model::Disconnect()
 		 //boost::thread watekSluchacza(&activateListeningThreadFun);
 		 //LOG4CXX_DEBUG(logger, "Uruchomiono watek nasluchu");
 		 //Sleep(5000);
+		 StatusCheckerFunctor checkerFunctor(clientsData,client);
+		//Utworz i uruchom watki
+	     boost::thread threadStatusChecker(checkerFunctor);
+		 LOG4CXX_DEBUG(logger, "Uruchomiono nas³uchiwanie statusu");
 		 return true;
 	 }
 	 else
