@@ -4,18 +4,21 @@
 int IRemoteObserverObject::RegisterObserv(IRemoteObserver * observ)
 {
 	LOG4CXX_DEBUG(logger, "Zarejestrowanie obserwatora.");
-	observer = observ;
+	RemoteObserversList.push_back(observ);
 	return 0;
 }
 
 int IRemoteObserverObject::UnregisterObserv()
 {
 	LOG4CXX_DEBUG(logger, "Wyrejestrowanie obserwatora.");
-	delete observer;
+	for(std::vector<IRemoteObserver *>::const_iterator it = RemoteObserversList.begin(); it < RemoteObserversList.end(); ++it)
+		delete *it;
+
 	return 0;
 }
 
 void IRemoteObserverObject::Notify(RemoteObserverData objectData)
 {
-	observer->Refresh(objectData);
+	for(std::vector<IRemoteObserver *>::const_iterator it = RemoteObserversList.begin(); it < RemoteObserversList.end(); ++it)
+		(*it)->Refresh(objectData);
 }

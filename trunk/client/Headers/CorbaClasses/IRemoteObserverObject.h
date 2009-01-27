@@ -28,7 +28,7 @@ class IRemoteObserverObject
 		///
 		/// kolekcji obserwatorow, czyli obiektow klasy IRemoteObserver
 		///
-        IRemoteObserver * observer;
+		std::vector<IRemoteObserver *> RemoteObserversList;
 
 		// logger
 		log4cxx::LoggerPtr logger;
