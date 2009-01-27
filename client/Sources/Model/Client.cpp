@@ -170,14 +170,35 @@ int Client::SendPackage(DomainData::User usr, DomainData::User sender, DomainDat
 			LOG4CXX_DEBUG(logger, "Nie udalo sie wyslac pliku. Nie pozyskano adresu klienta(NULL lub pusty lancuch) o podanej nazwie: " <<usr.name.in());
 			return -1;
 		}
-		CORBA::ORB_var orbClient;
-		LOG4CXX_DEBUG(logger, "pozyskiwanie zdalnej instancji klienta");
-		IClientClient_var otherClientInstance = getRemoteClientInstance(orbClient, *clAddr);
-		LOG4CXX_DEBUG(logger, "Pozyskano zdalna instancje klienta. Wysylanie pliku...");
+		//Sprawdz tryb klienta
+		DomainData::Enability en = connectedServerInstance->CheckClientStatus(usr);
+		if(en.mode_ == DomainData::active)
+		{
+			CORBA::ORB_var orbClient;
+			LOG4CXX_DEBUG(logger, "pozyskiwanie zdalnej instancji klienta");
+			IClientClient_var otherClientInstance = getRemoteClientInstance(orbClient, *clAddr);
+			LOG4CXX_DEBUG(logger, "Pozyskano zdalna instancje klienta. Wysylanie pliku...");
 
-		LOG4CXX_DEBUG(logger, "Wysylanie...");
-		otherClientInstance->SendFile(file,sender);
-		LOG4CXX_DEBUG(logger, "Wyslano");
+			LOG4CXX_DEBUG(logger, "Wysylanie...");
+			otherClientInstance->SendFile(file,sender);
+			LOG4CXX_DEBUG(logger, "Wyslano");
+		}
+		else
+		{
+			LOG4CXX_DEBUG(logger, "Zapytanie o Pipe Holder-a");
+			DomainData::Usr pipeHolder = connectedServerInstance->GetPipeHolder(usr);
+
+			DomainData::Address * pipeHolderClAddr = connectedServerInstance->GetUserAddressByName(pipeHolder);
+			CORBA::ORB_var orbClient;
+			LOG4CXX_DEBUG(logger, "pozyskiwanie zdalnej instancji klienta(pipeholdera)");
+			IClientClient_var otherClientInstance = getRemoteClientInstance(orbClient, *pipeHolderClAddr );
+			LOG4CXX_DEBUG(logger, "Pozyskano zdalna instancje klienta(pipeholdera). Wysylanie pliku...");
+			usr.number = 1;
+			otherClientInstance->CreatePipe(usr);
+			otherClientInstance->SendFile(file, sender);
+
+
+		}
 	}
 	catch(CORBA::SystemException & e)
 	{
