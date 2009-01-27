@@ -155,9 +155,23 @@ IServerClient_impl::SendMessage(const ::DomainData::User& ssender,
 IServerClient_impl::CheckClientStatus(const ::DomainData::User& usr)
     throw(::CORBA::SystemException)
 {
-    // TODO: Implementation
-    ::DomainData::Enability _r;
-    return _r;
+    std::cout << "WYWOLANIE CHECKENABILITYSTATUS z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()) << std::endl;
+
+	int clientId = ClientsDataBase::GetInstance()->Find(usr);
+
+	LOG4CXX_DEBUG(logger, "Pobrano indeks klienta...");
+	if(clientId < 0)
+	{
+		LOG4CXX_DEBUG(logger, "Nie znaleziono takiego klienta...");
+		::DomainData::Enability _r;
+		_r.status = false;
+		return _r;
+	}
+
+	LOG4CXX_DEBUG(logger, "Zwrocenie statusu klienta");
+	std:: cout << ClientsDataBase::GetInstance()->GetRecord(clientId).GetUser().name.in() << ": " << ClientsDataBase::GetInstance()->GetRecord(clientId).GetEnability().status << std::endl;
+
+    return ClientsDataBase::GetInstance()->GetRecord(clientId).GetEnability();
 }
 
 //
