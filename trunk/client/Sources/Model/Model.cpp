@@ -365,7 +365,7 @@ bool Model::runStatusChecker()
 	//Utworz logike watku
 	//StatusCheckerFunctor statusChecker(clientsData, client);
 	//Utworz i uruchom watki
-	boost::thread threadStatusChecker(statusChecker);
+	boost::thread threadStatusChecker(boost::ref(statusChecker));
 
 	LOG4CXX_DEBUG(logger, "Rozpoczeto nasluchiwac status w nowym watku");
 	return true;
