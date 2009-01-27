@@ -42,27 +42,19 @@ class Aplication
 		///
         IModel * model;
 
-		///
-		/// nazwa pliku konfiguracyjnego
-		///
-        const char * configFileName;
-
 		// logger
 		log4cxx::LoggerPtr logger;
 
 		///
 		/// konstruktor prywatny
 		///
-        Aplication(const char * fileName)
+        Aplication()
 		{
 			//logger
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("AplicationClass"));
 			logger->setLevel(LOGLEVEL);
 
 			LOG4CXX_DEBUG(logger, "Stworzenie i powiazanie obiektow klienta ... ");
-
-			// zapisanie nazwy pliku konfiguracyjnego
-			configFileName = fileName;
 
 			// stworzenie obietku modelu
 			model = Model::GetInstance();
@@ -79,15 +71,6 @@ class Aplication
 			LOG4CXX_DEBUG(logger, "... stworzono widok!");
 		}
 
-		///
-		///	@param [out]	address		miejsce gdzie ma byc zapisany adress serwera odczytany z pliku
-		/// @return						0 - powodzenie, 1 - niepowodzenie
-		///
-		/// Otwarcie pliku konfiguracyjnego o nawie 'configFileName' i odczytanie 
-		/// addresu serwera i przekazanie go do 'address'
-		///
-		bool openConfFile(std::string & address);
-
     public:
 
 		///
@@ -96,9 +79,9 @@ class Aplication
 		/// statyczna metoda zwracajaca wskaznik do obiektu klasy Server jesli
 		/// istnieje badz tworzaca go jesli nie istnieje
 		///
-		static Aplication * GetInstance(const char * configFileName)
+		static Aplication * GetInstance()
 		{
-			static Aplication * instance = new Aplication(configFileName);
+			static Aplication * instance = new Aplication();
 
 			return instance;
 		}
