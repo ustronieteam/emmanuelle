@@ -37,6 +37,8 @@ class ClientsData : public ClientDataObject
 		///Wlasny Record Klienta
 		///
 		ContactRecord ownRecord;
+
+		DomainData::Mode _mode;
 		///
 		/// Kolekcja trzymajaca kontakty klienta
 		///
@@ -73,6 +75,8 @@ class ClientsData : public ClientDataObject
         int AddContact(DomainData::User usr);
 		const ContactRecord & FindByName(std::string name);
 		bool ModifyRecord(const ContactRecord & cr);
+		void setOwnMode(DomainData::Mode m){_mode = m;}
+		DomainData::Mode getOwnMode(){return _mode;}
 
 };  //end class ClientsData
 

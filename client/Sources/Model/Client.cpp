@@ -21,6 +21,7 @@ Client::Client(DomainData::Address servAddr)
 	logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("Client"));
 	logger->setLevel(LOGLEVEL);		
 	serverAddress = servAddr;
+	readServerAddress();
 	port = defaultPortNumber;
 }
 
@@ -37,10 +38,19 @@ Client::~Client()
 void Client::readServerAddress()
 {
 	std::string servAddr="";
+	std::string clName="";
+	long clNumber = 0;
+	std::string mode = "active";
 	po::options_description configOption( "Opcje pliku konfiguracyjnego" );
 	configOption.add_options()
-			   ("serverAddress", po::value<std::string>(&servAddr),
-     "Adres Ip servera domyslnego") 
+			   ("clientName", po::value<std::string>(&clName),
+     "Adres Ip servera domyslnego")
+				("clientNumber", po::value<long>(&clNumber),
+     "Adres Ip servera domyslnego")
+	 ("serverAddress", po::value<std::string>(&servAddr),
+			"Adres Ip servera domyslnego")
+	 ("mode", po::value<std::string>(&mode),
+			"Tryb klienta (Passive/Active)") 
 	;
 	po::variables_map vm;
 	std::ifstream file;
@@ -50,8 +60,8 @@ void Client::readServerAddress()
 	{
 		store( parse_config_file(file,configOption), vm );
 		po::notify( vm );
-		serverAddress.localization = CORBA::string_dup(servAddr.c_str());//???
 		file.close();
+		serverAddress.localization = CORBA::string_dup(servAddr.c_str());//???
 	}
 	catch(std::exception &exc)
 	{
