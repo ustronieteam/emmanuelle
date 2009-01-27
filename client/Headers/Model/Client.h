@@ -119,6 +119,7 @@ class Client : public CorbaConnector
 			connectToClientClient(address, orb, client); 
 			LOG4CXX_DEBUG(logger, "...koniec testu na kliencie.");
 		}
+		void setMyMode(DomainData::Mode m){mode = m;}
 
 };  //end class Client
 

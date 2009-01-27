@@ -101,15 +101,22 @@ void Model::activateListning()
 		// </dla serwerów>
 
 		// </dla klientow>
-		clientImpl = new IClientClient_impl(poa);
-
-		PortableServer::ObjectId_var oidClnt = PortableServer::string_to_ObjectId("clientclient");
-		PortableServer::ServantBase_var servantClnt = clientImpl;
-		poa->activate_object_with_id(oidClnt, servantClnt);
-		LOG4CXX_DEBUG(logger, "utworzono i zarejestrowano zdalny obiekt klienta (udostepniany klientom)");
+		if(clientsData->getOwnMode() == DomainData::active)
+		{	
+			LOG4CXX_DEBUG(logger, "TRYB ACTIVE");
+			clientImpl = new IClientClient_impl(poa);
+			PortableServer::ObjectId_var oidClnt = PortableServer::string_to_ObjectId("clientclient");
+			PortableServer::ServantBase_var servantClnt = clientImpl;
+			poa->activate_object_with_id(oidClnt, servantClnt);
+			LOG4CXX_DEBUG(logger, "utworzono i zarejestrowano zdalny obiekt klienta (udostepniany klientom)");
 		
-		IClientClient_var client = clientImpl->_this();
-		bootManager->add_binding(oidClnt, client);
+			IClientClient_var client = clientImpl->_this();
+			bootManager->add_binding(oidClnt, client);
+		}
+		else
+		{
+			LOG4CXX_DEBUG(logger, "TRYB PASSIVE");
+		}
 		// </dla klientow>
 
 		manager->activate();
