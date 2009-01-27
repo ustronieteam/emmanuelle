@@ -15,7 +15,6 @@ View::View()
 
 	// Zerowanie niektorych skladowych.
 	_information.inMsgCount		= 0;
-	_information.outMsgCount	= 0;
 	_information.connected		= false;
 }
 

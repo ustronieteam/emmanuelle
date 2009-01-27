@@ -176,7 +176,7 @@ class Controller
 		void SetMyAvailability(bool b);
 		void testClient(std::string str);
 		void setOwnMode(DomainData::Mode m){model->setOwnMode(m);}
-		DomainData::Mode getOwnMode(){model->getOwnMode();}
+		DomainData::Mode getOwnMode(){return model->getOwnMode();}
 
 };  //end class Controller
 

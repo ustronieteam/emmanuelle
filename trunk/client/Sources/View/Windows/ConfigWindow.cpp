@@ -10,19 +10,21 @@ void ConfigWindow::Render(std::ostream & out)
 {
 	out	<< HEADLINE
 		<< SIDE << "^ Konfiguracja\n"
-		<< SIDE << std::endl << SIDE << "Serwer [srv]:\t\t\t";
+		<< SIDE << std::endl << SIDE << "Serwer [srv]:\t\t";
 
 	if ( this->GetController()->GetServerAddress() == NULL )
 		out << "NIE USTALONO";
 	else
 		out << this->GetController()->GetServerAddress();
 
-	/*out << '\n' << SIDE << "Port [port]:\t\t\t";
+	out << '\n' << SIDE << "Tryb [mode:a|p]:\t\t\t";
 
-	if ( this->GetController()->GetPortNumber() == 0 )
-		out << "NIE USTALONO";
+	if ( this->GetController()->getOwnMode() == DomainData::active )
+		out << "Aktywny";
+	else if ( this->GetController()->getOwnMode() == DomainData::passiv )
+		out << "Passywny";
 	else
-		out << this->GetController()->GetPortNumber();*/
+		out << "BLAD!";
 
 	out << '\n' << SIDE << "Nazwa uzytkownika [uname]:\t";
 
@@ -30,13 +32,6 @@ void ConfigWindow::Render(std::ostream & out)
 		out << "NIE USTALONO";
 	else
 		out << this->GetController()->GetOwnName();
-
-	/*out << '\n' << SIDE << "Numer uzytkownika [unum]:\t";
-
-	if ( this->GetController()->GetOwnNumber() == 0 )
-		out << "NIE USTALONO";
-	else
-		out << this->GetController()->GetOwnNumber();*/
 
 	out << '\n' << SIDE << '\n' << SIDE << "^ Informacje:\n" << SIDE << '\n';
 
@@ -47,7 +42,6 @@ void ConfigWindow::Render(std::ostream & out)
 	else
 		out << this->_information->connectedDate << '\n';
 
-	//out << SIDE << "Wyslanych wiadomosci:\t\t"	<< this->_information->outMsgCount << '\n';
 	out << SIDE << "Odebranych wiadomosci:\t"	<< this->_information->inMsgCount << '\n';
 	out << SIDE << '\n';
 	out << LINE;
@@ -76,56 +70,29 @@ void ConfigWindow::Command(std::string & cmd)
 			this->GetController()->SetServerAddress(mcmd.c_str());
 			this->SetMsg(INF_NEW_SRV);
 		}
-		//// Port
-		//else if ( !mcmd.compare("port") )
-		//{
-		//	std::cin >> tmp;
-		//	
-		//	/* Sprawdzanie poprawnosci. */
-		//	if ( std::cin.fail() )
-		//	{
-		//		this->SetMsg(INF_ER_NEW_PORT);
-		//		std::cin.clear( std::cin.rdstate() & ~std::ios::failbit );
-
-		//		// Pobranie smieci.
-		//		std::cin >> mcmd;
-		//	}
-		//	else
-		//	{
-		//		this->GetController()->SetPortNumber(tmp);
-		//		this->SetMsg(INF_NEW_PORT);
-		//	}
-		//}
+		// Tryb
+		else if ( !mcmd.compare("mode") )
+		{
+			std::cin >> mcmd;
+			
+			if ( !mcmd.compare("a") )
+			{
+				this->GetController()->setOwnMode(DomainData::active); // Ustaw aktywny
+			}
+			else if ( !mcmd.compare("p") )
+			{
+				this->GetController()->setOwnMode(DomainData::passiv); // Ustaw niekatywny
+			}
+		}
 		// Nazwa uzytkownika.
 		else if ( !mcmd.compare("uname") )
 		{
 			std::cin >> mcmd;
 
 			this->GetController()->SetOwnName(mcmd.c_str());
-			//this->_configuration->userName = mcmd;
 
 			this->SetMsg(INF_NEW_UNAME);
 		}
-		//// Numer uzytkownika.
-		//else if ( !mcmd.compare("unum") )
-		//{
-		//	std::cin >> tmp;
-
-		//	this->GetController()->SetOwnNumber(tmp);
-		//	//this->_configuration->userNumber = tmp;
-
-		//	/* Sprawdzanie poprawnosci. */
-		//	if ( std::cin.fail() )
-		//	{
-		//		this->SetMsg(INF_ER_NEW_UNUM);
-		//		std::cin.clear( std::cin.rdstate() & ~std::ios::failbit );
-
-		//		// Pobranie smieci.
-		//		std::cin >> mcmd;
-		//	}
-		//	else
-		//		this->SetMsg(INF_NEW_UNUM);
-		//}
 		else
 			this->SetMsg(ER_NO_PARAM);
 	}
