@@ -21,7 +21,7 @@ using namespace std;
 
 int main(int argc, char * argv[])
 {
-	if(argc < 2)
+	if(argc < 1)
 	{
 		cout << "Zla liczba paramaetrow";
 		return 1;
@@ -37,7 +37,7 @@ int main(int argc, char * argv[])
 	log4cxx::LoggerPtr logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("MAIN"));
 	logger->setLevel(LOGLEVEL);
 
-	if(Aplication::GetInstance(argv[1])->Run())
+	if(Aplication::GetInstance()->Run())
 	{
 		LOG4CXX_ERROR(logger, "Klient zosta³ nieprawidlowo zamkniety z powodu b³êdu");
 		return 1;
