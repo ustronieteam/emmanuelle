@@ -67,11 +67,6 @@ typedef struct _info
 	boost::posix_time::ptime connectedDate;
 
 	///
-	/// Ilosc wyslanych wiadomosci.
-	///
-	int outMsgCount;
-
-	///
 	/// Ilosc odebranych wiadomosci
 	///
 	int inMsgCount;

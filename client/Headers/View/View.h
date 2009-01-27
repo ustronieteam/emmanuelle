@@ -40,7 +40,7 @@
 #define INFO_DCONN_STILL	"Trwa rozlaczanie..."
 #define INFO_GET_NEW_MSG	"^^ Otrzymales nowa rozmowe od "
 #define INFO_GET_NEW_STAT1	"^^ Twoj znajomy "
-#define INFO_GET_NEW_STAT2	"zmienil status na "
+#define INFO_GET_NEW_STAT2	" zmienil status na "
 #define INFO_GET_FILE1		"^^ Twoj znajomy "
 #define INFO_GET_FILE2		" przyslal ci plik "
 #define INFO_GET_FILE_MSG	" Przyslano Ci plik: "
