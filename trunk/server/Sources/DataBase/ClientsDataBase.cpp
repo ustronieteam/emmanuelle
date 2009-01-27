@@ -225,6 +225,25 @@ int ClientsDataBase::FindActiveClientOnServer(int serverId)
 	return -1;
 }
 
+
+int ClientsDataBase::FindByAddress(const struct DomainData::Address & address)
+{
+	boost::mutex::scoped_lock sl(_mutex);
+
+	LOG4CXX_DEBUG(_logger, "Szukanie po strukturze Address. Address.name: " << address.name.in() << " Address.localization: " << address.localization.in() );
+
+	if ( _records.size() != 0 )
+		for(std::map<int, ClientRecord>::iterator i = this->_records.begin(); i != this->_records.end(); i++)
+			if ( strcmp((*i).second.GetAddress().localization.in(), address.localization.in()) == 0 )
+			{
+				LOG4CXX_DEBUG(_logger, "Znaleziono rekord!");
+				return (*i).second.GetRecordId();
+			}
+
+	LOG4CXX_DEBUG(_logger, "Nie znaleziono rekordu!");
+	return -1;
+}
+
 std::ostream & operator<<(std::ostream & os, const ClientsDataBase & db)
 {
 	int k = 1;

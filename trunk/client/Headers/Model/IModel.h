@@ -5,6 +5,7 @@
 #include "IRemoteObserver.h"
 #include "DomainData.h"
 #include "ContactRecord.h"
+#include "IServerClient.h"
 #include <vector>
 
 class IModel
@@ -55,6 +56,8 @@ class IModel
         virtual  std::vector<ContactRecord> GetContactsList() = 0; 
 		virtual bool runStatusChecker() = 0;
 		virtual void activateListning() = 0;
+
+		virtual IServerClient_var GetServerInstance() = 0;
 
 		 virtual void TestClient(std::string addrClient) = 0;
 		 virtual void setOwnMode(DomainData::Mode m)=0;

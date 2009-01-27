@@ -143,6 +143,13 @@ class ClientsDataBase
 		/// @return Id rekordu aktywnego klienta. -1 gdy nie znajdzie.
 		///
 		int FindActiveClientOnServer(int serverId);
+
+		///
+		/// Znajdz rekord clienta po adresie
+		/// @param[in] address Adres do wyszukania rekordu.
+		/// @return ID wyszukanego rekordu.
+		///
+		int FindByAddress(const struct DomainData::Address & address);
 };
 
 ///

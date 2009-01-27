@@ -1,6 +1,10 @@
 #include <OB/CORBA.h>
 #include <IClientServer_impl.h>
 
+#include <boost/bind.hpp>
+#include <boost/thread/thread.hpp>
+#include "CorbaConnector.h"
+#include "Model.h"
 //
 // IDL:IClientServer:1.0
 //
@@ -50,6 +54,52 @@ IClientServer_impl::ChangeServer(const ::DomainData::Address& serverAddress)
     // TODO: Implementation
 }
 
+// funkcja puszczana w odzienlnym watku do nasluchu czy utworzono pipe i mozna odebrac plik
+void runGetFileThread(IClientClient_var client, DomainData::User sender, IClientServer_impl * cl)
+{
+	try
+	{
+		while(true)
+		{
+			DomainData::File * f = client->GetFile(sender);
+			if(strcmp(f->name.in(), ""))
+			{
+				//LOG4CXX_DEBUG(logger, "Znalezino plik na pipe holderze");
+				RemoteObserverData observData;
+				observData.SetObserverType(FFILE);
+				observData.SetUser(sender);
+
+				//LOG4CXX_DEBUG(logger, "Zawartosc body: " << f.body.get_buffer());
+
+				std::ofstream fileStream(f->name.in(), std::ios_base::binary);
+				if(fileStream.is_open())
+				{
+					observData.SetFileName(f->name.in());
+
+					char * content = const_cast<char *>(f->body.get_buffer());
+					fileStream.write(content, f->size);
+
+					fileStream.close();
+				}
+
+				cl->Notify(observData);
+				
+
+				break;
+			}
+
+#ifndef WIN32
+			sleep(5);
+#else
+			Sleep(5000);
+#endif
+		}
+	}
+	catch(CORBA::SystemException & e)
+	{
+	}
+}
+
 //
 // IDL:IClientServer/CreatePipeRequest:1.0
 //
@@ -58,7 +108,30 @@ IClientServer_impl::CreatePipeRequest(const ::DomainData::User& sender,
                                       const ::DomainData::User& pipeHolder)
     throw(::CORBA::SystemException)
 {
-    // TODO: Implementation
-    ::CORBA::Boolean _r = false;
-    return _r;
+	try
+	{
+		IServerClient_var server = Model::GetInstance()->GetServerInstance();
+
+		CORBA::ORB_var orb;
+		IClientClient_var client;
+
+		if(!CorbaConnector::connectToClientClient(server->GetUserAddressByName(pipeHolder)->localization.in(), orb, client))
+		{
+			LOG4CXX_ERROR(logger, "Nie mozna polaczyc sie z klientem");
+			return false;
+		}
+		DomainData::User sender2 = sender;
+		sender2.number = 0;
+		client->CreatePipe(sender2);
+		boost::thread watekGetFile(boost::bind(&runGetFileThread, client, sender2, this));
+
+
+	}
+	catch(CORBA::SystemException & e)
+	{
+		LOG4CXX_ERROR(logger, "nie mozna utworzyc pipe'a" << e._to_string());
+		return false;
+	}
+
+    return true;
 }

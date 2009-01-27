@@ -186,9 +186,9 @@ int Client::SendPackage(DomainData::User usr, DomainData::User sender, DomainDat
 		else
 		{
 			LOG4CXX_DEBUG(logger, "Zapytanie o Pipe Holder-a");
-			DomainData::Usr pipeHolder = connectedServerInstance->GetPipeHolder(usr);
+			DomainData::User *pipeHolder = connectedServerInstance->GetPipeHolder(usr);
 
-			DomainData::Address * pipeHolderClAddr = connectedServerInstance->GetUserAddressByName(pipeHolder);
+			DomainData::Address * pipeHolderClAddr = connectedServerInstance->GetUserAddressByName(*pipeHolder);
 			CORBA::ORB_var orbClient;
 			LOG4CXX_DEBUG(logger, "pozyskiwanie zdalnej instancji klienta(pipeholdera)");
 			IClientClient_var otherClientInstance = getRemoteClientInstance(orbClient, *pipeHolderClAddr );

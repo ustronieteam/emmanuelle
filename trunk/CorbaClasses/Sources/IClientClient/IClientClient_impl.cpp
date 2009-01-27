@@ -11,6 +11,9 @@ IClientClient_impl::IClientClient_impl(PortableServer::POA_ptr poa)
 	//logger
 	logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("IClinetServer_impl"));
 	logger->setLevel(LOGLEVEL);
+
+	isPipeOpen = 0;
+	file.name = CORBA::string_dup("");
 }
 
 IClientClient_impl::~IClientClient_impl()
@@ -33,24 +36,31 @@ IClientClient_impl::SendFile(const ::DomainData::File& f,
 {
 	LOG4CXX_DEBUG(logger, "WYWOLANIE SENDFILE");
 
-	RemoteObserverData observData;
-	observData.SetObserverType(FFILE);
-	observData.SetUser(receiver);
-
-	LOG4CXX_DEBUG(logger, "Zawartosc body: " << f.body.get_buffer());
-
-	std::ofstream fileStream(f.name.in(), std::ios_base::binary);
-	if(fileStream.is_open())
+	if(isPipeOpen)
 	{
-		observData.SetFileName(f.name.in());
-
-		char * content = const_cast<char *>(f.body.get_buffer());
-		fileStream.write(content, f.size);
-
-		fileStream.close();
+		file = f;
 	}
+	else
+	{
+		RemoteObserverData observData;
+		observData.SetObserverType(FFILE);
+		observData.SetUser(receiver);
 
-	this->Notify(observData);
+		LOG4CXX_DEBUG(logger, "Zawartosc body: " << f.body.get_buffer());
+
+		std::ofstream fileStream(f.name.in(), std::ios_base::binary);
+		if(fileStream.is_open())
+		{
+			observData.SetFileName(f.name.in());
+
+			char * content = const_cast<char *>(f.body.get_buffer());
+			fileStream.write(content, f.size);
+
+			fileStream.close();
+		}
+
+		this->Notify(observData);
+	}
 }
 //
 // IDL:IClientClient/CreatePipe:1.0
@@ -59,7 +69,20 @@ void
 IClientClient_impl::CreatePipe(const ::DomainData::User& receiver)
     throw(::CORBA::SystemException)
 {
-    // TODO: Implementation
+	if(receiver.number)
+	{
+		// receiver
+		isPipeOpen++;
+		receiverCC = receiver;
+
+
+	}
+	else
+	{
+		// sender
+		isPipeOpen++;
+		senderCC = receiver;
+	}
 }
 
 //
@@ -69,7 +92,5 @@ IClientClient_impl::CreatePipe(const ::DomainData::User& receiver)
 IClientClient_impl::GetFile(const ::DomainData::User& sender)
     throw(::CORBA::SystemException)
 {
-    // TODO: Implementation
-    ::DomainData::File* _r = new ::DomainData::File;
-    return _r;
+	return &file;
 }
