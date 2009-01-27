@@ -147,13 +147,19 @@ void ClientsData::readClientName()
 {
 	lock_mutex();
 	std::string clName="";
+	std::string servAddr="";
 	long clNumber = 0;
+	std::string mode = "active";
 	po::options_description configOption( "Opcje pliku konfiguracyjnego" );
 	configOption.add_options()
 			   ("clientName", po::value<std::string>(&clName),
      "Adres Ip servera domyslnego")
 				("clientNumber", po::value<long>(&clNumber),
-     "Adres Ip servera domyslnego") 
+     "Adres Ip servera domyslnego")
+	 ("serverAddress", po::value<std::string>(&servAddr),
+			"Adres Ip servera domyslnego") 
+	("mode", po::value<std::string>(&mode),
+			"Tryb klienta (Passive/Active)") 
 	;
 	po::variables_map vm;
 	std::ifstream file;
@@ -167,6 +173,12 @@ void ClientsData::readClientName()
 		ownRecord.userDesc.name = CORBA::string_dup(clName.c_str());
 		ownRecord.userDesc.number = clNumber;
 		ownRecord.isAvailable = true;
+		if(mode=="passive")
+		{
+			_mode = DomainData::passiv;
+		}
+		else
+			_mode = DomainData::active;
 	}
 	catch(std::exception &)
 	{

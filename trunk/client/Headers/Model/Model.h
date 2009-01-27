@@ -296,6 +296,8 @@ class Model : public IModel
 
 		// test
 		virtual void TestClient(std::string addrClient);
+		virtual	void setOwnMode(DomainData::Mode m){clientsData->setOwnMode(m);}
+		virtual DomainData::Mode getOwnMode(){return clientsData->getOwnMode();}
 
 };  //end class Model
 

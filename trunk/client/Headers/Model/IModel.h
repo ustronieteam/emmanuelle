@@ -57,6 +57,8 @@ class IModel
 		virtual void activateListning() = 0;
 
 		 virtual void TestClient(std::string addrClient) = 0;
+		 virtual void setOwnMode(DomainData::Mode m)=0;
+		virtual DomainData::Mode getOwnMode()=0;
 
 };  //end class IModel
 
