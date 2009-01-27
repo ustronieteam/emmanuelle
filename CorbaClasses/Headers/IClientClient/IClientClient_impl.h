@@ -25,6 +25,11 @@ class IClientClient_impl : virtual public POA_IClientClient,
 	//logger
 	log4cxx::LoggerPtr logger;
 
+	int isPipeOpen;
+	DomainData::User senderCC;
+	DomainData::User receiverCC;
+	DomainData::File file;
+
 public:
 
     IClientClient_impl(PortableServer::POA_ptr);

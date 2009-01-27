@@ -106,6 +106,11 @@ class Client : public CorbaConnector
 		void setPortNumber(const int & p){port = p;}
 		const int & getPortNumber()const {return port;}
 
+		IServerClient_var GetServerInstance()
+		{
+			return connectedServerInstance;
+		}
+
 		void TestCLNT(std::string address)
 		{
 			CORBA::ORB_var orb;

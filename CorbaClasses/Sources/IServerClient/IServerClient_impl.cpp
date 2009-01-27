@@ -181,8 +181,103 @@ IServerClient_impl::CheckClientStatus(const ::DomainData::User& usr)
 IServerClient_impl::GetPipeHolder(const ::DomainData::User& receiver)
     throw(::CORBA::SystemException)
 {
-    // TODO: Implementation
-    ::DomainData::User* _r = new ::DomainData::User;
+	::DomainData::User* _r = new ::DomainData::User;
+
+	int localServId = ServerDataBase::GetInstance()->Find(Server::GetMyIP());
+	if(localServId <= 0)
+	{
+		LOG4CXX_ERROR(logger, "Id lokalnego servera mniejsze od 0 - nie istnieje");
+		return _r;
+	}
+
+	int clientId = ClientsDataBase::GetInstance()->FindActiveClient();
+
+		if(clientId <= 0)
+		{
+			LOG4CXX_ERROR(logger, "Brak aktywnego klienta");
+			return _r;
+		}
+
+	try
+	{
+		ClientRecord crPipeHolder = ClientsDataBase::GetInstance()->GetRecord(clientId);
+
+		int receiverId = ClientsDataBase::GetInstance()->Find(receiver);
+		if(receiverId <= 0)
+		{
+			LOG4CXX_ERROR(logger, "Nie udalo sie znalezc receivera");
+			return _r;
+		}
+		ClientRecord crReceiver = ClientsDataBase::GetInstance()->GetRecord(receiverId);
+
+		if(crReceiver.GetClientServerId() == localServId)
+		{
+			// client jest lokalnie
+			IClientServer_var clientRInst = crReceiver.GetClientRemoteInstance();
+			if(CORBA::is_nil(clientRInst))
+			{
+				CORBA::ORB_var orb;
+				if(!Server::connectToClientServer(receiverRecord.GetAddress().localization.in(), orb, clientRInst))
+				{
+					LOG4CXX_ERROR(logger, "Nie udalo sie pod³¹czyæ do znalezionego klienta");
+					return _r;
+				}
+
+				crReceiver.SetClientRemoteInstance(clientRInst);
+				crReceiver.SetBroker(orb);
+
+				ClientsDataBase::GetInstance()->ModifyRecord(crReceiver);
+
+				DomainData::User sender;
+				DomainData::Address address;
+				address.localization = CORBA::string_dup(Server::GetInstance("")->GetRemotedAddress());
+				
+				int senderId = ClientsDataBase::GetInstance()->FindByAddress(address);
+				sender = ClientsDataBase::GetInstance()->GetRecord(senderId).GetUser();
+
+				int counter = 5; // do wywalenia gdzies na zewnatrz
+				while(counter--)
+				{
+					if(!clientRInst->CreatePipeRequest(sender, crPipeHolder.GetUser()))
+					{
+						LOG4CXX_DEBUG(logger, "nie mozna utworzyc pipe");
+
+						clientId = ClientsDataBase::GetInstance()->FindActiveClient();
+
+						if(clientId <= 0)
+						{
+							LOG4CXX_ERROR(logger, "Brak aktywnego klienta");
+							return _r;
+						}
+
+						crPipeHolder = ClientsDataBase::GetInstance()->GetRecord(clientId);
+					}
+					else
+					{
+						LOG4CXX_DEBUG(logger, "Znaleziono pipe Holdera i utworzono pipe'a");
+						_r->name = crPipeHolder.GetUser().name;
+						return _r;
+					}
+				}
+			}
+		}
+		else
+		{
+			// client jest na innym serverze
+		}
+
+	}
+	catch(std::exception & e)
+	{
+		LOG4CXX_ERROR(logger, "Pobranie recordu - wyjatek: " << e.what());
+		return _r;
+	}
+	catch(CORBA::SystemException & exp)
+	{
+		LOG4CXX_ERROR(logger, "B³¹d po³¹czenia: " << exp._to_string());
+		return _r;
+	}
+    
     return _r;
 }
 

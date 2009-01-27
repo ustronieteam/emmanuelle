@@ -294,6 +294,11 @@ class Model : public IModel
 		virtual bool runStatusChecker();
 		void stopStatusChecker();
 
+		virtual IServerClient_var GetServerInstance()
+		{
+			return client->GetServerInstance();
+		}
+
 		// test
 		virtual void TestClient(std::string addrClient);
 		virtual	void setOwnMode(DomainData::Mode m){clientsData->setOwnMode(m);}
