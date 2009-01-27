@@ -75,4 +75,6 @@ class ClientsData : public ClientDataObject
 		bool ModifyRecord(const ContactRecord & cr);
 
 };  //end class ClientsData
+
+std::ostream & operator<<(std::ostream & os, const ClientsData & db);
 #endif

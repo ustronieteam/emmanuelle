@@ -76,6 +76,7 @@ class Model : public IModel
 		///
 		/// prywatny konstruktor
 		///
+		StatusCheckerFunctor statusChecker;
 		Model()
 		{
 			isActive = false;
@@ -86,6 +87,7 @@ class Model : public IModel
 
 			client = boost::shared_ptr<Client>(new Client(serverAddress) );
 			clientsData = boost::shared_ptr<ClientsData>(new ClientsData(true));
+			statusChecker = StatusCheckerFunctor(clientsData, client);
 		}
 
 
@@ -288,6 +290,7 @@ class Model : public IModel
 		/// co okreslony czas status wszystkich uzytkownikuw na liscie kontaktow
 		///
 		virtual bool runStatusChecker();
+		void stopStatusChecker();
 
 		// test
 		virtual void TestClient(std::string addrClient);

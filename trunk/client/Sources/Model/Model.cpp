@@ -224,6 +224,7 @@ int Model::DeleteContact(const DomainData::User & usr)
 
 int Model::Disconnect() 
 {
+	stopStatusChecker();
 	if(client != boost::shared_ptr<Client>())
 	{
 		LOG4CXX_DEBUG(logger, "Disconnect w Modelu...");
@@ -291,12 +292,7 @@ int Model::Disconnect()
 	 }
 	 if(result==1)
 	 {
-		 //boost::thread watekSluchacza(&activateListeningThreadFun);
-		 //LOG4CXX_DEBUG(logger, "Uruchomiono watek nasluchu");
-		 //Sleep(5000);
-		 StatusCheckerFunctor checkerFunctor(clientsData,client);
-		//Utworz i uruchom watki
-	     boost::thread threadStatusChecker(checkerFunctor);
+		runStatusChecker();
 		 LOG4CXX_DEBUG(logger, "Uruchomiono nas³uchiwanie statusu");
 		 return true;
 	 }
@@ -367,12 +363,16 @@ bool Model::runStatusChecker()
 {
 	LOG4CXX_DEBUG(logger, "Rozpoczynanie nasluchiwania statusu, uruchomienie w nowym watku");
 	//Utworz logike watku
-	StatusCheckerFunctor statusChecker(clientsData, client);
+	//StatusCheckerFunctor statusChecker(clientsData, client);
 	//Utworz i uruchom watki
 	boost::thread threadStatusChecker(statusChecker);
 
 	LOG4CXX_DEBUG(logger, "Rozpoczeto nasluchiwac status w nowym watku");
 	return true;
+}
+void Model::stopStatusChecker()
+{
+	statusChecker.stopRunning();
 }
 
  void Model::TestClient(std::string addr)
