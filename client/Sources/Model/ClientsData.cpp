@@ -50,10 +50,12 @@ ClientsData::~ClientsData()
 std::vector<ContactRecord> ClientsData::GetContactsList() const  
 {//Nie synchronizuje (bo metoda moze byc czasochlonna) a nie spowoduje to 
  //desynchronizacji danych w bazie
+	//lock_mutex();
 	std::vector<ContactRecord> v;
 	if ( _records.size() != 0 )
 	for(std::map<std::string, ContactRecord>::const_iterator i = this->_records.begin(); i != this->_records.end(); i++)
 		v.push_back((*i).second);
+	//unlock_mutex();
     return v;
 }
 
@@ -239,4 +241,18 @@ bool ClientsData::ModifyRecord(const ContactRecord & cr)
 		throw e;
 	}
 	return true;
+}
+std::ostream & operator<<(std::ostream & os, const ClientsData & db)
+{
+	int k = 1;
+
+	std::vector<ContactRecord> contactList = db.GetContactsList();
+	for(std::vector<ContactRecord>::iterator it = contactList.begin();
+				it != contactList.end();
+				it++)
+	{
+		os	<< "Username: " <<it->userDesc.name<<"; status: "<<it->isAvailable<<std::endl;
+	}
+
+	return os;
 }

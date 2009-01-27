@@ -3,11 +3,14 @@
 int StatusCheckerFunctor::operator()()
 {
 	LOG4CXX_INFO(logger, "Nasluchiwanie zmiany statusu klientow na liscie kontaktow");
-	std::vector<ContactRecord> contactList = clientsData->GetContactsList();
+	
 
-	while(true)
+	while(_running == true)
 	{
+		LOG4CXX_DEBUG(logger, "Petla Watku");
+		std::vector<ContactRecord> contactList = clientsData->GetContactsList();
 		LOG4CXX_DEBUG(logger, "Obudzony watek: Sprawdzanie statusow");
+		LOG4CXX_DEBUG(logger, "Aktualna lista kontaktow: "<<clientsData);
 		for(std::vector<ContactRecord>::iterator it = contactList.begin();
 				it != contactList.end();
 				it++)
@@ -24,9 +27,9 @@ int StatusCheckerFunctor::operator()()
 			LOG4CXX_DEBUG(logger, "Sprawdzanie czy status sie zmienil");
 			if(stat != it->isAvailable)
 			{
-				LOG4CXX_DEBUG(logger, "Wykryto zmieniony status klienta");
+				LOG4CXX_DEBUG(logger, "Wykryto zmieniony status klienta. Stary status: " << it->isAvailable <<" Nowy: " <<stat);
 				this->clientsData->ModifyRecord(cr);
-				LOG4CXX_DEBUG(logger, "Zmieniono record");
+				LOG4CXX_DEBUG(logger, "Zmieniono record(Nowy status : " << clientsData->FindByName(it->userDesc.name.in()).isAvailable);
 				DataObserverData obsrData;
 				obsrData.setContactRecord(cr);
 				LOG4CXX_DEBUG(logger, "Uruchamianie obserwatora");
@@ -43,7 +46,7 @@ int StatusCheckerFunctor::operator()()
 
 	}
 			
-	
+	LOG4CXX_DEBUG(logger, "Zakonczono nasluchiwanie statusu!!!");
 	return 0;
 
 }

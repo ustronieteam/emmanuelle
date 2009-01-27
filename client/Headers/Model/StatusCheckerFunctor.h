@@ -17,6 +17,7 @@ class StatusCheckerFunctor
 		log4cxx::LoggerPtr logger;
 		boost::shared_ptr<ClientsData> clientsData;
 		boost::shared_ptr<Client> _client;
+		volatile bool _running;
 	public:
 		StatusCheckerFunctor(boost::shared_ptr<ClientsData> clData, boost::shared_ptr<Client> client)
 		{
@@ -24,8 +25,10 @@ class StatusCheckerFunctor
 			_client = client;
 			logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("StatusCheckerFunctor"));
 			logger->setLevel(LOGLEVEL);
+			_running = true;
 		}
-
+		StatusCheckerFunctor(){};
+		void stopRunning() { _running=false;}
 		int operator()();
 
 };

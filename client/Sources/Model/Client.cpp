@@ -313,6 +313,7 @@ bool Client::CheckStatus(DomainData::User usr)
 	try
 	{
 		DomainData::Enability en = connectedServerInstance->CheckClientStatus(usr);
+		LOG4CXX_DEBUG(logger, "Otrzymano status:  "<< en.status);
 		return en.status;
 	}
 	catch(CORBA::SystemException & e)
