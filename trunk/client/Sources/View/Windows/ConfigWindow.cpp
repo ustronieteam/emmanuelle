@@ -10,14 +10,14 @@ void ConfigWindow::Render(std::ostream & out)
 {
 	out	<< HEADLINE
 		<< SIDE << "^ Konfiguracja\n"
-		<< SIDE << std::endl << SIDE << "Serwer [srv]:\t\t";
+		<< SIDE << std::endl << SIDE << "Serwer [srv]:\t\t\t";
 
 	if ( this->GetController()->GetServerAddress() == NULL )
 		out << "NIE USTALONO";
 	else
 		out << this->GetController()->GetServerAddress();
 
-	out << '\n' << SIDE << "Tryb [mode:a|p]:\t\t\t";
+	out << '\n' << SIDE << "Tryb [mode:a|p]:\t\t";
 
 	if ( this->GetController()->getOwnMode() == DomainData::active )
 		out << "Aktywny";
