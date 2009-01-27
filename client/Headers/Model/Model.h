@@ -18,6 +18,8 @@
 
 #include <boost/shared_ptr.hpp>
 #include <boost/thread.hpp>
+#include <boost/ref.hpp>
+
 #include <log4cxx/logger.h>
 #include <log4cxx/level.h>
 
