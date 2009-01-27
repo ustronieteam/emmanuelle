@@ -154,7 +154,16 @@ int Model::RegisterObserver(IRemoteObserver * observ, ObserverType type)
 	else if(type == FFILE)
 	{
 		LOG4CXX_DEBUG(logger, "rejestrowanie obseratora FILE" );
-		this->clientImpl->RegisterObserv(observ);
+		if(clientsData->getOwnMode() == DomainData::active)
+		{
+			LOG4CXX_DEBUG(logger, "Tryb Active rejestrowanie obseratora FILE w clientClientImpl" );
+			this->clientImpl->RegisterObserv(observ);
+		}
+		else
+		{
+			LOG4CXX_DEBUG(logger, "Tryb Passive rejestrowanie obseratora FILE w clientServerImpl" );
+			this->serverImpl->RegisterObserv(observ);
+		}
 	}
 	else
 	{
