@@ -90,6 +90,7 @@ class Model : public IModel
 			client = boost::shared_ptr<Client>(new Client(serverAddress) );
 			clientsData = boost::shared_ptr<ClientsData>(new ClientsData(true));
 			statusChecker = StatusCheckerFunctor(clientsData, client);
+			client->setMyMode(clientsData->getOwnMode());
 		}
 
 
@@ -301,7 +302,7 @@ class Model : public IModel
 
 		// test
 		virtual void TestClient(std::string addrClient);
-		virtual	void setOwnMode(DomainData::Mode m){clientsData->setOwnMode(m);}
+		virtual	void setOwnMode(DomainData::Mode m){clientsData->setOwnMode(m); client->setMyMode(m);}
 		virtual DomainData::Mode getOwnMode(){return clientsData->getOwnMode();}
 
 };  //end class Model
