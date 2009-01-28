@@ -127,7 +127,7 @@ int RemoteClientCreatePipeObserverLogicRunnable::operator()()
 		//    odpowiedni komunikat (PassCreatePipe?)
 
 		//Wyszukaj dowolnego nie blokujacego
-		int clientId2 = clientsDataBase->FindActiveClient();
+		int clientId2 = 0;//clientsDataBase->FindActiveClient();
 		if(clientId2<=0)
 		{
 			LOG4CXX_INFO(logger, "Nie odnaleziono zadnego pasujacego rekordu");

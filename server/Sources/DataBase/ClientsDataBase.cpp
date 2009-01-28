@@ -189,7 +189,7 @@ int ClientsDataBase::Find(const struct DomainData::User & user)
 	return -1;
 }
 
-int ClientsDataBase::FindActiveClient()
+int ClientsDataBase::FindActiveClient(const struct DomainData::User & notUser)
 {
 	boost::mutex::scoped_lock sl(_mutex);
 
@@ -197,7 +197,7 @@ int ClientsDataBase::FindActiveClient()
 
 	if ( _records.size() != 0 )
 		for(std::map<int, ClientRecord>::iterator i = this->_records.begin(); i != this->_records.end(); i++)
-			if ( (*i).second.GetEnability().mode_ == DomainData::active )
+			if ( ((*i).second.GetEnability().mode_ == DomainData::active) && !strcmp((*i).second.GetUser().name.in(), notUser.name.in()) )
 			{
 				LOG4CXX_DEBUG(_logger, "Znaleziono rekord!");
 				return (*i).second.GetRecordId();

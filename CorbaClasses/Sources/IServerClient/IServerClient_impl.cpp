@@ -184,6 +184,15 @@ IServerClient_impl::GetPipeHolder(const ::DomainData::User& receiver)
 	LOG4CXX_DEBUG(logger, "Wywolanie GETPIPEHOLDER z adresu:" << Server::GetRemotedAddress(SRVPORT.c_str()));
 	::DomainData::User* _r = new ::DomainData::User;
 
+	DomainData::User sender;
+	DomainData::Address address;
+	address.localization = CORBA::string_dup(Server::GetInstance("")->GetRemotedAddress(SRVPORT.c_str()));
+	
+	LOG4CXX_DEBUG(logger, "Adres sendera[" << address.localization.in() << "]");
+
+	int senderId = ClientsDataBase::GetInstance()->FindByAddress(address);
+	sender = ClientsDataBase::GetInstance()->GetRecord(senderId).GetUser();
+
 	int localServId = ServerDataBase::GetInstance()->Find(Server::GetMyIP());
 	if(localServId <= 0)
 	{
@@ -191,7 +200,7 @@ IServerClient_impl::GetPipeHolder(const ::DomainData::User& receiver)
 		return _r;
 	}
 
-	int clientId = ClientsDataBase::GetInstance()->FindActiveClient();
+	int clientId = ClientsDataBase::GetInstance()->FindActiveClient(sender);
 
 		if(clientId <= 0)
 		{
@@ -210,16 +219,6 @@ IServerClient_impl::GetPipeHolder(const ::DomainData::User& receiver)
 			return _r;
 		}
 		ClientRecord crReceiver = ClientsDataBase::GetInstance()->GetRecord(receiverId);
-
-
-		DomainData::User sender;
-		DomainData::Address address;
-		address.localization = CORBA::string_dup(Server::GetInstance("")->GetRemotedAddress(SRVPORT.c_str()));
-		
-		LOG4CXX_DEBUG(logger, "Adres sendera[" << address.localization.in() << "]");
-
-		int senderId = ClientsDataBase::GetInstance()->FindByAddress(address);
-		sender = ClientsDataBase::GetInstance()->GetRecord(senderId).GetUser();
 
 		if(crReceiver.GetClientServerId() == localServId)
 		{
@@ -250,7 +249,7 @@ IServerClient_impl::GetPipeHolder(const ::DomainData::User& receiver)
 				{
 					LOG4CXX_DEBUG(logger, "nie mozna utworzyc pipe");
 
-					clientId = ClientsDataBase::GetInstance()->FindActiveClient();
+					clientId = ClientsDataBase::GetInstance()->FindActiveClient(sender);
 
 					if(clientId <= 0)
 					{
