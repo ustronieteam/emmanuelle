@@ -294,6 +294,8 @@ IServerClient_impl::GetPipeHolder(const ::DomainData::User& receiver)
 
 			LOG4CXX_DEBUG(logger, "... wywolywane PassCreatePipeRequest(" << crPipeHolder.GetUser().name.in() << "," << sender.name.in() <<"," << receiver.name.in() <<")");
 			servRI->PassCreatePipeRequest(crPipeHolder.GetUser(), sender, receiver);
+
+			_r->name = CORBA::string_dup(crPipeHolder.GetUser().name.in());
 		}
 
 	}
