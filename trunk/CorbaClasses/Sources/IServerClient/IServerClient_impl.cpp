@@ -214,7 +214,7 @@ IServerClient_impl::GetPipeHolder(const ::DomainData::User& receiver)
 		if(crReceiver.GetClientServerId() == localServId)
 		{
 			// client jest lokalnie
-			LOG4CXX_DEBUG(logger, "Klient znajduje sie na lokalnym serwerze - znaleziony to [" << crReceiver.GetUser().name.in() << "]");
+			LOG4CXX_DEBUG(logger, "Klient znajduje sie na lokalnym serwerze - znaleziony to [" << crPipeHolder.GetUser().name.in() << "]");
 
 			IClientServer_var clientRInst = crReceiver.GetClientRemoteInstance();
 			if(CORBA::is_nil(clientRInst))
@@ -241,6 +241,7 @@ IServerClient_impl::GetPipeHolder(const ::DomainData::User& receiver)
 				int counter = 5; // do wywalenia gdzies na zewnatrz
 				while(counter--)
 				{
+					LOG4CXX_DEBUG(logger, "Odpalenie CREATEPIPEREQUEST na kliencie[" << crPipeHolder.GetUser().name.in() << "]");
 					if(!clientRInst->CreatePipeRequest(sender, crPipeHolder.GetUser()))
 					{
 						LOG4CXX_DEBUG(logger, "nie mozna utworzyc pipe");
@@ -258,7 +259,7 @@ IServerClient_impl::GetPipeHolder(const ::DomainData::User& receiver)
 					else
 					{
 						LOG4CXX_DEBUG(logger, "Znaleziono pipe Holdera i utworzono pipe'a");
-						_r->name = crPipeHolder.GetUser().name;
+						_r->name = CORBA::string_dup(crPipeHolder.GetUser().name.in());
 						return _r;
 					}
 				}
