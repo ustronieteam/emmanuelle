@@ -106,5 +106,8 @@ IClientClient_impl::GetFile(const ::DomainData::User& sender)
 	f->body = file.body;
 	f->size = file.size;
 
+	isPipeOpen = 0;
+	file.name = CORBA::string_dup("");
+
 	return f;
 }
