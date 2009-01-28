@@ -190,7 +190,7 @@ int Client::SendPackage(DomainData::User usr, DomainData::User sender, DomainDat
 
 			DomainData::Address * pipeHolderClAddr = connectedServerInstance->GetUserAddressByName(*pipeHolder);
 			CORBA::ORB_var orbClient;
-			LOG4CXX_DEBUG(logger, "pozyskiwanie zdalnej instancji klienta(pipeholdera)");
+			LOG4CXX_DEBUG(logger, "pozyskiwanie zdalnej instancji klienta(pipeholdera) Adres: " << pipeHolderClAddr->localization.in());
 			IClientClient_var otherClientInstance = getRemoteClientInstance(orbClient, *pipeHolderClAddr );
 			LOG4CXX_DEBUG(logger, "Pozyskano zdalna instancje klienta(pipeholdera). Wysylanie pliku...");
 			usr.number = 1;

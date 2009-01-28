@@ -136,7 +136,7 @@ class ClientsDataBase
 		/// Znajduje aktywnego klienta w bazie danych.
 		/// @return Id rekordu aktywnego klienta. -1 gdy nie znajdzie.
 		///
-		int FindActiveClient();
+		int FindActiveClient(const struct DomainData::User & notUser);
 
 		///
 		/// Znajduje aktywnego klienta na danym serwerze.
