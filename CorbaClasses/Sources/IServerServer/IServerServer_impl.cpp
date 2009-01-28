@@ -184,7 +184,42 @@ IServerServer_impl::PassCreatePipeRequest(const ::DomainData::User& pipeHolder,
 										  const ::DomainData::User& receiver)
     throw(::CORBA::SystemException)
 {
-    // TODO: Implementation
+	try
+	{
+		int receiverId = ClientsDataBase::GetInstance()->Find(receiver);
+
+		if(receiverId <= 0)
+		{
+			LOG4CXX_ERROR(logger, "Nie ma takiego klienta w bazie danych");
+			return;
+		}
+
+		ClientRecord crReceiver = ClientsDataBase::GetInstance()->GetRecord(receiverId);
+
+		IClientServer_var receiverRI = crReceiver.GetClientRemoteInstance();
+
+		if(CORBA::is_nil(receiverRI))
+		{
+			CORBA::ORB_var orb;
+			if(Server::connectToClientServer(crReceiver.GetAddress().localization.in(), orb, receiverRI))
+			{
+				LOG4CXX_ERROR(logger, "Nie udalo sie polaczyc");
+				return;
+			}
+
+			crReceiver.SetClientRemoteInstance(receiverRI);
+			crReceiver.SetBroker(orb);
+
+			ClientsDataBase::GetInstance()->ModifyRecord(crReceiver);
+		}
+
+		receiverRI->CreatePipeRequest(sender, pipeHolder);
+	}
+	catch(std::exception & e)
+	{
+		LOG4CXX_ERROR(logger, "Wyjatek: " << e.what());
+		return;
+	}
 }
 
 //

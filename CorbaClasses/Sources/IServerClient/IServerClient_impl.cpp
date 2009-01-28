@@ -211,6 +211,16 @@ IServerClient_impl::GetPipeHolder(const ::DomainData::User& receiver)
 		}
 		ClientRecord crReceiver = ClientsDataBase::GetInstance()->GetRecord(receiverId);
 
+
+		DomainData::User sender;
+		DomainData::Address address;
+		address.localization = CORBA::string_dup(Server::GetInstance("")->GetRemotedAddress(SRVPORT.c_str()));
+		
+		LOG4CXX_DEBUG(logger, "Adres sendera[" << address.localization.in() << "]");
+
+		int senderId = ClientsDataBase::GetInstance()->FindByAddress(address);
+		sender = ClientsDataBase::GetInstance()->GetRecord(senderId).GetUser();
+
 		if(crReceiver.GetClientServerId() == localServId)
 		{
 			// client jest lokalnie
@@ -230,46 +240,60 @@ IServerClient_impl::GetPipeHolder(const ::DomainData::User& receiver)
 				crReceiver.SetBroker(orb);
 
 				ClientsDataBase::GetInstance()->ModifyRecord(crReceiver);
+			}
 
-				DomainData::User sender;
-				DomainData::Address address;
-				address.localization = CORBA::string_dup(Server::GetInstance("")->GetRemotedAddress(SRVPORT.c_str()));
-				
-				int senderId = ClientsDataBase::GetInstance()->FindByAddress(address);
-				sender = ClientsDataBase::GetInstance()->GetRecord(senderId).GetUser();
-
-				int counter = 5; // do wywalenia gdzies na zewnatrz
-				while(counter--)
+			int counter = 5; // do wywalenia gdzies na zewnatrz
+			while(counter--)
+			{
+				LOG4CXX_DEBUG(logger, "Odpalenie CREATEPIPEREQUEST na kliencie[" << crPipeHolder.GetUser().name.in() << "]");
+				if(!clientRInst->CreatePipeRequest(sender, crPipeHolder.GetUser()))
 				{
-					LOG4CXX_DEBUG(logger, "Odpalenie CREATEPIPEREQUEST na kliencie[" << crPipeHolder.GetUser().name.in() << "]");
-					if(!clientRInst->CreatePipeRequest(sender, crPipeHolder.GetUser()))
+					LOG4CXX_DEBUG(logger, "nie mozna utworzyc pipe");
+
+					clientId = ClientsDataBase::GetInstance()->FindActiveClient();
+
+					if(clientId <= 0)
 					{
-						LOG4CXX_DEBUG(logger, "nie mozna utworzyc pipe");
-
-						clientId = ClientsDataBase::GetInstance()->FindActiveClient();
-
-						if(clientId <= 0)
-						{
-							LOG4CXX_ERROR(logger, "Brak aktywnego klienta");
-							return _r;
-						}
-
-						crPipeHolder = ClientsDataBase::GetInstance()->GetRecord(clientId);
-					}
-					else
-					{
-						LOG4CXX_DEBUG(logger, "Znaleziono pipe Holdera i utworzono pipe'a");
-						_r->name = CORBA::string_dup(crPipeHolder.GetUser().name.in());
+						LOG4CXX_ERROR(logger, "Brak aktywnego klienta");
 						return _r;
 					}
+
+					crPipeHolder = ClientsDataBase::GetInstance()->GetRecord(clientId);
+				}
+				else
+				{
+					LOG4CXX_DEBUG(logger, "Znaleziono pipe Holdera i utworzono pipe'a");
+					_r->name = CORBA::string_dup(crPipeHolder.GetUser().name.in());
+					return _r;
 				}
 			}
+			
 		}
 		else
 		{
 			// client jest na innym serverze
 			LOG4CXX_DEBUG(logger, "Klient znajduje sie na innym serwerze");
 
+			ServerRecord servRecord = ServerDataBase::GetInstance()->GetRecord(crReceiver.GetClientServerId());
+			IServerServer_var servRI = servRecord.GetServerRemoteInstance();
+
+			if(CORBA::is_nil(servRI))
+			{
+				CORBA::ORB_var orb;
+				if(!Server::connectToServerServer(servRecord.GetAddress().localization.in() ,orb, servRI))
+				{
+					LOG4CXX_ERROR(logger, "Nie mo¿na pod³¹czyc do drugiego serwera");
+					return _r;
+				}
+
+				servRecord.SetServerRemoteInstance(servRI);
+				servRecord.SetBroker(orb);
+
+				ServerDataBase::GetInstance()->ModifyRecord(servRecord);
+			}
+
+			LOG4CXX_DEBUG(logger, "... wywolywane PassCreatePipeRequest(" << crPipeHolder.GetUser().name.in() << "," << sender.name.in() <<"," << receiver.name.in() <<")");
+			servRI->PassCreatePipeRequest(crPipeHolder.GetUser(), sender, receiver);
 		}
 
 	}
@@ -284,6 +308,7 @@ IServerClient_impl::GetPipeHolder(const ::DomainData::User& receiver)
 		return _r;
 	}
     
+	LOG4CXX_DEBUG(logger, "koniec GetPipeHolder method");
     return _r;
 }
 
