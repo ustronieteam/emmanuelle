@@ -38,10 +38,13 @@ IClientClient_impl::SendFile(const ::DomainData::File& f,
 
 	if(isPipeOpen)
 	{
+		LOG4CXX_DEBUG(logger, "... przed pipe'a");
 		file = f;
 	}
 	else
 	{
+		LOG4CXX_DEBUG(logger, "... normalnie - bezposrednio");
+
 		RemoteObserverData observData;
 		observData.SetObserverType(FFILE);
 		observData.SetUser(receiver);
@@ -69,8 +72,11 @@ void
 IClientClient_impl::CreatePipe(const ::DomainData::User& receiver)
     throw(::CORBA::SystemException)
 {
+	LOG4CXX_DEBUG(logger, "WYWOLANIE CREATEPIPE");
+
 	if(receiver.number)
 	{
+		LOG4CXX_DEBUG(logger, "... do receivera");
 		// receiver
 		isPipeOpen++;
 		receiverCC = receiver;
@@ -79,6 +85,7 @@ IClientClient_impl::CreatePipe(const ::DomainData::User& receiver)
 	}
 	else
 	{
+		LOG4CXX_DEBUG(logger, "... do sendera");
 		// sender
 		isPipeOpen++;
 		senderCC = receiver;
@@ -92,5 +99,6 @@ IClientClient_impl::CreatePipe(const ::DomainData::User& receiver)
 IClientClient_impl::GetFile(const ::DomainData::User& sender)
     throw(::CORBA::SystemException)
 {
+	LOG4CXX_DEBUG(logger, "WYWOLANIE GETFILE");
 	return &file;
 }
