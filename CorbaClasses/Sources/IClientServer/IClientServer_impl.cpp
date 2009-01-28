@@ -108,6 +108,8 @@ IClientServer_impl::CreatePipeRequest(const ::DomainData::User& sender,
                                       const ::DomainData::User& pipeHolder)
     throw(::CORBA::SystemException)
 {
+	LOG4CXX_DEBUG(logger, "WYWOLANIE CREATEPIPEREQUEST ");
+	
 	try
 	{
 		IServerClient_var server = Model::GetInstance()->GetServerInstance();
@@ -124,8 +126,6 @@ IClientServer_impl::CreatePipeRequest(const ::DomainData::User& sender,
 		sender2.number = 0;
 		client->CreatePipe(sender2);
 		boost::thread watekGetFile(boost::bind(&runGetFileThread, client, sender2, this));
-
-
 	}
 	catch(CORBA::SystemException & e)
 	{
@@ -133,5 +133,6 @@ IClientServer_impl::CreatePipeRequest(const ::DomainData::User& sender,
 		return false;
 	}
 
+	LOG4CXX_DEBUG(logger, "Powodzenie CREATEPIPEREQUEST");
     return true;
 }

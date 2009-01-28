@@ -181,6 +181,7 @@ IServerClient_impl::CheckClientStatus(const ::DomainData::User& usr)
 IServerClient_impl::GetPipeHolder(const ::DomainData::User& receiver)
     throw(::CORBA::SystemException)
 {
+	LOG4CXX_DEBUG(logger, "Wywolanie GETPIPEHOLDER z adresu:" << Server::GetRemotedAddress(SRVPORT.c_str()));
 	::DomainData::User* _r = new ::DomainData::User;
 
 	int localServId = ServerDataBase::GetInstance()->Find(Server::GetMyIP());
@@ -213,6 +214,8 @@ IServerClient_impl::GetPipeHolder(const ::DomainData::User& receiver)
 		if(crReceiver.GetClientServerId() == localServId)
 		{
 			// client jest lokalnie
+			LOG4CXX_DEBUG(logger, "Klient znajduje sie na lokalnym serwerze - znaleziony to [" << crReceiver.GetUser().name.in() << "]");
+
 			IClientServer_var clientRInst = crReceiver.GetClientRemoteInstance();
 			if(CORBA::is_nil(clientRInst))
 			{
@@ -264,6 +267,8 @@ IServerClient_impl::GetPipeHolder(const ::DomainData::User& receiver)
 		else
 		{
 			// client jest na innym serverze
+			LOG4CXX_DEBUG(logger, "Klient znajduje sie na innym serwerze");
+
 		}
 
 	}
