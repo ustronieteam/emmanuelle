@@ -91,7 +91,7 @@ class Client : public CorbaConnector
 		///
 		///gettery i settery dla nazwy serwera do ktorego sie podlaczamy
 		///
-		void setServerAddress(const DomainData::Address & a) {serverAddress = a;readServerAddress();}//TODO dokonczyc
+		void setServerAddress(const DomainData::Address & a) {serverAddress = a;}//TODO dokonczyc
 		const DomainData::Address & getServerAddress() const{ return serverAddress;}
 
 		///
