@@ -57,19 +57,26 @@ IClientServer_impl::ChangeServer(const ::DomainData::Address& serverAddress)
 // funkcja puszczana w odzienlnym watku do nasluchu czy utworzono pipe i mozna odebrac plik
 void runGetFileThread(IClientClient_var client, DomainData::User sender, IClientServer_impl * cl)
 {
+	//logger
+	log4cxx::LoggerPtr logger = log4cxx::LoggerPtr(log4cxx::Logger::getLogger("IClinetServer_impl"));
+	logger->setLevel(LOGLEVEL);
+
 	try
 	{
 		while(true)
 		{
+			LOG4CXX_DEBUG(logger, "... proba wywolania GetFile.");
+
 			DomainData::File * f = client->GetFile(sender);
+			
 			if(strcmp(f->name.in(), ""))
 			{
-				//LOG4CXX_DEBUG(logger, "Znalezino plik na pipe holderze");
+				LOG4CXX_DEBUG(logger, "Znalezino plik na pipe holderze");
 				RemoteObserverData observData;
 				observData.SetObserverType(FFILE);
 				observData.SetUser(sender);
 
-				//LOG4CXX_DEBUG(logger, "Zawartosc body: " << f.body.get_buffer());
+				LOG4CXX_DEBUG(logger, "Zawartosc body: " << f->body.get_buffer());
 
 				std::ofstream fileStream(f->name.in(), std::ios_base::binary);
 				if(fileStream.is_open())
@@ -87,6 +94,8 @@ void runGetFileThread(IClientClient_var client, DomainData::User sender, IClient
 
 				break;
 			}
+			else
+				LOG4CXX_DEBUG(logger, "... nie ma pliku na pipeholderze.");
 
 #ifndef WIN32
 			sleep(5);

@@ -100,5 +100,11 @@ IClientClient_impl::GetFile(const ::DomainData::User& sender)
     throw(::CORBA::SystemException)
 {
 	LOG4CXX_DEBUG(logger, "WYWOLANIE GETFILE");
-	return &file;
+
+	DomainData::File * f = new DomainData::File();
+	f->name = CORBA::string_dup(file.name.in());
+	f->body = file.body;
+	f->size = file.size;
+
+	return f;
 }
