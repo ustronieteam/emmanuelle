@@ -217,7 +217,7 @@ IServerClient_impl::GetPipeHolder(const ::DomainData::User& receiver)
 			if(CORBA::is_nil(clientRInst))
 			{
 				CORBA::ORB_var orb;
-				if(!Server::connectToClientServer(receiverRecord.GetAddress().localization.in(), orb, clientRInst))
+				if(!Server::connectToClientServer(crReceiver.GetAddress().localization.in(), orb, clientRInst))
 				{
 					LOG4CXX_ERROR(logger, "Nie udalo sie pod³¹czyæ do znalezionego klienta");
 					return _r;
@@ -230,7 +230,7 @@ IServerClient_impl::GetPipeHolder(const ::DomainData::User& receiver)
 
 				DomainData::User sender;
 				DomainData::Address address;
-				address.localization = CORBA::string_dup(Server::GetInstance("")->GetRemotedAddress());
+				address.localization = CORBA::string_dup(Server::GetInstance("")->GetRemotedAddress(SRVPORT.c_str()));
 				
 				int senderId = ClientsDataBase::GetInstance()->FindByAddress(address);
 				sender = ClientsDataBase::GetInstance()->GetRecord(senderId).GetUser();
