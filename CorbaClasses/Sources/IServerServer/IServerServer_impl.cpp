@@ -184,6 +184,8 @@ IServerServer_impl::PassCreatePipeRequest(const ::DomainData::User& pipeHolder,
 										  const ::DomainData::User& receiver)
     throw(::CORBA::SystemException)
 {
+	LOG4CXX_DEBUG(logger, "WYWOLANIE PASSCREATEPIPEREQUEST z adresu: " << Server::GetRemotedAddress(SRVPORT.c_str()));
+
 	try
 	{
 		int receiverId = ClientsDataBase::GetInstance()->Find(receiver);
@@ -201,7 +203,7 @@ IServerServer_impl::PassCreatePipeRequest(const ::DomainData::User& pipeHolder,
 		if(CORBA::is_nil(receiverRI))
 		{
 			CORBA::ORB_var orb;
-			if(Server::connectToClientServer(crReceiver.GetAddress().localization.in(), orb, receiverRI))
+			if(!Server::connectToClientServer(crReceiver.GetAddress().localization.in(), orb, receiverRI))
 			{
 				LOG4CXX_ERROR(logger, "Nie udalo sie polaczyc");
 				return;
